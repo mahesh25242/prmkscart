@@ -40,6 +40,9 @@ const Login = () =>{
             Login
         </button>
     }
+     {
+        user &&  <a href="">LogOut</a>
+    }
        
        
         <div className="modal fade" id="loginPopup" data-backdrop="static" tabindex="-1" role="dialog" aria-labelledby="loginPopupLabel" aria-hidden="true">

@@ -15,10 +15,11 @@ import { CreateUserComponent } from './users/create-user/create-user.component';
 import { ShopCategoryComponent } from './shop-category/shop-category.component';
 import { ShopCategoryResolver } from './shop-category/shop-category-resolver';
 import { CreateShopCategoryComponent } from './shop-category/create-shop-category/create-shop-category.component';
+import { ShopComponent } from './shop/shop.component';
 
 
 @NgModule({
-  declarations: [  UsersComponent, DetailsComponent, ShopsComponent, ListComponent, CreateComponent, CreateUserComponent, ShopCategoryComponent, CreateShopCategoryComponent],
+  declarations: [  UsersComponent, DetailsComponent, ShopsComponent, ListComponent, CreateComponent, CreateUserComponent, ShopCategoryComponent, CreateShopCategoryComponent, ShopComponent],
   imports: [
     CommonModule,
     SharedModuleModule,

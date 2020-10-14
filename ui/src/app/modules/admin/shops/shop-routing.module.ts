@@ -10,6 +10,7 @@ import { ListComponent } from './list/list.component';
 import { ShopCategoryComponent } from './shop-category/shop-category.component';
 import { ShopCategoryResolver } from './shop-category/shop-category-resolver';
 import { EditShopResolver } from './create/edit-shop-resolver';
+import { ShopComponent } from './shop/shop.component';
 
 
 
@@ -45,7 +46,7 @@ const routes: Routes = [
       },
       {
         path: 'shop/:id',
-        component: CreateComponent,
+        component: ShopComponent,
       },
       {
         path: 'customers',
