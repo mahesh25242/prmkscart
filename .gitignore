@@ -1,1 +1,4 @@
-api/public/assets/
+# dependencies
+/node_modules
+
+/dist
