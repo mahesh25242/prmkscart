@@ -1,0 +1,43 @@
+<form [formGroup]="createCategoryFrm" (ngSubmit)="saveCategory()">
+  <app-modal>
+    <div header>Create Category</div>
+    <div body>
+        <div class="form-group">
+          <label for="name">Name</label>
+          <input type="text" class="form-control" id="name"
+          [ngClass]="{'is-invalid': ( f.name.errors && f.name.errors.error)}"
+          placeholder="Name"
+          formControlName="name">
+          <div *ngIf="f.name.errors && f.name.errors.error" class="invalid-feedback">
+            {{f.name.errors.error}}
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="description">Description</label>
+          <textarea  class="form-control" id="description"
+          [ngClass]="{'is-invalid': ( f.description.errors && f.description.errors.error)}"
+          placeholder="Description"
+          formControlName="description"></textarea>
+          <div *ngIf="f.description.errors && f.description.errors.error" class="invalid-feedback">
+            {{f.description.errors.error}}
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="Status">Status</label>
+          <select class="form-control"
+          [ngClass]="{'is-invalid': ( f.status.errors && f.status.errors.error)}"
+          formControlName="status">
+              <option value="1">Active</option>
+              <option value="0">In-Active</option>
+          </select>
+          <div *ngIf="f.status.errors && f.status.errors.error" class="invalid-feedback">
+            {{f.status.errors.error}}
+          </div>
+        </div>
+    </div>
+    <div footer>
+      <button type="button" class="btn btn-info" (click)="modal.close()">Cancel</button>
+      <button type="submit" class="btn btn-primary ml-1">Submit</button>
+    </div>
+  </app-modal>
+</form>

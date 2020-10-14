@@ -1,0 +1,19 @@
+.card {
+    h4{
+        a{font-size: 0.9rem;}
+    }
+    .d-grid {
+        align-items: center;
+        p {margin-bottom: 0px;}
+        text-align: right;
+
+        &.grd-col-3 {
+           
+            grid-template-columns: 1fr 1fr 50px;
+            &:nth-child(1) {
+                text-align: left;
+            }
+            
+        }
+    }
+}

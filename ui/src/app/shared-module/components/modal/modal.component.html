@@ -1,0 +1,16 @@
+<div>
+  <div class="modal-header">
+      <h4 class="modal-title" id="modal-title">
+        <ng-content select="[header]"></ng-content>
+      </h4>
+      <button type="button" class="close" aria-describedby="modal-title"  (click)="modal.dismiss('Cross click')">
+      <span aria-hidden="true">&times;</span>
+      </button>
+  </div>
+  <div class="modal-body">
+    <ng-content select="[body]"></ng-content>
+  </div>
+  <div class="modal-footer" *ngIf="!noFooter">
+    <ng-content select="[footer]"></ng-content>
+  </div>
+</div>

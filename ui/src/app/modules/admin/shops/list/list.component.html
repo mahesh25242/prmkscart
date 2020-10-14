@@ -1,0 +1,40 @@
+<a routerLink="create" class="btn btn-primary">Create Shop</a>
+<table class="table">
+  <thead>
+    <tr>
+      <th>
+        ID
+      </th>
+      <th>
+        Name
+      </th>
+      <th>
+        Status
+      </th>
+      <th>
+        Options
+      </th>
+    </tr>
+  </thead>
+  <tbody>
+    <ng-container *ngIf="(shops$ | async) as shops">
+      <tr *ngFor="let shop of shops">
+        <td>
+          {{ shop.id }}
+        </td>
+        <td>
+          <a [routerLink]="'shop/'+shop.id">{{shop.name}}</a>
+        </td>
+        <td>
+          {{ shop.status_text }}
+        </td>
+        <td>
+          <a href="javascript:{}" [routerLink]="'edit/'+shop.id">Edit</a>
+          <a href="javascript:{}" (click)="delete(shop)">Delete</a>
+        </td>
+      </tr>
+    </ng-container>
+
+  </tbody>
+</table>
+

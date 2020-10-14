@@ -1,0 +1,75 @@
+<form [formGroup]="editProfileFrm" *ngIf="(loggedUser$ | async) as loggedUser" (ngSubmit)="updateProfile()">
+  <img [src]="loggedUser.avatar" class="avatar-img img-thumbnail" />
+  <button type="button" (click)="fileInput.click()" class="btn btn-primary avatar-up-btn">
+    <span>Change Photo</span>
+    <input #fileInput type="file" (change)="onFileInput($event.target.files)" accept="image/*" style="display:none;" />
+  </button>
+  Created At: {{ loggedUser.created_at |  date:'dd/MM/yy'}}
+  Last Login: {{ loggedUser.last_login.created_at  |  date:'dd/MM/yy'}}
+  <div class="form-group">
+    <label for="fname">First Name</label>
+    <input type="text" class="form-control" id="fname"
+    [ngClass]="{'is-invalid': (f.fname.errors && f.fname.errors.error) }"
+     placeholder="First Name" formControlName="fname" >
+      <div *ngIf="f.fname.errors && f.fname.errors.error" class="invalid-feedback">
+        {{f.fname.errors.error}}
+      </div>
+  </div>
+  <div class="form-group">
+    <label for="lname">Last Name</label>
+    <input type="text" class="form-control" id="lname"
+    [ngClass]="{'is-invalid': (f.lname.errors && f.lname.errors.error)}"
+    placeholder="First Name" formControlName="lname">
+    <div *ngIf="f.lname.errors && f.lname.errors.error" class="invalid-feedback">
+      {{f.lname.errors.error}}
+    </div>
+  </div>
+  <div class="form-group">
+    <label for="phone">Phone Number</label>
+    <input type="text" class="form-control" id="phone"
+    [ngClass]="{'is-invalid': (f.phone.errors && f.phone.errors.error)}"
+    placeholder="Phone Number"
+    formControlName="phone">
+    <div *ngIf="f.phone.errors && f.phone.errors.error" class="invalid-feedback">
+      {{f.phone.errors.error}}
+    </div>
+  </div>
+  <div class="form-group">
+    <label for="email">Email Id</label>
+    <input type="email" class="form-control" id="email" aria-describedby="emailHelp"
+    [ngClass]="{'is-invalid': (f.email.errors && f.email.errors.error)}"
+    placeholder="Email Id"
+    formControlName="email">
+    <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small>
+  </div>
+
+  <div class="custom-control custom-checkbox">
+    <input type="checkbox" class="custom-control-input" id="changePass" formControlName="isChanegPassword">
+    <label class="custom-control-label" for="changePass">Change Password</label>
+  </div>
+  <div>
+
+    <div class="form-group">
+      <label for="password">Password</label>
+      <input type="password" class="form-control" id="password" placeholder="Password"
+      [ngClass]="{'is-invalid': ( f.password.errors && f.password.errors.error)}"
+      formControlName="password" >
+      <div *ngIf="f.password.errors && f.password.errors.error" class="invalid-feedback">
+        {{f.password.errors.error}}
+      </div>
+    </div>
+    <div class="form-group">
+      <label for="password_confirmation">Confirm Password</label>
+      <input type="password" class="form-control" id="password_confirmation"
+      [ngClass]="{'is-invalid': ( f.password_confirmation.errors && f.password_confirmation.errors.error)}"
+      placeholder="Confirm Password"
+       formControlName="password_confirmation" >
+       <div *ngIf="f.password_confirmation.errors && f.password_confirmation.errors.error" class="invalid-feedback">
+        {{f.password_confirmation.errors.error}}
+      </div>
+    </div>
+  </div>
+
+
+  <button type="submit" class="btn btn-primary">Submit</button>
+</form>

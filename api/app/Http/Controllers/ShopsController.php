@@ -1,0 +1,62 @@
+<?php
+namespace App\Http\Controllers;
+
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Validator;
+
+class ShopsController extends Controller
+{
+
+
+    public function shops(Request $request){
+        $shops = \App\Shop::get();
+        return response($shops);
+    }
+
+
+    public function store(Request $request){
+
+        $validator = Validator::make($request->all(), [
+            'name' => ['required'],
+            'status' => ['required'],
+            'shop_category_id' => ['required'],
+        ],[],[
+            'shop_category_id' => 'Category',
+        ]);
+
+
+
+
+        if($validator->fails()){
+            return response(['message' => 'Validation errors', 'errors' =>  $validator->errors(), 'status' => false], 422);
+        }
+        $input = $request->all();
+        $input["shop_category_id"] = $request->input("shop_category_id.id", 0);
+        $input["country_id"] = $request->input("country_id.id", 0);
+        $input["state_id"] = $request->input("state_id.id", 0);
+        $input["city_id"] = $request->input("city_id.id", 0);
+        $input["shop_key"] = sha1(time());
+
+        if($request->input("id", 0)){
+            $shop = \App\Shop::where('id', $request->input("id", 0))->update($input);
+        }else{
+            $shop = \App\Shop::create($input);
+        }
+
+
+        return response(['data' => $shop, 'message' => 'Account created successfully!', 'status' => true]);
+    }
+
+    public function delete(Request $request, $id=0){
+       $shop =  \App\Shop::where('id', $id)->delete();
+       return response(['message' => 'successfully deleted!', 'status' => true]);
+    }
+
+    public function getAShop(Request $request, $id=0){
+       $shop =  \App\Shop::with(["country", "state", "city", "shopCategory"])->find($id);
+       return response($shop);
+    }
+
+
+}

@@ -1,0 +1,88 @@
+
+  <h3>{{ this.pageTitle}} </h3>
+
+  <form class="form-inline" [formGroup]="searchFrm" (ngSubmit)="search()">
+    <input type="text" class="form-control my-1 mr-sm-2" placeholder="Search" formControlName="q" />
+    <button type="submit" class="btn btn-primary my-1">Search</button>
+    <button type="button" class="btn btn-primary my-1" (click)="resetSearch()">Clear</button>
+  </form>
+
+  <ng-container  *ngIf="(users$ | async ) as users">
+    <table class="table">
+      <thead>
+        <tr>
+          <th>
+            Sl
+          </th>
+          <th>
+            Name
+          </th>
+          <th>
+            Invoice
+          </th>
+          <th>
+            Status
+          </th>
+          <th>
+            Date
+          </th>
+          <th *ngIf="type=='teacher'">
+            Students
+          </th>
+          <th>
+            Details
+          </th>
+          <th>
+            Delete
+          </th>
+        </tr>
+      </thead>
+      <tbody>
+        <ng-container *ngIf="users?.data && users?.data.length">
+          <tr *ngFor="let item of users?.data; let i= index;">
+            <td data-label="SL">
+              {{ i+1 }}
+            </td>
+            <td data-label="Name">
+              {{ item.fname }} {{ item.lname }}
+            </td>
+            <td data-label="Invoice">
+                <a href="javascript:{}">View</a>
+            </td>
+            <td data-label="Status">
+              <a href="javascript:{}"
+              (click)="toggleStatus(item)" [class]="'toggle-status-'+item.id"
+              [ngClass]="{ 'text-success': item.status, 'text-warning': !item.status }"
+              placement="top" [ngbTooltip]="!item.status && 'This user can\'t login'">
+                {{ (item.status && 'Active') || (!item.status && 'In-Active') }}
+              </a>
+            </td>
+            <td data-label="Date">
+              <span placement="top" [ngbTooltip]="item.created_at | date:'mediumDate'">{{ item.created_at_human}}</span>
+            </td>
+            <td *ngIf="type=='teacher'" data-label="Students">
+              {{ item.student_count }}
+            </td>
+            <td data-label="Details">
+              <a href="javascript:{}" (click)="details(item)">Details</a>
+            </td>
+            <td data-label="Delete">
+              <a href="javascript:{}" (click)="deleteUser(item)"
+              [class]="'delete-user-'+item.id" class="btn btn-danger btn-sm"><fa-icon [icon]="faTrash"></fa-icon></a>
+            </td>
+          </tr>
+        </ng-container>
+        <ng-container *ngIf="users?.data && !users?.data.length">
+          <tr>
+            <td colspan="8">
+              <div class="alert alert-warning">No result found!</div>
+            </td>
+          </tr>
+        </ng-container>
+      </tbody>
+    </table>
+    <div *ngIf="users?.data.length">
+        <ngb-pagination [collectionSize]="users?.total" [pageSize]="users?.per_page" [(page)]="users.current_page"
+        aria-label="Default pagination" (pageChange)="search($event)" [maxSize]="5" [boundaryLinks]="true"  [rotate]="true"></ngb-pagination>
+    </div>
+  </ng-container>

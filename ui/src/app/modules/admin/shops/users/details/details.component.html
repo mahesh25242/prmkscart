@@ -1,0 +1,29 @@
+<app-modal>
+  <div header>
+   as
+  </div>
+  <div  body>
+    <div *ngIf="user$ | async as usr">
+      <img [src]="usr.avatar" />
+
+
+        <a [href]="'tel://'+usr.phone" class="btn btn-primary">Call</a>
+        <a class="d-none d-sm-block btn btn-primary" target="_blank" [href]="'https://web.whatsapp.com/send?phone='+usr.phone">Message</a>
+        <a class="d-block d-sm-none btn btn-primary" target="_blank" [href]="'https://api.whatsapp.com/send?phone='+usr.phone">Message</a>
+
+
+        Contact Number: {{ usr.phone}}
+        Email: {{ usr.email}}
+        Status:
+
+
+
+    </div>
+  </div>
+  <div  footer>
+
+
+    <button type="button" class="btn btn-outline-danger delete-user" (click)="deleteUser()">Delete</button>
+    <button type="button" class="btn btn-outline-secondary" (click)="modal.dismiss('cancel click')">Cancel</button>
+  </div>
+</app-modal>

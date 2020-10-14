@@ -1,0 +1,41 @@
+/* You can add global styles to this file, and also import other style files */
+
+/* Importing Bootstrap SCSS file. */
+@import '~bootstrap/scss/bootstrap';
+@import "~@ng-select/ng-select/themes/default.theme.css";
+@import '~ngx-sharebuttons/themes/default/default-theme';
+@import 'variables';
+
+.star {
+  font-size: 1.5rem;
+  color: #b0c4de;
+}
+.filled {
+  color: #1e90ff;
+}
+
+
+
+
+
+.d-grid {
+    display: grid;
+    row-gap: 15px;
+    column-gap: 15px;
+    .span2 {
+        grid-column: 1 / span 2;
+    }
+    &.grd-col-3 {
+        grid-template-columns: 1fr 1fr 1fr;
+    }
+   &.grd-col-2{
+    grid-template-columns: 1fr 1fr;
+   }
+  }
+
+  body {
+      font-family: $fontFmily;
+      color:$text-color;
+      font-size: 0.7rem;
+  }
+  h1 {font-size:$fontsize-2;}

@@ -1,0 +1,53 @@
+<form [formGroup]="contactUsFrm"  (ngSubmit)="sentContact()">
+  <div class="form-group">
+    <label for="name">Name</label>
+    <input type="email" class="form-control" id="name" placeholder="Name"
+    [ngClass]="{'is-invalid': f.name.invalid && ((f.name.dirty || f.name.touched))}"
+    formControlName="name">
+    <ng-container *ngIf="f.name.invalid && (f.name.dirty || f.name.touched)">
+      <div *ngIf="f.name.errors.required" class="invalid-feedback">
+        Name is required.
+      </div>
+    </ng-container>
+  </div>
+  <div class="form-group">
+    <label for="email">Email address</label>
+    <input type="email" class="form-control" id="email" aria-describedby="emailHelp"
+    [ngClass]="{'is-invalid': f.email.invalid && ((f.email.dirty || f.email.touched))}"
+     placeholder="Email" formControlName="email">
+    <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small>
+    <ng-container *ngIf="f.email.invalid && (f.email.dirty || f.email.touched)">
+      <div *ngIf="f.email.errors.required" class="invalid-feedback">
+        Email is required.
+      </div>
+      <div *ngIf="f.email.errors.email" class="invalid-feedback">
+        Email is not valid.
+      </div>
+    </ng-container>
+  </div>
+  <div class="form-group">
+    <label for="phone">Phone</label>
+    <input type="text" class="form-control" id="phone" aria-describedby="phoneHelp"
+    [ngClass]="{'is-invalid': f.phone.invalid && ((f.phone.dirty || f.phone.touched))}"
+     placeholder="Phone" formControlName="phone">
+    <small id="phoneHelp" class="form-text text-muted">We'll never share your email with anyone else.</small>
+    <ng-container *ngIf="f.phone.invalid && (f.phone.dirty || f.phone.touched)">
+      <div *ngIf="f.phone.errors.required" class="invalid-feedback">
+        Phone is required.
+      </div>
+    </ng-container>
+  </div>
+  <div class="form-group">
+    <label for="comment">Comment</label>
+    <textarea class="form-control" id="comment"  placeholder="Comment"
+    [ngClass]="{'is-invalid': f.comment.invalid && ((f.comment.dirty || f.comment.touched))}"
+    formControlName="comment"></textarea>
+    <ng-container *ngIf="f.comment.invalid && (f.comment.dirty || f.comment.touched)">
+      <div *ngIf="f.comment.errors.required" class="invalid-feedback">
+        Comment is required.
+      </div>
+    </ng-container>
+  </div>
+
+  <button type="submit" class="btn btn-primary" [disabled]="contactUsFrm.invalid">Sent</button>
+</form>
