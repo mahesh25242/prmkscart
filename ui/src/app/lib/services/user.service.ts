@@ -3,7 +3,6 @@ import { map, shareReplay, catchError } from 'rxjs/operators';
 import { of, BehaviorSubject, Observable, throwError } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 import { auth } from 'firebase/app';
-import { AngularFireAuth } from "@angular/fire/auth";
 import { Pagination, User, UserWithPagination } from '../interfaces';
 import { environment } from '../../../environments/environment';
 import * as _ from 'lodash';
@@ -16,7 +15,7 @@ export class UserService {
     private user$: BehaviorSubject<User> = new BehaviorSubject<User>(null);
     private users$: BehaviorSubject<UserWithPagination> = new BehaviorSubject<UserWithPagination>(null);
 
-  constructor(private http: HttpClient,public afAuth: AngularFireAuth) { }
+  constructor(private http: HttpClient) { }
 
 
   get getloggedUser() {

@@ -2,8 +2,6 @@ import { Injectable } from '@angular/core';
 import { map, shareReplay, catchError } from 'rxjs/operators';
 import { of, BehaviorSubject, Observable, throwError } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
-import { auth } from 'firebase/app';
-import { AngularFireAuth } from "@angular/fire/auth";
 import { Pagination, User, UserWithPagination } from '../interfaces';
 import { environment } from '../../../environments/environment';
 import * as _ from 'lodash';
@@ -16,7 +14,7 @@ export class UserService {
     private user$: BehaviorSubject<User> = new BehaviorSubject<User>(null);
     private users$: BehaviorSubject<UserWithPagination> = new BehaviorSubject<UserWithPagination>(null);
 
-  constructor(private http: HttpClient,public afAuth: AngularFireAuth) { }
+  constructor(private http: HttpClient) { }
 
 
   get getloggedUser() {
@@ -27,43 +25,6 @@ export class UserService {
   }
   get users() {
     return this.users$.asObservable();
-  }
-
-  GoogleAuth() {
-    return this.AuthLogin(new auth.GoogleAuthProvider());
-  }
-
-  FBAuth() {
-    return this.AuthLogin(new auth.FacebookAuthProvider());
-  }
-
-
-  signInWithPhone(){
-
-    var applicationVerifier = new auth.RecaptchaVerifier(
-      'recaptcha-container', { 'size': 'invisible'});
-        var provider = new auth.PhoneAuthProvider();
-        provider.verifyPhoneNumber('+919995453566', applicationVerifier)
-      .then(function(verificationId) {
-        var verificationCode = window.prompt('Please enter the verification ' +
-            'code that was sent to your mobile device.');
-        return auth.PhoneAuthProvider.credential(verificationId,
-            verificationCode);
-      })
-      .then(function(phoneCredential) {
-        return auth().signInWithCredential(phoneCredential);
-      });
-  }
-  // Auth logic to run auth providers
-  AuthLogin(provider) {
-    return this.afAuth.signInWithPopup(provider)
-    .then((result) => {
-        console.log('You have been successfully logged in!')
-    }).catch((error) => {
-        console.log(error)
-    })
-
-
   }
 
   signUp(user: any= null){

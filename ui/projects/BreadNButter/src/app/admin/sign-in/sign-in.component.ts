@@ -2,6 +2,11 @@ import { Component, OnInit } from '@angular/core';
 
 import { FormGroup, FormArray, FormBuilder,
   Validators,ReactiveFormsModule  } from '@angular/forms';
+import { Subscription } from 'rxjs';
+import { UserService } from '../../lib/services';
+import Notiflix from "notiflix";
+import { environment } from '../../../environments/environment';
+import { map, mergeMap } from 'rxjs/operators';
 
 @Component({
   selector: 'app-sign-in',
@@ -11,9 +16,42 @@ import { FormGroup, FormArray, FormBuilder,
 export class SignInComponent implements OnInit {
   signInFrm:FormGroup;
   invalidlogin:boolean = false;
-  constructor(private formBuilder: FormBuilder) { }
+  signInSubscription: Subscription;
+
+  constructor(private formBuilder: FormBuilder,
+    private userService: UserService) { }
   signIn(){
-    alert("as")
+    Notiflix.Loading.Pulse(`please wait`);
+    this.invalidlogin = false;
+    const postData = {
+      "grant_type": "password",
+      "client_id": 2,
+      "client_secret": environment.lumenSecret,
+      "password": this.f.password.value,
+      "username": this.f.mobile.value,
+      "scope": "",
+      "recaptcha": null
+    };
+
+    this.signInSubscription = this.userService.signIn(postData).pipe(mergeMap(()=>{
+
+      return this.userService.authUser().pipe(mergeMap(user=>{
+        return this.userService.setUserLogin({action:'SignIn'}).pipe(map(()=>{
+          return user
+        }))
+      }));
+    })).subscribe(()=>{
+
+      Notiflix.Loading.Remove();
+      //this.router.navigate([`/${res.role_url}`]);
+    }, ()=>{
+      Notiflix.Loading.Remove();
+        this.invalidlogin = true;
+        this.f.password.setValue(null);
+
+
+
+    });
   }
   get f(){ return this.signInFrm.controls}
   ngOnInit(): void {

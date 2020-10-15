@@ -17,9 +17,13 @@ export class ApiUrlInterceptor implements HttpInterceptor {
     const url = environment.baseUrl;
     if(!request.url.includes('http')){
       request = request.clone({
-        url: url + request.url
+        url: url + request.url,
+        setHeaders: {
+          'shopKey': `${environment.shopKey}`
+        }
       });
     }
+
     return next.handle(request);
   }
 }

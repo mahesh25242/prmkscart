@@ -4,6 +4,7 @@ import { NgModule } from '@angular/core';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { HttpClientModule, HttpClientXsrfModule } from '@angular/common/http';
 
+import { httpInterceptorProviders } from './lib/interceptor'
 
 import { SharedModuleModule } from './lib/shared-module/shared-module.module';
 
@@ -34,7 +35,9 @@ import { PageNotFoundComponent } from './page-not-found/page-not-found.component
     HttpClientModule,
     HttpClientXsrfModule.disable(),
   ],
-  providers: [],
+  providers: [
+    httpInterceptorProviders
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
