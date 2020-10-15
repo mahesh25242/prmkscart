@@ -34,7 +34,7 @@
     <input type="email" class="form-control" id="userEmail"
     [ngClass]="{'is-invalid': ( f.email.errors && f.email.errors.error)}"
     placeholder="Email"
-     formControemail="email">
+    formControlName="email">
      <div *ngIf="f.email.errors && f.email.errors.error" class="invalid-feedback">
       {{f.email.errors.error}}
     </div>
@@ -61,11 +61,24 @@
   </div>
 
   <div class="form-group">
+    <label for="Status">Status</label>
+    <select class="form-control"
+    [ngClass]="{'is-invalid': ( f.status.errors && f.status.errors.error)}"
+    formControlName="status">
+        <option value="1">Active</option>
+        <option value="0">In-Active</option>
+    </select>
+    <div *ngIf="f.status.errors && f.status.errors.error" class="invalid-feedback">
+      {{f.status.errors.error}}
+    </div>
+  </div>
+
+  <div class="form-group">
     <label for="userPhone">Phone</label>
     <input type="tel" class="form-control" id="userPhone"
     [ngClass]="{'is-invalid': ( f.phone.errors && f.phone.errors.error)}"
     placeholder="Phone"
-     formControphone="phone">
+    formControlName="phone">
      <div *ngIf="f.phone.errors && f.phone.errors.error" class="invalid-feedback">
       {{f.phone.errors.error}}
     </div>

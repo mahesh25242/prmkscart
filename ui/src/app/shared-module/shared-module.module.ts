@@ -12,7 +12,7 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import {DragDropModule} from '@angular/cdk/drag-drop';
 
 import { LoginComponent } from './components/login/login.component';
-import { RegisterComponent } from './components/register/register.component';
+
 
 import { ModalComponent } from './components/modal/modal.component';
 
@@ -27,7 +27,6 @@ Notiflix.Block.Init({ svgColor:"#204486", });
     SafeHtmlPipe,
     ModalComponent,
     LoginComponent,
-    RegisterComponent,
   ],
   imports: [
     CommonModule,
@@ -50,7 +49,6 @@ Notiflix.Block.Init({ svgColor:"#204486", });
     ReactiveFormsModule,
     NgxCaptchaModule,
     LoginComponent,
-    RegisterComponent,
     DragDropModule,
   ]
 })

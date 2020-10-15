@@ -135,14 +135,11 @@ class User extends Model implements AuthenticatableContract, AuthorizableContrac
         return $this->hasOne('App\UserLogin', 'user_id')->where("name", "SignIn")->orderBy("id", "DESC")->skip(1)->take(1);
     }
 
-    public function shopUser()
-    {
-        return $this->hasMany('App\ShopUser');
-    }
+
 
     public function shopProduct()
     {
-        return $this->hasMany('App\ShopUser', 'created_by');
+        return $this->hasMany('App\ShopProduct', 'created_by');
     }
 
     public function shopProductImage()
@@ -154,4 +151,6 @@ class User extends Model implements AuthenticatableContract, AuthorizableContrac
     {
         return $this->hasMany('App\ShopProductVariant', 'created_by');
     }
+
+
 }

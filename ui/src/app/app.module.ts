@@ -47,7 +47,7 @@ var config = {
     PageNotFoundComponent
   ],
   imports: [
-    BrowserModule.withServerTransition({ appId: 'serverApp' }),
+    BrowserModule,
     BrowserAnimationsModule,
     AppRoutingModule,
     SharedModuleModule,

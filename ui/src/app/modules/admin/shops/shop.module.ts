@@ -17,10 +17,11 @@ import { ShopCategoryResolver } from './shop-category/shop-category-resolver';
 import { CreateShopCategoryComponent } from './shop-category/create-shop-category/create-shop-category.component';
 import { ShopComponent } from './shop/shop.component';
 import { ShopResolver } from './shop/shop-resolver';
+import { CreateAdminComponent } from './shop/create-admin/create-admin.component';
 
 
 @NgModule({
-  declarations: [  UsersComponent, DetailsComponent, ShopsComponent, ListComponent, CreateComponent, CreateUserComponent, ShopCategoryComponent, CreateShopCategoryComponent, ShopComponent],
+  declarations: [  UsersComponent, DetailsComponent, ShopsComponent, ListComponent, CreateComponent, CreateUserComponent, ShopCategoryComponent, CreateShopCategoryComponent, ShopComponent, CreateAdminComponent],
   imports: [
     CommonModule,
     SharedModuleModule,

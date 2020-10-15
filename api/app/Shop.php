@@ -55,10 +55,7 @@ class Shop extends Model implements AuthenticatableContract, AuthorizableContrac
         return $this->belongsTo('App\User', 'created_by');
     }
 
-    public function shopUser()
-    {
-        return $this->hasMany('App\ShopUser');
-    }
+
 
     public function shopProduct()
     {
@@ -68,6 +65,11 @@ class Shop extends Model implements AuthenticatableContract, AuthorizableContrac
     public function shopProductCategory()
     {
         return $this->hasMany('App\ShopProductCategory');
+    }
+
+    public function userRole()
+    {
+        return $this->hasOne('App\UserRole');
     }
 
     public function shopCategory()

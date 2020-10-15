@@ -1,7 +1,9 @@
 import { Component, Input, OnDestroy, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { Subscription } from 'rxjs';
+import { Shop } from 'src/app/lib/interfaces';
 import { UserService } from 'src/app/lib/services';
+import Notiflix from "notiflix";
 
 @Component({
   selector: 'app-create-user',
@@ -10,6 +12,7 @@ import { UserService } from 'src/app/lib/services';
 })
 export class CreateUserComponent implements OnInit, OnDestroy {
   @Input() nosave:boolean;
+  @Input() shop: Shop;
   createUserFrm: FormGroup;
 
   saveUserSubScr: Subscription;
@@ -20,6 +23,7 @@ export class CreateUserComponent implements OnInit, OnDestroy {
 
   saveUser(){
     const postData = {
+      id: this.f.id.value,
       fname: this.f.fname.value,
       mname: this.f.mname.value,
       lname: this.f.lname.value,
@@ -30,18 +34,34 @@ export class CreateUserComponent implements OnInit, OnDestroy {
       status: this.f.status.value,
       shop_id: this.f.shop_id.value,
     }
-    const saveUserService = this.userService.signUp(postData);
+    const saveUserService = this.userService.createAdmin(postData);
 
     if(this.nosave){
       return saveUserService;
     }else{
-      this.saveUserSubScr = saveUserService.subscribe();
+      Notiflix.Loading.Arrows();
+      this.saveUserSubScr = saveUserService.subscribe(res=>{
+        Notiflix.Loading.Remove();
+        Notiflix.Notify.Success(`Successfully saved user `);
+      }, error=>{
+        Notiflix.Loading.Remove();
+        if(error.status == 422){
+          for(let result in this.createUserFrm.controls){
+            if(error.error.errors[result]){
+              this.createUserFrm.controls[result].setErrors({ error: error.error.errors[result] });
+            }else{
+              this.createUserFrm.controls[result].setErrors(null);
+            }
+          }
+        }
+      });
     }
 
   }
 
   ngOnInit(): void {
     this.createUserFrm = this.formBuilder.group({
+      id: [null, []],
       fname: [null, []],
       mname: [null, []],
       lname: [null, []],
@@ -49,10 +69,20 @@ export class CreateUserComponent implements OnInit, OnDestroy {
       password: [null, []],
       password_confirmation: [null, []],
       phone: [null, []],
-      status: [null, []],
-      shop_id:[null, []]
+      status: [1, []],
+      shop_id:[((this.shop && this.shop.id) ? this.shop.id : 0), []]
     });
 
+    if(this.shop?.user_role?.user){
+      this.createUserFrm.patchValue({
+        id: this.shop?.user_role?.user.id,
+        fname: this.shop?.user_role?.user.fname,
+        lname: this.shop?.user_role?.user.lname,
+        email: this.shop?.user_role?.user.email,
+        phone: this.shop?.user_role?.user.phone,
+        status: this.shop?.user_role?.user.status,
+      });
+    }
 
   }
 

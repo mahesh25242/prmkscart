@@ -16,33 +16,38 @@ class UsersController extends Controller
 {
 
 
-    public function signUp(Request $request)
+    public function createAdmin(Request $request)
     {
 
 
         $return  = null;
-        $recaptcha = new \ReCaptcha\ReCaptcha(env("RECAPTCHA_SECRET"));
-        $resp = $recaptcha->setExpectedAction("SignUp")
-                        //->setExpectedHostname(env("APP_URL"))
-                        ->verify($request->input('recaptcha'), $request->ip());
-        if (!$resp->isSuccess()) {
-           return response($resp->getErrorCodes());
-        }
+        // $recaptcha = new \ReCaptcha\ReCaptcha(env("RECAPTCHA_SECRET"));
+        // $resp = $recaptcha->setExpectedAction("SignUp")
+        //                 //->setExpectedHostname(env("APP_URL"))
+        //                 ->verify($request->input('recaptcha'), $request->ip());
+        // if (!$resp->isSuccess()) {
+        //    return response($resp->getErrorCodes());
+        // }
 
-
-        $validator = Validator::make($request->all(), [
+        $validationArr = [
             'fname' => ['required'],
-            'lname' => ['required'],
-            'country_id' => ['required'],
-            'state_id' => ['required'],
-            'city_id' => ['required'],
-            'pin' => ['required'],
-            'email' => ['required', 'email'],
-            'phone' => ['required', 'unique:users'],
-            'address' => ['string'],
-            'password' => ['required', 'string','min:6',  'max:255', 'confirmed'],
-            'password_confirmation' => ['required', 'string',  'max:255']
-        ],[],[
+            //'lname' => ['required'],
+        ];
+
+        if($request->input("id", 0)){
+            $validationArr["email"] = ['required', 'email', 'unique:users,email,'.$request->input("id", 0)];
+            $validationArr["phone"] = ['required', 'unique:users,phone,'.$request->input("id", 0)];
+            if($request->input("password", null)){
+                $validationArr["password"] = ['required', 'string','min:6',  'max:255', 'confirmed'];
+                $validationArr["password_confirmation"] =  ['required', 'string',  'max:255'];
+            }
+        }else{
+            $validationArr["email"] = ['required', 'email', 'unique:users,email'];
+            $validationArr["phone"] = ['required', 'unique:users,phone'];
+            $validationArr["password"] = ['required', 'string','min:6',  'max:255', 'confirmed'];
+            $validationArr["password_confirmation"] =  ['required', 'string',  'max:255'];
+        }
+        $validator = Validator::make($request->all(), $validationArr,[],[
             'fname' => 'First name',
             'lname' => 'Last name',
             'password_confirmation' => "Confirm Password"
@@ -54,61 +59,50 @@ class UsersController extends Controller
         }
 
         $input = $request->all();
-        $input["country_id"] = $request->input("country_id.id",0);
-        $input["state_id"] = $request->input("state_id.id",0);
-        $input["city_id"] = $request->input("city_id.id",0);
-        $input['password'] = Hash::make($input['password']);
-        $user = User::create($input);
-
-        switch($request->input("type", "student")){
-            case 'teacher':
-                $user->userRole()->updateOrCreate(
-                    [
-                        "role_id" => 2,
-                    ],
-                    [
-                        "role_id" => 2,
-                    ]
-                );
-
-                //user pla selection
-                $UserPlan = \App\UserPlan::where("user_id", $user->id)
-                ->where("end_date", ">", new Carbon)->get()->first();
-                if(!$UserPlan){
-                        $currentTime = new Carbon;
-                        $plan = \App\Plan::where("basic", 1)->get()->first();
-                        $user->userPlan()->updateOrCreate(
-                            [
-                                "plan_id" => $plan->id,
-                            ],
-                            [
-                                "plan_id" => $plan->id,
-                                "start_date" => new Carbon,
-                                "end_date" => $currentTime->add($plan->days, 'day'),
-                            ]
-                        );
-                }
-            break;
-            default:
-                $user->userRole()->updateOrCreate(
-                [
-                    "role_id" => 3,
-                ],
-                [
-                    "role_id" => 3,
-                ]
-            );
-            break;
+        if($request->input("id", 0)){
+            if($input['password']){
+                $input['password'] = Hash::make($input['password']);
+            }
+            $user = User::find($request->input("id", 0));
+            $user->fname = $request->input("fname", '');
+            $user->mname = $request->input("mname", '');
+            $user->lname = $request->input("lname", '');
+            $user->email = $request->input("email", '');
+            $user->phone = $request->input("phone", '');
+        }else{
+            $input['password'] = Hash::make($input['password']);
+            $user = User::create($input);
         }
+
+
+
         /**Take note of this: Your user authentication access token is generated here **/
-        $data['token'] =  $user->createToken('cart')->accessToken;
+        if(!$request->input("id", 0)){
+            $data['token'] =  $user->createToken('cart')->accessToken;
+        }
+
         $data['name'] =  $user->fname;
 
-        return response(['data' => $data, 'message' => 'Account created successfully!', 'status' => true]);
+
+
+        $userRole = \App\UserRole::updateOrCreate(
+            [
+                "shop_id" => $request->input("shop_id", 0),
+                "role_id" => 2,
+                "user_id" => $user->id
+            ],
+            [
+                "shop_id" => $request->input("shop_id", 0),
+                "role_id" => 2,
+                "user_id" => $user->id
+            ]
+        );
+        return response(['data' => $data, 'message' => 'Saved successfully!', 'status' => true]);
     }
 
     public function authUser(Request $request){
-        $user = \App\User::with(["country", "state", "city", "role", "lastLogin"])->find(Auth::id());
+        $user = \App\User::with(["country", "state",
+         "city", "role", "lastLogin"])->find(Auth::id());
         return response($user);
     }
 

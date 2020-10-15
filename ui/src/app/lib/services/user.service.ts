@@ -66,8 +66,8 @@ export class UserService {
 
   }
 
-  signUp(user: any= null){
-    return this.http.post<any>('/signUp',user);
+  createAdmin(user: any= null){
+    return this.http.post<any>('/admin/createAdmin',user);
   }
 
   signIn(user: any=null){

@@ -15,6 +15,7 @@ class CreateUserRolesTable extends Migration
     {
         Schema::create('user_roles', function (Blueprint $table) {
             $table->id();
+            $table->bigInteger('shop_id')->default(0);
             $table->bigInteger('user_id')->default(0);
             $table->bigInteger('role_id')->default(0);
             $table->bigInteger('created_by')->default(0);

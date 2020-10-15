@@ -27,7 +27,7 @@ $router->group(['prefix' => 'v1'], function () use ($router) {
     $router->get('states','StateController@states');
     $router->get('cities','CityController@cities');
 
-    $router->post('signUp','UsersController@signUp');
+
 
     $router->post('sentContact','ContactUsController@sentContact');
 
@@ -43,6 +43,7 @@ $router->group(['prefix' => 'v1'], function () use ($router) {
         $router->group(['prefix' => 'admin',  'middleware' =>  'admin'], function () use ($router) {
             $router->post('updateAvatar','UsersController@updateAvatar');
             $router->post('updateProfile','UsersController@updateProfile');
+            $router->post('createAdmin','UsersController@createAdmin');
 
             $router->group(['prefix' => 'shops'], function () use ($router) {
                 $router->post('/','ShopsController@shops');

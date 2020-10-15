@@ -7,7 +7,7 @@ export const environment = {
   tinyMceApi: 'n6mryrdzt1pclqabsvpbvw6mtym3kj9gpwjguof89d2sv52q',
   baseUrl: 'http://localhost/cart/api/public/v1',
   recaptchaKey: '6Ld2McEZAAAAABDjGwyJ63pD3ETCQkWCiZqEH39C',
-  lumenSecret: 'xa0z4S7bj6KcBGaY6lPYFLxtm5RTP5U73XHuKKE8',
+  lumenSecret: 'sQniT3y30ia1wkRTEk7LYlrEqUY7WXeQIqiRg7h1',
   siteAddress: 'http://localhost/cart'
 };
 

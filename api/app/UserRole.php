@@ -22,7 +22,7 @@ class UserRole extends Model implements AuthenticatableContract, AuthorizableCon
      * @var array
      */
     protected $fillable = [
-        'user_id', 'role_id', 'created_by', 'updated_by', 'deleted_by'
+        'shop_id', 'user_id', 'role_id', 'created_by', 'updated_by', 'deleted_by'
     ];
 
 
@@ -54,6 +54,11 @@ class UserRole extends Model implements AuthenticatableContract, AuthorizableCon
     public function user()
     {
         return $this->belongsTo('App\User');
+    }
+
+    public function shop()
+    {
+        return $this->belongsTo('App\Shop');
     }
 
     public function role()

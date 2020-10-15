@@ -3,6 +3,7 @@ import { City } from "./city";
 import { Country } from "./country";
 import { ShopCategory } from './shop-category';
 import { State } from "./state";
+import { UserRole } from "./user-role";
 
 export interface Shop {
   id?: number,
@@ -26,5 +27,6 @@ export interface Shop {
   status_text?: string,
   shop_category_id?: number,
   shop_category?: ShopCategory,
-  created_at?: string
+  created_at?: string,
+  user_role?: UserRole
 }
