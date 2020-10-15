@@ -11,6 +11,6 @@ export class ShopResolver implements Resolve<any> {
     private shopService: ShopService) { }
 
   resolve(route: ActivatedRouteSnapshot): Observable<any> {
-    return this.shopService.getAllShops();
+    return this.shopService.shop(route.params.id);
   }
 }

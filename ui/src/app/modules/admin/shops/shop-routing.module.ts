@@ -11,6 +11,7 @@ import { ShopCategoryComponent } from './shop-category/shop-category.component';
 import { ShopCategoryResolver } from './shop-category/shop-category-resolver';
 import { EditShopResolver } from './create/edit-shop-resolver';
 import { ShopComponent } from './shop/shop.component';
+import { ShopResolver } from './shop/shop-resolver';
 
 
 
@@ -47,6 +48,9 @@ const routes: Routes = [
       {
         path: 'shop/:id',
         component: ShopComponent,
+        resolve:{
+          shop : ShopResolver
+        }
       },
       {
         path: 'customers',

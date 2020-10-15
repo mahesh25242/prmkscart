@@ -25,5 +25,6 @@ export interface Shop {
   status?:number,
   status_text?: string,
   shop_category_id?: number,
-  shop_category?: ShopCategory
+  shop_category?: ShopCategory,
+  created_at?: string
 }

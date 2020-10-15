@@ -1,1 +1,43 @@
-<p>shop works!</p>
+<div *ngIf="(shop$ | async) as shop">
+
+
+  <h3>{{shop.name}}</h3>
+  <div>shopKey: {{shop.shop_key}}</div>
+  <div>Status: {{shop.status_text}}</div>
+  <div>Category: {{ shop.shop_category.name }}</div>
+  <div>Created At: {{shop.created_at | date:'medium'}}</div>
+  <ul>
+    <li>
+      Email: {{ shop.email}}
+    </li>
+    <li>
+      Phone: {{ shop.phone}}
+    </li>
+    <li>
+      Address: {{ shop.address}}
+    </li>
+    <li>
+      Pin: {{ shop.pin}}
+    </li>
+    <li>
+      Country: {{ shop.country?.name}}
+    </li>
+    <li>
+      State: {{ shop.state?.name}}
+    </li>
+    <li>
+      City: {{ shop.city?.name}}
+    </li>
+        <li>
+      City: {{ shop.city?.name}}
+    </li>
+  </ul>
+  <div >
+    <button type="button" class="btn btn-outline-primary">Category</button>
+    <button type="button" class="btn btn-outline-primary ml-1">Products</button>
+    <button type="button" class="btn btn-outline-primary ml-1">Orders</button>
+    <button type="button" class="btn btn-outline-primary ml-1">Customers</button>
+  </div>
+
+
+</div>

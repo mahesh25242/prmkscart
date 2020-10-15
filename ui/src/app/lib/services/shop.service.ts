@@ -9,10 +9,14 @@ import { Shop } from '../interfaces';
 })
 export class ShopService {
   private shops$: BehaviorSubject<Shop[]> = new BehaviorSubject<Shop[]>(null);
+  private shop$: BehaviorSubject<Shop> = new BehaviorSubject<Shop>(null);
   constructor(private http: HttpClient) { }
 
   get shops(){
     return this.shops$.asObservable();
+  }
+  get aShop(){
+    return this.shop$.asObservable();
   }
   getAllShops(postData: any = null){
     return this.http.post<Shop[]>("/admin/shops", postData).pipe(map(res=>{
@@ -30,6 +34,9 @@ export class ShopService {
   }
 
   shop(shopId:number = 0){
-    return this.http.get<Shop>(`/admin/shops/shop/${shopId}`);
+    return this.http.get<Shop>(`/admin/shops/shop/${shopId}`).pipe(map(res=>{
+      this.shop$.next(res);
+      return res;
+    }));
   }
 }

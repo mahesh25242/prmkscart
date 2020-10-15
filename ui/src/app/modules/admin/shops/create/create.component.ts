@@ -5,7 +5,7 @@ import { map, mergeMap } from 'rxjs/operators';
 import { City, Country, ShopCategory, State } from 'src/app/lib/interfaces';
 import { CityService, CountryService, ShopCategoryService, ShopService, StateService } from 'src/app/lib/services';
 import Notiflix from "notiflix";
-import { ActivatedRoute, ActivatedRouteSnapshot } from '@angular/router';
+import { ActivatedRoute, ActivatedRouteSnapshot, Router } from '@angular/router';
 
 @Component({
   selector: 'app-create',
@@ -29,7 +29,8 @@ export class CreateComponent implements OnInit, OnDestroy {
     private cityService: CityService,
     private shopService: ShopService,
     private shopCategoryService: ShopCategoryService,
-    private route: ActivatedRoute) { }
+    private route: ActivatedRoute,
+    private router: Router,) { }
 
   saveShop(){
 
@@ -55,6 +56,7 @@ export class CreateComponent implements OnInit, OnDestroy {
     })).subscribe(res=>{
       Notiflix.Notify.Success(`Successfully saved shop `);
       Notiflix.Loading.Remove();
+      this.router.navigate(['admin/shops']);
     }, error=>{
       if(error.status == 422){
         for(let result in this.createShop.controls){

@@ -16,6 +16,7 @@ import { ShopCategoryComponent } from './shop-category/shop-category.component';
 import { ShopCategoryResolver } from './shop-category/shop-category-resolver';
 import { CreateShopCategoryComponent } from './shop-category/create-shop-category/create-shop-category.component';
 import { ShopComponent } from './shop/shop.component';
+import { ShopResolver } from './shop/shop-resolver';
 
 
 @NgModule({
@@ -30,7 +31,8 @@ import { ShopComponent } from './shop/shop.component';
     UsersResolver,
     ShopsResolver,
     ShopCategoryResolver,
-    EditShopResolver
+    EditShopResolver,
+    ShopResolver
   ]
 })
 export class ShopModule { }

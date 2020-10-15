@@ -14,7 +14,22 @@
       "path": "./tsconfig.spec.json"
     },
     {
-      "path": "./tsconfig.server.json"
-    }
+      "path": "./projects/BreadNButter/tsconfig.app.json"
+    },
+    {
+      "path": "./projects/BreadNButter/tsconfig.spec.json"
+    },
+    {
+      "path": "./projects/tools/tsconfig.lib.json"
+    },
+    {
+      "path": "./projects/tools/tsconfig.spec.json"
+    },
+    {
+      "path": "./projects/vendors/tsconfig.lib.json"
+    },
+    {
+      "path": "./projects/vendors/tsconfig.spec.json"
+    }   
 ]
 }
