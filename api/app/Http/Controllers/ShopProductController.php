@@ -49,7 +49,8 @@ class ShopProductController extends Controller
         $shopKey = $request->header('shopKey');
 
         if($request->input("id", 0)){
-            $shopProduct = \App\ShopProduct::where('id', $request->input("id", 0))->update($productIns);
+            \App\ShopProduct::where('id', $request->input("id", 0))->update($productIns);
+            $shopProduct = \App\ShopProduct::find($request->input("id", 0));
         }else{
             if($shopKey){
                 $shop = \App\Shop::where("shop_key", $shopKey)->get()->first();
@@ -61,7 +62,8 @@ class ShopProductController extends Controller
         }
 
         $variants = $request->input("variants", null);
-        if($variants && is_array($variants) && !empty($variants)){
+        if($shopProduct && $variants && is_array($variants) && !empty($variants)){
+            $insVariantId = [];
             foreach($variants as $ind=>$variant){
                 $shopProductVariant = \App\ShopProductVariant::updateOrCreate(
                     [
@@ -81,12 +83,15 @@ class ShopProductController extends Controller
                      "updated_by" =>  Auth::id(),
                     ]
                 );
+                $insVariantId[] = $shopProductVariant->id;
+
                 $productImg = null;
                 if ($request->hasFile("variants.{$ind}.image")) {
                     $productImg = sprintf("%s.%s",time(), $request->file("variants.{$ind}.image")->extension());
                     $destinationPath = "assets/shop/".$productIns["shop_id"].'/products';
                     $request->file("variants.{$ind}.image")->move($destinationPath, $productImg);
-
+                    $img = Image::make($destinationPath.'/'.$productImg)->resize(150);
+                    $img->save($destinationPath.$productImg, 60);
                 }
                 if($productImg){
                     \App\ShopProductImage::updateOrCreate(
@@ -106,6 +111,8 @@ class ShopProductController extends Controller
                 }
 
             }
+
+            \App\ShopProductVariant::whereNotIn("id", $insVariantId)->delete();
         }
 
         return response(['data' => $shopProduct, 'message' => 'Account created successfully!', 'status' => true]);

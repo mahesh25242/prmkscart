@@ -26,6 +26,15 @@ class ShopProduct extends Model implements AuthenticatableContract, Authorizable
     ];
 
 
+    public static function boot() {
+        parent::boot();
+
+        static::deleting(function($shopProduct) { // before delete() method call this
+             $shopProduct->shopProductImage()->delete();
+             $shopProduct->shopProductVariant()->delete();
+             // do the rest of the cleanup...
+        });
+    }
 
     public function user()
     {

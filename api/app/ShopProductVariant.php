@@ -25,7 +25,14 @@ class ShopProductVariant extends Model implements AuthenticatableContract, Autho
         'status', 'created_by', 'updated_by', 'deleted_by'
     ];
 
+    public static function boot() {
+        parent::boot();
 
+        static::deleting(function($shopProductVariant) { // before delete() method call this
+             $shopProductVariant->shopProductImage()->delete();
+             // do the rest of the cleanup...
+        });
+    }
 
     public function user()
     {
@@ -39,7 +46,7 @@ class ShopProductVariant extends Model implements AuthenticatableContract, Autho
 
     public function shopProductImage()
     {
-        return $this->hasOne('App\ShopProductImage');
+        return $this->hasOne('App\ShopProductImage', 'shop_product_variant_id');
     }
 
 }
