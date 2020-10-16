@@ -113,7 +113,7 @@
                   </div>
                 </td>
                 <td>
-                  <input type="file" class="form-control" >
+                  <input type="file" class="form-control" (change)="handleImageSelection(stat, $event.target.files)" accept="image/*">
                 </td>
                 <td>
                   <a href="javascript:{}" class="btn btn-primary btn-sm" (click)="addVarient(stat)"><fa-icon [icon]="faPlus"></fa-icon></a>

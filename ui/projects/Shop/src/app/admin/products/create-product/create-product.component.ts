@@ -47,16 +47,31 @@ export class CreateProductComponent implements OnInit, OnDestroy {
   saveProduct(){
     Notiflix.Loading.Arrows();
 
-    const postData = {
-      id: this.f.id.value,
-      name: this.f.name.value,
-      description: this.f.description.value,
-      status: this.f.status.value,
-      sortorder: this.f.sortorder.value,
-      shop_product_category_id: this.f.shop_product_category_id.value,
-    };
+    const formData = new FormData();
 
-    this.saveProdSubScr = this.shopProductService.createProduct(postData).pipe(mergeMap(res=>{
+    this.varients.controls.map((res: FormGroup, i) =>{
+      formData.append(`variants[${i}][id]`, `${(res.controls.id.value) ? res.controls.id.value : 0}`);
+      formData.append(`variants[${i}][status]`, `${(res.controls.status.value) ? res.controls.status.value : ''}`);
+      formData.append(`variants[${i}][name]`, `${(res.controls.name.value) ? res.controls.name.value : ''}`);
+      formData.append(`variants[${i}][shop_product_id]`, `${(res.controls.shop_product_id.value) ? res.controls.shop_product_id.value : 0}`);
+      formData.append(`variants[${i}][actual_price]`, `${(res.controls.actual_price.value) ? res.controls.actual_price.value : 0}`);
+      formData.append(`variants[${i}][price]`, `${(res.controls.price.value) ? res.controls.price.value : 0}`);
+      formData.append(`variants[${i}][sortorder]`, `${(res.controls.sortorder.value) ? res.controls.sortorder.value : 0}`);
+      formData.append(`variants[${i}][image]`, res.controls.image.value);
+
+    });
+
+
+    formData.append('id', `${this.f.id.value}`);
+    formData.append('name', this.f.name.value);
+    formData.append('description', this.f.description.value);
+    formData.append('status', this.f.status.value);
+    formData.append('sortorder', this.f.sortorder.value);
+    formData.append('shop_product_category_id', this.f.shop_product_category_id.value);
+
+
+
+    this.saveProdSubScr = this.shopProductService.createProduct(formData).pipe(mergeMap(res=>{
       return this.shopProductService.listproducts();
     })).subscribe(res=>{
       Notiflix.Loading.Remove();
@@ -77,6 +92,10 @@ export class CreateProductComponent implements OnInit, OnDestroy {
 
   }
 
+  handleImageSelection(stat:FormGroup, files: FileList) {
+    stat.controls.image.setValue(files.item(0));
+  }
+
   addVarient(stat: FormGroup){
     let validation = true;
     if(!stat.controls.name.value){
@@ -94,13 +113,14 @@ export class CreateProductComponent implements OnInit, OnDestroy {
     }
     if(validation){
       this.varients.push(this.formBuilder.group({
-        id: 0,
+        id: new FormControl(0),
         status: new FormControl(null),
         name: new FormControl(null),
         shop_product_id: new FormControl(0),
         actual_price: new FormControl(0),
         price: new FormControl(0),
-        sortorder: new FormControl(null)
+        sortorder: new FormControl(null),
+        image: new FormControl(null)
       }));
     }
   }
@@ -111,7 +131,7 @@ export class CreateProductComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
 
     this.createProductFrm= this.formBuilder.group({
-      id: [null, []],
+      id: [0, []],
       name: [null, []],
       description: [null, []],
       status: [1, []],
@@ -127,23 +147,24 @@ export class CreateProductComponent implements OnInit, OnDestroy {
     this.varients.controls = [];
 
     this.varients.push(this.formBuilder.group({
-      id: 0,
+      id: new FormControl(0),
       status: new FormControl(null),
       name: new FormControl(null),
       shop_product_id: new FormControl(0),
       actual_price: new FormControl(0),
       price: new FormControl(0),
-      sortorder: new FormControl(null)
+      sortorder: new FormControl(null),
+      image: new FormControl(null)
     }));
 
     this.formPathSubScr = this.product.subscribe(res=>{
       this.createProductFrm.patchValue({
-        id: res?.id,
-        name: res?.name,
-        description: res?.description,
+        id: (res?.id) ? res?.id : 0,
+        name: (res?.name) ? res?.name : '',
+        description: (res?.description) ? res?.description : '',
         status: (res?.status >= 0) ? res?.status : 1,
         sortorder: (res?.sortorder) ? res?.sortorder : 1,
-        shop_product_category_id: (res?.shop_product_category.id) ? res?.shop_product_category.id : null,
+        shop_product_category_id: (res?.shop_product_category?.id) ? res?.shop_product_category?.id : null,
       });
     });
 
