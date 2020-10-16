@@ -2,7 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
 import { map } from 'rxjs/operators';
-import { ShopCategory } from '../interfaces';
+import { ShopCategory } from 'src/app/lib/interfaces';
 
 @Injectable({
   providedIn: 'root'

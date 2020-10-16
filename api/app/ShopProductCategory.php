@@ -25,6 +25,12 @@ class ShopProductCategory extends Model implements AuthenticatableContract, Auth
         'created_by', 'updated_by', 'deleted_by',
     ];
 
+    protected $appends = array('status_text');
+
+    public function getStatusTextAttribute()
+    {
+        return (($this->status) ? 'Active' : 'In-Active');
+    }
 
 
     public function user()

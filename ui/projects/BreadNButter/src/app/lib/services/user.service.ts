@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { map, shareReplay, catchError } from 'rxjs/operators';
 import { of, BehaviorSubject, Observable, throwError } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
-import { Pagination, User, UserWithPagination } from '../interfaces';
+import { Pagination, User, UserWithPagination } from 'src/app/lib/interfaces';
 import { environment } from '../../../environments/environment';
 import * as _ from 'lodash';
 

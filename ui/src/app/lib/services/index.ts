@@ -6,4 +6,5 @@ export * from './city.service';
 export * from './general.service';
 export * from './shop.service';
 export * from './shop-category.service';
+export * from './shop-product-category.service';
 

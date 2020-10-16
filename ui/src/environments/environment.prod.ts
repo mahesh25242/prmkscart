@@ -4,5 +4,7 @@ export const environment = {
   baseUrl: 'https://cart/api/public',
   recaptchaKey: '6Ld2McEZAAAAABDjGwyJ63pD3ETCQkWCiZqEH39C',
   lumenSecret: 'sQniT3y30ia1wkRTEk7LYlrEqUY7WXeQIqiRg7h1',
+  client_id: 2 ,
+  grant_type: "password",
   siteAddress: 'http://localhost/cart'
 };

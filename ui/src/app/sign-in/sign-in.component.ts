@@ -40,7 +40,7 @@ export class SignInComponent implements OnInit, OnDestroy {
     this.invalidlogin = false;
     const postData = {
       "grant_type": "password",
-      "client_id": 2,
+      "client_id": environment.client_id,
       "client_secret": environment.lumenSecret,
       "password": this.f.password.value,
       "username": this.f.mobile.value,

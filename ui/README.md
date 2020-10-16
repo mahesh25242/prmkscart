@@ -2,16 +2,15 @@
 1. first run `ng generate application {name}` here `{name}` meand project name. for exmaple if we want to create a site for anns then {name} should be anns. If we run this command then it create new site inside projects folder. 
 2. change the ShopKey inside src/environments/ folder both file . there `shopKey` key was there please update with newly created shop key
 
-3. copy app folder ( BreadNButter/src/app ) folder  to newly created project src/ folder.
+3. copy app folder ( Shop/src/app ) folder  to newly created project src/ folder and replace it. copy environments folder to newly created folder and replace it and also copy styles.scss to new folder and replace it;
 
-4. change app.component.ts file `title` variable value;
-5. change the design 
-6. folder structure
+4. change the design 
+5. folder structure
   admin:  admin page no need to customize
   lib: libraries for the site this also no need to customize
   remaining folders are usind for custoimise site 
   
-# cart
+#4. change app.component.ts file `title` variable value; cart
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 10.0.6.
 

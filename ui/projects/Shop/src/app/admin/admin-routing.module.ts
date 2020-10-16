@@ -1,0 +1,48 @@
+import { NgModule } from '@angular/core';
+import { Routes, RouterModule } from '@angular/router';
+import { SignInComponent } from './sign-in/sign-in.component';
+import { AdminAuthGuard, NegateAuthGuard } from '../lib/guard';
+import { HomeComponent } from './home/home.component';
+import { CategoriesComponent } from './categories/categories.component';
+import { ProductsComponent } from './products/products.component';
+import { EditProfileComponent } from './edit-profile/edit-profile.component';
+import { CategoriesResolver } from './categories/categories-resolver';
+
+
+
+const routes: Routes = [
+  {
+    path: '',
+    component: SignInComponent,
+    canActivate: [NegateAuthGuard],
+  },
+  {
+    path: 'home',
+    component: HomeComponent,
+    canActivate: [AdminAuthGuard],
+  },
+  {
+    path: 'categories',
+    component: CategoriesComponent,
+    canActivate: [AdminAuthGuard],
+    resolve:{
+      cats: CategoriesResolver
+    }
+  },
+  {
+    path: 'products',
+    component: ProductsComponent,
+    canActivate: [AdminAuthGuard],
+  },
+  {
+    path: 'edit-profile',
+    component: EditProfileComponent,
+    canActivate: [AdminAuthGuard],
+  },
+];
+
+@NgModule({
+  imports: [RouterModule.forChild(routes)],
+  exports: [RouterModule]
+})
+export class AdminRoutingModule { }

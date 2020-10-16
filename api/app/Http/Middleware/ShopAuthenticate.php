@@ -18,9 +18,14 @@ class ShopAuthenticate
     public function handle($request, Closure $next)
     {
 
-        $header = $request->header('ShopId');
-        if($header)
-            return $next($request);
-        return redirect()->guest('/');
+        $shopKey = $request->header('shopKey');
+        if($shopKey){
+            $exists = \App\User::whereHas("userRole.shop", function($q) use($shopKey){
+                $q->where("shop_key", $shopKey);
+            })->where("id", Auth::id())->exists();
+            if($exists)
+                return $next($request);
+        }
+        return response('Unauthorized.', 401);
     }
 }

@@ -30,6 +30,12 @@
     },
     {
       "path": "./projects/vendors/tsconfig.spec.json"
+    },
+    {
+      "path": "./projects/Shop/tsconfig.app.json"
+    },
+    {
+      "path": "./projects/Shop/tsconfig.spec.json"
     }   
 ]
 }

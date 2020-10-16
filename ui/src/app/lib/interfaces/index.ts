@@ -6,3 +6,4 @@ export * from './role';
 export * from './pagination';
 export * from './shop';
 export * from './shop-category';
+export * from './shop-product-category';
