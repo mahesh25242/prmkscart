@@ -4,9 +4,9 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Validator;
-class ShopProductCategoryController extends Controller
+class ShopProductController extends Controller
 {
-    public function categories(Request $request){
+    public function products(Request $request){
         $shopKey = $request->header('shopKey');
         if($shopKey){
             $shop = \App\Shop::where("shop_key", $shopKey)->get()->first();
@@ -14,12 +14,8 @@ class ShopProductCategoryController extends Controller
         }else{
             $shopId = $request->input("id", 0);
         }
-
-        $categories = \App\ShopProductCategory::where("shop_id", $shopId);
-        if($request->input("status", 0)){
-            $categories->where("status", $request->input("status", 0));
-        }
-        return response($categories->get());
+        $categories = \App\ShopProduct::where("shop_id", $shopId)->get();
+        return response($categories);
     }
 
     public function store(Request $request){
@@ -43,7 +39,7 @@ class ShopProductCategoryController extends Controller
 
 
         if($request->input("id", 0)){
-            $shopCategory = \App\ShopProductCategory::where('id', $request->input("id", 0))->update($input);
+            $shopProduct = \App\ShopProduct::where('id', $request->input("id", 0))->update($input);
         }else{
             if($shopKey){
                 $shop = \App\Shop::where("shop_key", $shopKey)->get()->first();
@@ -51,15 +47,15 @@ class ShopProductCategoryController extends Controller
             }else{
                 $input["shop_id"] = $request->input("shop_id", 0);
             }
-            $shopCategory = \App\ShopProductCategory::create($input);
+            $shopProduct = \App\ShopProduct::create($input);
         }
 
 
-        return response(['data' => $shopCategory, 'message' => 'Account created successfully!', 'status' => true]);
+        return response(['data' => $shopProduct, 'message' => 'Account created successfully!', 'status' => true]);
     }
 
     public function delete(Request $request){
-       $shopCategory =  \App\ShopProductCategory::where('id', $request->input("id"))->delete();
+       $shopCategory =  \App\ShopProduct::where('id', $request->input("id"))->delete();
        return response(['message' => 'successfully deleted!', 'status' => true]);
     }
 

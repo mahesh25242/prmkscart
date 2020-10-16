@@ -44,7 +44,9 @@ $router->group(['prefix' => 'v1'], function () use ($router) {
             $router->group(['prefix' => 'shop'], function () use ($router) {
 
                 $router->group(['prefix' => 'products'], function () use ($router) {
-
+                    $router->post('/','ShopProductController@products');
+                    $router->post('store','ShopProductController@store');
+                    $router->post('delete','ShopProductController@delete');
                     $router->group(['prefix' => 'categories'], function () use ($router) {
                         $router->post('/','ShopProductCategoryController@categories');
                         $router->post('store','ShopProductCategoryController@store');

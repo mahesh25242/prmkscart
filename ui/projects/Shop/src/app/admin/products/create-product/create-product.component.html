@@ -1,14 +1,29 @@
 
-<div class="modal-dialog modal-lg">
+<div class="modal-dialog modal-xl">
   <div class="modal-content">
     <div class="modal-header">
-      <h5 class="modal-title">Create Category</h5>
+      <h5 class="modal-title">Create Product</h5>
       <button type="button" class="close" data-dismiss="modal" aria-label="Close">
         <span aria-hidden="true">&times;</span>
       </button>
     </div>
-    <form [formGroup]="createCatFrm" (ngSubmit)="saveCategory()">
+    <form [formGroup]="createProductFrm" (ngSubmit)="saveProduct()">
       <div class="modal-body">
+
+          <div class="form-group">
+            <label for="Category">Category</label>
+            <ng-select [items]="(categories$ | async)"
+            [ngClass]="{'is-invalid': ( f.shop_product_category_id.errors && f.shop_product_category_id.errors.error)}"
+              bindLabel="name"
+              id="shop_product_category_id"
+              placeholder="select Category"
+              formControlName="shop_product_category_id">
+              </ng-select>
+              <div *ngIf="f.shop_product_category_id.errors && f.shop_product_category_id.errors.error" class="invalid-feedback">
+                {{f.shop_product_category_id.errors.error}}
+              </div>
+          </div>
+
           <div class="form-group">
             <label for="name">Name</label>
             <input type="text" class="form-control" id="name"
@@ -20,7 +35,7 @@
             </div>
           </div>
           <div class="form-group">
-            <label for="description">Description</label>
+            <label for="description">Description /  Ingredients</label>
             <textarea  class="form-control" id="description"
             [ngClass]="{'is-invalid': ( f.description.errors && f.description.errors.error)}"
             placeholder="Description"
@@ -32,10 +47,10 @@
           <div class="form-group">
             <label for="status">Status</label>
             <ng-select [items]="statuses"
-           bindLabel="name"
-           bindValue="id"
-           formControlName="status">
-          </ng-select>
+            bindLabel="name"
+            bindValue="id"
+            formControlName="status">
+            </ng-select>
             <div *ngIf="f.status.errors && f.status.errors.error" class="invalid-feedback">
               {{f.status.errors.error}}
             </div>
@@ -50,6 +65,32 @@
             </div>
           </div>
 
+          <h3>Varients</h3>
+
+          <table class="table">
+            <thead>
+              <tr>
+                <th>
+                  id
+                </th>
+                <th>
+                  Varient Name
+                </th>
+                <th>
+                  Actual Price
+                </th>
+                <th>
+                  Sale Price
+                </th>
+                <th>
+                  Image
+                </th>
+                <th>
+                  Options
+                </th>
+              </tr>
+            </thead>
+          </table>
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>

@@ -5,7 +5,7 @@
 </button>
 
 <!-- Modal -->
-<div class="modal fade" id="createCategory" tabindex="-1" aria-labelledby="createCategoryLabel" aria-hidden="true">
+<div class="modal fade" id="createCategory" data-backdrop="static"  tabindex="-1" aria-labelledby="createCategoryLabel" aria-hidden="true">
   <app-create-category [category]="category"></app-create-category>
 </div>
 
@@ -40,6 +40,13 @@
         </td>
         <td>
           <a href="javascript:{}" class="text-danger" (click)="deleteCategory(category)">Delete</a>
+        </td>
+      </tr>
+      <tr *ngIf="!categories || !categories.length">
+        <td colspan="4">
+          <div class="alert alert-warning">
+            No product found
+          </div>
         </td>
       </tr>
     </ng-container>

@@ -17,8 +17,19 @@ declare var $: any;
 export class CreateCategoryComponent implements OnInit, OnDestroy {
   createCatFrm: FormGroup;
 
+  statuses = [
+    {
+      name:'Active',
+      id: 1
+    },
+    {
+      name:'In-Active',
+      id: 0
+    }
+  ];
   @Input() category: Observable<ShopProductCategory>;
   saveCatSubScr: Subscription;
+  formPathSubScr: Subscription;
   constructor(private formBuilder: FormBuilder,
     private shopProductCategoryService: ShopProductCategoryService) { }
 
@@ -66,14 +77,14 @@ export class CreateCategoryComponent implements OnInit, OnDestroy {
       sortorder: [1, []],
     });
 
-    this.category.subscribe(res=>{
+    this.formPathSubScr = this.category.subscribe(res=>{
 
 
       this.createCatFrm.patchValue({
         id: res?.id,
         name: res?.name,
         description: res?.description,
-        status: (res?.status) ? res?.status : 1,
+        status: (res?.status >= 0) ? res?.status : 1,
         sortorder: (res?.sortorder) ? res?.sortorder : 1,
       });
     });
@@ -83,6 +94,10 @@ export class CreateCategoryComponent implements OnInit, OnDestroy {
   ngOnDestroy(){
     if(this.saveCatSubScr){
       this.saveCatSubScr.unsubscribe();
+    }
+
+    if(this.formPathSubScr){
+      this.formPathSubScr.unsubscribe();
     }
   }
 }

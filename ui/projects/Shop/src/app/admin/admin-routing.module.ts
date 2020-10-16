@@ -7,6 +7,7 @@ import { CategoriesComponent } from './categories/categories.component';
 import { ProductsComponent } from './products/products.component';
 import { EditProfileComponent } from './edit-profile/edit-profile.component';
 import { CategoriesResolver } from './categories/categories-resolver';
+import { ProductsResolver } from './products/products-resolver';
 
 
 
@@ -33,6 +34,9 @@ const routes: Routes = [
     path: 'products',
     component: ProductsComponent,
     canActivate: [AdminAuthGuard],
+    resolve:{
+      products: ProductsResolver
+    }
   },
   {
     path: 'edit-profile',
