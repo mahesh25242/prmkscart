@@ -90,6 +90,37 @@
                 </th>
               </tr>
             </thead>
+            <tbody formArrayName="varients" >
+              <tr *ngFor="let stat of varients.controls; let i=index; let last = last" [formGroupName]="i">
+                <td>
+                  {{ i+ 1}}
+                </td>
+                <td>
+                  <input type="text" class="form-control" formControlName="name" placeholder="Name"
+                  [ngClass]="{'is-invalid': ( stat.controls.name.errors && stat.controls.name.errors.error)}">
+                  <div *ngIf="stat.controls.name.errors && stat.controls.name.errors.error" class="invalid-feedback">
+                    {{stat.controls.name.errors.error}}
+                  </div>
+                </td>
+                <td>
+                  <input type="number" class="form-control" formControlName="actual_price" placeholder="Actual Price">
+                </td>
+                <td>
+                  <input type="number" class="form-control" formControlName="price" placeholder="Price"
+                  [ngClass]="{'is-invalid': ( stat.controls.price.errors && stat.controls.price.errors.error)}">
+                  <div *ngIf="stat.controls.price.errors && stat.controls.price.errors.error" class="invalid-feedback">
+                    {{stat.controls.price.errors.error}}
+                  </div>
+                </td>
+                <td>
+                  <input type="file" class="form-control" >
+                </td>
+                <td>
+                  <a href="javascript:{}" class="btn btn-primary btn-sm" (click)="addVarient(stat)"><fa-icon [icon]="faPlus"></fa-icon></a>
+                  <a href="javascript:{}" class="btn btn-primary  btn-sm" (click)="removeVarient(i)"><fa-icon [icon]="faTrash"></fa-icon></a>
+                </td>
+              </tr>
+            </tbody>
           </table>
       </div>
       <div class="modal-footer">

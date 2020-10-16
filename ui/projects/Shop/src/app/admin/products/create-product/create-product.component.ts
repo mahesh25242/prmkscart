@@ -1,10 +1,11 @@
 import { Component, Input, OnDestroy, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup } from '@angular/forms';
+import { FormArray, FormBuilder, FormControl, FormGroup } from '@angular/forms';
 import { Observable, Subscription } from 'rxjs';
 import { mergeMap } from 'rxjs/operators';
 import { ShopProductService, ShopProductCategoryService } from 'src/app/lib/services';
 import Notiflix from "notiflix";
 import { ShopProduct, ShopProductCategory } from 'src/app/lib/interfaces';
+import { faPlus, faTrash } from '@fortawesome/free-solid-svg-icons';
 
 declare var $: any;
 
@@ -15,6 +16,8 @@ declare var $: any;
   styleUrls: ['./create-product.component.scss']
 })
 export class CreateProductComponent implements OnInit, OnDestroy {
+  faPlus =faPlus ;
+  faTrash = faTrash;
   createProductFrm: FormGroup;
   statuses = [
     {
@@ -36,6 +39,10 @@ export class CreateProductComponent implements OnInit, OnDestroy {
     ) { }
 
   get f() { return this.createProductFrm.controls}
+
+  get varients() {
+    return this.createProductFrm.get('varients') as FormArray;
+ }
 
   saveProduct(){
     Notiflix.Loading.Arrows();
@@ -70,6 +77,37 @@ export class CreateProductComponent implements OnInit, OnDestroy {
 
   }
 
+  addVarient(stat: FormGroup){
+    let validation = true;
+    if(!stat.controls.name.value){
+      validation = false;
+      stat.controls.name.setErrors({"error": 'Varient name is requires'})
+    }
+    if(!stat.controls.price.value && stat.controls.price.value !== 0){
+      validation = false;
+      stat.controls.name.setErrors({"error": 'Varient name is requires'})
+    }
+
+    if(stat.controls.actual_price.value && (stat.controls.actual_price.value < stat.controls.price.value)){
+      validation = false;
+      stat.controls.price.setErrors({"error": 'Sale price is greater than actual price'})
+    }
+    if(validation){
+      this.varients.push(this.formBuilder.group({
+        id: 0,
+        status: new FormControl(null),
+        name: new FormControl(null),
+        shop_product_id: new FormControl(0),
+        actual_price: new FormControl(0),
+        price: new FormControl(0),
+        sortorder: new FormControl(null)
+      }));
+    }
+  }
+  removeVarient(i){
+    this.varients.removeAt(i);
+  }
+
   ngOnInit(): void {
 
     this.createProductFrm= this.formBuilder.group({
@@ -78,17 +116,27 @@ export class CreateProductComponent implements OnInit, OnDestroy {
       description: [null, []],
       status: [1, []],
       sortorder: [1, []],
-      shop_product_category_id: [null, []]
+      shop_product_category_id: [null, []],
+      varients:this.formBuilder.array([]),
     });
 
     this.categories$ = this.shopProductCategoryService.listCategories({
       status: 1
     });
 
+    this.varients.controls = [];
+
+    this.varients.push(this.formBuilder.group({
+      id: 0,
+      status: new FormControl(null),
+      name: new FormControl(null),
+      shop_product_id: new FormControl(0),
+      actual_price: new FormControl(0),
+      price: new FormControl(0),
+      sortorder: new FormControl(null)
+    }));
 
     this.formPathSubScr = this.product.subscribe(res=>{
-
-
       this.createProductFrm.patchValue({
         id: res?.id,
         name: res?.name,
