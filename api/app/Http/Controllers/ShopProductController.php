@@ -80,10 +80,7 @@ class ShopProductController extends Controller
                 $shopProductVariant = \App\ShopProductVariant::updateOrCreate(
                     [
                      "shop_product_id" =>  $shopProduct->id,
-                     "name" =>  $variant["name"],
-                     "actual_price" =>  $variant["actual_price"],
-                     "price" =>  $variant["price"],
-                     "type" =>  $variant["type"],
+                     "id" =>  $variant["id"],
                     ],
                     [
                     "shop_product_id" =>  $shopProduct->id,
@@ -104,6 +101,7 @@ class ShopProductController extends Controller
                 $productImg = null;
 
                 if ($request->hasFile("variants.{$ind}.image")) {
+
                     $productImg = sprintf("%s.%s",time(), $request->file("variants.{$ind}.image")->extension());
                     $destinationPath = "assets/shop/".$shopProduct->shop->shop_key.'/products';
                     $request->file("variants.{$ind}.image")->move($destinationPath, $productImg);

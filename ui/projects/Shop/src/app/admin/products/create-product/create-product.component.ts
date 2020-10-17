@@ -158,7 +158,7 @@ export class CreateProductComponent implements OnInit, OnDestroy {
         name: new FormControl((vrnt?.name ? vrnt?.name : '')),
         description: new FormControl((vrnt?.description ? vrnt?.description : '')),
         is_primary: new FormControl((vrnt?.is_primary ? vrnt?.is_primary : 0)),
-        type: new FormControl((vrnt?.type ? vrnt?.type : null)),
+        type: new FormControl((vrnt?.type ? vrnt?.type : { name:'Any', id: 0 })),
         shop_product_id: new FormControl((vrnt?.shop_product_id ? vrnt?.shop_product_id : 0)),
         actual_price: new FormControl((vrnt?.actual_price ? vrnt?.actual_price : 0)),
         price: new FormControl((vrnt?.price ? vrnt?.price : 0)),
