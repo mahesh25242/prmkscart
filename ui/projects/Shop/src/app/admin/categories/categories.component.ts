@@ -4,7 +4,7 @@ import { ShopProductCategory } from 'src/app/lib/interfaces';
 import { ShopProductCategoryService } from 'src/app/lib/services';
 import Notiflix from "notiflix";
 import { map, mergeMap } from 'rxjs/operators';
-
+import { environment } from '../../../environments/environment';
 declare var $: any;
 
 @Component({
@@ -15,7 +15,7 @@ declare var $: any;
 export class CategoriesComponent implements OnInit {
   categories$: Observable<ShopProductCategory[]>;
   private category$: BehaviorSubject<ShopProductCategory> = new BehaviorSubject<ShopProductCategory>(null);
-
+  environment = environment;
   constructor(private shopProductCategoryService: ShopProductCategoryService) { }
 
   get category() { return this.category$.asObservable()}

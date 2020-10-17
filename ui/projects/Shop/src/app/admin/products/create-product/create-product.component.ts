@@ -6,7 +6,7 @@ import { ShopProductService, ShopProductCategoryService } from 'src/app/lib/serv
 import Notiflix from "notiflix";
 import { ShopProduct, ShopProductCategory } from 'src/app/lib/interfaces';
 import { faPlus, faTrash } from '@fortawesome/free-solid-svg-icons';
-
+import { environment } from '../../../../environments/environment';
 declare var $: any;
 
 
@@ -27,6 +27,20 @@ export class CreateProductComponent implements OnInit, OnDestroy {
     {
       name:'In-Active',
       id: 0
+    }
+  ];
+  varientTypes = [
+    {
+      name:'Any',
+      id: 0
+    },
+    {
+      name:'Veg',
+      id: 1
+    },
+    {
+      name:'Non Veg',
+      id: 1
     }
   ];
   categories$: Observable<ShopProductCategory[]>;
@@ -53,6 +67,9 @@ export class CreateProductComponent implements OnInit, OnDestroy {
       formData.append(`variants[${i}][id]`, `${(res.controls.id.value) ? res.controls.id.value : 0}`);
       formData.append(`variants[${i}][status]`, `${(res.controls.status.value) ? res.controls.status.value : ''}`);
       formData.append(`variants[${i}][name]`, `${(res.controls.name.value) ? res.controls.name.value : ''}`);
+      formData.append(`variants[${i}][description]`, `${(res.controls.description.value) ? res.controls.description.value : ''}`);
+      formData.append(`variants[${i}][is_primary]`, `${(res.controls.is_primary.value) ? 1 : 0}`);
+      formData.append(`variants[${i}][type]`, `${(res.controls.type.value) ?  JSON.stringify(res.controls.type.value): ''}`);
       formData.append(`variants[${i}][shop_product_id]`, `${(res.controls.shop_product_id.value) ? res.controls.shop_product_id.value : 0}`);
       formData.append(`variants[${i}][actual_price]`, `${(res.controls.actual_price.value) ? res.controls.actual_price.value : 0}`);
       formData.append(`variants[${i}][price]`, `${(res.controls.price.value) ? res.controls.price.value : 0}`);
@@ -127,23 +144,29 @@ export class CreateProductComponent implements OnInit, OnDestroy {
       stat.controls.price.setErrors({"error": 'Sale price is greater than actual price'})
     }
     if(validation){
-      this.varients.push(this.formBuilder.group({
-        id: new FormControl(0),
-        status: new FormControl(null),
-        name: new FormControl(null),
-        shop_product_id: new FormControl(0),
-        actual_price: new FormControl(0),
-        price: new FormControl(0),
-        sortorder: new FormControl(null),
-        image: new FormControl(null),
-        currImage: new FormControl(null)
-      }));
+      this.varients.push(this.formBuilder.group(this.varientFormBuild()));
     }
   }
   removeVarient(i){
     this.varients.removeAt(i);
   }
 
+  varientFormBuild(vrnt=null, img=null){
+      return {
+        id: new FormControl((vrnt?.id ? vrnt?.id : 0)),
+        status: new FormControl((vrnt?.status ? vrnt?.status : 1)),
+        name: new FormControl((vrnt?.name ? vrnt?.name : '')),
+        description: new FormControl((vrnt?.description ? vrnt?.description : '')),
+        is_primary: new FormControl((vrnt?.is_primary ? vrnt?.is_primary : 0)),
+        type: new FormControl((vrnt?.type ? vrnt?.type : null)),
+        shop_product_id: new FormControl((vrnt?.shop_product_id ? vrnt?.shop_product_id : 0)),
+        actual_price: new FormControl((vrnt?.actual_price ? vrnt?.actual_price : 0)),
+        price: new FormControl((vrnt?.price ? vrnt?.price : 0)),
+        sortorder: new FormControl((vrnt?.sortorder ? vrnt?.sortorder : 0)),
+        image: new FormControl(null),
+        currImage: new FormControl(img)
+      }
+  }
   ngOnInit(): void {
 
     this.createProductFrm= this.formBuilder.group({
@@ -177,36 +200,16 @@ export class CreateProductComponent implements OnInit, OnDestroy {
       if(res?.shop_product_variant){
         res.shop_product_variant.map(vrnt =>{
           let img=null;
-          if(vrnt.shop_product_image.image)
-            img = `${vrnt.shop_product_image.image_path}${vrnt.shop_product_image.image}`;
-          this.varients.push(this.formBuilder.group({
-            id: new FormControl(vrnt.id),
-            status: new FormControl(vrnt.status),
-            name: new FormControl(vrnt.name),
-            shop_product_id: new FormControl(vrnt.shop_product_id),
-            actual_price: new FormControl(vrnt.actual_price),
-            price: new FormControl(vrnt.price),
-            sortorder: new FormControl(vrnt.sortorder),
-            image: new FormControl(null),
-            currImage: new FormControl(img)
-          }));
+          if(vrnt?.shop_product_image?.image)
+            img = `${environment.siteAddress}/assets/shop/${environment.shopKey}/products/${vrnt.shop_product_image.image}`;
+          this.varients.push(this.formBuilder.group(this.varientFormBuild(vrnt, img)));
         });
         // this.varients.patchValue({
         //   id: res.shop_product_variant?.
         // });
       }else{
         this.varients.controls = [];
-        this.varients.push(this.formBuilder.group({
-          id: new FormControl(0),
-          status: new FormControl(null),
-          name: new FormControl(null),
-          shop_product_id: new FormControl(0),
-          actual_price: new FormControl(0),
-          price: new FormControl(0),
-          sortorder: new FormControl(null),
-          image: new FormControl(null),
-          currImage: new FormControl(null),
-        }));
+        this.varients.push(this.formBuilder.group(this.varientFormBuild()));
       }
     });
 

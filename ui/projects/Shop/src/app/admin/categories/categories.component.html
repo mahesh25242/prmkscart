@@ -19,6 +19,9 @@
         Name
       </th>
       <th>
+        Icon
+      </th>
+      <th>
         Status
       </th>
       <th>
@@ -34,6 +37,9 @@
         </td>
         <td>
           <a href="javascript:{}" (click)="editCategory(category)">{{category.name}}</a>
+        </td>
+        <td>
+          <img class="img-thumbnail" [src]="environment.siteAddress+'/assets/shop/'+environment.shopKey+'/category/'+category.icon" *ngIf="category.icon"/>
         </td>
         <td>
           {{ category.status_text}}

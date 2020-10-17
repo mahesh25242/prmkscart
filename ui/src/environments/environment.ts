@@ -10,7 +10,7 @@ export const environment = {
   lumenSecret: 'VCBlKpvNQMy4p6oTZeV50fXtNxPHNIrvh2THvBYu',
   client_id: 2 ,
   grant_type: "password",
-  siteAddress: 'http://localhost/cart'
+  siteAddress: 'http://localhost/cart/api/public'
 };
 
 /*

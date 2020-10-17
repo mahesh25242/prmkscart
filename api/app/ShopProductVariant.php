@@ -34,6 +34,13 @@ class ShopProductVariant extends Model implements AuthenticatableContract, Autho
         });
     }
 
+
+
+    public function getTypeAttribute($type)
+    {
+        return (($type) ? json_decode($type) : null);
+    }
+
     public function user()
     {
         return $this->belongsTo('App\User', 'created_by');

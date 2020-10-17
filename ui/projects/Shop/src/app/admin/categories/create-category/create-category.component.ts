@@ -38,15 +38,17 @@ export class CreateCategoryComponent implements OnInit, OnDestroy {
   saveCategory(){
     Notiflix.Loading.Arrows();
 
-    const postData = {
-      id: this.f.id.value,
-      name: this.f.name.value,
-      description: this.f.description.value,
-      status: this.f.status.value,
-      sortorder: this.f.sortorder.value,
-    };
 
-    this.saveCatSubScr = this.shopProductCategoryService.createCategory(postData).pipe(mergeMap(res=>{
+
+    const formData = new FormData();
+    formData.append('id', `${(this.f.id.value) ? this.f.id.value : 0}`);
+    formData.append('name', (this.f.name.value) ? this.f.name.value : '');
+    formData.append('description', (this.f.description.value) ? this.f.description.value : '');
+    formData.append('status', `${this.f.status.value}`);
+    formData.append('sortorder', `${this.f.sortorder.value}`);
+    formData.append(`icon`, this.f.icon.value);
+
+    this.saveCatSubScr = this.shopProductCategoryService.createCategory(formData).pipe(mergeMap(res=>{
       return this.shopProductCategoryService.listCategories();
     })).subscribe(res=>{
       Notiflix.Loading.Remove();
@@ -67,6 +69,10 @@ export class CreateCategoryComponent implements OnInit, OnDestroy {
 
   }
 
+  handleIconSelection( files: FileList) {
+    this.f.icon.setValue(files.item(0));
+  }
+
   ngOnInit(): void {
 
     this.createCatFrm= this.formBuilder.group({
@@ -75,6 +81,7 @@ export class CreateCategoryComponent implements OnInit, OnDestroy {
       description: [null, []],
       status: [1, []],
       sortorder: [1, []],
+      icon: [null, []]
     });
 
     this.formPathSubScr = this.category.subscribe(res=>{

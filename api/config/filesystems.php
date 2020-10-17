@@ -54,12 +54,6 @@ return [
             'url' => env('APP_URL').'/assets',
             'visibility' => 'public',
         ],
-        'kmc' => [
-            'driver' => 'local',
-            'root' =>  env('KMC_URL_PUBLISH_PATH'), //str_replace("api/","",base_path('courses')),
-            'url' =>  env('KMC_URL_PUBLISH_URL'), //str_replace("api", "", env('APP_URL')).'/courses',
-            'visibility' => 'public',
-        ],
 
         's3' => [
             'driver' => 's3',

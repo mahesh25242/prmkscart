@@ -8,5 +8,6 @@ export interface ShopProductCategory {
   status_text?: string,
   sortorder?: number,
   created_at?: string,
-  shop?: Shop
+  shop?: Shop,
+  icon?: string
 }

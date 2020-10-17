@@ -5,6 +5,8 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Validator;
 use Image;
+use Illuminate\Support\Facades\Storage;
+
 class ShopProductController extends Controller
 {
     public function products(Request $request){
@@ -81,10 +83,14 @@ class ShopProductController extends Controller
                      "name" =>  $variant["name"],
                      "actual_price" =>  $variant["actual_price"],
                      "price" =>  $variant["price"],
+                     "type" =>  $variant["type"],
                     ],
                     [
                     "shop_product_id" =>  $shopProduct->id,
                      "name" =>  $variant["name"],
+                     "description" =>  $variant["description"],
+                     "is_primary" =>  $variant["is_primary"],
+                     "type" =>  $variant["type"],
                      "actual_price" =>  $variant["actual_price"],
                      "price" =>  $variant["price"],
                      "sortorder" =>  $variant["sortorder"],
@@ -99,12 +105,40 @@ class ShopProductController extends Controller
 
                 if ($request->hasFile("variants.{$ind}.image")) {
                     $productImg = sprintf("%s.%s",time(), $request->file("variants.{$ind}.image")->extension());
-                    $destinationPath = "assets/shop/".$shopProduct->shop_id.'/products';
+                    $destinationPath = "assets/shop/".$shopProduct->shop->shop_key.'/products';
                     $request->file("variants.{$ind}.image")->move($destinationPath, $productImg);
-                    $img = Image::make($destinationPath.'/'.$productImg)->resize(150);
+
+                    if(!Storage::disk('public')->exists("shop/index.html")){
+                        Storage::disk('public')->put("shop/index.html", 'unauthorised access');
+                    }
+
+                    if(!Storage::disk('public')->exists("shop/{$shopProduct->shop->shop_key}/index.html")){
+                        Storage::disk('public')->put("shop/{$shopProduct->shop->shop_key}/index.html", 'unauthorised access');
+                    }
+
+                    if(!Storage::disk('public')->exists("shop/{$shopProduct->shop->shop_key}/category/index.html")){
+                        Storage::disk('public')->put("shop/{$shopProduct->shop->shop_key}/category/index.html", 'unauthorised access');
+                    }
+
+                    if(!Storage::disk('public')->exists("shop/{$shopProduct->shop->shop_key}/products/index.html")){
+                        Storage::disk('public')->put("shop/{$shopProduct->shop->shop_key}/products/index.html", 'unauthorised access');
+                    }
+
+                    $img = Image::make($destinationPath.'/'.$productImg)->resize(150, null, function ($constraint) {
+                        $constraint->aspectRatio();
+                    });
                     $img->save($destinationPath.'/'.$productImg, 60);
                 }
                 if($productImg){
+                    $shopProductImage = \App\ShopProductImage::where("shop_product_id", $shopProduct->id)
+                    ->where("shop_product_variant_id", $shopProductVariant->id)->get()->first();
+                    if($shopProductImage){
+                        if(Storage::disk('public')->exists("shop/{$shopProduct->shop->shop_key}/products/{$shopProductImage->image}")){
+                            Storage::disk('public')->delete("shop/{$shopProduct->shop->shop_key}/products/{$shopProductImage->image}");
+                        }
+                    }
+
+
                     \App\ShopProductImage::updateOrCreate(
                         [
                          "shop_product_id" =>  $shopProduct->id,
@@ -123,7 +157,7 @@ class ShopProductController extends Controller
 
             }
 
-            \App\ShopProductVariant::whereNotIn("id", $insVariantId)->delete();
+            \App\ShopProductVariant::whereNotIn("id", $insVariantId)->where("shop_product_id",  $shopProduct->id)->delete();
         }
 
         return response(['data' => $shopProduct, 'message' => 'Account created successfully!', 'status' => true]);

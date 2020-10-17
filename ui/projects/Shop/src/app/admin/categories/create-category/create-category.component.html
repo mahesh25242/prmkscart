@@ -50,6 +50,15 @@
             </div>
           </div>
 
+          <div class="form-group">
+            <label for="icon">Icon</label>
+            <input type="file" class="form-control" id="icon" (change)="handleIconSelection($event.target.files)" accept="image/*"
+            [ngClass]="{'is-invalid': ( f.icon.errors && f.icon.errors.error)}">
+            <div *ngIf="f.icon.errors && f.icon.errors.error" class="invalid-feedback">
+              {{f.icon.errors.error}}
+            </div>
+          </div>
+
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
