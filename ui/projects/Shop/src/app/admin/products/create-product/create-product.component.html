@@ -51,7 +51,7 @@
             bindValue="id"
             formControlName="status">
             </ng-select>
-            <div *ngIf="f.status.errors && f.status.errors.error" class="invalid-feedback">
+            <div *ngIf="f.status.errors && f.status.errors.error" class="text-danger">
               {{f.status.errors.error}}
             </div>
           </div>
@@ -96,10 +96,11 @@
                   {{ i+ 1}}
                 </td>
                 <td>
+
                   <input type="text" class="form-control" formControlName="name" placeholder="Name"
-                  [ngClass]="{'is-invalid': ( stat.controls.name.errors && stat.controls.name.errors.error)}">
-                  <div *ngIf="stat.controls.name.errors && stat.controls.name.errors.error" class="invalid-feedback">
-                    {{stat.controls.name.errors.error}}
+                  [ngClass]="{'is-invalid': ( stat.get('name').errors && stat.get('name').errors.error)}">
+                  <div *ngIf="stat.get('name').errors && stat.get('name').errors.error" class="invalid-feedback">
+                    {{stat.get('name').errors.error}}
                   </div>
                 </td>
                 <td>
@@ -107,17 +108,18 @@
                 </td>
                 <td>
                   <input type="number" class="form-control" formControlName="price" placeholder="Price"
-                  [ngClass]="{'is-invalid': ( stat.controls.price.errors && stat.controls.price.errors.error)}">
-                  <div *ngIf="stat.controls.price.errors && stat.controls.price.errors.error" class="invalid-feedback">
-                    {{stat.controls.price.errors.error}}
+                  [ngClass]="{'is-invalid': ( stat.get('price').errors && stat.get('price').errors.error)}">
+                  <div *ngIf="stat.get('price').errors && stat.get('price').errors.error" class="invalid-feedback">
+                    {{stat.get('price').errors.error}}
                   </div>
                 </td>
                 <td>
                   <input type="file" class="form-control" (change)="handleImageSelection(stat, $event.target.files)" accept="image/*">
+                  <a [href]="stat.get('currImage').value" target="_blank">Image</a>
                 </td>
                 <td>
                   <a href="javascript:{}" class="btn btn-primary btn-sm" (click)="addVarient(stat)"><fa-icon [icon]="faPlus"></fa-icon></a>
-                  <a href="javascript:{}" class="btn btn-primary  btn-sm" (click)="removeVarient(i)"><fa-icon [icon]="faTrash"></fa-icon></a>
+                  <a href="javascript:{}" class="btn btn-danger  btn-sm" (click)="removeVarient(i)" *ngIf="varients.controls.length > 1"><fa-icon [icon]="faTrash"></fa-icon></a>
                 </td>
               </tr>
             </tbody>

@@ -65,9 +65,9 @@ export class CreateProductComponent implements OnInit, OnDestroy {
     formData.append('id', `${this.f.id.value}`);
     formData.append('name', this.f.name.value);
     formData.append('description', this.f.description.value);
-    formData.append('status', this.f.status.value);
-    formData.append('sortorder', this.f.sortorder.value);
-    formData.append('shop_product_category_id', this.f.shop_product_category_id.value);
+    formData.append('status', (this.f.status.value) ? this.f.status.value : '');
+    formData.append('sortorder', (this.f.sortorder.value) ? this.f.sortorder.value : 0);
+    formData.append('shop_product_category_id', JSON.stringify(this.f.shop_product_category_id.value));
 
 
 
@@ -81,6 +81,21 @@ export class CreateProductComponent implements OnInit, OnDestroy {
       Notiflix.Loading.Remove();
       if(error.status == 422){
         for(let result in this.createProductFrm.controls){
+          if(result == 'varients'){
+            for(let varient in (this.createProductFrm.controls['varients'] as FormArray).controls){
+              for(let variantFrm in ((this.createProductFrm.controls['varients'] as FormArray).controls[varient] as FormGroup).controls){
+                if(error.error.errors[`variants.${varient}.${variantFrm}`]){
+                  ((this.createProductFrm.controls['varients'] as FormArray).controls[varient] as FormGroup).controls[variantFrm].setErrors({ error: error.error.errors[`variants.${varient}.${variantFrm}`] });
+                }else{
+                  ((this.createProductFrm.controls['varients'] as FormArray).controls[varient] as FormGroup).controls[variantFrm].setErrors(null);
+                }
+                console.log(variantFrm)
+              }
+            }
+
+
+          }
+
           if(error.error.errors[result]){
             this.createProductFrm.controls[result].setErrors({ error: error.error.errors[result] });
           }else{
@@ -100,11 +115,11 @@ export class CreateProductComponent implements OnInit, OnDestroy {
     let validation = true;
     if(!stat.controls.name.value){
       validation = false;
-      stat.controls.name.setErrors({"error": 'Varient name is requires'})
+      stat.controls.name.setErrors({"error": 'The variant name field is required'})
     }
     if(!stat.controls.price.value && stat.controls.price.value !== 0){
       validation = false;
-      stat.controls.name.setErrors({"error": 'Varient name is requires'})
+      stat.controls.name.setErrors({"error": 'The price field is required'})
     }
 
     if(stat.controls.actual_price.value && (stat.controls.actual_price.value < stat.controls.price.value)){
@@ -120,7 +135,8 @@ export class CreateProductComponent implements OnInit, OnDestroy {
         actual_price: new FormControl(0),
         price: new FormControl(0),
         sortorder: new FormControl(null),
-        image: new FormControl(null)
+        image: new FormControl(null),
+        currImage: new FormControl(null)
       }));
     }
   }
@@ -144,28 +160,54 @@ export class CreateProductComponent implements OnInit, OnDestroy {
       status: 1
     });
 
-    this.varients.controls = [];
 
-    this.varients.push(this.formBuilder.group({
-      id: new FormControl(0),
-      status: new FormControl(null),
-      name: new FormControl(null),
-      shop_product_id: new FormControl(0),
-      actual_price: new FormControl(0),
-      price: new FormControl(0),
-      sortorder: new FormControl(null),
-      image: new FormControl(null)
-    }));
+
+
 
     this.formPathSubScr = this.product.subscribe(res=>{
+      this.varients.controls = [];
       this.createProductFrm.patchValue({
         id: (res?.id) ? res?.id : 0,
         name: (res?.name) ? res?.name : '',
         description: (res?.description) ? res?.description : '',
         status: (res?.status >= 0) ? res?.status : 1,
         sortorder: (res?.sortorder) ? res?.sortorder : 1,
-        shop_product_category_id: (res?.shop_product_category?.id) ? res?.shop_product_category?.id : null,
+        shop_product_category_id: (res?.shop_product_category?.id) ? res?.shop_product_category : null,
       });
+      if(res?.shop_product_variant){
+        res.shop_product_variant.map(vrnt =>{
+          let img=null;
+          if(vrnt.shop_product_image.image)
+            img = `${vrnt.shop_product_image.image_path}${vrnt.shop_product_image.image}`;
+          this.varients.push(this.formBuilder.group({
+            id: new FormControl(vrnt.id),
+            status: new FormControl(vrnt.status),
+            name: new FormControl(vrnt.name),
+            shop_product_id: new FormControl(vrnt.shop_product_id),
+            actual_price: new FormControl(vrnt.actual_price),
+            price: new FormControl(vrnt.price),
+            sortorder: new FormControl(vrnt.sortorder),
+            image: new FormControl(null),
+            currImage: new FormControl(img)
+          }));
+        });
+        // this.varients.patchValue({
+        //   id: res.shop_product_variant?.
+        // });
+      }else{
+        this.varients.controls = [];
+        this.varients.push(this.formBuilder.group({
+          id: new FormControl(0),
+          status: new FormControl(null),
+          name: new FormControl(null),
+          shop_product_id: new FormControl(0),
+          actual_price: new FormControl(0),
+          price: new FormControl(0),
+          sortorder: new FormControl(null),
+          image: new FormControl(null),
+          currImage: new FormControl(null),
+        }));
+      }
     });
 
   }

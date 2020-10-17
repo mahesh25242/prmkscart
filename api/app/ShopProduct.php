@@ -22,7 +22,7 @@ class ShopProduct extends Model implements AuthenticatableContract, Authorizable
      */
     protected $fillable = [
         'shop_id', 'name', 'description', 'status', 'sortorder',
-        'shop_product_category_id', 'created_by', 'updated_by', 'deleted_by',
+        'shop_product_category_id', 'created_by', 'updated_by', 'deleted_by'
     ];
 
 
@@ -35,6 +35,15 @@ class ShopProduct extends Model implements AuthenticatableContract, Authorizable
              // do the rest of the cleanup...
         });
     }
+
+    protected $appends = array('status_text');
+
+    public function getStatusTextAttribute()
+    {
+        return (($this->status) ? 'Yes' : 'No');
+    }
+
+
 
     public function user()
     {

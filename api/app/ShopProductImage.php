@@ -25,6 +25,16 @@ class ShopProductImage extends Model implements AuthenticatableContract, Authori
         'created_by', 'updated_by', 'deleted_by'
     ];
 
+    protected $appends = array('image_path');
+
+
+
+    public function getImagePathAttribute()
+    {
+        return url("assets/shop/{$this->shop_id}/products/");
+    }
+
+
 
 
     public function user()

@@ -18,6 +18,7 @@ class CreateShopProductCategoriesTable extends Migration
             $table->bigInteger('shop_id')->default(0);
             $table->string('name')->nullable();
             $table->string('description')->nullable();
+            $table->string('icon')->nullable();
             $table->boolean('status')->default(1);
             $table->integer('sortorder')->default(1);
             $table->bigInteger('created_by')->default(0);

@@ -1,4 +1,5 @@
 import { ShopProduct } from './shop-product';
+import { ShopProductImage } from './shop-product-image';
 
 export interface ShopProductVariant {
   id?: number,
@@ -10,5 +11,6 @@ export interface ShopProductVariant {
   status_text?: string,
   sortorder?: number,
   created_at?: string,
-  shop_product?: ShopProduct
+  shop_product?: ShopProduct,
+  shop_product_image?: ShopProductImage
 }

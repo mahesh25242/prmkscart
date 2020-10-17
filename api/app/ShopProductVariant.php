@@ -21,8 +21,8 @@ class ShopProductVariant extends Model implements AuthenticatableContract, Autho
      * @var array
      */
     protected $fillable = [
-        'shop_product_id',  'name', 'actual_price', 'price', 'sortorder',
-        'status', 'created_by', 'updated_by', 'deleted_by'
+        'shop_product_id',  'name', 'description', 'actual_price', 'price', 'sortorder',
+        'status', 'is_primary', 'type', 'created_by', 'updated_by', 'deleted_by'
     ];
 
     public static function boot() {
