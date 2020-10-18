@@ -57,7 +57,7 @@ class ShopsController extends Controller
        $shop =  \App\Shop::with(["country", "state",
        "city", "shopCategory", "userRole"=> function($q){
            $q->with(["user"])->where("role_id", 2);
-       }])->find($id);
+       }])->where("shop_key", $id)->get()->first();
        return response($shop);
     }
 

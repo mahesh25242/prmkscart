@@ -20,7 +20,7 @@ class AdminAuthenticate
 
        if (Auth::check() )
        {
-            if(Auth::user()->has("isAdmin"))
+        if(\App\User::has("isSuperAdmin")->find(Auth::id())->exists())
                 return $next($request);
        }
        return redirect()->guest('/');

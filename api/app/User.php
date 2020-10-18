@@ -93,7 +93,7 @@ class User extends Model implements AuthenticatableContract, AuthorizableContrac
         return $this->hasMany('App\UserAddress');
     }
 
-    public function isAdmin()
+    public function isSuperAdmin()
     {
         return $this->hasMany('App\UserRole')->where("role_id",1);
     }

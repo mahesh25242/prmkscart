@@ -23,13 +23,13 @@
           {{ shop.id }}
         </td>
         <td>
-          <a [routerLink]="'shop/'+shop.id">{{shop.name}}</a>
+          <a [routerLink]="'shop/'+shop.shop_key">{{shop.name}}</a>
         </td>
         <td>
           {{ shop.status_text }}
         </td>
         <td>
-          <a href="javascript:{}" [routerLink]="'edit/'+shop.id">Edit</a>
+          <a href="javascript:{}" [routerLink]="'edit/'+shop.shop_key">Edit</a>
           <a href="javascript:{}" (click)="delete(shop)">Delete</a>
         </td>
       </tr>

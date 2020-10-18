@@ -12,7 +12,8 @@ import { ShopCategoryResolver } from './shop-category/shop-category-resolver';
 import { EditShopResolver } from './create/edit-shop-resolver';
 import { ShopComponent } from './shop/shop.component';
 import { ShopResolver } from './shop/shop-resolver';
-
+import { CategoriesComponent } from './shop/categories/categories.component';
+import { CategoriesResolver } from './shop/categories/categories-resolver';
 
 
 const routes: Routes = [
@@ -50,7 +51,16 @@ const routes: Routes = [
         component: ShopComponent,
         resolve:{
           shop : ShopResolver
-        }
+        },
+        children:[
+          {
+            path: 'categories',
+            component: CategoriesComponent,
+            resolve:{
+              shops: CategoriesResolver
+            },
+          },
+        ]
       },
       {
         path: 'customers',

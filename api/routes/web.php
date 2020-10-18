@@ -36,7 +36,7 @@ $router->group(['prefix' => 'v1'], function () use ($router) {
 
     $router->group(['middleware' => 'auth'], function () use ($router) {
 
-        $router->group(['middleware' =>  'shop'], function () use ($router) {
+        $router->group(['middleware' =>  'adminAndShop'], function () use ($router) {
             $router->get('authUser','UsersController@authUser');
             $router->post('setUserLogin','UsersController@setUserLogin');
             $router->get('signOut','UsersController@signOut');
@@ -59,11 +59,7 @@ $router->group(['prefix' => 'v1'], function () use ($router) {
         });
 
 
-        $router->group(['middleware' =>  'admin'], function () use ($router) {
-            $router->get('authUser','UsersController@authUser');
-            $router->post('setUserLogin','UsersController@setUserLogin');
-            $router->get('signOut','UsersController@signOut');
-        });
+
         $router->group(['prefix' => 'admin',  'middleware' =>  'admin'], function () use ($router) {
             $router->post('updateAvatar','UsersController@updateAvatar');
             $router->post('updateProfile','UsersController@updateProfile');

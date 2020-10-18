@@ -15,7 +15,9 @@ class ShopProductCategoryController extends Controller
             $shop = \App\Shop::where("shop_key", $shopKey)->get()->first();
             $shopId = ($shop) ? $shop->id : 0;
         }else{
-            $shopId = $request->input("id", 0);
+            $shopKey = $request->input("shop_key", '');
+            $shop = \App\Shop::where("shop_key", $shopKey)->get()->first();
+            $shopId = ($shop) ? $shop->id : 0;
         }
 
         $categories = \App\ShopProductCategory::where("shop_id", $shopId);
@@ -58,7 +60,9 @@ class ShopProductCategoryController extends Controller
                 $shop = \App\Shop::where("shop_key", $shopKey)->get()->first();
                 $input["shop_id"] = ($shop) ? $shop->id : 0;
             }else{
-                $input["shop_id"] = $request->input("shop_id", 0);
+                $shopKey = $request->input("shop_key", 0);
+                $shop = \App\Shop::where("shop_key", $shopKey)->get()->first();
+                $input["shop_id"] = ($shop) ? $shop->id : 0;
             }
             $shopProductCategory = \App\ShopProductCategory::create($input);
         }

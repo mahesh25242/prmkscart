@@ -1,0 +1,58 @@
+<h3>Categories</h3>
+<!-- Button trigger modal -->
+<button type="button" class="btn btn-primary" (click)="editCategory(null)">
+  Create Category
+</button>
+
+
+
+<table class="table" *ngIf="(shopKey$ | async) as shopKey">
+  <thead>
+    <tr>
+      <th>
+        No
+      </th>
+      <th>
+        Name
+      </th>
+      <th>
+        Icon
+      </th>
+      <th>
+        Status
+      </th>
+      <th>
+        Options
+      </th>
+    </tr>
+  </thead>
+  <tbody>
+    <ng-container *ngIf="(categories$ | async) as categories">
+      <tr *ngFor="let category of categories; let i = index">
+        <td>
+            {{ i+1 }}
+        </td>
+        <td>
+          <a href="javascript:{}" (click)="editCategory(category)">{{category.name}}</a>
+        </td>
+        <td>
+          <img class="img-thumbnail" [src]="environment.siteAddress+'/assets/shop/'+(shopKey?.id ) +'/category/'+category.icon" *ngIf="category.icon"/>
+        </td>
+        <td>
+          {{ category.status_text}}
+        </td>
+        <td>
+          <a href="javascript:{}" class="text-danger" (click)="deleteCategory(category, shopKey?.id)">Delete</a>
+        </td>
+      </tr>
+      <tr *ngIf="!categories || !categories.length">
+        <td colspan="4">
+          <div class="alert alert-warning">
+            No product found
+          </div>
+        </td>
+      </tr>
+    </ng-container>
+
+  </tbody>
+</table>

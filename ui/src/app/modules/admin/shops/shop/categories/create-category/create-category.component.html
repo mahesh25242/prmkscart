@@ -1,0 +1,61 @@
+<form [formGroup]="createCatFrm" (ngSubmit)="saveCategory()">
+<app-modal>
+   <div header>
+    Create Category
+  </div>
+  <div body>
+    <div class="form-group">
+      <label for="name">Name</label>
+      <input type="text" class="form-control" id="name"
+      [ngClass]="{'is-invalid': ( f.name.errors && f.name.errors.error)}"
+      placeholder="Name"
+      formControlName="name">
+      <div *ngIf="f.name.errors && f.name.errors.error" class="invalid-feedback">
+        {{f.name.errors.error}}
+      </div>
+    </div>
+    <div class="form-group">
+      <label for="description">Description</label>
+      <textarea  class="form-control" id="description"
+      [ngClass]="{'is-invalid': ( f.description.errors && f.description.errors.error)}"
+      placeholder="Description"
+      formControlName="description"></textarea>
+      <div *ngIf="f.description.errors && f.description.errors.error" class="invalid-feedback">
+        {{f.description.errors.error}}
+      </div>
+    </div>
+    <div class="form-group">
+      <label for="status">Status</label>
+      <ng-select [items]="statuses"
+     bindLabel="name"
+     bindValue="id"
+     formControlName="status">
+    </ng-select>
+      <div *ngIf="f.status.errors && f.status.errors.error" class="invalid-feedback">
+        {{f.status.errors.error}}
+      </div>
+    </div>
+    <div class="form-group">
+      <label for="sortorder">Sortorder</label>
+      <input type="number" class="form-control" id="sortorder"   [ngClass]="{'is-invalid': ( f.sortorder.errors && f.sortorder.errors.error)}"
+      placeholder="SortOrder"
+      formControlName="sortorder">
+      <div *ngIf="f.sortorder.errors && f.sortorder.errors.error" class="invalid-feedback">
+        {{f.sortorder.errors.error}}
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label for="icon">Icon</label>
+      <input type="file" class="form-control" id="icon" (change)="handleIconSelection($event.target.files)" accept="image/*"
+      [ngClass]="{'is-invalid': ( f.icon.errors && f.icon.errors.error)}">
+      <div *ngIf="f.icon.errors && f.icon.errors.error" class="invalid-feedback">
+        {{f.icon.errors.error}}
+      </div>
+    </div>
+  </div>
+  <div footer>
+    <button type="submit" class="btn btn-primary">Save changes</button>
+  </div>
+</app-modal>
+</form>
