@@ -52,6 +52,7 @@ class ShopProductCategoryController extends Controller
         $input["name"] = $request->input("name", '');
         $input["sortorder"] = $request->input("sortorder", '');
         $input["status"] = $request->input("status", '');
+        $input["url"] = \Illuminate\Support\Str::slug($input["name"], '-');
 
 
         $shopKey = $request->header('shopKey');

@@ -21,7 +21,7 @@ class ShopProductCategory extends Model implements AuthenticatableContract, Auth
      * @var array
      */
     protected $fillable = [
-        'shop_id', 'name', 'description', 'icon', 'status', 'sortorder',
+        'shop_id', 'name', 'description', 'icon', 'url', 'status', 'sortorder',
         'created_by', 'updated_by', 'deleted_by',
     ];
 

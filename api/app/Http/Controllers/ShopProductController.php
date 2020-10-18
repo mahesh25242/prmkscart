@@ -9,6 +9,11 @@ use Illuminate\Support\Facades\Storage;
 
 class ShopProductController extends Controller
 {
+    public function showProducts(Request $request){
+        $request->request->add(['status' => 1]);
+        return $this->products($request);
+    }
+
     public function products(Request $request){
         $shopKey = $request->header('shopKey');
         if($shopKey){
@@ -19,8 +24,25 @@ class ShopProductController extends Controller
             $shop = \App\Shop::where("shop_key", $shopKey)->get()->first();
             $shopId = ($shop) ? $shop->id : 0;
         }
-        $categories = \App\ShopProduct::with(["shopProductCategory", "shopProductVariant.shopProductImage"])->where("shop_id", $shopId)->get();
-        return response($categories);
+//shopProductVariant.shopProductImage
+
+        $products = \App\ShopProduct::with(["shopProductCategory", "shopProductPrimaryVariant.shopProductImage",
+        "shopProductVariant.shopProductImage"])->where("shop_id", $shopId);
+
+        if($request->input("status", 0)){
+            $products->where("status", $request->input("status", 0));
+        }
+
+        if($request->input("shop_product_category_id", 0)){
+            $products->where("shop_product_category_id", $request->input("shop_product_category_id", 0));
+        }
+        if($request->input("cat_url", null)){
+            $products->whereHas("shopProductCategory", function($q) use($request){
+                $q->where("url", $request->input("cat_url", null));
+            });
+        }
+
+        return response($products->get());
     }
 
     public function store(Request $request){
@@ -58,6 +80,7 @@ class ShopProductController extends Controller
             "status" => $request->input("status", 1),
             "sortorder" => $request->input("sortorder", 1),
             "shop_product_category_id" => $shop_product_category_id,
+            "url" => \Illuminate\Support\Str::slug($request->input("name", ''), '-')
         ];
 
         $shopKey = $request->header('shopKey');

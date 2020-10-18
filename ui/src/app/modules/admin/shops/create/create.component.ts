@@ -48,6 +48,7 @@ export class CreateComponent implements OnInit, OnDestroy {
       map: this.f.map.value,
       status: this.f.status.value,
       shop_category_id: this.f.shop_category_id.value,
+      shop_url: this.f.shop_url.value
     };
     Notiflix.Loading.Arrows();
 
@@ -88,6 +89,7 @@ export class CreateComponent implements OnInit, OnDestroy {
       map: [null, []],
       status: [1, []],
       shop_category_id: [null, []],
+      shop_url: [null, []]
     });
 
     this.countries$ = this.countryService.countries();
@@ -118,6 +120,7 @@ export class CreateComponent implements OnInit, OnDestroy {
         map: this.route.snapshot.data?.shop.map,
         status: this.route.snapshot.data?.shop.status,
         shop_category_id: this.route.snapshot.data?.shop.shop_category,
+        shop_url: this.route.snapshot.data?.shop.shop_url,
 
       });
     }

@@ -1,8 +1,9 @@
 <ng-container *ngIf="(categories$  | async) as categories">
   <ng-container *ngIf="categories && categories.length > 1">
-    <div *ngFor="let category of categories">
+    <a *ngFor="let category of categories" [routerLink]="'/'+category.url">
       <img class="img-thumbnail" [src]="environment.siteAddress+'/assets/shop/'+environment.shopKey+'/category/'+category.icon" *ngIf="category.icon"/>
       {{ category.name }}
-    </div>
+    </a>
   </ng-container>
+  <app-product></app-product>
 </ng-container>

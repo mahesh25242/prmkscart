@@ -21,7 +21,7 @@ class ShopProduct extends Model implements AuthenticatableContract, Authorizable
      * @var array
      */
     protected $fillable = [
-        'shop_id', 'name', 'description', 'status', 'sortorder',
+        'shop_id', 'name', 'description', 'url', 'status', 'sortorder',
         'shop_product_category_id', 'created_by', 'updated_by', 'deleted_by'
     ];
 
@@ -63,6 +63,11 @@ class ShopProduct extends Model implements AuthenticatableContract, Authorizable
     public function shopProductVariant()
     {
         return $this->hasMany('App\ShopProductVariant');
+    }
+
+    public function shopProductPrimaryVariant()
+    {
+        return $this->hasOne('App\ShopProductVariant')->where("is_primary", 1);
     }
 
     public function shopProductCategory()

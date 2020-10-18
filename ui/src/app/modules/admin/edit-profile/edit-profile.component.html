@@ -4,8 +4,8 @@
     <span>Change Photo</span>
     <input #fileInput type="file" (change)="onFileInput($event.target.files)" accept="image/*" style="display:none;" />
   </button>
-  Created At: {{ loggedUser.created_at |  date:'dd/MM/yy'}}
-  Last Login: {{ loggedUser.last_login.created_at  |  date:'dd/MM/yy'}}
+  Created At: {{ loggedUser?.created_at |  date:'dd/MM/yy'}}
+  Last Login: {{ loggedUser?.last_login?.created_at  |  date:'dd/MM/yy'}}
   <div class="form-group">
     <label for="fname">First Name</label>
     <input type="text" class="form-control" id="fname"

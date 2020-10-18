@@ -10,3 +10,4 @@ export * from './shop-product-category';
 export * from './shop-product';
 export * from './shop-product-variant';
 export * from './shop-product-image';
+export * from './cart';

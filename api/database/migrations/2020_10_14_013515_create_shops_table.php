@@ -26,6 +26,7 @@ class CreateShopsTable extends Migration
             $table->string('local')->nullable();
             $table->string('map')->nullable();
             $table->string('shop_key')->default('');
+            $table->string('shop_url')->default('');
             $table->boolean('status')->default(1);
             $table->bigInteger('shop_category_id')->default(0);
             $table->bigInteger('created_by')->default(0);

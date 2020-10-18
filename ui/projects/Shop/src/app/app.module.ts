@@ -17,6 +17,8 @@ import { AboutUsComponent } from './about-us/about-us.component';
 import { ContactUsComponent } from './contact-us/contact-us.component';
 import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
 import { CategoriesComponent } from './components/categories/categories.component';
+import { ProductComponent } from './components/product/product.component';
+import { CartComponent } from './components/cart/cart.component';
 
 @NgModule({
   declarations: [
@@ -27,7 +29,9 @@ import { CategoriesComponent } from './components/categories/categories.componen
     AboutUsComponent,
     ContactUsComponent,
     PageNotFoundComponent,
-    CategoriesComponent
+    CategoriesComponent,
+    ProductComponent,
+    CartComponent
   ],
   imports: [
     BrowserModule,

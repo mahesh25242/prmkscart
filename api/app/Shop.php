@@ -23,7 +23,7 @@ class Shop extends Model implements AuthenticatableContract, AuthorizableContrac
     protected $fillable = [
         'name', 'email', 'phone', 'address', 'country_id',
         'state_id', 'city_id', 'pin', 'local', 'map',
-        'shop_key', 'status', 'shop_category_id',
+        'shop_key', 'shop_url', 'status', 'shop_category_id',
          'created_by', 'updated_by', 'deleted_by'
     ];
 

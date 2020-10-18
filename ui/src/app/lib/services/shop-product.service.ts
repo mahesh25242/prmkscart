@@ -9,6 +9,7 @@ import { ShopProduct } from '../interfaces';
 })
 export class ShopProductService {
   private products$: BehaviorSubject<ShopProduct[]> = new BehaviorSubject<ShopProduct[]>(null);
+
   constructor(private http: HttpClient) { }
 
   get products(){
@@ -28,6 +29,13 @@ export class ShopProductService {
 
   deleteProduct(postData: any = null): Observable<ShopProduct>{
     return this.http.post<ShopProduct>(`/shop/products/delete`, postData);
+  }
+
+  showProducts(postData: any = null): Observable<ShopProduct[]>{
+    return this.http.post<ShopProduct[]>("/shop/product/showProducts", postData).pipe(map(res=>{
+      this.products$.next(res);
+      return res;
+    }));
   }
 
 }

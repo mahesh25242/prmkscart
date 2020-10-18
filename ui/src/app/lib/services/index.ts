@@ -8,4 +8,5 @@ export * from './shop.service';
 export * from './shop-category.service';
 export * from './shop-product-category.service';
 export * from './shop-product.service';
+export * from './cart.service';
 

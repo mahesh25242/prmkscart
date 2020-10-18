@@ -1,4 +1,4 @@
-import { User } from "firebase";
+import { User } from "./user";
 import { City } from "./city";
 import { Country } from "./country";
 import { ShopCategory } from './shop-category';
@@ -28,5 +28,6 @@ export interface Shop {
   shop_category_id?: number,
   shop_category?: ShopCategory,
   created_at?: string,
-  user_role?: UserRole
+  user_role?: UserRole,
+  shop_url?: string
 }

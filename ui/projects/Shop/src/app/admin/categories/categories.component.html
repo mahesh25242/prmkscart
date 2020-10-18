@@ -31,7 +31,7 @@
   </thead>
   <tbody>
     <ng-container *ngIf="(categories$ | async) as categories">
-      <tr *ngFor="let category of categories; let i = index">
+      <tr *ngFor="let category of categories; let i = index" [ngClass]="{ 'text-warning' : !category.status}">
         <td>
             {{ i+1 }}
         </td>
@@ -49,7 +49,7 @@
         </td>
       </tr>
       <tr *ngIf="!categories || !categories.length">
-        <td colspan="4">
+        <td colspan="5">
           <div class="alert alert-warning">
             No product found
           </div>

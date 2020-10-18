@@ -37,6 +37,7 @@ class ShopsController extends Controller
         $input["state_id"] = $request->input("state_id.id", 0);
         $input["city_id"] = $request->input("city_id.id", 0);
         $input["shop_key"] = sha1(time());
+        $input["shop_url"] = $request->input("shop_url", '');
 
         if($request->input("id", 0)){
             $shop = \App\Shop::where('id', $request->input("id", 0))->update($input);

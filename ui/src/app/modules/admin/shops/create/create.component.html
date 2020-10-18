@@ -37,6 +37,17 @@
         </div>
       </div>
 
+      <div class="form-group">
+        <label for="shop_url">Shop Url</label>
+        <input type="text" class="form-control" id="shop_url"
+        [ngClass]="{'is-invalid': ( f.shop_url.errors && f.shop_url.errors.error)}"
+        placeholder="Shop Url eg.www.kfc.com"
+        formControlName="shop_url">
+        <div *ngIf="f.shop_url.errors && f.shop_url.errors.error" class="invalid-feedback">
+          {{f.shop_url.errors.error}}
+        </div>
+      </div>
+
         <div class="form-group">
           <label for="email">Email</label>
           <input type="email" class="form-control" id="email"
