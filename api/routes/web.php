@@ -28,8 +28,17 @@ $router->group(['prefix' => 'v1'], function () use ($router) {
     $router->get('cities','CityController@cities');
 
 
+    $router->group(['prefix' => 'shop'], function () use ($router) {
+        $router->group(['prefix' => 'product'], function () use ($router) {
+            $router->get('showCategories','ShopProductCategoryController@showCategories');
+        });
+    });
+
+
 
     $router->post('sentContact','ContactUsController@sentContact');
+
+
 
 
 
@@ -80,21 +89,13 @@ $router->group(['prefix' => 'v1'], function () use ($router) {
 
             });
 
-
         });
 
 
 
-
-
-
-
-
-
-
-
-
     });
+
+
 });
 
 

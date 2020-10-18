@@ -3,8 +3,7 @@ import { BehaviorSubject, Observable } from 'rxjs';
 import { ShopProduct } from 'src/app/lib/interfaces';
 import { ShopProductService } from 'src/app/lib/services';
 import Notiflix from "notiflix";
-import { mergeMap } from 'rxjs/internal/operators/mergeMap';
-import { map } from 'rxjs/operators';
+import { map, mergeMap } from 'rxjs/operators';
 
 declare var $: any;
 

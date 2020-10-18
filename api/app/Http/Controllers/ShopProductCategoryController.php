@@ -9,6 +9,11 @@ use Illuminate\Support\Facades\Storage;
 
 class ShopProductCategoryController extends Controller
 {
+    public function showCategories(Request $request){
+        $request->request->add(['status' => 1]);
+        return $this->categories($request);
+    }
+
     public function categories(Request $request){
         $shopKey = $request->header('shopKey');
         if($shopKey){

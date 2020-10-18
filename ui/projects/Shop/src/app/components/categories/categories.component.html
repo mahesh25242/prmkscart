@@ -1,0 +1,8 @@
+<ng-container *ngIf="(categories$  | async) as categories">
+  <ng-container *ngIf="categories && categories.length > 1">
+    <div *ngFor="let category of categories">
+      <img class="img-thumbnail" [src]="environment.siteAddress+'/assets/shop/'+environment.shopKey+'/category/'+category.icon" *ngIf="category.icon"/>
+      {{ category.name }}
+    </div>
+  </ng-container>
+</ng-container>

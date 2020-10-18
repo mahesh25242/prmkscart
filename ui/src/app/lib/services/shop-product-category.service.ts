@@ -31,4 +31,7 @@ export class ShopProductCategoryService {
   }
 
 
+  showCategories(){
+    return this.http.get<ShopProductCategory[]>("/shop/product/showCategories");
+  }
 }
