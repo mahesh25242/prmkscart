@@ -1,0 +1,161 @@
+
+<form [formGroup]="createProductFrm" (ngSubmit)="saveProduct()">
+<app-modal>
+  <div header>Create Product</div>
+  <div body>
+    <div class="form-group">
+      <label for="Category">Category</label>
+      <ng-select [items]="(categories$ | async)"
+      [ngClass]="{'is-invalid': ( f.shop_product_category_id.errors && f.shop_product_category_id.errors.error)}"
+        bindLabel="name"
+        id="shop_product_category_id"
+        placeholder="select Category"
+        formControlName="shop_product_category_id">
+        </ng-select>
+        <div *ngIf="f.shop_product_category_id.errors && f.shop_product_category_id.errors.error" class="invalid-feedback">
+          {{f.shop_product_category_id.errors.error}}
+        </div>
+    </div>
+
+    <div class="form-group">
+      <label for="name">Name</label>
+      <input type="text" class="form-control" id="name"
+      [ngClass]="{'is-invalid': ( f.name.errors && f.name.errors.error)}"
+      placeholder="Name"
+      formControlName="name">
+      <div *ngIf="f.name.errors && f.name.errors.error" class="invalid-feedback">
+        {{f.name.errors.error}}
+      </div>
+    </div>
+    <div class="form-group">
+      <label for="description">Description /  Ingredients</label>
+      <textarea  class="form-control" id="description"
+      [ngClass]="{'is-invalid': ( f.description.errors && f.description.errors.error)}"
+      placeholder="Description"
+      formControlName="description"></textarea>
+      <div *ngIf="f.description.errors && f.description.errors.error" class="invalid-feedback">
+        {{f.description.errors.error}}
+      </div>
+    </div>
+    <div class="form-group">
+      <label for="status">Status</label>
+      <ng-select [items]="statuses"
+      bindLabel="name"
+      bindValue="id"
+      formControlName="status">
+      </ng-select>
+      <div *ngIf="f.status.errors && f.status.errors.error" class="text-danger">
+        {{f.status.errors.error}}
+      </div>
+    </div>
+    <div class="form-group">
+      <label for="sortorder">Sortorder</label>
+      <input type="number" class="form-control" id="sortorder"   [ngClass]="{'is-invalid': ( f.sortorder.errors && f.sortorder.errors.error)}"
+      placeholder="SortOrder"
+      formControlName="sortorder">
+      <div *ngIf="f.sortorder.errors && f.sortorder.errors.error" class="invalid-feedback">
+        {{f.sortorder.errors.error}}
+      </div>
+    </div>
+
+    <h3>Varients</h3>
+
+    <table class="table">
+      <thead>
+        <tr>
+          <th>
+            id
+          </th>
+          <th>
+            Varient Name
+          </th>
+          <th>
+            Description
+          </th>
+          <th>
+            Is Primary
+          </th>
+          <th>
+            Type
+          </th>
+          <th>
+            Actual Price
+          </th>
+          <th>
+            Sale Price
+          </th>
+          <th>
+            Image
+          </th>
+          <th>
+            Options
+          </th>
+        </tr>
+      </thead>
+      <tbody formArrayName="varients" >
+        <tr *ngFor="let stat of varients.controls; let i=index; let last = last" [formGroupName]="i">
+          <td>
+            {{ i+ 1}}
+          </td>
+          <td>
+            <input type="text" class="form-control" formControlName="name" placeholder="Name"
+            [ngClass]="{'is-invalid': ( stat.get('name').errors && stat.get('name').errors.error)}">
+            <div *ngIf="stat.get('name').errors && stat.get('name').errors.error" class="invalid-feedback">
+              {{stat.get('name').errors.error}}
+            </div>
+          </td>
+          <td>
+            <textarea class="form-control" formControlName="description" placeholder="Description"
+            [ngClass]="{'is-invalid': ( stat.get('description').errors && stat.get('description').errors.error)}"></textarea>
+            <div *ngIf="stat.get('description').errors && stat.get('description').errors.error" class="invalid-feedback">
+              {{stat.get('description').errors.error}}
+            </div>
+          </td>
+          <td>
+            <div class="custom-control custom-checkbox">
+              <input type="checkbox" class="custom-control-input" [id]="'is_primary'+i" formControlName="is_primary">
+              <label class="custom-control-label" [for]="'is_primary'+i">&nbsp;</label>
+            </div>
+            <div *ngIf="stat.get('is_primary').errors && stat.get('is_primary').errors.error" class="invalid-feedback">
+              {{stat.get('is_primary').errors.error}}
+            </div>
+          </td>
+          <th>
+            <label for="type">Type</label>
+              <ng-select [items]="varientTypes"
+              bindLabel="name"
+              formControlName="type">
+              </ng-select>
+
+
+          </th>
+          <td>
+            <input type="number" class="form-control" formControlName="actual_price" placeholder="Actual Price">
+          </td>
+          <td>
+            <input type="number" class="form-control" formControlName="price" placeholder="Price"
+            [ngClass]="{'is-invalid': ( stat.get('price').errors && stat.get('price').errors.error)}">
+            <div *ngIf="stat.get('price').errors && stat.get('price').errors.error" class="invalid-feedback">
+              {{stat.get('price').errors.error}}
+            </div>
+          </td>
+          <td>
+            <input type="file" class="form-control" (change)="handleImageSelection(stat, $event.target.files)" accept="image/*">
+            <a [href]="stat.get('currImage').value" target="_blank" *ngIf="stat.get('currImage').value">Image</a>
+          </td>
+          <td>
+            <a href="javascript:{}" class="btn btn-primary btn-sm" (click)="addVarient(stat)"><fa-icon [icon]="faPlus"></fa-icon></a>
+            <a href="javascript:{}" class="btn btn-danger  btn-sm" (click)="removeVarient(i)" *ngIf="varients.controls.length > 1"><fa-icon [icon]="faTrash"></fa-icon></a>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  <div footer>
+    <button type="button" class="btn btn-secondary" (click)="modal.close()">Close</button>
+    <button type="submit" class="btn btn-primary">Save changes</button>
+  </div>
+</app-modal>
+</form>
+
+

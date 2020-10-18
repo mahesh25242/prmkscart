@@ -6,8 +6,9 @@ import { ShopProductService, ShopProductCategoryService } from 'src/app/lib/serv
 import Notiflix from "notiflix";
 import { ShopProduct, ShopProductCategory } from 'src/app/lib/interfaces';
 import { faPlus, faTrash } from '@fortawesome/free-solid-svg-icons';
-import { environment } from '../../../../environments/environment';
-declare var $: any;
+import { environment } from '../../../../../../../environments/environment';
+import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
+
 
 
 @Component({
@@ -18,6 +19,7 @@ declare var $: any;
 export class CreateProductComponent implements OnInit, OnDestroy {
   faPlus =faPlus ;
   faTrash = faTrash;
+
   createProductFrm: FormGroup;
   statuses = [
     {
@@ -44,15 +46,17 @@ export class CreateProductComponent implements OnInit, OnDestroy {
     }
   ];
   categories$: Observable<ShopProductCategory[]>;
-  @Input() product: Observable<ShopProduct>;
+  @Input() product: ShopProduct;
+  @Input() shopKey: Observable<any>;
   saveProdSubScr: Subscription;
   formPathSubScr: Subscription;
   constructor(private formBuilder: FormBuilder,
     private shopProductService: ShopProductService,
     private shopProductCategoryService: ShopProductCategoryService,
+    public modal: NgbActiveModal,
     ) { }
 
-  get f() { return this.createProductFrm.controls}
+  get f() { return this.createProductFrm.controls }
 
   get varients() {
     return this.createProductFrm.get('varients') as FormArray;
@@ -88,12 +92,17 @@ export class CreateProductComponent implements OnInit, OnDestroy {
 
 
 
-    this.saveProdSubScr = this.shopProductService.createProduct(formData).pipe(mergeMap(res=>{
-      return this.shopProductService.listproducts();
+    this.saveProdSubScr = this.shopKey.pipe(mergeMap(parm=>{
+      formData.append(`shop_key`, parm.id);
+      return this.shopProductService.createProduct(formData).pipe(mergeMap(res=>{
+        return this.shopProductService.listproducts({
+          shop_key: parm.id
+        });
+      }))
     })).subscribe(res=>{
       Notiflix.Loading.Remove();
       Notiflix.Notify.Success(`Successfully saved product `);
-      $('#createProduct').modal('hide')
+      this.modal.close();
     }, error=>{
       Notiflix.Loading.Remove();
       if(error.status == 422){
@@ -179,39 +188,47 @@ export class CreateProductComponent implements OnInit, OnDestroy {
       varients:this.formBuilder.array([]),
     });
 
-    this.categories$ = this.shopProductCategoryService.listCategories({
-      status: 1
-    });
+    this.categories$ = this.shopKey.pipe(mergeMap(parm=>{
+      return this.shopProductCategoryService.listCategories({
+        status: 1,
+        shop_key: parm.id
+      })
+    }));
 
 
 
 
-
-    this.formPathSubScr = this.product.subscribe(res=>{
-      this.varients.controls = [];
-      this.createProductFrm.patchValue({
-        id: (res?.id) ? res?.id : 0,
-        name: (res?.name) ? res?.name : '',
-        description: (res?.description) ? res?.description : '',
-        status: (res?.status >= 0) ? res?.status : 1,
-        sortorder: (res?.sortorder) ? res?.sortorder : 1,
-        shop_product_category_id: (res?.shop_product_category?.id) ? res?.shop_product_category : null,
-      });
-      if(res?.shop_product_variant){
-        res.shop_product_variant.map(vrnt =>{
-          let img=null;
-          if(vrnt?.shop_product_image?.image)
-            img = `${environment.siteAddress}/assets/shop/${environment.shopKey}/products/${vrnt.shop_product_image.image}`;
-          this.varients.push(this.formBuilder.group(this.varientFormBuild(vrnt, img)));
-        });
-        // this.varients.patchValue({
-        //   id: res.shop_product_variant?.
-        // });
-      }else{
+    this.shopKey.subscribe(res=>{
+      if(res?.id){
         this.varients.controls = [];
-        this.varients.push(this.formBuilder.group(this.varientFormBuild()));
+        this.createProductFrm.patchValue({
+          id: (this.product?.id) ? this.product?.id : 0,
+          name: (this.product?.name) ? this.product?.name : '',
+          description: (this.product?.description) ? this.product?.description : '',
+          status: (this.product?.status >= 0) ? this.product?.status : 1,
+          sortorder: (this.product?.sortorder) ? this.product?.sortorder : 1,
+          shop_product_category_id: (this.product?.shop_product_category?.id) ? this.product?.shop_product_category : null,
+        });
+        if(this.product?.shop_product_variant){
+          this.product.shop_product_variant.map(vrnt =>{
+            let img=null;
+            if(vrnt?.shop_product_image?.image)
+              img = `${environment.siteAddress}/assets/shop/${res?.id}/products/${vrnt.shop_product_image.image}`;
+            this.varients.push(this.formBuilder.group(this.varientFormBuild(vrnt, img)));
+          });
+          // this.varients.patchValue({
+          //   id: res.shop_product_variant?.
+          // });
+        }else{
+          this.varients.controls = [];
+          this.varients.push(this.formBuilder.group(this.varientFormBuild()));
+        }
       }
+
+
     });
+
+
 
   }
 

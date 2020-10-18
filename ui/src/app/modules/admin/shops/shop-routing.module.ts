@@ -14,6 +14,8 @@ import { ShopComponent } from './shop/shop.component';
 import { ShopResolver } from './shop/shop-resolver';
 import { CategoriesComponent } from './shop/categories/categories.component';
 import { CategoriesResolver } from './shop/categories/categories-resolver';
+import { ProductsComponent } from './shop/products/products.component';
+import { ProductsResolver } from './shop/products/products-resolver';
 
 
 const routes: Routes = [
@@ -58,6 +60,13 @@ const routes: Routes = [
             component: CategoriesComponent,
             resolve:{
               shops: CategoriesResolver
+            },
+          },
+          {
+            path: 'products',
+            component: ProductsComponent,
+            resolve:{
+              products: ProductsResolver
             },
           },
         ]

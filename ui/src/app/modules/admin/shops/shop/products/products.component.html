@@ -1,0 +1,52 @@
+<h3>Products</h3>
+<!-- Button trigger modal -->
+<button type="button" class="btn btn-primary" (click)="editProduct(null)">
+  Create Product
+</button>
+
+
+
+<table class="table" *ngIf="(shopKey$ | async) as shopKey">
+  <thead>
+    <tr>
+      <th>
+        No
+      </th>
+      <th>
+        Name
+      </th>
+      <th>
+        Status
+      </th>
+      <th>
+        Options
+      </th>
+    </tr>
+  </thead>
+  <tbody>
+    <ng-container *ngIf="(products$ | async) as products">
+      <tr *ngFor="let product of products; let i = index">
+        <td>
+            {{ i+1 }}
+        </td>
+        <td>
+          <a href="javascript:{}" (click)="editProduct(product)">{{product.name}}</a>
+        </td>
+        <td>
+          {{ product.status_text}}
+        </td>
+        <td>
+          <a href="javascript:{}" class="text-danger" (click)="deleteProduct(product, shopKey)">Delete</a>
+        </td>
+      </tr>
+      <tr *ngIf="!products || !products.length">
+        <td colspan="4">
+          <div class="alert alert-warning">
+            No product found
+          </div>
+        </td>
+      </tr>
+    </ng-container>
+
+  </tbody>
+</table>

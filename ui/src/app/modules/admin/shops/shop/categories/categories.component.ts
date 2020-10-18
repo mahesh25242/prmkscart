@@ -25,7 +25,10 @@ export class CategoriesComponent implements OnInit {
 
 
   editCategory(cat: ShopProductCategory = null){
-    const activeModal = this._modalService.open(CreateCategoryComponent);
+    const activeModal = this._modalService.open(CreateCategoryComponent, {
+      size: 'lg',
+      //backdrop: false,
+    });
     activeModal.componentInstance.category = cat;
     activeModal.componentInstance.shopKey = this.shopKey$;
   }

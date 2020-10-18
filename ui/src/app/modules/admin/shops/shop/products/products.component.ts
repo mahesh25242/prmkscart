@@ -1,0 +1,66 @@
+import { Component, OnInit } from '@angular/core';
+import { BehaviorSubject, Observable } from 'rxjs';
+import { ShopProduct } from 'src/app/lib/interfaces';
+import { ShopProductService } from 'src/app/lib/services';
+import Notiflix from "notiflix";
+import { mergeMap } from 'rxjs/internal/operators/mergeMap';
+import { map } from 'rxjs/operators';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { ActivatedRoute } from '@angular/router';
+import { CreateProductComponent } from './create-product/create-product.component';
+
+
+
+@Component({
+  selector: 'app-products',
+  templateUrl: './products.component.html',
+  styleUrls: ['./products.component.scss']
+})
+export class ProductsComponent implements OnInit {
+
+  products$: Observable<ShopProduct[]>;
+  private product$: BehaviorSubject<ShopProduct> = new BehaviorSubject<ShopProduct>(null);
+  shopKey$:Observable<any>;
+
+  constructor(private shopProductService: ShopProductService,
+    private _modalService: NgbModal,
+    private route: ActivatedRoute) { }
+
+  get product() { return this.product$.asObservable()}
+  editProduct(product: ShopProduct = null){
+    const activeModal = this._modalService.open(CreateProductComponent, {
+      size: 'xl',
+      //backdrop: true,
+    });
+    activeModal.componentInstance.product = product;
+    activeModal.componentInstance.shopKey = this.shopKey$;
+
+  }
+
+  deleteProduct(product: ShopProduct = null, shopKey: string = ''){
+    Notiflix.Confirm.Show( 'delete?', `Do you want to delete ${product.name}`, 'Yes', 'No', ()=>{
+      Notiflix.Loading.Arrows();
+      this.shopProductService.deleteProduct(product).pipe(mergeMap(res=>{
+        return this.shopProductService.listproducts({
+          "shop_key": shopKey
+        }).pipe(map(()=>{
+          return res;
+        }));
+      })).subscribe(()=>{
+        Notiflix.Loading.Remove();
+        Notiflix.Notify.Success(`${product.name} Successfully deleted `);
+      }, ()=>{
+        Notiflix.Loading.Remove();
+        Notiflix.Notify.Failure(`unexpected error`);
+      });
+    }, ()=>{
+      // No button callback alert('If you say so...');
+    } );
+  }
+
+  ngOnInit(): void {
+    this.products$ = this.shopProductService.products;
+    this.shopKey$ = this.route.parent.params;
+  }
+
+}
