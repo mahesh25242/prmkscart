@@ -94,11 +94,11 @@ export class UserService {
   }
 
   updateProfile(postData:any= null){
-    return this.http.post('/admin/updateProfile', postData);
+    return this.http.post('/updateProfile', postData);
   }
 
   updateAvatar(postData:any= null){
-    return this.http.post('/admin/updateAvatar', postData);
+    return this.http.post('/updateAvatar', postData);
   }
 
 

@@ -20,9 +20,9 @@ class AdminAuthenticate
 
        if (Auth::check() )
        {
-        if(\App\User::has("isSuperAdmin")->find(Auth::id())->exists())
+        if(\App\User::has("isSuperAdmin")->find(Auth::id()) && \App\User::has("isSuperAdmin")->find(Auth::id())->exists())
                 return $next($request);
        }
-       return redirect()->guest('/');
+       return response('Unauthorized.', 401);;
     }
 }

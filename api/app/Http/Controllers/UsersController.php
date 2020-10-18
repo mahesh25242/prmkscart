@@ -145,7 +145,6 @@ class UsersController extends Controller
 
         $validationField = [
             'fname' => ['required'],
-            'lname' => ['required'],
             'email' => ['required', 'email'],
         ];
 
