@@ -1,3 +1,15 @@
-{{
-  cart$ | async | json
-}}
+<ng-container *ngIf="(cart$ | async) as cart">
+  <ng-container *ngIf="cart">
+    <div *ngFor="let item of cart">
+      {{item.product.name}}
+      {{item.product.shop_product_selected_variant.name}}
+      {{item.qty}}
+      {{item.price}}
+        <a href="javascript:{}" class="btn btn-primary btn-sm" (click)="updateCart(item, '+')">+</a>
+        <a href="javascript:{}" class="btn btn-primary btn-sm ml-1" (click)="updateCart(item, '-')">-</a>
+    </div>
+    Items: {{cart.length}}
+    Total : {{ total}}
+    <a href="javascript:{}" class="btn btn-primary" (click)="sendToShop()">Send</a>
+  </ng-container>
+</ng-container>

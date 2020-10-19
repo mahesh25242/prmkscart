@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Observable } from 'rxjs';
-import { Cart } from 'src/app/lib/interfaces';
+import { map, mergeMap, tap } from 'rxjs/operators';
+import { Cart, ShopProduct } from 'src/app/lib/interfaces';
 import { CartService } from 'src/app/lib/services';
 import { environment } from '../../../environments/environment';
 @Component({
@@ -10,35 +11,70 @@ import { environment } from '../../../environments/environment';
 })
 export class CartComponent implements OnInit {
   cart$: Observable<Cart[]>;
-  constructor(private cartService: CartService) { }
+  total:number = 0;
 
+  constructor(private cartService: CartService) {
+    cartService.shopKey = environment.shopKey;
+  }
+
+  updateCart(cart: Cart, action: string='+'){
+    const itm =Object.assign({}, cart);
+    itm.qty = 1;
+    this.cartService.updateCart(itm, action).subscribe();
+  }
+
+  sendToShop(){
+    let txt = `%0a‎ New Order`;
+    txt += `%0a‎ Order Number: ${encodeURIComponent(`#45`)}`;
+    txt += `%0a‎ Product: Cake `;
+    txt += `%0a‎ Quantity: 1Kg `;
+    txt += `%0a‎ Price: 200 `;
+    txt += `%0a‎ ============== `;
+
+
+    txt += `%0a‎ Product: Cake `;
+    txt += `%0a‎ Quantity: 1Kg `;
+    txt += `%0a‎ Price: 200 `;
+    txt += `%0a‎ ============== `;
+
+
+    txt += `%0a‎ Product: Cake `;
+    txt += `%0a‎ Quantity: 1Kg `;
+    txt += `%0a‎ Price: 200 `;
+    txt += `%0a‎ ============== `;
+
+
+
+    txt += `%0a‎ Product: Cake `;
+    txt += `%0a‎ Quantity: 1Kg `;
+    txt += `%0a‎ Price: 200 `;
+    txt += `%0a‎ ============== `;
+
+
+
+    txt += `%0a‎ Product: Cake `;
+    txt += `%0a‎ Quantity: 1Kg `;
+    txt += `%0a‎ Price: 200 `;
+    txt += `%0a‎ ============== `;
+
+
+    txt += `%0a‎ Product: Cake `;
+    txt += `%0a‎ Quantity: 1Kg `;
+    txt += `%0a‎ Price: 200 `;
+    txt += `%0a‎ ============== `;
+
+
+    txt += `%0a‎ Total: 20000 %0a`;
+    window.location.href = `https://wa.me/919995453566?text=${txt}`;
+
+  }
   ngOnInit(): void {
-
-    this.cartService.cart$.asObservable().subscribe(crt =>{
-
-      const cart = localStorage.getItem(`${environment.shopKey}-cart`);
-      let isFound: boolean = false;
-      if(cart){
-        const cartArr: Cart[] = JSON.parse(cart);
-
-        cartArr.map(item =>{
-          if(item && crt && item?.product?.id == crt?.product?.id){
-            isFound = true;
-            item.qty += crt.qty;
-          }
-        });
-        if(!isFound){
-          const cartArr: Cart[] = [crt];
-        }
-        localStorage.removeItem(`${environment.shopKey}-cart`);
-        localStorage.setItem(`${environment.shopKey}-cart`,JSON.stringify(cartArr));
-      }else if(crt){
-        const cartArr: Cart[] = [crt];
-        localStorage.setItem(`${environment.shopKey}-cart`,JSON.stringify(cartArr));
-      }
-
-
-    })
+    this.cart$ = this.cartService.cart().pipe(tap(res=>{
+      this.total = 0;
+      res.map(itm=>{
+        this.total +=itm.price;
+      });
+    }));
   }
 
 }
