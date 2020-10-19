@@ -1,5 +1,5 @@
 <ng-container *ngIf="(cart$ | async) as cart">
-  <ng-container *ngIf="cart">
+  <ng-container *ngIf="cart && cart.length">
     <div *ngFor="let item of cart">
       {{item.product.name}}
       {{item.product.shop_product_selected_variant.name}}
