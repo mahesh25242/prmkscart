@@ -1,15 +1,15 @@
 <ng-container *ngIf="(cart$ | async) as cart">
-  <ng-container *ngIf="cart && cart.length">
-    <div *ngFor="let item of cart">
-      {{item.product.name}}
-      {{item.product.shop_product_selected_variant.name}}
-      {{item.qty}}
-      {{item.price}}
-        <a href="javascript:{}" class="btn btn-primary btn-sm" (click)="updateCart(item, '+')">+</a>
-        <a href="javascript:{}" class="btn btn-primary btn-sm ml-1" (click)="updateCart(item, '-')">-</a>
+  <ng-container *ngIf="cart && cart.length ">
+    <!-- && !cartDetails -->
+    On Your Bag {{cart.length}} {{ cart.length > 1 ? 'items' : 'item' }}
+    Total Price : {{ total}}
+    <a href="javascript:{}" class="btn btn-primary" (click)="showDetails()">Details</a>
+
+    <div class="modal fade" id="cartDetails" data-backdrop="static"  tabindex="-1" aria-labelledby="cartDetailsLabel" aria-hidden="true">
+      <app-cart-details (showDetails)="showDetails()" ></app-cart-details>
     </div>
-    Items: {{cart.length}}
-    Total : {{ total}}
-    <a href="javascript:{}" class="btn btn-primary" (click)="sendToShop()">Send</a>
+
+
   </ng-container>
 </ng-container>
+

@@ -4,6 +4,9 @@ import { map, mergeMap, tap } from 'rxjs/operators';
 import { Cart, ShopProduct } from 'src/app/lib/interfaces';
 import { CartService } from 'src/app/lib/services';
 import { environment } from '../../../environments/environment';
+
+declare var $: any;
+
 @Component({
   selector: 'app-cart',
   templateUrl: './cart.component.html',
@@ -12,7 +15,7 @@ import { environment } from '../../../environments/environment';
 export class CartComponent implements OnInit {
   cart$: Observable<Cart[]>;
   total:number = 0;
-
+  cartDetails: boolean = false;
   constructor(private cartService: CartService) {
     cartService.shopKey = environment.shopKey;
   }
@@ -23,51 +26,11 @@ export class CartComponent implements OnInit {
     this.cartService.updateCart(itm, action).subscribe();
   }
 
-  sendToShop(){
-    let txt = `%0a‎ New Order`;
-    txt += `%0a‎ Order Number: ${encodeURIComponent(`#45`)}`;
-    txt += `%0a‎ Product: Cake `;
-    txt += `%0a‎ Quantity: 1Kg `;
-    txt += `%0a‎ Price: 200 `;
-    txt += `%0a‎ ============== `;
-
-
-    txt += `%0a‎ Product: Cake `;
-    txt += `%0a‎ Quantity: 1Kg `;
-    txt += `%0a‎ Price: 200 `;
-    txt += `%0a‎ ============== `;
-
-
-    txt += `%0a‎ Product: Cake `;
-    txt += `%0a‎ Quantity: 1Kg `;
-    txt += `%0a‎ Price: 200 `;
-    txt += `%0a‎ ============== `;
-
-
-
-    txt += `%0a‎ Product: Cake `;
-    txt += `%0a‎ Quantity: 1Kg `;
-    txt += `%0a‎ Price: 200 `;
-    txt += `%0a‎ ============== `;
-
-
-
-    txt += `%0a‎ Product: Cake `;
-    txt += `%0a‎ Quantity: 1Kg `;
-    txt += `%0a‎ Price: 200 `;
-    txt += `%0a‎ ============== `;
-
-
-    txt += `%0a‎ Product: Cake `;
-    txt += `%0a‎ Quantity: 1Kg `;
-    txt += `%0a‎ Price: 200 `;
-    txt += `%0a‎ ============== `;
-
-
-    txt += `%0a‎ Total: 20000 %0a`;
-    window.location.href = `https://wa.me/919995453566?text=${txt}`;
-
+  showDetails(){
+    $('#cartDetails').modal('show')
+    this.cartDetails = !this.cartDetails;
   }
+
   ngOnInit(): void {
     this.cart$ = this.cartService.cart().pipe(tap(res=>{
       this.total = 0;

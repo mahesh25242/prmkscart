@@ -1,0 +1,46 @@
+<ng-container *ngIf="(cart$ | async) as cart">
+  <ng-container *ngIf="cart && cart.length">
+    <div class="modal-dialog modal-xl">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">{{cart.length}} {{ (cart.length  >1) ? 'items' : 'item' }}, Total Amount: {{ total}}</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close" (click)="closeWindow()">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+
+          <div *ngFor="let item of cart">
+            {{item.product.name}}
+            {{item.product.shop_product_selected_variant.name}}
+            {{item.qty}}
+            {{item.price}}
+              <a href="javascript:{}" class="btn btn-primary btn-sm" (click)="updateCart(item, '+')">+</a>
+              <a href="javascript:{}" class="btn btn-primary btn-sm ml-1" (click)="updateCart(item, '-')">-</a>
+          </div>
+          Items: {{cart.length}}
+          Total : {{ total}}
+
+          <div>
+            <form>
+              <div class="form-group">
+                <label for="email">Email address</label>
+                <input type="email" class="form-control" id="email"  placeholder="Enter email">
+              </div>
+              <div class="form-group">
+                <label for="phone">Phone</label>
+                <input type="tel" class="form-control" id="phone"  placeholder="Phone">
+              </div>
+            </form>
+
+          </div>
+        </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal" (click)="closeWindow()">Close</button>
+        <button type="submit" class="btn btn-primary"  (click)="sendToShop()">Send to Whatsapp</button>
+      </div>
+    </div>
+  </div>
+
+  </ng-container>
+</ng-container>
