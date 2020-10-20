@@ -1,13 +1,13 @@
-import { Component, Input, OnDestroy, OnInit } from '@angular/core';
+import { Component, Inject, Input, OnDestroy, OnInit } from '@angular/core';
 import { FormArray, FormBuilder, FormControl, FormGroup } from '@angular/forms';
 import { Observable, Subscription } from 'rxjs';
 import { mergeMap } from 'rxjs/operators';
 import { ShopProductService, ShopProductCategoryService } from 'src/app/lib/services';
 import Notiflix from "notiflix";
 import { ShopProduct, ShopProductCategory } from 'src/app/lib/interfaces';
-import { faPlus, faTrash } from '@fortawesome/free-solid-svg-icons';
+
 import { environment } from '../../../../environments/environment';
-declare var $: any;
+import {MatDialogRef, MAT_DIALOG_DATA} from '@angular/material/dialog';
 
 
 @Component({
@@ -16,8 +16,7 @@ declare var $: any;
   styleUrls: ['./create-product.component.scss']
 })
 export class CreateProductComponent implements OnInit, OnDestroy {
-  faPlus =faPlus ;
-  faTrash = faTrash;
+
   createProductFrm: FormGroup;
   statuses = [
     {
@@ -44,13 +43,14 @@ export class CreateProductComponent implements OnInit, OnDestroy {
     }
   ];
   categories$: Observable<ShopProductCategory[]>;
-  @Input() product: Observable<ShopProduct>;
+
   saveProdSubScr: Subscription;
   formPathSubScr: Subscription;
   constructor(private formBuilder: FormBuilder,
     private shopProductService: ShopProductService,
     private shopProductCategoryService: ShopProductCategoryService,
-    ) { }
+    @Inject(MAT_DIALOG_DATA) public data: ShopProduct,
+    public dialogRef: MatDialogRef<CreateProductComponent>) { }
 
   get f() { return this.createProductFrm.controls}
 
@@ -93,7 +93,7 @@ export class CreateProductComponent implements OnInit, OnDestroy {
     })).subscribe(res=>{
       Notiflix.Loading.Remove();
       Notiflix.Notify.Success(`Successfully saved product `);
-      $('#createProduct').modal('hide')
+      this.dialogRef.close();
     }, error=>{
       Notiflix.Loading.Remove();
       if(error.status == 422){
@@ -187,18 +187,18 @@ export class CreateProductComponent implements OnInit, OnDestroy {
 
 
 
-    this.formPathSubScr = this.product.subscribe(res=>{
+
       this.varients.controls = [];
       this.createProductFrm.patchValue({
-        id: (res?.id) ? res?.id : 0,
-        name: (res?.name) ? res?.name : '',
-        description: (res?.description) ? res?.description : '',
-        status: (res?.status >= 0) ? res?.status : 1,
-        sortorder: (res?.sortorder) ? res?.sortorder : 1,
-        shop_product_category_id: (res?.shop_product_category?.id) ? res?.shop_product_category : null,
+        id: (this.data?.id) ? this.data?.id : 0,
+        name: (this.data?.name) ? this.data?.name : '',
+        description: (this.data?.description) ? this.data?.description : '',
+        status: (this.data?.status >= 0) ? this.data?.status : 1,
+        sortorder: (this.data?.sortorder) ? this.data?.sortorder : 1,
+        shop_product_category_id: (this.data?.shop_product_category?.id) ? this.data?.shop_product_category : null,
       });
-      if(res?.shop_product_variant){
-        res.shop_product_variant.map(vrnt =>{
+      if(this.data?.shop_product_variant){
+        this.data.shop_product_variant.map(vrnt =>{
           let img=null;
           if(vrnt?.shop_product_image?.image)
             img = `${environment.siteAddress}/assets/shop/${environment.shopKey}/products/${vrnt.shop_product_image.image}`;
@@ -211,7 +211,7 @@ export class CreateProductComponent implements OnInit, OnDestroy {
         this.varients.controls = [];
         this.varients.push(this.formBuilder.group(this.varientFormBuild()));
       }
-    });
+
 
   }
 

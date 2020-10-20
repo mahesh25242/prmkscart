@@ -1,11 +1,13 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit, OnDestroy, Output, EventEmitter } from '@angular/core';
 import * as _ from 'lodash';
 import { Router } from '@angular/router';
 import { environment } from '../../environments/environment';
 import { Observable, Subscription } from 'rxjs';
 import { User } from 'src/app/lib/interfaces';
-import { UserService } from 'src/app/lib/services';
+import {  UserService } from 'src/app/lib/services';
 import { mergeMap } from 'rxjs/operators';
+import { GeneralService } from '../lib/services/index';
+import { BreakpointObserver, Breakpoints, BreakpointState } from '@angular/cdk/layout';
 
 @Component({
   selector: 'app-header',
@@ -16,17 +18,33 @@ export class HeaderComponent implements OnInit, OnDestroy {
   title : string = environment.siteName;
   loggedUser$: Observable<User>;
 
+  @Output() public sidenavToggle = new EventEmitter();
+
+  layOutXSmall$:Observable<BreakpointState>;
   loggedSubScrioption: Subscription;
   signOutSubscription: Subscription;
+
   constructor(
     private router: Router,
-    private userService: UserService,) { }
+    private userService: UserService,
+    private breakpointObserver: BreakpointObserver) {
+
+    }
 
   ngOnInit(): void {
+    this.layOutXSmall$ = this.breakpointObserver.observe([
+      Breakpoints.XSmall
+    ])
+
+
     this.loggedUser$ = this.userService.getloggedUser;
     this.loggedSubScrioption = this.userService.authUser().subscribe();
+
   }
 
+  onToggleSidenav = () => {
+    this.sidenavToggle.emit();
+  }
 
   signOut(){
     this.signOutSubscription = this.userService.setUserLogin({action:'SignOut'}).pipe(mergeMap(sRes=>{
@@ -47,5 +65,6 @@ export class HeaderComponent implements OnInit, OnDestroy {
     if(this.signOutSubscription){
       this.signOutSubscription.unsubscribe();
     }
+
   }
 }

@@ -1,12 +1,13 @@
-import { Component, Input, OnDestroy, OnInit } from '@angular/core';
+import { Component, Inject, Input, OnDestroy, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { Observable, Subscription } from 'rxjs';
 import { mergeMap } from 'rxjs/operators';
 import { ShopProductCategoryService } from 'src/app/lib/services/shop-product-category.service';
 import Notiflix from "notiflix";
 import { ShopProductCategory } from 'src/app/lib/interfaces';
+import {MatDialogRef, MAT_DIALOG_DATA} from '@angular/material/dialog';
 
-declare var $: any;
+
 
 
 @Component({
@@ -27,11 +28,13 @@ export class CreateCategoryComponent implements OnInit, OnDestroy {
       id: 0
     }
   ];
-  @Input() category: Observable<ShopProductCategory>;
+
   saveCatSubScr: Subscription;
   formPathSubScr: Subscription;
-  constructor(private formBuilder: FormBuilder,
-    private shopProductCategoryService: ShopProductCategoryService) { }
+  constructor(@Inject(MAT_DIALOG_DATA) public data: ShopProductCategory,
+  private formBuilder: FormBuilder,
+    private shopProductCategoryService: ShopProductCategoryService,
+    public dialogRef: MatDialogRef<CreateCategoryComponent>) { }
 
   get f() { return this.createCatFrm.controls}
 
@@ -53,7 +56,7 @@ export class CreateCategoryComponent implements OnInit, OnDestroy {
     })).subscribe(res=>{
       Notiflix.Loading.Remove();
       Notiflix.Notify.Success(`Successfully saved category `);
-      $('#createCategory').modal('hide')
+      this.dialogRef.close();
     }, error=>{
       Notiflix.Loading.Remove();
       if(error.status == 422){
@@ -84,17 +87,17 @@ export class CreateCategoryComponent implements OnInit, OnDestroy {
       icon: [null, []]
     });
 
-    this.formPathSubScr = this.category.subscribe(res=>{
+
 
 
       this.createCatFrm.patchValue({
-        id: res?.id,
-        name: res?.name,
-        description: res?.description,
-        status: (res?.status >= 0) ? res?.status : 1,
-        sortorder: (res?.sortorder) ? res?.sortorder : 1,
+        id: this.data?.id,
+        name: this.data?.name,
+        description: this.data?.description,
+        status: (this.data?.status >= 0) ? this.data?.status : 1,
+        sortorder: (this.data?.sortorder) ? this.data?.sortorder : 1,
       });
-    });
+
 
   }
 

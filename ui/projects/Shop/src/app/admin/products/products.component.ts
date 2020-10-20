@@ -4,8 +4,8 @@ import { ShopProduct } from 'src/app/lib/interfaces';
 import { ShopProductService } from 'src/app/lib/services';
 import Notiflix from "notiflix";
 import { map, mergeMap } from 'rxjs/operators';
-
-declare var $: any;
+import {MatDialog, MatDialogRef, MAT_DIALOG_DATA} from '@angular/material/dialog';
+import { CreateProductComponent } from './create-product/create-product.component';
 
 
 @Component({
@@ -17,13 +17,19 @@ export class ProductsComponent implements OnInit {
 
   products$: Observable<ShopProduct[]>;
   private product$: BehaviorSubject<ShopProduct> = new BehaviorSubject<ShopProduct>(null);
+  displayedColumns: string[] = ['no', 'name',  'status', 'options'];
 
-  constructor(private shopProductService: ShopProductService) { }
+  constructor(private shopProductService: ShopProductService,
+    public dialog: MatDialog) { }
 
   get product() { return this.product$.asObservable()}
   editProduct(product: ShopProduct = null){
-    this.product$.next(product);
-    $('#createProduct').modal('show')
+
+    let dialogRef = this.dialog.open(CreateProductComponent, {
+      data: product,
+      // height: '400px',
+      // width: '600px',
+    });
   }
 
   deleteProduct(product: ShopProduct = null){

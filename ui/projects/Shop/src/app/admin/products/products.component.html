@@ -1,55 +1,47 @@
 <h3>Products</h3>
-<!-- Button trigger modal -->
-<button type="button" class="btn btn-primary" (click)="editProduct(null)">
-  Create Product
-</button>
 
-<!-- Modal -->
-<div class="modal fade" data-backdrop="static"  id="createProduct" tabindex="-1" aria-labelledby="createCategoryLabel" aria-hidden="true">
-  <app-create-product [product]="product"></app-create-product>
-</div>
+<button mat-raised-button color="primary" type="button"  (click)="editProduct(null)">Create Product</button>
 
-<table class="table">
-  <thead>
-    <tr>
-      <th>
-        No
-      </th>
-      <th>
-        Name
-      </th>
-      <th>
-        Status
-      </th>
-      <th>
-        Options
-      </th>
-    </tr>
-  </thead>
-  <tbody>
-    <ng-container *ngIf="(products$ | async) as products">
-      <tr *ngFor="let product of products; let i = index">
-        <td>
-            {{ i+1 }}
-        </td>
-        <td>
-          <a href="javascript:{}" (click)="editProduct(product)">{{product.name}}</a>
-        </td>
-        <td>
-          {{ product.status_text}}
-        </td>
-        <td>
-          <a href="javascript:{}" class="text-danger" (click)="deleteProduct(product)">Delete</a>
-        </td>
-      </tr>
-      <tr *ngIf="!products || !products.length">
-        <td colspan="4">
-          <div class="alert alert-warning">
-            No product found
-          </div>
-        </td>
-      </tr>
+<ng-container *ngIf="(products$ | async) as products">
+  <table mat-table [dataSource]="products" class="mat-elevation-z8">
+
+    <!--- Note that these columns can be defined in any order.
+          The actual rendered columns are set as a property on the row definition" -->
+
+    <!-- Number Column -->
+    <ng-container matColumnDef="no">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header> No. </th>
+      <td mat-cell *matCellDef="let element; let i = index">{{i + 1}}</td>
     </ng-container>
 
-  </tbody>
-</table>
+    <!-- Name Column -->
+    <ng-container matColumnDef="name">
+      <th mat-header-cell *matHeaderCellDef> Name </th>
+      <td mat-cell *matCellDef="let element">
+        <a href="javascript:{}" (click)="editProduct(element)">{{element.name}}</a>
+      </td>
+    </ng-container>
+
+
+    <!-- Status Column -->
+    <ng-container matColumnDef="status">
+      <th mat-header-cell *matHeaderCellDef> Status </th>
+      <td mat-cell *matCellDef="let element"> {{element.status_text}} </td>
+    </ng-container>
+
+     <!-- Options Column -->
+     <ng-container matColumnDef="options">
+      <th mat-header-cell *matHeaderCellDef> Delete </th>
+      <td mat-cell *matCellDef="let element">
+        <button  type="button" mat-icon-button  color="primary"
+          (click)="deleteProduct(element)">
+          <mat-icon>delete_forever</mat-icon>
+        </button>
+      </td>
+    </ng-container>
+
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+  </table>
+</ng-container>
+

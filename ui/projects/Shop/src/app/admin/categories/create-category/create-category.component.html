@@ -1,70 +1,57 @@
 
-<div class="modal-dialog modal-lg">
-  <div class="modal-content">
-    <div class="modal-header">
-      <h5 class="modal-title">Create Category</h5>
-      <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-        <span aria-hidden="true">&times;</span>
-      </button>
-    </div>
-    <form [formGroup]="createCatFrm" (ngSubmit)="saveCategory()">
-      <div class="modal-body">
-          <div class="form-group">
-            <label for="name">Name</label>
-            <input type="text" class="form-control" id="name"
-            [ngClass]="{'is-invalid': ( f.name.errors && f.name.errors.error)}"
-            placeholder="Name"
-            formControlName="name">
-            <div *ngIf="f.name.errors && f.name.errors.error" class="invalid-feedback">
-              {{f.name.errors.error}}
-            </div>
-          </div>
-          <div class="form-group">
-            <label for="description">Description</label>
-            <textarea  class="form-control" id="description"
-            [ngClass]="{'is-invalid': ( f.description.errors && f.description.errors.error)}"
-            placeholder="Description"
-            formControlName="description"></textarea>
-            <div *ngIf="f.description.errors && f.description.errors.error" class="invalid-feedback">
-              {{f.description.errors.error}}
-            </div>
-          </div>
-          <div class="form-group">
-            <label for="status">Status</label>
-            <ng-select [items]="statuses"
-           bindLabel="name"
-           bindValue="id"
-           formControlName="status">
-          </ng-select>
-            <div *ngIf="f.status.errors && f.status.errors.error" class="invalid-feedback">
-              {{f.status.errors.error}}
-            </div>
-          </div>
-          <div class="form-group">
-            <label for="sortorder">Sortorder</label>
-            <input type="number" class="form-control" id="sortorder"   [ngClass]="{'is-invalid': ( f.sortorder.errors && f.sortorder.errors.error)}"
-            placeholder="SortOrder"
-            formControlName="sortorder">
-            <div *ngIf="f.sortorder.errors && f.sortorder.errors.error" class="invalid-feedback">
-              {{f.sortorder.errors.error}}
-            </div>
-          </div>
+<h1 mat-dialog-title>
+  {{ (this.data?.id) ? 'Edit '+this.data.name : 'Create New Category' }}
+</h1>
+<div mat-dialog-content>
+  <form [formGroup]="createCatFrm" (ngSubmit)="saveCategory()">
+    <mat-form-field class="full-width-text" appearance="standard">
+      <mat-label>Name</mat-label>
+      <input matInput formControlName="name" placeholder="Ex. Cake" required>
+      <mat-error *ngIf="f.name.errors && f.name.errors.error">
+        {{f.name.errors.error}}
+      </mat-error>
+    </mat-form-field>
 
-          <div class="form-group">
-            <label for="icon">Icon</label>
-            <input type="file" class="form-control" id="icon" (change)="handleIconSelection($event.target.files)" accept="image/*"
-            [ngClass]="{'is-invalid': ( f.icon.errors && f.icon.errors.error)}">
-            <div *ngIf="f.icon.errors && f.icon.errors.error" class="invalid-feedback">
-              {{f.icon.errors.error}}
-            </div>
-          </div>
+    <mat-form-field class="full-width-text" appearance="standard">
+      <mat-label>Description</mat-label>
+      <textarea matInput formControlName="description" placeholder="Ex. Cake"></textarea>
+      <mat-error *ngIf="f.description.errors && f.description.errors.error">
+        {{f.description.errors.error}}
+      </mat-error>
+    </mat-form-field>
 
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-        <button type="submit" class="btn btn-primary">Save changes</button>
-      </div>
-    </form>
-  </div>
+    <mat-form-field appearance="standard">
+      <mat-label>Status</mat-label>
+      <mat-select formControlName="status" required>
+        <mat-option *ngFor="let status of statuses" [value]="status.id">
+          {{status.name}}
+        </mat-option>
+      </mat-select>
+      <mat-error *ngIf="f.status.errors && f.status.errors.error">
+        {{f.status.errors.error}}
+      </mat-error>
+    </mat-form-field>
+
+
+    <mat-form-field class="full-width-text" appearance="standard">
+      <mat-label>Sortorder</mat-label>
+      <input type="number" matInput formControlName="sortorder" placeholder="Ex. Cake" >
+      <mat-error *ngIf="f.sortorder.errors && f.sortorder.errors.error">
+        {{f.sortorder.errors.error}}
+      </mat-error>
+    </mat-form-field>
+
+    <button (click)="fileInput.click()" type="button" mat-stroked-button color="primary">
+      <span>Choose Icon</span>
+      <input #fileInput type="file" (change)="handleIconSelection($event.target.files)"
+       style="display:none;"  accept="image/*" />
+    </button>
+    <mat-error *ngIf="f.icon.errors && f.icon.errors.error">
+      {{f.icon.errors.error}}
+    </mat-error>
+
+    <button mat-stroked-button type="button" (click)="dialogRef.close()">Close</button>
+    <button mat-raised-button color="primary" type="submit">Save changes</button>
+  </form>
 </div>
 

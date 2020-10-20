@@ -1,61 +1,53 @@
 <h3>Categories</h3>
-<!-- Button trigger modal -->
-<button type="button" class="btn btn-primary" (click)="editCategory(null)">
-  Create Category
-</button>
 
-<!-- Modal -->
-<div class="modal fade" id="createCategory" data-backdrop="static"  tabindex="-1" aria-labelledby="createCategoryLabel" aria-hidden="true">
-  <app-create-category [category]="category"></app-create-category>
-</div>
+<button mat-raised-button color="primary" type="button" (click)="editCategory(null)">Create Category</button>
 
-<table class="table">
-  <thead>
-    <tr>
-      <th>
-        No
-      </th>
-      <th>
-        Name
-      </th>
-      <th>
-        Icon
-      </th>
-      <th>
-        Status
-      </th>
-      <th>
-        Options
-      </th>
-    </tr>
-  </thead>
-  <tbody>
-    <ng-container *ngIf="(categories$ | async) as categories">
-      <tr *ngFor="let category of categories; let i = index" [ngClass]="{ 'text-warning' : !category.status}">
-        <td>
-            {{ i+1 }}
-        </td>
-        <td>
-          <a href="javascript:{}" (click)="editCategory(category)">{{category.name}}</a>
-        </td>
-        <td>
-          <img class="img-thumbnail" [src]="environment.siteAddress+'/assets/shop/'+environment.shopKey+'/category/'+category.icon" *ngIf="category.icon"/>
-        </td>
-        <td>
-          {{ category.status_text}}
-        </td>
-        <td>
-          <a href="javascript:{}" class="text-danger" (click)="deleteCategory(category)">Delete</a>
-        </td>
-      </tr>
-      <tr *ngIf="!categories || !categories.length">
-        <td colspan="5">
-          <div class="alert alert-warning">
-            No product found
-          </div>
-        </td>
-      </tr>
+<ng-container *ngIf="(categories$ | async) as categories">
+  <table mat-table [dataSource]="categories" class="mat-elevation-z8">
+
+    <!--- Note that these columns can be defined in any order.
+          The actual rendered columns are set as a property on the row definition" -->
+
+    <!-- Number Column -->
+    <ng-container matColumnDef="no">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header> No. </th>
+      <td mat-cell *matCellDef="let element; let i = index">{{i + 1}}</td>
     </ng-container>
 
-  </tbody>
-</table>
+    <!-- Name Column -->
+    <ng-container matColumnDef="name">
+      <th mat-header-cell *matHeaderCellDef> Name </th>
+      <td mat-cell *matCellDef="let element">
+        <a href="javascript:{}" (click)="editCategory(element)">{{element.name}}</a>
+      </td>
+    </ng-container>
+
+    <!-- Icon Column -->
+    <ng-container matColumnDef="icon">
+      <th mat-header-cell *matHeaderCellDef> Icon </th>
+      <td mat-cell *matCellDef="let element">
+        <img class="img-thumbnail" [src]="environment.siteAddress+'/assets/shop/'+environment.shopKey+'/category/'+element.icon" *ngIf="element.icon"/>
+      </td>
+    </ng-container>
+
+    <!-- Status Column -->
+    <ng-container matColumnDef="status">
+      <th mat-header-cell *matHeaderCellDef> Status </th>
+      <td mat-cell *matCellDef="let element"> {{element.status_text}} </td>
+    </ng-container>
+
+     <!-- Options Column -->
+     <ng-container matColumnDef="options">
+      <th mat-header-cell *matHeaderCellDef> Delete </th>
+      <td mat-cell *matCellDef="let element">
+        <button type="button" mat-icon-button  color="primary"
+          (click)="deleteCategory(element)">
+          <mat-icon>delete_forever</mat-icon>
+        </button>
+      </td>
+    </ng-container>
+
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+  </table>
+</ng-container>

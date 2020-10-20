@@ -5,7 +5,10 @@ import { ShopProductCategoryService } from 'src/app/lib/services';
 import Notiflix from "notiflix";
 import { map, mergeMap } from 'rxjs/operators';
 import { environment } from '../../../environments/environment';
-declare var $: any;
+import {MatDialog, MatDialogRef, MAT_DIALOG_DATA} from '@angular/material/dialog';
+import { CreateCategoryComponent } from './create-category/create-category.component';
+
+
 
 @Component({
   selector: 'app-categories',
@@ -14,14 +17,23 @@ declare var $: any;
 })
 export class CategoriesComponent implements OnInit {
   categories$: Observable<ShopProductCategory[]>;
-  private category$: BehaviorSubject<ShopProductCategory> = new BehaviorSubject<ShopProductCategory>(null);
   environment = environment;
-  constructor(private shopProductCategoryService: ShopProductCategoryService) { }
 
-  get category() { return this.category$.asObservable()}
+  displayedColumns: string[] = ['no', 'name', 'icon', 'status', 'options'];
+
+  constructor(private shopProductCategoryService: ShopProductCategoryService,
+    public dialog: MatDialog) { }
+
+
   editCategory(cat: ShopProductCategory = null){
-    this.category$.next(cat);
-    $('#createCategory').modal('show')
+
+    let dialogRef = this.dialog.open(CreateCategoryComponent, {
+      data: cat,
+      height: '400px',
+      width: '600px',
+    });
+
+
   }
 
   deleteCategory(cat: ShopProductCategory = null){

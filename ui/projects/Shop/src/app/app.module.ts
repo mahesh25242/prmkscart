@@ -8,6 +8,8 @@ import { httpInterceptorProviders } from './lib/interceptor'
 
 import { SharedModuleModule } from './lib/shared-module/shared-module.module';
 
+import {MatToolbarModule} from '@angular/material/toolbar';
+
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { HeaderComponent } from './header/header.component';
@@ -20,6 +22,7 @@ import { CategoriesComponent } from './components/categories/categories.componen
 import { ProductComponent } from './components/product/product.component';
 import { CartComponent } from './components/cart/cart.component';
 import { CartDetailsComponent } from './cart-details/cart-details.component';
+import { SideNavListComponent } from './header/side-nav-list/side-nav-list.component';
 
 @NgModule({
   declarations: [
@@ -33,13 +36,17 @@ import { CartDetailsComponent } from './cart-details/cart-details.component';
     CategoriesComponent,
     ProductComponent,
     CartComponent,
-    CartDetailsComponent
+    CartDetailsComponent,
+    SideNavListComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     BrowserAnimationsModule,
     SharedModuleModule,
+
+    MatToolbarModule,
+
     HttpClientModule,
     HttpClientXsrfModule.disable(),
   ],

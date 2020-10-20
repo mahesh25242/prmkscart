@@ -9,6 +9,21 @@ import { NgxCaptchaModule } from 'ngx-captcha';
 import Notiflix from "notiflix";
 // import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
+import {MatIconModule} from '@angular/material/icon';
+import {MatButtonModule} from '@angular/material/button';
+import {MatCardModule} from '@angular/material/card';
+import {MatCheckboxModule} from '@angular/material/checkbox';
+import {MatDatepickerModule} from '@angular/material/datepicker';
+import {MatDialogModule} from '@angular/material/dialog';
+import {MatFormFieldModule} from '@angular/material/form-field';
+import {MatGridListModule} from '@angular/material/grid-list';
+import {MatInputModule} from '@angular/material/input';
+import {MatSidenavModule} from '@angular/material/sidenav';
+import { MatListModule } from '@angular/material/list';
+import {LayoutModule} from '@angular/cdk/layout';
+import {MatMenuModule} from '@angular/material/menu';
+import {MatTableModule} from '@angular/material/table';
+import {MatSelectModule} from '@angular/material/select';
 
 Notiflix.Confirm.Init({ borderRadius:"5px",titleColor:"#204486",okButtonBackground:"#204486",cancelButtonBackground:"#e2e2e2",cancelButtonColor:"#393939", });
 Notiflix.Notify.Init({ width:"390px", success: {background:"#d4edda",textColor:"#155724",}, failure: {background:"#f8d7da",textColor:"#721c24",}, warning: {background:"#fff3cd",textColor:"#856404",}, info: {background:"#cce5ff",textColor:"#004085",}, });
@@ -28,7 +43,23 @@ Notiflix.Block.Init({ svgColor:"#204486", });
     FontAwesomeModule,
     FormsModule,
     ReactiveFormsModule,
-    NgxCaptchaModule
+    NgxCaptchaModule,
+
+    MatIconModule,
+    MatButtonModule,
+    MatCardModule,
+    MatCheckboxModule,
+    MatDatepickerModule,
+    MatDialogModule,
+    MatFormFieldModule,
+    MatGridListModule,
+    MatInputModule,
+    MatSidenavModule,
+    MatListModule,
+    LayoutModule,
+    MatMenuModule,
+    MatTableModule,
+    MatSelectModule
   ],
   exports:[
     NgSelectModule,
@@ -38,6 +69,22 @@ Notiflix.Block.Init({ svgColor:"#204486", });
     FormsModule,
     ReactiveFormsModule,
     NgxCaptchaModule,
+
+    MatIconModule,
+    MatButtonModule,
+    MatCardModule,
+    MatCheckboxModule,
+    MatDatepickerModule,
+    MatDialogModule,
+    MatFormFieldModule,
+    MatGridListModule,
+    MatInputModule,
+    MatSidenavModule,
+    MatListModule,
+    LayoutModule,
+    MatMenuModule,
+    MatTableModule,
+    MatSelectModule
   ]
 })
 export class SharedModuleModule { }

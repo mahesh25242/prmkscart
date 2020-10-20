@@ -10,7 +10,7 @@ import {
 import { Observable, throwError, BehaviorSubject } from 'rxjs';
 import { environment } from  '../../../environments/environment';
 import { catchError, switchMap, filter, take } from 'rxjs/operators';
-import { UserService, SettingService } from '../services';
+import { UserService, SettingService } from 'src/app/lib/services';
 import Notiflix from "notiflix";
 
 @Injectable()
