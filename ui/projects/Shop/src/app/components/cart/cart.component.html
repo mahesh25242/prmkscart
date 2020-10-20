@@ -3,11 +3,9 @@
     <!-- && !cartDetails -->
     On Your Bag {{cart.length}} {{ cart.length > 1 ? 'items' : 'item' }}
     Total Price : {{ total}}
-    <a href="javascript:{}" class="btn btn-primary" (click)="showDetails()">Details</a>
 
-    <div class="modal fade" id="cartDetails" data-backdrop="static"  tabindex="-1" aria-labelledby="cartDetailsLabel" aria-hidden="true">
-      <app-cart-details (showDetails)="showDetails()" ></app-cart-details>
-    </div>
+    <button mat-stroked-button color="primary" (click)="showDetails()">Details</button>
+
 
 
   </ng-container>

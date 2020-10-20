@@ -2,11 +2,11 @@
 <h1 mat-dialog-title>
   {{ (this.data?.id) ? 'Edit '+this.data.name : 'Create New Category' }}
 </h1>
-<form [formGroup]="createCatFrm" (ngSubmit)="saveCategory()">
+<form [formGroup]="createDeliveryFrm" (ngSubmit)="saveDelivery()">
   <div mat-dialog-content>
       <mat-form-field class="full-width-text" appearance="standard">
         <mat-label>Name</mat-label>
-        <input matInput formControlName="name" placeholder="Ex. Cake" required>
+        <input matInput formControlName="name" placeholder="Ex. Kochi" required>
         <mat-error *ngIf="f.name.errors && f.name.errors.error">
           {{f.name.errors.error}}
         </mat-error>
@@ -14,21 +14,18 @@
 
       <mat-form-field class="full-width-text" appearance="standard">
         <mat-label>Description</mat-label>
-        <textarea matInput formControlName="description" placeholder="Ex. Cake related itesm listed under this"></textarea>
+        <textarea matInput formControlName="description" placeholder="Ex. Kochi nearby location"></textarea>
         <mat-error *ngIf="f.description.errors && f.description.errors.error">
           {{f.description.errors.error}}
         </mat-error>
       </mat-form-field>
 
-      <mat-form-field appearance="standard">
-        <mat-label>Status</mat-label>
-        <mat-select formControlName="status" required>
-          <mat-option *ngFor="let status of statuses" [value]="status.id">
-            {{status.name}}
-          </mat-option>
-        </mat-select>
-        <mat-error *ngIf="f.status.errors && f.status.errors.error">
-          {{f.status.errors.error}}
+
+      <mat-form-field class="full-width-text" appearance="standard">
+        <mat-label>Charge</mat-label>
+        <input type="number" matInput formControlName="charge" placeholder="Ex. 250 Rs" required>
+        <mat-error *ngIf="f.charge.errors && f.charge.errors.error">
+          {{f.charge.errors.error}}
         </mat-error>
       </mat-form-field>
 
@@ -41,14 +38,9 @@
         </mat-error>
       </mat-form-field>
 
-      <button (click)="fileInput.click()" type="button" mat-stroked-button color="primary">
-        <span>Choose Icon</span>
-        <input #fileInput type="file" (change)="handleIconSelection($event.target.files)"
-        style="display:none;"  accept="image/*" />
-      </button>
-      <mat-error *ngIf="f.icon.errors && f.icon.errors.error">
-        {{f.icon.errors.error}}
-      </mat-error>
+
+      <mat-checkbox class="example-margin" formControlName="need_cust_loc" matTooltip="If it checked then while customer fill his/her details it will ask his/her location details too"
+      aria-label="Button that displays a tooltip when focused or hovered over">Need customer Location Details?</mat-checkbox>
 
 
   </div>

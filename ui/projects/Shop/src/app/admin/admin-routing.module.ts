@@ -8,6 +8,8 @@ import { ProductsComponent } from './products/products.component';
 import { EditProfileComponent } from './edit-profile/edit-profile.component';
 import { CategoriesResolver } from './categories/categories-resolver';
 import { ProductsResolver } from './products/products-resolver';
+import { ShopDeliveryResolver } from './shop-delivery/shop-delivery-resolver';
+import { ShopDeliveryComponent } from './shop-delivery/shop-delivery.component';
 
 
 
@@ -36,6 +38,14 @@ const routes: Routes = [
     canActivate: [AdminAuthGuard],
     resolve:{
       products: ProductsResolver
+    }
+  },
+  {
+    path: 'deliveries',
+    component: ShopDeliveryComponent,
+    canActivate: [AdminAuthGuard],
+    resolve:{
+      deliveries: ShopDeliveryResolver
     }
   },
   {

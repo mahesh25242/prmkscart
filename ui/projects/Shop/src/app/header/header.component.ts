@@ -3,9 +3,9 @@ import * as _ from 'lodash';
 import { Router } from '@angular/router';
 import { environment } from '../../environments/environment';
 import { Observable, Subscription } from 'rxjs';
-import { User } from 'src/app/lib/interfaces';
-import {  UserService } from 'src/app/lib/services';
-import { mergeMap } from 'rxjs/operators';
+import { Shop, User } from 'src/app/lib/interfaces';
+import {  UserService, ShopService } from 'src/app/lib/services';
+import { mergeMap, map } from 'rxjs/operators';
 import { GeneralService } from '../lib/services/index';
 import { BreakpointObserver, Breakpoints, BreakpointState } from '@angular/cdk/layout';
 
@@ -17,7 +17,6 @@ import { BreakpointObserver, Breakpoints, BreakpointState } from '@angular/cdk/l
 export class HeaderComponent implements OnInit, OnDestroy {
   title : string = environment.siteName;
   loggedUser$: Observable<User>;
-
   @Output() public sidenavToggle = new EventEmitter();
 
   layOutXSmall$:Observable<BreakpointState>;
@@ -27,7 +26,8 @@ export class HeaderComponent implements OnInit, OnDestroy {
   constructor(
     private router: Router,
     private userService: UserService,
-    private breakpointObserver: BreakpointObserver) {
+    private breakpointObserver: BreakpointObserver,
+    private shopService: ShopService) {
 
     }
 
@@ -37,7 +37,12 @@ export class HeaderComponent implements OnInit, OnDestroy {
     ])
 
 
-    this.loggedUser$ = this.userService.getloggedUser;
+
+    this.loggedUser$ = this.userService.getloggedUser.pipe(mergeMap(user=>{
+      return this.shopService.shopDetail().pipe(map(res=>{
+        return user;
+      }))
+    }));
     this.loggedSubScrioption = this.userService.authUser().subscribe();
 
   }

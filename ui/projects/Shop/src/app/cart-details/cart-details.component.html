@@ -1,46 +1,99 @@
 <ng-container *ngIf="(cart$ | async) as cart">
   <ng-container *ngIf="cart && cart.length">
-    <div class="modal-dialog modal-xl">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title">{{cart.length}} {{ (cart.length  >1) ? 'items' : 'item' }}, Total Amount: {{ total}}</h5>
-          <button type="button" class="close" data-dismiss="modal" aria-label="Close" (click)="closeWindow()">
-            <span aria-hidden="true">&times;</span>
-          </button>
-        </div>
-        <div class="modal-body">
 
-          <div *ngFor="let item of cart">
-            {{item.product.name}}
-            {{item.product.shop_product_selected_variant.name}}
-            {{item.qty}}
-            {{item.price}}
-              <a href="javascript:{}" class="btn btn-primary btn-sm" (click)="updateCart(item, '+')">+</a>
-              <a href="javascript:{}" class="btn btn-primary btn-sm ml-1" (click)="updateCart(item, '-')">-</a>
-          </div>
-          Items: {{cart.length}}
-          Total : {{ total}}
+    <h1 mat-dialog-title>
+      My Cart ( {{cart.length}} )
+    </h1>
+    <div mat-dialog-content>
 
-          <div>
-            <form>
-              <div class="form-group">
-                <label for="email">Email address</label>
-                <input type="email" class="form-control" id="email"  placeholder="Enter email">
-              </div>
-              <div class="form-group">
-                <label for="phone">Phone</label>
-                <input type="tel" class="form-control" id="phone"  placeholder="Phone">
-              </div>
-            </form>
+      <mat-card *ngFor="let item of cart">
+        {{item.product.name}}
+        {{item.product.shop_product_selected_variant.name}}
+        {{item.qty}}
+        {{item.price}}
+        <button mat-icon-button color="primary" (click)="updateCart(item, '+')">
+          <mat-icon>add_circle_outline</mat-icon>
+        </button>
+        <button mat-icon-button color="primary" (click)="updateCart(item, '-')">
+          <mat-icon>remove_circle_outline</mat-icon>
+        </button>
 
-          </div>
-        </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-dismiss="modal" (click)="closeWindow()">Close</button>
-        <button type="submit" class="btn btn-primary"  (click)="sendToShop()">Send to Whatsapp</button>
+      </mat-card>
+
+
+      Items: {{cart.length}}
+      Total : {{ total}}
+
+      <div>
+        <form [formGroup]="customerFrm">
+
+          <ng-container *ngIf="(shop$ | async) as shop">
+            <div *ngFor="let shop_delivery of shop.shop_delivery">
+              {{ shop_delivery.name }}
+              <span *ngIf="shop_delivery.charge">
+                @ {{ shop_delivery.charge}}
+              </span>
+
+            </div>
+          </ng-container>
+          <mat-form-field class="full-width-text" appearance="standard">
+            <mat-label>Full Name</mat-label>
+            <input matInput formControlName="name" placeholder="Ex. John Doe" required>
+            <mat-error *ngIf="f.name.errors && f.name.errors.error">
+              {{f.name.errors.error}}
+            </mat-error>
+          </mat-form-field>
+
+          <mat-slide-toggle>Pick My Location</mat-slide-toggle>
+
+          <mat-form-field class="full-width-text" appearance="standard">
+            <mat-label>Email address</mat-label>
+            <input matInput formControlName="email" placeholder="Ex. johndoe@gmail.com" >
+            <mat-error *ngIf="f.email.errors && f.email.errors.error">
+              {{f.email.errors.error}}
+            </mat-error>
+          </mat-form-field>
+
+          <mat-form-field class="full-width-text" appearance="standard">
+            <mat-label>Phone</mat-label>
+            <input type="tel" matInput formControlName="phone" placeholder="Ex. 91546542465" required>
+            <mat-error *ngIf="f.phone.errors && f.phone.errors.error">
+              {{f.phone.errors.error}}
+            </mat-error>
+          </mat-form-field>
+
+          <mat-form-field class="full-width-text" appearance="standard">
+            <mat-label>Address</mat-label>
+            <textarea matInput formControlName="address" placeholder="Ex. House Name/ Number" required></textarea>
+            <mat-error *ngIf="f.address.errors && f.address.errors.error">
+              {{f.address.errors.error}}
+            </mat-error>
+          </mat-form-field>
+
+          <mat-form-field class="full-width-text" appearance="standard">
+            <mat-label>Pin Code</mat-label>
+            <input type="number" matInput formControlName="pin" placeholder="Ex. 658956" required>
+            <mat-error *ngIf="f.pin.errors && f.pin.errors.error">
+              {{f.pin.errors.error}}
+            </mat-error>
+          </mat-form-field>
+
+          <mat-form-field class="full-width-text" appearance="standard">
+            <mat-label>Order Note</mat-label>
+            <textarea matInput formControlName="note" placeholder="Ex. Birth day John Doe " required></textarea>
+            <mat-error *ngIf="f.note.errors && f.note.errors.error">
+              {{f.note.errors.error}}
+            </mat-error>
+          </mat-form-field>
+
+        </form>
+
       </div>
     </div>
-  </div>
 
+    <div mat-dialog-actions>
+      <button mat-stroked-button type="button" (click)="dialogRef.close()">Close</button>
+      <button mat-raised-button color="primary" type="submit" (click)="sendToShop()">Send to Whatsapp</button>
+    </div>
   </ng-container>
 </ng-container>

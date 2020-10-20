@@ -77,6 +77,9 @@ class Shop extends Model implements AuthenticatableContract, AuthorizableContrac
         return $this->belongsTo('App\ShopCategory');
     }
 
-
+    public function shopDelivery()
+    {
+        return $this->hasMany('App\ShopDelivery');
+    }
 
 }

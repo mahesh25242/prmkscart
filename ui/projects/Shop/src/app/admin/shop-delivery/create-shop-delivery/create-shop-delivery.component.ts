@@ -1,0 +1,82 @@
+import { Component, Inject, OnDestroy, OnInit } from '@angular/core';
+import { FormBuilder, FormGroup } from '@angular/forms';
+import {MatDialogRef, MAT_DIALOG_DATA} from '@angular/material/dialog';
+import Notiflix from "notiflix";
+import { Subscription } from 'rxjs';
+import { mergeMap } from 'rxjs/operators';
+import { ShopDelivery } from 'src/app/lib/interfaces';
+import { ShopService } from 'src/app/lib/services';
+
+@Component({
+  selector: 'app-create-shop-delivery',
+  templateUrl: './create-shop-delivery.component.html',
+  styleUrls: ['./create-shop-delivery.component.scss']
+})
+export class CreateShopDeliveryComponent implements OnInit, OnDestroy {
+  createDeliveryFrm: FormGroup;
+  saveCatSubScr: Subscription;
+  constructor(@Inject(MAT_DIALOG_DATA) public data: ShopDelivery,
+  private formBuilder: FormBuilder,
+    private shopService: ShopService,
+    public dialogRef: MatDialogRef<CreateShopDeliveryComponent>) { }
+
+  get f(){ return this.createDeliveryFrm.controls;}
+
+  saveDelivery(){
+    Notiflix.Loading.Arrows();
+    const postData = {
+      id: this.f.id.value,
+      name: this.f.name.value,
+      description: this.f.description.value,
+      charge: this.f.charge.value,
+      sortorder: this.f.sortorder.value,
+      need_cust_loc: this.f.need_cust_loc.value,
+    }
+    this.saveCatSubScr = this.shopService.saveShopDelivery(postData).pipe(mergeMap(res=>{
+      return this.shopService.shopDeliveries();
+    })).subscribe(res=>{
+      Notiflix.Loading.Remove();
+      Notiflix.Notify.Success(`Successfully saved delivery location `);
+      this.dialogRef.close();
+    }, error=>{
+      Notiflix.Loading.Remove();
+      if(error.status == 422){
+        for(let result in this.createDeliveryFrm.controls){
+          if(error.error.errors[result]){
+            this.createDeliveryFrm.controls[result].setErrors({ error: error.error.errors[result] });
+          }else{
+            this.createDeliveryFrm.controls[result].setErrors(null);
+          }
+        }
+      }
+    });
+
+  }
+
+  ngOnInit(): void {
+    this.createDeliveryFrm= this.formBuilder.group({
+      id: [null, []],
+      name: [null, []],
+      description: [null, []],
+      charge: [null, []],
+      sortorder: [1, []],
+      need_cust_loc: [1, []],
+    });
+
+    this.createDeliveryFrm.patchValue({
+      id: this.data?.id,
+      name: this.data?.name,
+      description: this.data?.description,
+      sortorder: (this.data?.sortorder) ? this.data?.sortorder : 1,
+      charge: (this.data?.charge) ? this.data?.charge : 0,
+      need_cust_loc: (this.data?.need_cust_loc) ? this.data?.need_cust_loc : 0,
+    });
+
+  }
+
+  ngOnDestroy(){
+    if(this.saveCatSubScr){
+      this.saveCatSubScr.unsubscribe();
+    }
+  }
+}

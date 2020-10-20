@@ -4,8 +4,10 @@ import { map, mergeMap, tap } from 'rxjs/operators';
 import { Cart, ShopProduct } from 'src/app/lib/interfaces';
 import { CartService } from 'src/app/lib/services';
 import { environment } from '../../../environments/environment';
+import {MatDialog, MatDialogRef, MAT_DIALOG_DATA} from '@angular/material/dialog';
+import { CartDetailsComponent } from '../../cart-details/cart-details.component';
 
-declare var $: any;
+
 
 @Component({
   selector: 'app-cart',
@@ -16,7 +18,8 @@ export class CartComponent implements OnInit {
   cart$: Observable<Cart[]>;
   total:number = 0;
   cartDetails: boolean = false;
-  constructor(private cartService: CartService) {
+  constructor(private cartService: CartService,
+    public dialog: MatDialog) {
     cartService.shopKey = environment.shopKey;
   }
 
@@ -27,7 +30,8 @@ export class CartComponent implements OnInit {
   }
 
   showDetails(){
-    $('#cartDetails').modal('show')
+    let dialogRef = this.dialog.open(CartDetailsComponent);
+
     this.cartDetails = !this.cartDetails;
   }
 

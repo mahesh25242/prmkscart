@@ -11,7 +11,7 @@ import { environment } from '../../../environments/environment';
 })
 export class ProductComponent implements OnInit {
   products$: Observable<ShopProduct[]>;
-
+  environment = environment;
   constructor(private shopProductService: ShopProductService,
     private cartService: CartService) {
       cartService.shopKey = environment.shopKey;

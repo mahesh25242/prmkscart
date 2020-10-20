@@ -12,9 +12,12 @@ import { ProductsResolver } from './products/products-resolver';
 import { EditProfileComponent } from './edit-profile/edit-profile.component';
 import { CreateCategoryComponent } from './categories/create-category/create-category.component';
 import { CreateProductComponent } from './products/create-product/create-product.component';
+import { ShopDeliveryComponent } from './shop-delivery/shop-delivery.component';
+import { ShopDeliveryResolver } from './shop-delivery/shop-delivery-resolver';
+import { CreateShopDeliveryComponent } from './shop-delivery/create-shop-delivery/create-shop-delivery.component';
 
 @NgModule({
-  declarations: [  SignInComponent, HomeComponent, CategoriesComponent, ProductsComponent, EditProfileComponent, CreateCategoryComponent, CreateProductComponent],
+  declarations: [  SignInComponent, HomeComponent, CategoriesComponent, ProductsComponent, EditProfileComponent, CreateCategoryComponent, CreateProductComponent, ShopDeliveryComponent, CreateShopDeliveryComponent],
   imports: [
     CommonModule,
     AdminRoutingModule,
@@ -22,7 +25,8 @@ import { CreateProductComponent } from './products/create-product/create-product
   ],
   providers:[
     CategoriesResolver,
-    ProductsResolver
+    ProductsResolver,
+    ShopDeliveryResolver
   ]
 })
 export class AdminModule { }

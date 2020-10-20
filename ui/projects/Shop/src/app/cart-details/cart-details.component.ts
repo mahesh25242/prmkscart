@@ -1,11 +1,12 @@
 import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { Observable,pipe } from 'rxjs';
 import { tap, } from 'rxjs/operators';
-import { Cart } from 'src/app/lib/interfaces';
-import { CartService } from 'src/app/lib/services';
+import { Cart, Shop, ShopDelivery } from 'src/app/lib/interfaces';
+import { CartService, ShopService } from 'src/app/lib/services';
 import { environment } from '../../environments/environment';
+import {MatDialogRef, MAT_DIALOG_DATA} from '@angular/material/dialog';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
-declare var $: any;
 
 @Component({
   selector: 'app-cart-details',
@@ -13,11 +14,18 @@ declare var $: any;
   styleUrls: ['./cart-details.component.scss']
 })
 export class CartDetailsComponent implements OnInit {
+  customerFrm: FormGroup;
   @Output() public showDetails = new EventEmitter();
   cart$: Observable<Cart[]>;
   total:number = 0;
 
-  constructor(private cartService: CartService) {
+  shop$:Observable<Shop>;
+  selectedLocation: ShopDelivery;
+
+  constructor(private cartService: CartService,
+    private formBuilder: FormBuilder,
+    public dialogRef: MatDialogRef<CartDetailsComponent>,
+    private shopService: ShopService) {
     cartService.shopKey = environment.shopKey;
   }
 
@@ -75,9 +83,12 @@ export class CartDetailsComponent implements OnInit {
 
   closeWindow(){
     this.showDetails.emit();
-    $('#cartDetails').modal('hide')
+    this.dialogRef.close();
   }
+
+  get f(){ return this.customerFrm.controls; }
   ngOnInit(): void {
+    this.shop$ = this.shopService.aShop;
     this.cart$ = this.cartService.cart().pipe(tap(res=>{
       this.total = 0;
       res.map(itm=>{
@@ -88,7 +99,14 @@ export class CartDetailsComponent implements OnInit {
       }
     }));
 
-
+    this.customerFrm = this.formBuilder.group({
+      name: [null, [Validators.required]],
+      note: [null, [Validators.required]],
+      email: [null, []],
+      phone: [null, [Validators.required]],
+      address: [null, [Validators.required]],
+      pin: [null, [Validators.required]],
+    });
   }
 
 

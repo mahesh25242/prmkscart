@@ -11,3 +11,4 @@ export * from './shop-product';
 export * from './shop-product-variant';
 export * from './shop-product-image';
 export * from './cart';
+export * from './shop-delivery';

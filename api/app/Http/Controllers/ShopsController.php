@@ -62,5 +62,18 @@ class ShopsController extends Controller
        return response($shop);
     }
 
+    public function shopDetails(Request $request){
+        $shopKey = $request->header('shopKey');
+
+        $shopKey = ($shopKey) ? $shopKey : $request->input("shop_key");
+
+        if($shopKey){
+            $shop = \App\Shop::with(["country", "state", "city", "shopDelivery"])->where("shop_key", $shopKey)->get()->first();
+            return response($shop);
+        }else{
+            return response(['message' => 'No data found!', 'status' => false]);
+        }
+    }
+
 
 }

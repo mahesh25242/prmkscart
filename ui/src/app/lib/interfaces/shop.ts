@@ -4,6 +4,7 @@ import { Country } from "./country";
 import { ShopCategory } from './shop-category';
 import { State } from "./state";
 import { UserRole } from "./user-role";
+import { ShopDelivery } from './shop-delivery';
 
 export interface Shop {
   id?: number,
@@ -29,5 +30,6 @@ export interface Shop {
   shop_category?: ShopCategory,
   created_at?: string,
   user_role?: UserRole,
-  shop_url?: string
+  shop_url?: string,
+  shop_delivery?: ShopDelivery[]
 }
