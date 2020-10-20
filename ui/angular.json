@@ -279,6 +279,7 @@
               "projects/Shop/src/assets"
             ],
             "styles": [
+              "./node_modules/@angular/material/prebuilt-themes/indigo-pink.css",
               "projects/Shop/src/styles.scss"
             ],
             "scripts": []
@@ -343,6 +344,7 @@
               "projects/Shop/src/assets"
             ],
             "styles": [
+              "./node_modules/@angular/material/prebuilt-themes/indigo-pink.css",
               "projects/Shop/src/styles.scss"
             ],
             "scripts": []
