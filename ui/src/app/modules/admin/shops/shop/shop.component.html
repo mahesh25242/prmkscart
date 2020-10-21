@@ -4,7 +4,7 @@
   <h3>{{shop.name}}</h3>
   <div>shopKey: {{shop.shop_key}}</div>
   <div>Status: {{shop.status_text}}</div>
-  <div>Category: {{ shop.shop_category.name }}</div>
+  <div>Category: {{ shop.shop_category?.name }}</div>
   <div>Created At: {{shop.created_at | date:'medium'}}</div>
   <ul>
     <li>
