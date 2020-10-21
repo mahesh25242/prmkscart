@@ -6,5 +6,7 @@ export const environment = {
   lumenSecret: 'K6IlhS1oZBgxNQciIEtCoXzlHRGu0MefIkNkp68b',
   client_id: 2 ,
   grant_type: "password",
-  siteAddress: 'http://localhost/cart'
+  siteAddress: 'http://localhost/cart',
+  gMapUrl: `http://maps.google.com/`,
+  openstreetmap: `https://nominatim.openstreetmap.org`
 };

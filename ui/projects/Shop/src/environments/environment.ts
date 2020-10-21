@@ -10,7 +10,9 @@ export const environment = {
   lumenSecret: env.lumenSecret,
   client_id: env.client_id,
   grant_type: env.grant_type,
-  siteAddress: env.siteAddress
+  siteAddress: env.siteAddress,
+  gMapUrl: env.gMapUrl,
+  openstreetmap: env.openstreetmap,
 };
 
 /*

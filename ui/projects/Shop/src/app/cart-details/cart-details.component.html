@@ -20,7 +20,6 @@
 
       </mat-card>
 
-
       Items: {{cart.length}}
       Total : {{ total}}
 
@@ -28,13 +27,15 @@
         <form [formGroup]="customerFrm">
 
           <ng-container *ngIf="(shop$ | async) as shop">
-            <div *ngFor="let shop_delivery of shop.shop_delivery">
-              {{ shop_delivery.name }}
-              <span *ngIf="shop_delivery.charge">
-                @ {{ shop_delivery.charge}}
-              </span>
-
-            </div>
+            <ng-container *ngFor="let shop_delivery of shop.shop_delivery">
+              <a href="javascript:{}" [ngClass]="{'active' : (selectedLocation.id == shop_delivery.id)}"
+              (click)="changeLocation(shop_delivery)">
+                {{ shop_delivery.name }}
+                <span *ngIf="shop_delivery.charge">
+                  @ {{ shop_delivery.charge}}
+                </span>
+              </a>
+            </ng-container>
           </ng-container>
           <mat-form-field class="full-width-text" appearance="standard">
             <mat-label>Full Name</mat-label>
@@ -44,7 +45,7 @@
             </mat-error>
           </mat-form-field>
 
-          <mat-slide-toggle>Pick My Location</mat-slide-toggle>
+
 
           <mat-form-field class="full-width-text" appearance="standard">
             <mat-label>Email address</mat-label>
@@ -62,21 +63,26 @@
             </mat-error>
           </mat-form-field>
 
-          <mat-form-field class="full-width-text" appearance="standard">
-            <mat-label>Address</mat-label>
-            <textarea matInput formControlName="address" placeholder="Ex. House Name/ Number" required></textarea>
-            <mat-error *ngIf="f.address.errors && f.address.errors.error">
-              {{f.address.errors.error}}
-            </mat-error>
-          </mat-form-field>
+          <ng-container *ngIf="(selectedLocation.need_cust_loc)">
+            <a [href]="mapUrl" target="_blank">Map</a>
+            <mat-form-field class="full-width-text" appearance="standard">
+              <mat-label>Address</mat-label>
+              <textarea matInput formControlName="address" placeholder="Ex. House Name/ Number" required></textarea>
+              <mat-error *ngIf="f.address.errors && f.address.errors.error">
+                {{f.address.errors.error}}
+              </mat-error>
+            </mat-form-field>
 
-          <mat-form-field class="full-width-text" appearance="standard">
-            <mat-label>Pin Code</mat-label>
-            <input type="number" matInput formControlName="pin" placeholder="Ex. 658956" required>
-            <mat-error *ngIf="f.pin.errors && f.pin.errors.error">
-              {{f.pin.errors.error}}
-            </mat-error>
-          </mat-form-field>
+            <mat-form-field class="full-width-text" appearance="standard">
+              <mat-label>Pin Code</mat-label>
+              <input type="number" matInput formControlName="pin" placeholder="Ex. 658956" required>
+              <mat-error *ngIf="f.pin.errors && f.pin.errors.error">
+                {{f.pin.errors.error}}
+              </mat-error>
+            </mat-form-field>
+          </ng-container>
+
+
 
           <mat-form-field class="full-width-text" appearance="standard">
             <mat-label>Order Note</mat-label>
