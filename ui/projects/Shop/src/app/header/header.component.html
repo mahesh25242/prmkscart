@@ -26,6 +26,12 @@
         <a routerLink="/admin/deliveries" routerLinkActive="active">Delivery Locations</a>
       </div>
       <div>
+        <a routerLink="/admin/details" routerLinkActive="active">Shop Info</a>
+      </div>
+      <div>
+        <a routerLink="/admin/orders" routerLinkActive="active">Orders</a>
+      </div>
+      <div>
         <button mat-button [matMenuTriggerFor]="menu">{{loggedUser.fname}}</button>
         <mat-menu #menu="matMenu">
           <button mat-menu-item routerLink="/admin/edit-profile">Edit Profile</button>

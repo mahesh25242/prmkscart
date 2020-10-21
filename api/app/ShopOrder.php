@@ -25,6 +25,17 @@ class ShopOrder extends Model implements AuthenticatableContract, AuthorizableCo
          'pin', 'note', 'loc', 'status'
     ];
 
+    protected $appends = array('status_text');
+
+    public function getStatusTextAttribute()
+    {
+        switch($this->status){
+            case 1:
+                return 'Ordered';
+            break;
+        }
+    }
+
     public function shop()
     {
         return $this->belongsTo('App\Shop');

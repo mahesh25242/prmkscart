@@ -1,0 +1,31 @@
+<ng-container *ngIf="(shop$ | async) as shop">
+<h3>{{shop.name}} Details</h3>
+Status: {{shop.status_text}}
+<form [formGroup]="shopDetailsFrm"  (ngSubmit)="updateShop()">
+
+  <mat-form-field class="full-width-text" appearance="standard">
+    <mat-label>Name</mat-label>
+    <input matInput formControlName="name" placeholder="Ex. KFC" required>
+    <mat-error *ngIf="f.name.errors && f.name.errors.error">
+      {{ f.name.errors.error }}
+    </mat-error>
+  </mat-form-field>
+
+  <mat-form-field class="full-width-text" appearance="standard">
+    <mat-label>Email</mat-label>
+    <input matInput formControlName="email" placeholder="Ex. kfc@gmail.com">
+    <mat-error *ngIf="f.email.errors && f.email.errors.error">
+      {{ f.email.errors.error }}
+    </mat-error>
+  </mat-form-field>
+
+  <mat-form-field class="full-width-text" appearance="standard">
+    <mat-label>Phone ( enter with 91 as prefix)</mat-label>
+    <input matInput formControlName="phone" placeholder="Ex. 1234567890" required>
+    <mat-error *ngIf="f.phone.errors && f.phone.errors.error">
+      {{ f.phone.errors.error }}
+    </mat-error>
+  </mat-form-field>
+  <button mat-raised-button color="primary" type="submit">Save</button>
+</form>
+</ng-container>

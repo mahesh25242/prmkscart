@@ -94,6 +94,17 @@ class OrderController extends Controller
         return response(['message' => 'successfully placed order', 'status' => 1]);
     }
 
+    public function orders(Request $request){
+        $perPage = 20;
+        $shop = null;
+        $shopKey = $request->header('shopKey');
+        $shopKey = ( $shopKey ) ?  $shopKey  :$request->input("shop_key");
+        if($shopKey){
+            $shop = \App\Shop::where("shop_key", $shopKey)->get()->first();
+        }
+        $orders = \App\ShopOrder::where("shop_id", $shop->id)->paginate($perPage);
+        return response($orders);
+    }
 
 
 

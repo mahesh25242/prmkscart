@@ -46,7 +46,7 @@ export class CartDetailsComponent implements OnInit, OnDestroy {
 
   sendToShop(){
     if(!this.selectedLocation?.id){
-      this.matSnackBar.open('Please choose a adelivery location.');
+      this.matSnackBar.open('Please choose a delivery location.');
       return;
     }
     this.cart$.pipe(mergeMap(cart=>{
@@ -100,7 +100,8 @@ export class CartDetailsComponent implements OnInit, OnDestroy {
       }));
 
     })).subscribe(res=>{
-      console.log(res)
+      localStorage.removeItem(`${environment.shopKey}-cart`);
+      window.location.href = res.url;
     });
 
 

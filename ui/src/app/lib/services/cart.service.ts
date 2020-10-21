@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Cart, City } from '../interfaces';
+import { Cart, City, ShopOrder } from '../interfaces';
 import { BehaviorSubject, empty, from, Observable, of, throwError } from 'rxjs';
 import { combineAll, concatAll, map, mergeAll, tap, toArray } from 'rxjs/operators';
 import { compact } from 'lodash';
@@ -10,6 +10,7 @@ import { compact } from 'lodash';
 })
 export class CartService {
   cart$: BehaviorSubject<Cart[]> = new BehaviorSubject<Cart[]>(null);
+  private orders$: BehaviorSubject<ShopOrder[]> = new BehaviorSubject<ShopOrder[]>(null);
   private isUpdated$: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
   shopKey: string = null;
   constructor(private http: HttpClient) { }
@@ -17,6 +18,10 @@ export class CartService {
   get isUpdated(){
     return this.isUpdated$.asObservable();
   }
+  get orders(){
+    return this.orders$.asObservable();
+  }
+
   private getCart(){
     try {
       if(this.shopKey){
@@ -90,6 +95,12 @@ export class CartService {
 
   createOrder(postData:any = null){
     return this.http.post<City[]>(`/shop/createOrder`, postData);
+  }
+
+  getAllOrders(postData:any = null){
+    return this.http.post<ShopOrder[]>(`/shop/orders`, postData).pipe(tap(res=>{
+      this.orders$.next(res);
+    }));
   }
 
 }

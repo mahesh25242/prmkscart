@@ -1,11 +1,11 @@
 <form [formGroup]="editProfileFrm" *ngIf="(loggedUser$ | async) as loggedUser" (ngSubmit)="updateProfile()">
-  <img [src]="loggedUser.avatar" class="avatar-img img-thumbnail" />
+  <!-- <img [src]="loggedUser.avatar" class="avatar-img img-thumbnail" /> -->
 
-  <button (click)="fileInput.click()" type="button" mat-stroked-button color="primary">
+  <!-- <button (click)="fileInput.click()" type="button" mat-stroked-button color="primary">
     <span>Choose Photo</span>
     <input #fileInput type="file" (change)="onFileInput($event.target.files)"
      style="display:none;"  accept="image/*" />
-  </button>
+  </button> -->
 
 
   Created At: {{ loggedUser?.created_at |  date:'dd/MM/yy'}}

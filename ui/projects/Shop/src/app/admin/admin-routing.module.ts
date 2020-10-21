@@ -10,6 +10,9 @@ import { CategoriesResolver } from './categories/categories-resolver';
 import { ProductsResolver } from './products/products-resolver';
 import { ShopDeliveryResolver } from './shop-delivery/shop-delivery-resolver';
 import { ShopDeliveryComponent } from './shop-delivery/shop-delivery.component';
+import { ShopDetailsComponent } from './shop-details/shop-details.component';
+import { OrdersComponent } from './orders/orders.component';
+import { OrdersResolver } from './orders/orders-resolver';
 
 
 
@@ -46,6 +49,19 @@ const routes: Routes = [
     canActivate: [AdminAuthGuard],
     resolve:{
       deliveries: ShopDeliveryResolver
+    }
+  },
+  {
+    path: 'details',
+    component: ShopDetailsComponent,
+    canActivate: [AdminAuthGuard],
+  },
+  {
+    path: 'orders',
+    component: OrdersComponent,
+    canActivate: [AdminAuthGuard],
+    resolve:{
+      orders: OrdersResolver
     }
   },
   {

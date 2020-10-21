@@ -1,0 +1,19 @@
+import { Shop } from './shop';
+import { ShopCustomer } from './shop-customer';
+import { ShopOrderItem } from './shop-order-item';
+export interface ShopOrder {
+  id?: number,
+  shop_id?: number,
+  shop_customer_id?: number,
+  total?: number,
+  delivery_chage?: number,
+  address?: string,
+  pin?: string,
+  note?: string,
+  loc?: any,
+  status?: number,
+  created_at: string,
+  shop?: Shop
+  shop_customer?:  ShopCustomer,
+  shop_order_item?: ShopOrderItem
+}

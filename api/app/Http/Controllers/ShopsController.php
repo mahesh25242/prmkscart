@@ -75,5 +75,32 @@ class ShopsController extends Controller
         }
     }
 
+    public function updateDetails(Request $request){
+        $validator = Validator::make($request->all(), [
+            'name' => ['required'],
+            'phone' => ['required'],
+        ]);
+
+        if($validator->fails()){
+            return response(['message' => 'Validation errors', 'errors' =>  $validator->errors(), 'status' => false], 422);
+        }
+
+        $shopInput = [
+            "name" => $request->input("name", ''),
+            "phone" => $request->input("phone", ''),
+        ];
+        $shopKey = $request->header('shopKey');
+        $shopKey = ($shopKey) ? $shopKey : $request->input("shop_key",'');
+
+        if($shopKey){
+            $shop = \App\Shop::where("shop_key", $shopKey)->get()->first();
+        }else{
+            $shopKey = $request->input("shop_key");
+            $shop = \App\Shop::where("shop_key", $shopKey)->get()->first();
+        }
+
+        \App\Shop::where('id', $shop->id)->update($shopInput);
+        return response(['message' => 'successfully saved',  'status' => true]);
+    }
 
 }

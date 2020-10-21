@@ -33,6 +33,10 @@ export class ShopService {
     return this.http.post<any>("/admin/shops/store", postData);
   }
 
+  saveShopDetail(postData: any = null){
+    return this.http.post<any>("/shop/store", postData);
+  }
+
   deleteShop(shopId:number = 0, postData: any = null){
     return this.http.post<any>(`/admin/shops/delete/${shopId}`, postData);
   }

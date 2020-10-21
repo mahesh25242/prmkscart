@@ -12,3 +12,6 @@ export * from './shop-product-variant';
 export * from './shop-product-image';
 export * from './cart';
 export * from './shop-delivery';
+export * from './shop-customer';
+export * from './shop-order';
+export * from './shop-order-item';
