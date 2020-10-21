@@ -21,14 +21,19 @@
       </mat-card>
 
       Items: {{cart.length}}
-      Total : {{ total}}
+      <ng-container *ngIf="selectedLocation && selectedLocation?.charge">
+        Delivery Cost: {{ selectedLocation?.charge }}
+      </ng-container>
+
+      Total : {{ grandTotal }}
 
       <div>
         <form [formGroup]="customerFrm">
 
+          <div *ngIf="!selectedLocation?.id">Please select a delivery location</div>
           <ng-container *ngIf="(shop$ | async) as shop">
             <ng-container *ngFor="let shop_delivery of shop.shop_delivery">
-              <a href="javascript:{}" [ngClass]="{'active' : (selectedLocation.id == shop_delivery.id)}"
+              <a href="javascript:{}" [ngClass]="{'active' : (selectedLocation?.id == shop_delivery.id)}"
               (click)="changeLocation(shop_delivery)">
                 {{ shop_delivery.name }}
                 <span *ngIf="shop_delivery.charge">
@@ -63,8 +68,8 @@
             </mat-error>
           </mat-form-field>
 
-          <ng-container *ngIf="(selectedLocation.need_cust_loc)">
-            <a [href]="mapUrl" target="_blank">Map</a>
+          <ng-container *ngIf="(selectedLocation?.need_cust_loc)">
+            <a *ngIf="mapUrl" [href]="mapUrl" target="_blank">Map</a>
             <mat-form-field class="full-width-text" appearance="standard">
               <mat-label>Address</mat-label>
               <textarea matInput formControlName="address" placeholder="Ex. House Name/ Number" required></textarea>

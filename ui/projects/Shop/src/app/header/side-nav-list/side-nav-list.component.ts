@@ -1,9 +1,9 @@
 import { Component, EventEmitter, OnDestroy, OnInit, Output } from '@angular/core';
 import { Router } from '@angular/router';
 import { Observable, Subscription } from 'rxjs';
-import { mergeMap } from 'rxjs/operators';
+import { map, mergeMap } from 'rxjs/operators';
 import { User } from 'src/app/lib/interfaces';
-import { UserService } from 'src/app/lib/services';
+import { ShopService, UserService } from 'src/app/lib/services';
 
 @Component({
   selector: 'app-side-nav-list',
@@ -17,7 +17,8 @@ export class SideNavListComponent implements OnInit, OnDestroy {
   signOutSubscription: Subscription;
 
   constructor(private userService: UserService,
-    private router: Router,) { }
+    private router: Router,
+    private shopService: ShopService) { }
 
   signOut(){
     this.signOutSubscription = this.userService.setUserLogin({action:'SignOut'}).pipe(mergeMap(sRes=>{
@@ -33,7 +34,11 @@ export class SideNavListComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
-    this.loggedUser$ = this.userService.getloggedUser;
+    this.loggedUser$ = this.userService.getloggedUser.pipe(mergeMap(user=>{
+      return this.shopService.shopDetail().pipe(map(res=>{
+        return user;
+      }))
+    }));
   }
 
   public onSidenavClose = () => {

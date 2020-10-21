@@ -5,7 +5,7 @@ export interface ShopDelivery {
   shop_id?: number,
   name?: string,
   description?: string,
-  charge?: string,
+  charge?: number,
   created_at?: string,
   sortorder?: number,
   need_cust_loc?: number,

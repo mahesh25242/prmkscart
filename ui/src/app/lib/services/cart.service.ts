@@ -88,4 +88,8 @@ export class CartService {
 
   }
 
+  createOrder(postData:any = null){
+    return this.http.post<City[]>(`/shop/createOrder`, postData);
+  }
+
 }

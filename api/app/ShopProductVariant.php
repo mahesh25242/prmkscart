@@ -56,4 +56,9 @@ class ShopProductVariant extends Model implements AuthenticatableContract, Autho
         return $this->hasOne('App\ShopProductImage', 'shop_product_variant_id');
     }
 
+    public function shopOrderItem()
+    {
+        return $this->hasMany('App\ShopOrderItem');
+    }
+
 }

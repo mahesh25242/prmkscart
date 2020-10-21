@@ -1,6 +1,6 @@
 import { Component, EventEmitter, OnDestroy, OnInit, Output } from '@angular/core';
 import { empty, Observable,of,pipe, Subscription } from 'rxjs';
-import { mergeMap, tap, } from 'rxjs/operators';
+import { mergeMap, tap, map } from 'rxjs/operators';
 import { Cart, Shop, ShopDelivery } from 'src/app/lib/interfaces';
 import { CartService, GeneralService, ShopService } from 'src/app/lib/services';
 import { environment } from '../../environments/environment';
@@ -20,10 +20,12 @@ export class CartDetailsComponent implements OnInit, OnDestroy {
   @Output() public showDetails = new EventEmitter();
   cart$: Observable<Cart[]>;
   total:number = 0;
+  grandTotal:number = 0;
 
   shop$:Observable<Shop>;
   selectedLocation: ShopDelivery;
   mapUrl: string = '';
+  loc : any =null;
 
   breakPointSubScr: Subscription;
   constructor(private cartService: CartService,
@@ -43,48 +45,66 @@ export class CartDetailsComponent implements OnInit, OnDestroy {
   }
 
   sendToShop(){
-    let txt = `%0a‎ New Order`;
-    txt += `%0a‎ Order Number: ${encodeURIComponent(`#45`)}`;
-    txt += `%0a‎ Product: Cake `;
-    txt += `%0a‎ Quantity: 1Kg `;
-    txt += `%0a‎ Price: 200 `;
-    txt += `%0a‎ ============== `;
+    if(!this.selectedLocation?.id){
+      this.matSnackBar.open('Please choose a adelivery location.');
+      return;
+    }
+    this.cart$.pipe(mergeMap(cart=>{
+      if(!cart) return empty();
+      return this.shop$.pipe(mergeMap(shop=>{
+        if(!shop) return empty();
+        const postData = {
+          cart: cart,
+          name: this.f.name.value,
+          note: this.f.note.value,
+          email: this.f.email.value,
+          phone: this.f.phone.value,
+          address: this.f.address.value,
+          pin: this.f.pin.value,
+          selectedLocation: this.selectedLocation,
+          grad_total: this.grandTotal,
+          loc :this.loc
+        }
+        return this.cartService.createOrder(postData).pipe(mergeMap(orderRes=>{
+          if(!orderRes) return empty();
+          return this.breakpointObserver.observe([
+            Breakpoints.Handset,
+            Breakpoints.Tablet
+          ]).pipe(map(bp =>{
+            let txt = `%0a‎ New Order`;
+            txt += `%0a‎ Order Number: ${encodeURIComponent(`#45`)}`;
+
+            cart.map(itm=>{
+              txt += `%0a‎ Product: ${itm.product.name} `;
+              txt += `%0a‎ Varient Name: ${itm.product.shop_product_selected_variant.name} `;
+              txt += `%0a‎ Quantity: ${itm.qty} `;
+              txt += `%0a‎ Price: ${itm.price} `;
+              txt += `%0a‎ ============== `;
+            });
+            txt += `%0a‎ ${ cart.length }  ${ (cart.length > 1) ? 'items' : 'item' }  %0a`;
+            txt += `%0a‎ Grand Total: ${this.grandTotal} %0a`;
+
+            let ret;
+            if(bp.matches){
+              ret = {
+                url: `https://api.whatsapp.com/send?phone=${shop.phone}&text=${txt}`
+              }
+            }else{
+              ret = {
+                url: `https://web.whatsapp.com/send?phone=${shop.phone}&text=${txt}`
+              }
+            }
+            return ret;
+          }))
+        }))
+      }));
+
+    })).subscribe(res=>{
+      console.log(res)
+    });
 
 
-    txt += `%0a‎ Product: Cake `;
-    txt += `%0a‎ Quantity: 1Kg `;
-    txt += `%0a‎ Price: 200 `;
-    txt += `%0a‎ ============== `;
 
-
-    txt += `%0a‎ Product: Cake `;
-    txt += `%0a‎ Quantity: 1Kg `;
-    txt += `%0a‎ Price: 200 `;
-    txt += `%0a‎ ============== `;
-
-
-
-    txt += `%0a‎ Product: Cake `;
-    txt += `%0a‎ Quantity: 1Kg `;
-    txt += `%0a‎ Price: 200 `;
-    txt += `%0a‎ ============== `;
-
-
-
-    txt += `%0a‎ Product: Cake `;
-    txt += `%0a‎ Quantity: 1Kg `;
-    txt += `%0a‎ Price: 200 `;
-    txt += `%0a‎ ============== `;
-
-
-    txt += `%0a‎ Product: Cake `;
-    txt += `%0a‎ Quantity: 1Kg `;
-    txt += `%0a‎ Price: 200 `;
-    txt += `%0a‎ ============== `;
-
-
-    txt += `%0a‎ Total: 20000 %0a`;
-    window.location.href = `https://wa.me/919995453566?text=${txt}`;
 
   }
 
@@ -94,74 +114,93 @@ export class CartDetailsComponent implements OnInit, OnDestroy {
   }
 
   changeLocation(loc: ShopDelivery){
+    if(!loc) return;
     this.selectedLocation = loc;
+    if(this.selectedLocation?.charge){
+      this.grandTotal = this.total + this.selectedLocation?.charge;
+    }else{
+      this.grandTotal = this.total;
+    }
 
 
-    if (navigator.geolocation && loc.need_cust_loc) {
-        navigator.geolocation.getCurrentPosition((position: Position) => {
-          if (position) {
-            this.breakPointSubScr = this.breakpointObserver.observe([
-              Breakpoints.Handset,
-              Breakpoints.Tablet
-            ]).pipe(mergeMap(res=>{
-              //alert("as")
-              if(res.matches){
-                return this.generalService.reverseLatLngAddress({
-                  lat: position?.coords?.latitude,
-                  lon: position?.coords?.longitude
-                })
+      this.breakPointSubScr = this.breakpointObserver.observe([
+        Breakpoints.Handset,
+        Breakpoints.Tablet
+      ]).pipe(mergeMap(brakPoints=>{
+        if (navigator.geolocation && loc.need_cust_loc) {
+          return this.generalService.getLocation().pipe(mergeMap(coords=>{
+            if(coords){
+              if(brakPoints.matches){
+                this.loc = {
+                  lat: coords?.coords?.latitude,
+                  lon: coords?.coords?.longitude
+                }
+                this.mapUrl = `${environment.gMapUrl}/maps?z=12&t=m&q=loc:${coords?.coords?.latitude}+${coords?.coords?.longitude}`;
+                return this.generalService.reverseLatLngAddress(this.loc);
               }else{
+                this.mapUrl = null;
                 return empty();
               }
-            })).subscribe((res: any)=> {
-              if(res){
-                if(!this.f.pin.value && res?.address?.postcode){
-                  this.f.pin.setValue(res?.address?.postcode)
-                }
+            }else{
+              this.mapUrl = null;
+              return empty();
+            }
 
-                if(!this.f.address.value && res?.display_name){
-                  this.f.address.setValue(res?.display_name)
-                }
+          }))
+        }else{
+          return empty()
+        }
 
-              }
-            });
-            this.mapUrl = `${environment.gMapUrl}/maps?z=12&t=m&q=loc:${position?.coords?.latitude}+${position?.coords?.longitude}`;
+      })).subscribe((res: any)=> {
+
+        if(res){
+          if(!this.f.pin.value && res?.address?.postcode){
+            this.f.pin.setValue(res?.address?.postcode)
           }
-      }, (err: PositionError) =>{
-          switch(err.code){
-            case 1:
-              this.matSnackBar.open('Location Permission denied.');
-            break;
-            case 2:
-              this.matSnackBar.open('Sorry your position is unavailable.');
-            break;
-            case 3:
-              this.matSnackBar.open('Sorry your position request was timeout. Please try again.');
-            break;
-            default:
-              this.matSnackBar.open('Sorry unexpected error occur.');
-            break;
+
+          if(!this.f.address.value && res?.display_name){
+            this.f.address.setValue(res?.display_name)
           }
+
+        }
+      }, err=>{
+        switch(err?.code){
+              case 1:
+                this.matSnackBar.open('Location Permission denied.');
+              break;
+              case 2:
+                this.matSnackBar.open('Sorry your position is unavailable.');
+              break;
+              case 3:
+                this.matSnackBar.open('Sorry your position request was timeout. Please try again.');
+              break;
+              default:
+                this.matSnackBar.open('Sorry unexpected error occur.');
+              break;
+            }
       })
-    }else{
-      this.mapUrl = null;
-    }
+
+
 
   }
   get f(){ return this.customerFrm.controls; }
 
   ngOnInit(): void {
-    this.shop$ = this.shopService.aShop.pipe(tap(res=>{
-      this.changeLocation(first(res.shop_delivery));
-    }));
+    this.shop$ = this.shopService.aShop;
+    // .pipe(tap(res=>{
+    //   this.changeLocation(first(res?.shop_delivery));
+    // }));
     this.cart$ = this.cartService.cart().pipe(tap(res=>{
       this.total = 0;
       res.map(itm=>{
         this.total +=itm.price;
       });
+
+      this.grandTotal = this.total;
       if(!this.total){
         this.closeWindow();
       }
+
     }));
 
     this.customerFrm = this.formBuilder.group({
