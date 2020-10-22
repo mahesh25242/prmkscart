@@ -18,7 +18,8 @@ export interface ShopOrder {
   shop?: Shop
   shop_customer?:  ShopCustomer,
   shop_order_item?: ShopOrderItem,
-  shop_delivery?: ShopDelivery
+  shop_delivery?: ShopDelivery,
+  delivery_at?: string
 }
 
 

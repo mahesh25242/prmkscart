@@ -76,7 +76,7 @@
         </div>
         <div class="form-group">
           <label for="phone">Phone</label>
-          {{ f.countr_id.value?.phonecode }}<input type="tel" class="form-control" id="phone"
+          {{ f.country_id.value?.phonecode }}<input type="tel" class="form-control" id="phone"
           [ngClass]="{'is-invalid': ( f.phone.errors && f.phone.errors.error)}"
           placeholder="Phone"
           formControlName="phone">

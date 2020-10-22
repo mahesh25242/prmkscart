@@ -103,7 +103,7 @@ class ShopOrderController extends Controller
         if($shopKey){
             $shop = \App\Shop::where("shop_key", $shopKey)->get()->first();
         }
-        $orders = \App\ShopOrder::with(["shopCustomer", "shopOrderItem", "shopDelivery"])->where("shop_id", $shop->id)->orderBy("id", "desc")->paginate($perPage);
+        $orders = \App\ShopOrder::with(["shopCustomer", "shopOrderItem.ShopProductVariant.shopProduct", "shopDelivery"])->where("shop_id", $shop->id)->orderBy("id", "desc")->paginate($perPage);
         return response($orders);
     }
 

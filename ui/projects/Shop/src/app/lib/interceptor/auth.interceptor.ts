@@ -38,7 +38,6 @@ export class AuthInterceptor implements HttpInterceptor {
     // }
     return next.handle(request).pipe(
       catchError(error => {
-
         if (error instanceof HttpErrorResponse && error.status === 401 ) {
           if(!request.url.includes("oauth/token")){
             return this.handle401Error(request, next);

@@ -6,7 +6,7 @@ use Closure;
 use Auth;
 use Cache;
 use Carbon\Carbon;
-class ShopAuthenticate
+class ShopAccessMiddleWare
 {
     /**
      * Handle an incoming request.
@@ -20,12 +20,15 @@ class ShopAuthenticate
 
         $shopKey = $request->header('shopKey');
         if($shopKey){
-            $user = \App\User::whereHas("userRole.shop", function($q) use($shopKey){
-                $q->where("shop_key", $shopKey);
-            })->where("status", 1)->where("id", Auth::id())->get()->first();
-            if($user->userRole->shop->status)
+            $shop = \App\Shop::where("shop_key",$shopKey)->get()->first();
+
+            if($shop->status)
                 return $next($request);
+
+            else
+                return response('Shop was inactive.', 402);
+        }else{
+            return $next($request);
         }
-        return response('Unauthorized.', 401);
     }
 }

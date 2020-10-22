@@ -9,27 +9,20 @@ import { tap } from 'rxjs/operators';
   providedIn: 'root'
 })
 export class GeneralService {
-  private layOut$: BehaviorSubject<BreakpointState> = new BehaviorSubject<BreakpointState>(null);
+  shopDisabled$: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(null);
 
   constructor(private http: HttpClient,
-    private breakpointObserver: BreakpointObserver) { }
+    ) { }
 
-  get layOut(){
-    return this.layOut$.asObservable();
-  }
+    get shopDisabled(){
+      return this.shopDisabled$.asObservable();
+    }
+
 
   sentContact(postData: any = null){
     return this.http.post("/sentContact", postData);
   }
 
-  responsive(){
-     return this.breakpointObserver.observe([
-      Breakpoints.XSmall,
-      Breakpoints.Medium,
-      Breakpoints.Large,
-      Breakpoints.XLarge,
-    ]).pipe(tap(res=>{
-      this.layOut$.next(res);
-    }))
-  }
+
+
 }

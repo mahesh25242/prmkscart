@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Observable, of } from 'rxjs';
+import { empty, Observable, of } from 'rxjs';
 import { map, mergeMap } from 'rxjs/operators';
 import { ShopProductCategory } from 'src/app/lib/interfaces';
 import { ShopProductCategoryService, ShopProductService } from 'src/app/lib/services';
@@ -29,10 +29,14 @@ export class CategoriesComponent implements OnInit {
             }).pipe(map(products=> cats));
           }else{
             const cat:ShopProductCategory = _.first(cats);
+            if(cat){
+              return this.shopProductService.showProducts({
+                shop_product_category_id: cat.id
+              }).pipe(map(products=> cats));
+            }else{
+              return empty();
+            }
 
-            return this.shopProductService.showProducts({
-              shop_product_category_id: cat.id
-            }).pipe(map(products=> cats));
           }
 
       }))

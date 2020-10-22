@@ -1,5 +1,6 @@
 <mat-toolbar color="primary" *ngIf="(layOutXSmall$ | async) as layOutXSmall">
   <a routerLink="/">{{title}}</a>
+
   <div class="flex-right" *ngIf="layOutXSmall.matches">
       <button mat-icon-button (click)="onToggleSidenav()">
           <mat-icon>menu</mat-icon>
@@ -40,4 +41,7 @@
   </ng-container>
 
 </mat-toolbar>
+<div *ngIf="(generalService.shopDisabled | async)">
+  Your shop was disabled by admin
+</div>
 
