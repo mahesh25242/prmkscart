@@ -1,13 +1,27 @@
-<ng-container *ngIf="(cart$ | async) as cart">
+<ng-container class="example-button-container" *ngIf="(cart$ | async) as cart">
   <ng-container *ngIf="cart && cart.length ">
+    <a mat-fab color="primary" class="extended-fab-button" (click)="showDetails()" aria-label="Example icon button with a delete icon">
+      <div class="extend-btn-cart">
+      <div class="left-align">
+        On Your Bag
+        <span class="d-block">{{cart.length}} <span class="items">Item (s)</span> </span>
+
+      </div>
+    <div><mat-icon>shopping_cart</mat-icon></div>  
     <!-- && !cartDetails -->
-    On Your Bag {{cart.length}} {{ cart.length > 1 ? 'items' : 'item' }}
-    Total Price : {{ total}}
+    
+   <div class="right-align">Total Price
+    <span class="d-block"> <span class="items">₹</span> {{ total}}</span></div> 
 
-    <button mat-stroked-button color="primary" (click)="showDetails()">Details</button>
+    </div>
 
 
-
+  </a>
   </ng-container>
 </ng-container>
 
+<div >
+  
+   
+  
+</div>

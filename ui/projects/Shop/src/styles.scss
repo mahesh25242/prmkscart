@@ -11,3 +11,7 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
 .mb1 {
     margin-bottom:1.5rem;
 }
+.mat-fab .mat-button-wrapper {
+    padding: 0px!important;
+    line-height: 16px!important;
+}
