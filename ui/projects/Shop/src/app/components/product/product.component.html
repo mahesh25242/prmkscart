@@ -1,6 +1,6 @@
-<ng-container *ngIf="(products$ | async) as products">
-
-  <mat-card *ngFor="let product of products">
+<div class="row"> <ng-container *ngIf="(products$ | async) as products">
+<div class="col s6 m4 l3 xl3 mb1" *ngFor="let product of products">
+  <mat-card >
     <mat-card-header>
       <div mat-card-avatar ></div>
       <mat-card-title> {{ product.name }}</mat-card-title>
@@ -15,5 +15,6 @@
       <button mat-button >Details</button>
     </mat-card-actions>
   </mat-card>
-
+</div>
 </ng-container>
+</div>

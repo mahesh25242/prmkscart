@@ -1,36 +1,33 @@
 <mat-toolbar color="primary" *ngIf="(layOutXSmall$ | async) as layOutXSmall">
-  <span>{{title}}</span>
-  <div *ngIf="layOutXSmall.matches">
+  <span >{{title}}</span>
+  <div class="flex-right" *ngIf="layOutXSmall.matches">
       <button mat-icon-button (click)="onToggleSidenav()">
           <mat-icon>menu</mat-icon>
       </button>
   </div>
+  
   <ng-container *ngIf="!layOutXSmall.matches">
-    <div>
-        <a routerLink="/" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">Home</a>
-    </div>
-    <div>
-      <a routerLink="/about-us" routerLinkActive="active">About Us</a>
-    </div>
-    <div>
-      <a routerLink="/contact-us" routerLinkActive="active">Contact Us</a>
-    </div>
+    <div class="flex-right navmenu"> 
+    <a routerLink="/" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">Home</a>
+    <a routerLink="/about-us" routerLinkActive="active">About Us</a>
+    <a routerLink="/contact-us" routerLinkActive="active">Contact Us</a>
+    
     <ng-container *ngIf="(loggedUser$ | async) as loggedUser">
-      <div>
+     
         <a routerLink="/admin/categories" routerLinkActive="active">Categories</a>
-      </div>
-      <div>
-        <a routerLink="/admin/products" routerLinkActive="active">Products</a>
-      </div>
-      <div>
-        <a routerLink="/admin/deliveries" routerLinkActive="active">Delivery Locations</a>
-      </div>
-      <div>
-        <a routerLink="/admin/details" routerLinkActive="active">Shop Info</a>
-      </div>
-      <div>
+    
+     
+        <a routerLink="/admin/products"  routerLinkActive="active">Products</a>
+     
+
+        <a routerLink="/admin/deliveries"  routerLinkActive="active">Delivery Locations</a>
+      
+     
+        <a routerLink="/admin/details"  routerLinkActive="active">Shop Info</a>
+    
+     
         <a routerLink="/admin/orders" routerLinkActive="active">Orders</a>
-      </div>
+    
       <div>
         <button mat-button [matMenuTriggerFor]="menu">{{loggedUser.fname}}</button>
         <mat-menu #menu="matMenu">
@@ -39,6 +36,8 @@
         </mat-menu>
       </div>
     </ng-container>
+  </div>
   </ng-container>
+
 </mat-toolbar>
 
