@@ -128,20 +128,15 @@ export class CartDetailsComponent implements OnInit, OnDestroy {
         Breakpoints.Handset,
         Breakpoints.Tablet
       ]).pipe(mergeMap(brakPoints=>{
-        if (navigator.geolocation && loc.need_cust_loc) {
+        if (brakPoints.matches && navigator.geolocation && loc.need_cust_loc) {
           return this.generalService.getLocation().pipe(mergeMap(coords=>{
             if(coords){
-              if(brakPoints.matches){
-                this.loc = {
-                  lat: coords?.coords?.latitude,
-                  lon: coords?.coords?.longitude
-                }
-                this.mapUrl = `${environment.gMapUrl}/maps?z=12&t=m&q=loc:${coords?.coords?.latitude}+${coords?.coords?.longitude}`;
-                return this.generalService.reverseLatLngAddress(this.loc);
-              }else{
-                this.mapUrl = null;
-                return empty();
+              this.loc = {
+                lat: coords?.coords?.latitude,
+                lon: coords?.coords?.longitude
               }
+              this.mapUrl = `${environment.gMapUrl}/maps?z=12&t=m&q=loc:${coords?.coords?.latitude}+${coords?.coords?.longitude}`;
+              return this.generalService.reverseLatLngAddress(this.loc);
             }else{
               this.mapUrl = null;
               return empty();

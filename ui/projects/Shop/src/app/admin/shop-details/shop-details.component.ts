@@ -1,9 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
-import { Observable } from 'rxjs';
+import { Observable, Subscription } from 'rxjs';
 import { mergeMap, tap } from 'rxjs/operators';
-import { Shop } from 'src/app/lib/interfaces';
-import { ShopService } from 'src/app/lib/services';
+import { City, Country, Shop, State } from 'src/app/lib/interfaces';
+import { CityService, CountryService, ShopService, StateService } from 'src/app/lib/services';
 import Notiflix from "notiflix";
 
 @Component({
@@ -11,11 +11,20 @@ import Notiflix from "notiflix";
   templateUrl: './shop-details.component.html',
   styleUrls: ['./shop-details.component.scss']
 })
-export class ShopDetailsComponent implements OnInit {
+export class ShopDetailsComponent implements OnInit, OnDestroy {
   shop$: Observable<Shop>;
   shopDetailsFrm: FormGroup;
+  countries$: Observable<Country[]>;
+  states$: Observable<State[]>;
+  cities$: Observable<City[]>;
+
+  countrySubscription: Subscription;
+  stateSubscription: Subscription;
   constructor(private shopService: ShopService,
-    private formBuilder: FormBuilder) { }
+    private formBuilder: FormBuilder,
+    private countryServive: CountryService,
+    private stateService: StateService,
+    private cityService: CityService) { }
 
   updateShop(){
     const postData = {
@@ -53,9 +62,9 @@ export class ShopDetailsComponent implements OnInit {
         email: res?.email,
         phone: res?.phone,
         address: res?.address,
-        country_id: res?.country_id,
-        state_id: res?.state_id,
-        city_id: res?.city_id,
+        country_id: res?.country,
+        state_id: res?.state,
+        city_id: res?.city,
         pin: res?.pin ,
         local: res?.local,
       });
@@ -73,6 +82,28 @@ export class ShopDetailsComponent implements OnInit {
       local: [null, []] ,
     });
 
+    this.countries$ = this.countryServive.countries();
+
+    this.countrySubscription = this.f.country_id.valueChanges.subscribe(res=>{
+      if(res)
+        this.states$ = this.stateService.states(res.id);
+    });
+
+    this.stateSubscription = this.f.state_id.valueChanges.subscribe(res=>{
+      if(res)
+        this.cities$ = this.cityService.cities(res.id);
+    });
+
+  }
+
+  ngOnDestroy(){
+    if(this.countrySubscription){
+      this.countrySubscription.unsubscribe();
+    }
+
+    if(this.stateSubscription){
+      this.stateSubscription.unsubscribe();
+    }
   }
 
 }

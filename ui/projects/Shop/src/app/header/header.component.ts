@@ -27,7 +27,8 @@ export class HeaderComponent implements OnInit, OnDestroy {
     private router: Router,
     private userService: UserService,
     private breakpointObserver: BreakpointObserver,
-    private shopService: ShopService) {
+    private shopService: ShopService,
+    public generalService: GeneralService) {
 
     }
 

@@ -1,33 +1,34 @@
 <mat-toolbar color="primary" *ngIf="(layOutXSmall$ | async) as layOutXSmall">
-  <span >{{title}}</span>
+  <a routerLink="/">{{title}}</a>
+
   <div class="flex-right" *ngIf="layOutXSmall.matches">
       <button mat-icon-button (click)="onToggleSidenav()">
           <mat-icon>menu</mat-icon>
       </button>
   </div>
-  
+
   <ng-container *ngIf="!layOutXSmall.matches">
-    <div class="flex-right navmenu"> 
+    <div class="flex-right navmenu">
     <a routerLink="/" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">Home</a>
     <a routerLink="/about-us" routerLinkActive="active">About Us</a>
     <a routerLink="/contact-us" routerLinkActive="active">Contact Us</a>
-    
+
     <ng-container *ngIf="(loggedUser$ | async) as loggedUser">
-     
+
         <a routerLink="/admin/categories" routerLinkActive="active">Categories</a>
-    
-     
+
+
         <a routerLink="/admin/products"  routerLinkActive="active">Products</a>
-     
+
 
         <a routerLink="/admin/deliveries"  routerLinkActive="active">Delivery Locations</a>
-      
-     
+
+
         <a routerLink="/admin/details"  routerLinkActive="active">Shop Info</a>
-    
-     
+
+
         <a routerLink="/admin/orders" routerLinkActive="active">Orders</a>
-    
+
       <div>
         <button mat-button [matMenuTriggerFor]="menu">{{loggedUser.fname}}</button>
         <mat-menu #menu="matMenu">
@@ -40,4 +41,7 @@
   </ng-container>
 
 </mat-toolbar>
+<div *ngIf="(generalService.shopDisabled | async)">
+  Your shop was disabled by admin
+</div>
 

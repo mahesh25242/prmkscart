@@ -22,7 +22,8 @@ class ShopOrder extends Model implements AuthenticatableContract, AuthorizableCo
      */
     protected $fillable = [
          'shop_id', 'shop_customer_id', 'total', 'delivery_chage', 'address',
-         'pin', 'note', 'loc', 'status'
+         'pin', 'note', 'loc', 'status', 'shop_delivery_id',
+         'delivery_at'
     ];
 
     protected $appends = array('status_text');
@@ -44,6 +45,18 @@ class ShopOrder extends Model implements AuthenticatableContract, AuthorizableCo
     public function shopCustomer()
     {
         return $this->belongsTo('App\ShopCustomer');
+    }
+
+
+    public function shopDelivery()
+    {
+        return $this->belongsTo('App\ShopDelivery');
+    }
+
+
+    public function shopOrderItem()
+    {
+        return $this->hasMany('App\ShopOrderItem');
     }
 
 }

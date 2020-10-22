@@ -22,7 +22,7 @@ class AdminAndShopAuthenticate
         if($shopKey){
             $exists = \App\User::whereHas("userRole.shop", function($q) use($shopKey){
                 $q->where("shop_key", $shopKey);
-            })->where("id", Auth::id())->exists();
+            })->where("status", 1)->where("id", Auth::id())->exists();
             if($exists)
                 return $next($request);
         }

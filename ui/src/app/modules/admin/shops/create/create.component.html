@@ -1,6 +1,21 @@
 <form [formGroup]="createShop" (ngSubmit)="saveShop()">
   <div class="row">
     <div class="col">
+
+      <div class="form-group">
+        <label for="country">Country</label>
+        <ng-select [items]="(countries$ | async)"
+        bindLabel="name"
+        id="country_id"
+        [ngClass]="{'is-invalid': ( f.country_id.errors && f.country_id.errors.error)}"
+        placeholder="select Country"
+        formControlName="country_id">
+        </ng-select>
+        <div *ngIf="f.country_id.errors && f.country_id.errors.error" class="invalid-feedback">
+          {{f.country_id.errors.error}}
+        </div>
+      </div>
+
       <div class="form-group">
         <label for="Category">Category</label>
         <ng-select [items]="(categories$ | async)"
@@ -61,7 +76,7 @@
         </div>
         <div class="form-group">
           <label for="phone">Phone</label>
-          <input type="tel" class="form-control" id="phone"
+          {{ f.country_id.value?.phonecode }}<input type="tel" class="form-control" id="phone"
           [ngClass]="{'is-invalid': ( f.phone.errors && f.phone.errors.error)}"
           placeholder="Phone"
           formControlName="phone">
@@ -80,19 +95,7 @@
             {{f.address.errors.error}}
           </div>
         </div>
-        <div class="form-group">
-          <label for="country">Country</label>
-          <ng-select [items]="(countries$ | async)"
-          bindLabel="name"
-          id="country_id"
-          [ngClass]="{'is-invalid': ( f.country_id.errors && f.country_id.errors.error)}"
-          placeholder="select Country"
-          formControlName="country_id">
-          </ng-select>
-          <div *ngIf="f.country_id.errors && f.country_id.errors.error" class="invalid-feedback">
-            {{f.country_id.errors.error}}
-          </div>
-        </div>
+
         <div class="form-group">
           <label for="State">State</label>
           <ng-select [items]="(states$ | async)"

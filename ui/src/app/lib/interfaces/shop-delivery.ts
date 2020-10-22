@@ -9,5 +9,6 @@ export interface ShopDelivery {
   created_at?: string,
   sortorder?: number,
   need_cust_loc?: number,
-  shop?: Shop
+  shop?: Shop,
+  min_amount?: number
 }

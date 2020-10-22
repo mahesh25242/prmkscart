@@ -18,7 +18,7 @@
     <ng-container matColumnDef="name">
       <th mat-header-cell *matHeaderCellDef> Name </th>
       <td mat-cell *matCellDef="let element">
-        <a href="javascript:{}" (click)="editProduct(element)">{{element.name}}</a>
+        <a href="javascript:{}" (click)="editProduct(element)" matTooltip="Click here to view or edit this product">{{element.name}}</a>
       </td>
     </ng-container>
 
