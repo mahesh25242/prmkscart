@@ -22,12 +22,17 @@ class ShopDelivery extends Model implements AuthenticatableContract, Authorizabl
      */
     protected $fillable = [
          'shop_id', 'name', 'description', 'charge',
-         'sortorder', 'need_cust_loc'
+         'sortorder', 'need_cust_loc', 'min_amount'
     ];
 
     public function shop()
     {
         return $this->belongsTo('App\Shop');
+    }
+
+    public function shopOrder()
+    {
+        return $this->hasMany('App\ShopOrder');
     }
 
 }

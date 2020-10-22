@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable } from 'rxjs';
-import { map } from 'rxjs/operators';
+import { map, tap } from 'rxjs/operators';
 import { ShopProductCategory } from '../interfaces';
 
 @Injectable({
@@ -9,6 +9,7 @@ import { ShopProductCategory } from '../interfaces';
 })
 export class ShopProductCategoryService {
   private categories$: BehaviorSubject<ShopProductCategory[]> = new BehaviorSubject<ShopProductCategory[]>(null);
+
   constructor(private http: HttpClient) { }
 
   get categories(){
@@ -32,6 +33,8 @@ export class ShopProductCategoryService {
 
 
   showCategories(){
-    return this.http.get<ShopProductCategory[]>("/shop/product/showCategories");
+    return this.http.get<ShopProductCategory[]>("/shop/product/showCategories").pipe(tap(res=>{
+      this.categories$.next(res);
+    }));
   }
 }

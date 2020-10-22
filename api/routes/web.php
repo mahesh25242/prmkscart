@@ -30,7 +30,7 @@ $router->group(['prefix' => 'v1'], function () use ($router) {
 
     $router->group(['prefix' => 'shop'], function () use ($router) {
         $router->get('/','ShopsController@shopDetails');
-        $router->post('createOrder','OrderController@createOrder');
+        $router->post('createOrder','ShopOrderController@createOrder');
         $router->group(['prefix' => 'product'], function () use ($router) {
             $router->get('showCategories','ShopProductCategoryController@showCategories');
             $router->post('showProducts','ShopProductController@showProducts');
@@ -57,7 +57,7 @@ $router->group(['prefix' => 'v1'], function () use ($router) {
 
             $router->group(['prefix' => 'shop'], function () use ($router) {
                 $router->post('/store','ShopsController@updateDetails');
-                $router->post('/orders','OrderController@orders');
+                $router->post('/orders','ShopOrderController@orders');
                 $router->group(['prefix' => 'deliveries'], function () use ($router) {
                     $router->post('/','ShopDeliveryController@deliveries');
                     $router->post('delete','ShopDeliveryController@delete');

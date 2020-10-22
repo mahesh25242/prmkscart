@@ -1,5 +1,7 @@
+import { Pagination } from './pagination';
 import { Shop } from './shop';
 import { ShopCustomer } from './shop-customer';
+import { ShopDelivery } from './shop-delivery';
 import { ShopOrderItem } from './shop-order-item';
 export interface ShopOrder {
   id?: number,
@@ -15,5 +17,11 @@ export interface ShopOrder {
   created_at: string,
   shop?: Shop
   shop_customer?:  ShopCustomer,
-  shop_order_item?: ShopOrderItem
+  shop_order_item?: ShopOrderItem,
+  shop_delivery?: ShopDelivery
+}
+
+
+export interface ShopOrderWithPagination extends Pagination {
+  data?: ShopOrder[]
 }

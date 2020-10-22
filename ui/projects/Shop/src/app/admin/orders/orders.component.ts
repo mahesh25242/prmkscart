@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Observable } from 'rxjs';
-import { ShopOrder } from 'src/app/lib/interfaces';
+import { ShopOrderWithPagination } from 'src/app/lib/interfaces';
 import { CartService } from 'src/app/lib/services';
 
 @Component({
@@ -9,11 +9,11 @@ import { CartService } from 'src/app/lib/services';
   styleUrls: ['./orders.component.scss']
 })
 export class OrdersComponent implements OnInit {
-  orders$: Observable<ShopOrder[]>;
-  displayedColumns = ["no", "name", "status"]
+  orders$: Observable<ShopOrderWithPagination>;
+  displayedColumns = ["no", "name", "total", "delivery_location" ,'created_at', "status"]
   constructor(private cartService: CartService) { }
 
-  viewOrder(shopOrder: ShopOrder = null){
+  viewOrder(shopOrder: ShopOrderWithPagination = null){
 
   }
   ngOnInit(): void {

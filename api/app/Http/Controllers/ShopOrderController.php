@@ -5,7 +5,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Validator;
 
-class OrderController extends Controller
+class ShopOrderController extends Controller
 {
 
 
@@ -50,6 +50,7 @@ class OrderController extends Controller
                 $shopOrder = new \App\ShopOrder;
                 $shopOrder->shop_id =  $shop->id;
                 $shopOrder->shop_customer_id =  $shopCustomer->id;
+                $shopOrder->shop_delivery_id =  ($shopDelivery) ? $shopDelivery->id : 0;
                 $shopOrder->delivery_chage =  ($shopDelivery) ? $shopDelivery->charge : 0;
                 $shopOrder->address =  $request->input("address", '');
                 $shopOrder->pin =  $request->input("pin", '');
@@ -102,7 +103,7 @@ class OrderController extends Controller
         if($shopKey){
             $shop = \App\Shop::where("shop_key", $shopKey)->get()->first();
         }
-        $orders = \App\ShopOrder::where("shop_id", $shop->id)->paginate($perPage);
+        $orders = \App\ShopOrder::with(["shopCustomer", "shopOrderItem", "shopDelivery"])->where("shop_id", $shop->id)->orderBy("id", "desc")->paginate($perPage);
         return response($orders);
     }
 
