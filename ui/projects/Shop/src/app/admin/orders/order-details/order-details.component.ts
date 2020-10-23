@@ -9,7 +9,7 @@ import { ShopOrder } from 'src/app/lib/interfaces';
   styleUrls: ['./order-details.component.scss']
 })
 export class OrderDetailsComponent implements OnInit {
-  displayedColumns = ["no", "name", "qty", "price"];
+  displayedColumns = ["no", "name", "qty", "message", "price"];
   constructor(@Inject(MAT_DIALOG_DATA) public data: ShopOrder,
   public dialogRef: MatDialogRef<OrderDetailsComponent>) { }
 

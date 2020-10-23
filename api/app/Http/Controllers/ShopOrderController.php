@@ -71,6 +71,7 @@ class ShopOrderController extends Controller
                                     $shopOrderItem->shop_order_id = $shopOrder->id;
                                     $shopOrderItem->shop_product_variant_id = $crt["product"]["shop_product_selected_variant"]["id"];
                                     $shopOrderItem->qty = $crt["qty"];
+                                    $shopOrderItem->message = $crt["message"];
                                     $shopOrderItem->price = $crt["qty"] * $shopProductVarient->price;
                                     $shopOrderItem->save();
                                     $totalPrice += $shopOrderItem->price;

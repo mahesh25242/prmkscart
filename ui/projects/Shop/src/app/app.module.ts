@@ -27,6 +27,7 @@ import { SideNavListComponent } from './header/side-nav-list/side-nav-list.compo
 import { AddToCartComponent } from './components/add-to-cart/add-to-cart.component';
 import { ProductDetailsComponent } from './product-details/product-details.component';
 import { ProductDetailsResolver } from './product-details/product-details-resolver';
+import { EditMessageComponent } from './cart-details/edit-message/edit-message.component';
 
 @NgModule({
   declarations: [
@@ -43,7 +44,8 @@ import { ProductDetailsResolver } from './product-details/product-details-resolv
     CartDetailsComponent,
     SideNavListComponent,
     AddToCartComponent,
-    ProductDetailsComponent
+    ProductDetailsComponent,
+    EditMessageComponent
   ],
   imports: [
     BrowserModule,

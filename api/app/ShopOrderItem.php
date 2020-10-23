@@ -22,7 +22,7 @@ class ShopOrderItem extends Model implements AuthenticatableContract, Authorizab
      */
     protected $fillable = [
          'shop_order_id', 'shop_product_variant_id', 'qty', 'price',
-         'status'
+         'status', 'message'
     ];
 
     public function shopOrder()

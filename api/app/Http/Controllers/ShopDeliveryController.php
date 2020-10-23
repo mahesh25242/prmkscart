@@ -41,6 +41,8 @@ class ShopDeliveryController extends Controller
             "name" => $request->input("name", ''),
             "description" => $request->input("description", ''),
             "charge" => $request->input("charge", 0),
+            "sortorder" => $request->input("sortorder", 0),
+            "min_amount" => ($request->input("min_amount", 0) ? $request->input("min_amount", 0) : 0) ,
             "need_cust_loc" => $request->input("need_cust_loc", 0),
         ];
         if($request->input("id", 0)){

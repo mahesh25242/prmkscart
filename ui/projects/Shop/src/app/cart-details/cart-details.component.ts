@@ -9,6 +9,9 @@ import { first } from 'lodash'
 import {MatSnackBar} from '@angular/material/snack-bar';
 import { BreakpointObserver, Breakpoints, BreakpointState } from '@angular/cdk/layout';
 import { Router } from '@angular/router';
+import {MatDialog, MatDialogRef, MAT_DIALOG_DATA} from '@angular/material/dialog';
+import { EditMessageComponent } from './edit-message/edit-message.component';
+import Notiflix from "notiflix";
 
 @Component({
   selector: 'app-cart-details',
@@ -37,7 +40,8 @@ export class CartDetailsComponent implements OnInit, OnDestroy {
     private matSnackBar: MatSnackBar,
     private breakpointObserver: BreakpointObserver,
     private generalService: GeneralService,
-    private router: Router,) {
+    private router: Router,
+    public dialog: MatDialog) {
     cartService.shopKey = environment.shopKey;
   }
 
@@ -53,6 +57,7 @@ export class CartDetailsComponent implements OnInit, OnDestroy {
       this.matSnackBar.open('Please choose a delivery location.');
       return;
     }
+    Notiflix.Loading.Arrows();
     this.sentToShop = this.cart$.pipe(mergeMap(cart=>{
       if(!cart) return empty();
       return this.shop$.pipe(mergeMap(shop=>{
@@ -106,6 +111,18 @@ export class CartDetailsComponent implements OnInit, OnDestroy {
     })).subscribe(res=>{
       localStorage.removeItem(`${environment.shopKey}-cart`);
       window.location.href = res.url;
+      Notiflix.Loading.Remove();
+    }, error=>{
+      Notiflix.Loading.Remove();
+      if(error.status == 422){
+        for(let result in this.customerFrm.controls){
+          if(error.error.errors[result]){
+            this.customerFrm.controls[result].setErrors({ error: error.error.errors[result] });
+          }else{
+            this.customerFrm.controls[result].setErrors(null);
+          }
+        }
+      }
     });
 
 
@@ -125,6 +142,10 @@ export class CartDetailsComponent implements OnInit, OnDestroy {
 
   changeLocation(loc: ShopDelivery){
     if(!loc) return;
+    if(loc.min_amount && this.grandTotal < loc.min_amount){
+      this.matSnackBar.open(`Sorry you cant choose ${loc.name} as your delivery. Because it has miinum order amount is ${loc.min_amount}`);
+      return;
+    }
     this.selectedLocation = loc;
     if(this.selectedLocation?.charge){
       this.grandTotal = this.total + this.selectedLocation?.charge;
@@ -191,6 +212,11 @@ export class CartDetailsComponent implements OnInit, OnDestroy {
   }
   get f(){ return this.customerFrm.controls; }
 
+  editMessage(cart: Cart = null){
+    let dialogRef = this.dialog.open(EditMessageComponent, {
+      data: cart
+    });
+  }
   ngOnInit(): void {
     this.generalService.bc$.next({
       siteName: environment.siteName,
@@ -230,7 +256,7 @@ export class CartDetailsComponent implements OnInit, OnDestroy {
 
     this.customerFrm = this.formBuilder.group({
       name: [null, [Validators.required]],
-      note: [null, [Validators.required]],
+      note: [null, []],
       email: [null, []],
       phone: [null, [Validators.required]],
       address: [null, [Validators.required]],

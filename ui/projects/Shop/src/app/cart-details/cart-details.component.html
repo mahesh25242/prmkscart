@@ -13,6 +13,14 @@
 
         {{item.price}}
 
+        <!-- <ng-container *ngIf="item.message"> -->
+          {{item.message}}
+          <button mat-icon-button color="primary" (click)="editMessage(item)">
+            <mat-icon>edit</mat-icon>
+          </button>
+        <!-- </ng-container> -->
+
+
         <button mat-icon-button color="primary" (click)="updateCart(item, '-')">
           <mat-icon>remove_circle_outline</mat-icon>
         </button>
@@ -54,6 +62,9 @@
             <mat-error *ngIf="f.name.errors && f.name.errors.error">
               {{f.name.errors.error}}
             </mat-error>
+            <mat-error *ngIf="f.name.invalid && ((f.name.dirty || f.name.touched)) && f.name.errors.required">
+              Name is required.
+            </mat-error>
           </mat-form-field>
 
 
@@ -71,6 +82,9 @@
             <input type="tel" matInput formControlName="phone" placeholder="Ex. 91546542465" required>
             <mat-error *ngIf="f.phone.errors && f.phone.errors.error">
               {{f.phone.errors.error}}
+            </mat-error>
+            <mat-error *ngIf="f.phone.invalid && ((f.phone.dirty || f.phone.touched)) && f.phone.errors.required">
+              Phone is required.
             </mat-error>
           </mat-form-field>
 
@@ -104,7 +118,7 @@
 
           <mat-form-field class="full-width-text" appearance="standard">
             <mat-label>Order Note</mat-label>
-            <textarea matInput formControlName="note" placeholder="Ex. Birth day John Doe " required></textarea>
+            <textarea matInput formControlName="note" placeholder="Ex. Birth day John Doe "></textarea>
             <mat-error *ngIf="f.note.errors && f.note.errors.error">
               {{f.note.errors.error}}
             </mat-error>

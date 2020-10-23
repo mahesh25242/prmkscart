@@ -12,6 +12,24 @@ import { ProductDetailsComponent } from './product-details/product-details.compo
 
 const routes: Routes = [
   {
+    path: 'about-us',
+    component: AboutUsComponent
+  },
+  {
+    path: 'contact-us',
+    component: ContactUsComponent
+  },
+  {
+    path: 'bag',
+    component: CartDetailsComponent
+  },
+
+  {
+    path: 'admin',
+    loadChildren: () => import('./admin/admin.module').then(m => m.AdminModule)
+  },
+
+  {
     path: '',
     component: HomeComponent,
     children:[
@@ -38,23 +56,7 @@ const routes: Routes = [
       },
     ]
   },
-  {
-    path: 'about-us',
-    component: AboutUsComponent
-  },
-  {
-    path: 'contact-us',
-    component: ContactUsComponent
-  },
-  {
-    path: 'bag',
-    component: CartDetailsComponent
-  },
 
-  {
-    path: 'admin',
-    loadChildren: () => import('./admin/admin.module').then(m => m.AdminModule)
-  },
 
   { path: '**', component: PageNotFoundComponent }
 ];

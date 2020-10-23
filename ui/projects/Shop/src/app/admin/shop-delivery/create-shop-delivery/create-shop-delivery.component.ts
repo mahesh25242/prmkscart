@@ -30,6 +30,7 @@ export class CreateShopDeliveryComponent implements OnInit, OnDestroy {
       description: this.f.description.value,
       charge: this.f.charge.value,
       sortorder: this.f.sortorder.value,
+      min_amount: this.f.min_amount.value,
       need_cust_loc: this.f.need_cust_loc.value,
     }
     this.saveCatSubScr = this.shopService.saveShopDelivery(postData).pipe(mergeMap(res=>{
@@ -60,6 +61,7 @@ export class CreateShopDeliveryComponent implements OnInit, OnDestroy {
       description: [null, []],
       charge: [null, []],
       sortorder: [1, []],
+      min_amount: [0, []],
       need_cust_loc: [1, []],
     });
 
@@ -68,6 +70,7 @@ export class CreateShopDeliveryComponent implements OnInit, OnDestroy {
       name: this.data?.name,
       description: this.data?.description,
       sortorder: (this.data?.sortorder) ? this.data?.sortorder : 1,
+      min_amount: (this.data?.min_amount) ? this.data?.min_amount : 0,
       charge: (this.data?.charge) ? this.data?.charge : 0,
       need_cust_loc: (this.data?.need_cust_loc) ? this.data?.need_cust_loc : 0,
     });
