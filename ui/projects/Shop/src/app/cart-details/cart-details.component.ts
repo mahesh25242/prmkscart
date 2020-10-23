@@ -12,6 +12,7 @@ import { Router } from '@angular/router';
 import {MatDialog, MatDialogRef, MAT_DIALOG_DATA} from '@angular/material/dialog';
 import { EditMessageComponent } from './edit-message/edit-message.component';
 import Notiflix from "notiflix";
+import { DatePipe } from '@angular/common'
 
 @Component({
   selector: 'app-cart-details',
@@ -24,6 +25,7 @@ export class CartDetailsComponent implements OnInit, OnDestroy {
   cart$: Observable<Cart[]>;
   total:number = 0;
   grandTotal:number = 0;
+  todayDate:Date = new Date();
 
   shop$:Observable<Shop>;
   selectedLocation: ShopDelivery;
@@ -41,7 +43,8 @@ export class CartDetailsComponent implements OnInit, OnDestroy {
     private breakpointObserver: BreakpointObserver,
     private generalService: GeneralService,
     private router: Router,
-    public dialog: MatDialog) {
+    public dialog: MatDialog,
+    public datepipe: DatePipe) {
     cartService.shopKey = environment.shopKey;
   }
 
@@ -62,6 +65,17 @@ export class CartDetailsComponent implements OnInit, OnDestroy {
       if(!cart) return empty();
       return this.shop$.pipe(mergeMap(shop=>{
         if(!shop) return empty();
+
+        let deliveryDate = '';
+
+        if(this.f.delivery_date.value){
+          deliveryDate = this.datepipe.transform(this.f.delivery_date.value, 'yyyy-MM-dd');
+          let minute;
+          if(this.f.hour.value){
+            minute = (this.f.minute.value) ? ("0" + this.f.minute.value).slice(-2) : '00';
+          }
+          deliveryDate = `${deliveryDate} ${ (this.f.hour.value) ? `${("0" + this.f.hour.value).slice(-2) }:` :'' }${ (minute) ? `${minute}` : '' }${(this.f.hour.value) ? this.f.ampm.value : ''}`
+        }
         const postData = {
           cart: cart,
           name: this.f.name.value,
@@ -73,7 +87,7 @@ export class CartDetailsComponent implements OnInit, OnDestroy {
           selectedLocation: this.selectedLocation,
           grad_total: this.grandTotal,
           loc :this.loc,
-          delivery_date: this.f.delivery_date.value,
+          delivery_date: deliveryDate,
           hour: this.f.hour.value,
           minute: this.f.minute.value,
           ampm: this.f.ampm.value,
@@ -267,7 +281,7 @@ export class CartDetailsComponent implements OnInit, OnDestroy {
       pin: [null, [Validators.required]],
       delivery_date: [null, []],
       hour: [null, [Validators.min(1), Validators.max(12)]],
-      minute: [0, [Validators.min(0), Validators.max(59)]],
+      minute: [null, [Validators.min(0), Validators.max(59)]],
       ampm: ['am', []],
     });
   }

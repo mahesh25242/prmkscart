@@ -8,6 +8,7 @@ import {  RouterModule } from '@angular/router';
 import { NgxCaptchaModule } from 'ngx-captcha';
 import Notiflix from "notiflix";
 // import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { DatePipe } from '@angular/common'
 
 import {MatIconModule} from '@angular/material/icon';
 import {MatButtonModule} from '@angular/material/button';
@@ -103,6 +104,7 @@ Notiflix.Block.Init({ svgColor:"#204486", });
     MatButtonToggleModule
   ],
   providers:[
+    DatePipe,
     {provide: MAT_SNACK_BAR_DEFAULT_OPTIONS, useValue: {duration: 2500}}
   ]
 })

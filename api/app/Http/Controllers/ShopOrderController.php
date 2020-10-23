@@ -11,6 +11,7 @@ class ShopOrderController extends Controller
 
     public function createOrder(Request $request){
 
+
         $validator = Validator::make($request->all(), [
             'name' => ['required'],
             'phone' => ['required'],
@@ -46,9 +47,14 @@ class ShopOrderController extends Controller
                 ]
             );
             if($shopCustomer->id){
+                $delivery_date = null;
+                if($request->input("delivery_date", null))
+                    $delivery_date = \Carbon\Carbon::parse($request->input("delivery_date"))->format('Y-m-d H:i:s');
+
                 $shopDelivery = \App\ShopDelivery::find($request->input("selectedLocation.id", 0));
                 $shopOrder = new \App\ShopOrder;
                 $shopOrder->shop_id =  $shop->id;
+                $shopOrder->delivery_at =  $delivery_date;
                 $shopOrder->shop_customer_id =  $shopCustomer->id;
                 $shopOrder->shop_delivery_id =  ($shopDelivery) ? $shopDelivery->id : 0;
                 $shopOrder->delivery_chage =  ($shopDelivery) ? $shopDelivery->charge : 0;
