@@ -8,6 +8,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { first } from 'lodash'
 import {MatSnackBar} from '@angular/material/snack-bar';
 import { BreakpointObserver, Breakpoints, BreakpointState } from '@angular/cdk/layout';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-cart-details',
@@ -35,7 +36,8 @@ export class CartDetailsComponent implements OnInit, OnDestroy {
     private shopService: ShopService,
     private matSnackBar: MatSnackBar,
     private breakpointObserver: BreakpointObserver,
-    private generalService: GeneralService) {
+    private generalService: GeneralService,
+    private router: Router,) {
     cartService.shopKey = environment.shopKey;
   }
 
@@ -202,7 +204,10 @@ export class CartDetailsComponent implements OnInit, OnDestroy {
       });
 
       this.grandTotal = this.total;
-
+      if(!this.total){
+        this.matSnackBar.open('Your bag is empty.');
+        this.router.navigate(['/']);
+      }
 
     }));
 
