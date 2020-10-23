@@ -20,6 +20,7 @@ export class AddToCartComponent implements OnInit, OnDestroy {
   cartSubScr: Subscription;
   cart: Cart;
   qty: number = 1;
+
   constructor(@Inject(MAT_DIALOG_DATA) public data: ShopProduct,
   public dialogRef: MatDialogRef<AddToCartComponent>,
   private formBuilder: FormBuilder,
@@ -54,7 +55,8 @@ export class AddToCartComponent implements OnInit, OnDestroy {
       price: (this.data.shop_product_selected_variant.price * this.qty),
       message: this.f.message.value
     };
-    this.cartService.updateCart(this.cart, '++').subscribe(res =>{
+    if(this.cartSubScr) this.cartSubScr.unsubscribe();
+    this.cartSubScr = this.cartService.updateCart(this.cart, '++').subscribe(res =>{
       console.log(res)
       this.matSnackBar.open(`${this.cart.product.name} - ${this.cart.product.shop_product_selected_variant.name} ( ${this.cart.qty} ) is added`);
       this.dialogRef.close();

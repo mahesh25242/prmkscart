@@ -27,6 +27,9 @@ export class CartDetailsComponent implements OnInit, OnDestroy {
   loc : any =null;
 
   breakPointSubScr: Subscription;
+
+  cartSubScr: Subscription;
+  sentToShop: Subscription;
   constructor(private cartService: CartService,
     private formBuilder: FormBuilder,
     private shopService: ShopService,
@@ -39,7 +42,8 @@ export class CartDetailsComponent implements OnInit, OnDestroy {
   updateCart(cart: Cart, action: string='+'){
     const itm =Object.assign({}, cart);
     itm.qty = 1;
-    this.cartService.updateCart(itm, action).subscribe();
+    if(this.cartSubScr) this.cartSubScr.unsubscribe();
+    this.cartSubScr = this.cartService.updateCart(itm, action).subscribe();
   }
 
   sendToShop(){
@@ -47,7 +51,7 @@ export class CartDetailsComponent implements OnInit, OnDestroy {
       this.matSnackBar.open('Please choose a delivery location.');
       return;
     }
-    this.cart$.pipe(mergeMap(cart=>{
+    this.sentToShop = this.cart$.pipe(mergeMap(cart=>{
       if(!cart) return empty();
       return this.shop$.pipe(mergeMap(shop=>{
         if(!shop) return empty();
@@ -107,13 +111,12 @@ export class CartDetailsComponent implements OnInit, OnDestroy {
 
   }
 
-  closeWindow(){
-    this.showDetails.emit();
-  }
+
 
   deleteItem(itm: Cart){
     itm.qty = 0;
-    this.cartService.updateCart(itm, '++').subscribe(res=>{
+    if(this.cartSubScr) this.cartSubScr.unsubscribe();
+    this.cartSubScr = this.cartService.updateCart(itm, '++').subscribe(res=>{
       this.matSnackBar.open(`${itm.product.name} - ${itm.product.shop_product_selected_variant.name} successfully removed`);
     });
   }
@@ -127,6 +130,7 @@ export class CartDetailsComponent implements OnInit, OnDestroy {
       this.grandTotal = this.total;
     }
 
+    if(this.breakPointSubScr) this.breakPointSubScr.unsubscribe();
 
       this.breakPointSubScr = this.breakpointObserver.observe([
         Breakpoints.Handset,
@@ -198,9 +202,7 @@ export class CartDetailsComponent implements OnInit, OnDestroy {
       });
 
       this.grandTotal = this.total;
-      if(!this.total){
-        this.closeWindow();
-      }
+
 
     }));
 
@@ -216,7 +218,17 @@ export class CartDetailsComponent implements OnInit, OnDestroy {
 
   ngOnDestroy(){
     this.cartService.hideCartComponent$.next(false);
-    if(this.breakPointSubScr)
+    if(this.breakPointSubScr){
       this.breakPointSubScr.unsubscribe();
+    }
+
+    if(this.cartSubScr){
+      this.cartSubScr.unsubscribe();
+    }
+
+    if(this.sentToShop){
+      this.sentToShop.unsubscribe();
+    }
+
   }
 }
