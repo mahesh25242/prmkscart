@@ -4,9 +4,6 @@ import { map, mergeMap, tap } from 'rxjs/operators';
 import { Cart, ShopProduct } from 'src/app/lib/interfaces';
 import { CartService } from 'src/app/lib/services';
 import { environment } from '../../../environments/environment';
-import {MatDialog, MatDialogRef, MAT_DIALOG_DATA} from '@angular/material/dialog';
-import { CartDetailsComponent } from '../../cart-details/cart-details.component';
-
 
 
 @Component({
@@ -15,11 +12,11 @@ import { CartDetailsComponent } from '../../cart-details/cart-details.component'
   styleUrls: ['./cart.component.scss']
 })
 export class CartComponent implements OnInit {
+  hideCartComponent$: Observable<boolean>;
   cart$: Observable<Cart[]>;
   total:number = 0;
   cartDetails: boolean = false;
-  constructor(private cartService: CartService,
-    public dialog: MatDialog) {
+  constructor(private cartService: CartService) {
     cartService.shopKey = environment.shopKey;
   }
 
@@ -29,13 +26,10 @@ export class CartComponent implements OnInit {
     this.cartService.updateCart(itm, action).subscribe();
   }
 
-  showDetails(){
-    let dialogRef = this.dialog.open(CartDetailsComponent);
-
-    this.cartDetails = !this.cartDetails;
-  }
 
   ngOnInit(): void {
+    this.hideCartComponent$ = this.cartService.hideCartComponent$.asObservable();
+
     this.cart$ = this.cartService.cart().pipe(tap(res=>{
       this.total = 0;
       res.map(itm=>{

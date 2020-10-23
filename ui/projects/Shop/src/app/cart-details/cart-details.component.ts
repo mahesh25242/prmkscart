@@ -4,7 +4,6 @@ import { mergeMap, tap, map } from 'rxjs/operators';
 import { Cart, Shop, ShopDelivery } from 'src/app/lib/interfaces';
 import { CartService, GeneralService, ShopService } from 'src/app/lib/services';
 import { environment } from '../../environments/environment';
-import {MatDialogRef, MAT_DIALOG_DATA} from '@angular/material/dialog';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { first } from 'lodash'
 import {MatSnackBar} from '@angular/material/snack-bar';
@@ -30,7 +29,6 @@ export class CartDetailsComponent implements OnInit, OnDestroy {
   breakPointSubScr: Subscription;
   constructor(private cartService: CartService,
     private formBuilder: FormBuilder,
-    public dialogRef: MatDialogRef<CartDetailsComponent>,
     private shopService: ShopService,
     private matSnackBar: MatSnackBar,
     private breakpointObserver: BreakpointObserver,
@@ -111,7 +109,11 @@ export class CartDetailsComponent implements OnInit, OnDestroy {
 
   closeWindow(){
     this.showDetails.emit();
-    this.dialogRef.close();
+  }
+
+  deleteItem(itm: Cart){
+    itm.qty = 0;
+    this.cartService.updateCart(itm, '++').subscribe();
   }
 
   changeLocation(loc: ShopDelivery){
@@ -182,6 +184,7 @@ export class CartDetailsComponent implements OnInit, OnDestroy {
   get f(){ return this.customerFrm.controls; }
 
   ngOnInit(): void {
+    this.cartService.hideCartComponent$.next(true);
     this.shop$ = this.shopService.aShop;
     // .pipe(tap(res=>{
     //   this.changeLocation(first(res?.shop_delivery));
@@ -210,6 +213,7 @@ export class CartDetailsComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy(){
+    this.cartService.hideCartComponent$.next(false);
     if(this.breakPointSubScr)
       this.breakPointSubScr.unsubscribe();
   }

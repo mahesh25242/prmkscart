@@ -27,6 +27,7 @@ export class AddToCartComponent implements OnInit, OnDestroy {
   get f(){ return  this.addToCartFrm.controls; }
 
   chooseVarient(){
+    this.qty = 1;
     this.data.shop_product_selected_variant =  find(this.data.shop_product_variant, (spv)=> (spv.id == this.f.shop_product_variant_id.value));
   }
 

@@ -12,6 +12,8 @@ export class CartService {
   cart$: BehaviorSubject<Cart[]> = new BehaviorSubject<Cart[]>(null);
   private orders$: BehaviorSubject<ShopOrderWithPagination> = new BehaviorSubject<ShopOrderWithPagination>(null);
   private isUpdated$: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
+  hideCartComponent$: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
+
   shopKey: string = null;
   constructor(private http: HttpClient) { }
 

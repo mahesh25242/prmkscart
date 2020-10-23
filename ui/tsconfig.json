@@ -20,22 +20,10 @@
       "path": "./projects/BreadNButter/tsconfig.spec.json"
     },
     {
-      "path": "./projects/tools/tsconfig.lib.json"
-    },
-    {
-      "path": "./projects/tools/tsconfig.spec.json"
-    },
-    {
-      "path": "./projects/vendors/tsconfig.lib.json"
-    },
-    {
-      "path": "./projects/vendors/tsconfig.spec.json"
-    },
-    {
       "path": "./projects/Shop/tsconfig.app.json"
     },
     {
       "path": "./projects/Shop/tsconfig.spec.json"
-    }   
+    }
 ]
 }

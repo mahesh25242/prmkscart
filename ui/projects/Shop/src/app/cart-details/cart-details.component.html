@@ -9,15 +9,20 @@
       <mat-card *ngFor="let item of cart">
         {{item.product.name}}
         {{item.product.shop_product_selected_variant.name}}
-        {{item.qty}}
+
         {{item.price}}
-        <button mat-icon-button color="primary" (click)="updateCart(item, '+')">
-          <mat-icon>add_circle_outline</mat-icon>
-        </button>
+
         <button mat-icon-button color="primary" (click)="updateCart(item, '-')">
           <mat-icon>remove_circle_outline</mat-icon>
         </button>
+        {{item.qty}}
+        <button mat-icon-button color="primary" (click)="updateCart(item, '+')">
+          <mat-icon>add_circle_outline</mat-icon>
+        </button>
 
+        <button mat-icon-button color="primary" (click)="deleteItem(item)">
+          <mat-icon>delete</mat-icon>
+        </button>
       </mat-card>
 
       Items: {{cart.length}}
@@ -110,7 +115,6 @@
     </div>
 
     <div mat-dialog-actions>
-      <button mat-stroked-button type="button" (click)="dialogRef.close()">Close</button>
       <button mat-raised-button color="primary" type="submit" (click)="sendToShop()">Send to Whatsapp</button>
     </div>
   </ng-container>
