@@ -72,7 +72,11 @@ export class CartDetailsComponent implements OnInit, OnDestroy {
           pin: this.f.pin.value,
           selectedLocation: this.selectedLocation,
           grad_total: this.grandTotal,
-          loc :this.loc
+          loc :this.loc,
+          delivery_date: this.f.delivery_date.value,
+          hour: this.f.hour.value,
+          minute: this.f.minute.value,
+          ampm: this.f.ampm.value,
         }
         return this.cartService.createOrder(postData).pipe(mergeMap(orderRes=>{
           if(!orderRes) return empty();
@@ -261,6 +265,10 @@ export class CartDetailsComponent implements OnInit, OnDestroy {
       phone: [null, [Validators.required]],
       address: [null, [Validators.required]],
       pin: [null, [Validators.required]],
+      delivery_date: [null, []],
+      hour: [null, [Validators.max(12), Validators.min(1)]],
+      minute: [null, [Validators.max(0), Validators.min(59)]],
+      ampm: ['am', []],
     });
   }
 

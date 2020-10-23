@@ -28,7 +28,7 @@ import {MatSlideToggleModule} from '@angular/material/slide-toggle';
 import {MatTooltipModule} from '@angular/material/tooltip';
 import {MatSnackBarModule, MAT_SNACK_BAR_DEFAULT_OPTIONS} from '@angular/material/snack-bar';
 import {MatNativeDateModule} from '@angular/material/core';
-
+import {MatButtonToggleModule} from '@angular/material/button-toggle';
 
 
 Notiflix.Confirm.Init({ borderRadius:"5px",titleColor:"#204486",okButtonBackground:"#204486",cancelButtonBackground:"#e2e2e2",cancelButtonColor:"#393939", });
@@ -69,7 +69,8 @@ Notiflix.Block.Init({ svgColor:"#204486", });
     MatSlideToggleModule,
     MatTooltipModule,
     MatSnackBarModule,
-    MatNativeDateModule
+    MatNativeDateModule,
+    MatButtonToggleModule
   ],
   exports:[
     NgSelectModule,
@@ -98,7 +99,8 @@ Notiflix.Block.Init({ svgColor:"#204486", });
     MatSlideToggleModule,
     MatTooltipModule,
     MatSnackBarModule,
-    MatNativeDateModule
+    MatNativeDateModule,
+    MatButtonToggleModule
   ],
   providers:[
     {provide: MAT_SNACK_BAR_DEFAULT_OPTIONS, useValue: {duration: 2500}}
