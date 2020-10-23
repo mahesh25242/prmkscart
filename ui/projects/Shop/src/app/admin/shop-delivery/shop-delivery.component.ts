@@ -1,11 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 import { Observable } from 'rxjs';
 import { ShopDelivery } from 'src/app/lib/interfaces';
-import { ShopService } from 'src/app/lib/services';
+import { GeneralService, ShopService } from 'src/app/lib/services';
 import {MatDialog, MatDialogRef, MAT_DIALOG_DATA} from '@angular/material/dialog';
 import Notiflix from "notiflix";
 import { map, mergeMap } from 'rxjs/operators';
 import { CreateShopDeliveryComponent } from './create-shop-delivery/create-shop-delivery.component';
+import { environment } from '../../../environments/environment';
 
 @Component({
   selector: 'app-shop-delivery',
@@ -17,7 +18,8 @@ export class ShopDeliveryComponent implements OnInit {
   displayedColumns: string[] = ['no', 'name', 'charge', 'need_cust_loc', 'options'];
 
   constructor(private shopService: ShopService,
-    public dialog: MatDialog) { }
+    public dialog: MatDialog,
+    private generalService: GeneralService) { }
 
     editDeliveryLoc(delivery: ShopDelivery = null){
 
@@ -48,6 +50,13 @@ export class ShopDeliveryComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.generalService.bc$.next({
+      siteName: environment.siteName,
+      title: 'Shop Deliveries',
+      url:'',
+      backUrl: null
+    });
+
     this.deliveries$ = this.shopService.deliveries;
   }
 

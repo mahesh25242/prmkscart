@@ -1,11 +1,12 @@
 import { Component, OnInit } from '@angular/core';
-import { UserService } from 'src/app/lib/services';
+import { GeneralService, UserService } from 'src/app/lib/services';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Observable } from 'rxjs/internal/Observable';
 import { User } from 'src/app/lib/interfaces';
 import { Subscription } from 'rxjs';
 import { map, mergeMap } from 'rxjs/operators';
 import Notiflix from "notiflix";
+import { environment } from '../../../environments/environment';
 
 @Component({
   selector: 'app-edit-profile',
@@ -20,10 +21,19 @@ export class EditProfileComponent implements OnInit {
 
   changePassCheckSubScr: Subscription;
   constructor(private formBuilder: FormBuilder,
-    private userService: UserService,) { }
+    private userService: UserService,
+    private generalService: GeneralService) { }
 
     get f() { return this.editProfileFrm.controls; }
   ngOnInit(): void {
+
+    this.generalService.bc$.next({
+      siteName: environment.siteName,
+      title: 'Edit My Profile',
+      url:'',
+      backUrl: null
+    });
+
     this.editProfileFrm = this.formBuilder.group({
       fname: [null, [ Validators.required]],
       lname:[null, []],

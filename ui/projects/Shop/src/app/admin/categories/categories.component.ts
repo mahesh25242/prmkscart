@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { ShopProductCategory } from 'src/app/lib/interfaces';
-import { ShopProductCategoryService } from 'src/app/lib/services';
+import { GeneralService, ShopProductCategoryService } from 'src/app/lib/services';
 import Notiflix from "notiflix";
 import { map, mergeMap } from 'rxjs/operators';
 import { environment } from '../../../environments/environment';
@@ -22,7 +22,8 @@ export class CategoriesComponent implements OnInit {
   displayedColumns: string[] = ['no', 'name', 'icon', 'status', 'options'];
 
   constructor(private shopProductCategoryService: ShopProductCategoryService,
-    public dialog: MatDialog) { }
+    public dialog: MatDialog,
+    private generalService: GeneralService) { }
 
 
   editCategory(cat: ShopProductCategory = null){
@@ -56,6 +57,14 @@ export class CategoriesComponent implements OnInit {
   }
 
   ngOnInit(): void {
+
+    this.generalService.bc$.next({
+      siteName: environment.siteName,
+      title: 'Categories',
+      url:'',
+      backUrl: null
+    });
+
     this.categories$ = this.shopProductCategoryService.categories;
   }
 

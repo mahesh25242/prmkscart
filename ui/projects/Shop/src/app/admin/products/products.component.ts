@@ -1,12 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { ShopProduct } from 'src/app/lib/interfaces';
-import { ShopProductService } from 'src/app/lib/services';
+import { GeneralService, ShopProductService } from 'src/app/lib/services';
 import Notiflix from "notiflix";
 import { map, mergeMap } from 'rxjs/operators';
 import {MatDialog, MatDialogRef, MAT_DIALOG_DATA} from '@angular/material/dialog';
 import { CreateProductComponent } from './create-product/create-product.component';
-
+import { environment } from '../../../environments/environment';
 
 @Component({
   selector: 'app-products',
@@ -20,7 +20,8 @@ export class ProductsComponent implements OnInit {
   displayedColumns: string[] = ['no', 'name',  'status', 'options'];
 
   constructor(private shopProductService: ShopProductService,
-    public dialog: MatDialog) { }
+    public dialog: MatDialog,
+    private generalService: GeneralService) { }
 
   get product() { return this.product$.asObservable()}
   editProduct(product: ShopProduct = null){
@@ -52,6 +53,14 @@ export class ProductsComponent implements OnInit {
   }
 
   ngOnInit(): void {
+
+    this.generalService.bc$.next({
+      siteName: environment.siteName,
+      title: 'Products',
+      url:'',
+      backUrl: null
+    });
+
     this.products$ = this.shopProductService.products;
   }
 

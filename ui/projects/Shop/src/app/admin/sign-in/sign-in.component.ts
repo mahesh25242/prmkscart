@@ -3,7 +3,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormArray, FormBuilder,
   Validators,ReactiveFormsModule  } from '@angular/forms';
 import { Subscription } from 'rxjs';
-import { UserService } from 'src/app/lib/services';
+import { GeneralService, UserService } from 'src/app/lib/services';
 import Notiflix from "notiflix";
 import { environment } from '../../../environments/environment';
 import { map, mergeMap } from 'rxjs/operators';
@@ -21,7 +21,8 @@ export class SignInComponent implements OnInit {
 
   constructor(private formBuilder: FormBuilder,
     private userService: UserService,
-    private router: Router, ) { }
+    private router: Router,
+    private generalService: GeneralService ) { }
   signIn(){
     Notiflix.Loading.Pulse(`please wait`);
     this.invalidlogin = false;
@@ -57,6 +58,14 @@ export class SignInComponent implements OnInit {
   }
   get f(){ return this.signInFrm.controls}
   ngOnInit(): void {
+    this.generalService.bc$.next({
+      siteName: environment.siteName,
+      title: 'Admin Login',
+      url:'',
+      backUrl: null
+    });
+
+
     this.signInFrm = this.formBuilder.group({
       mobile: [null, [Validators.required]],
       password: [null, [Validators.required]]

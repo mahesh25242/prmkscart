@@ -3,8 +3,9 @@ import { FormBuilder, FormGroup } from '@angular/forms';
 import { Observable, Subscription } from 'rxjs';
 import { mergeMap, tap } from 'rxjs/operators';
 import { City, Country, Shop, State } from 'src/app/lib/interfaces';
-import { CityService, CountryService, ShopService, StateService } from 'src/app/lib/services';
+import { CityService, CountryService, GeneralService, ShopService, StateService } from 'src/app/lib/services';
 import Notiflix from "notiflix";
+import { environment } from '../../../environments/environment';
 
 @Component({
   selector: 'app-shop-details',
@@ -24,7 +25,8 @@ export class ShopDetailsComponent implements OnInit, OnDestroy {
     private formBuilder: FormBuilder,
     private countryServive: CountryService,
     private stateService: StateService,
-    private cityService: CityService) { }
+    private cityService: CityService,
+    private generalService: GeneralService) { }
 
   updateShop(){
     const postData = {
@@ -56,6 +58,14 @@ export class ShopDetailsComponent implements OnInit, OnDestroy {
   }
   get f(){ return this.shopDetailsFrm.controls;}
   ngOnInit(): void {
+
+    this.generalService.bc$.next({
+      siteName: environment.siteName,
+      title: 'Shop Details',
+      url:'',
+      backUrl: null
+    });
+
     this.shop$ = this.shopService.aShop.pipe(tap(res=>{
       this.shopDetailsFrm.patchValue({
         name: res?.name,
