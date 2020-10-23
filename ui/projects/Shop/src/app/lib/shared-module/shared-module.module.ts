@@ -26,7 +26,7 @@ import {MatTableModule} from '@angular/material/table';
 import {MatSelectModule} from '@angular/material/select';
 import {MatSlideToggleModule} from '@angular/material/slide-toggle';
 import {MatTooltipModule} from '@angular/material/tooltip';
-import {MatSnackBarModule} from '@angular/material/snack-bar';
+import {MatSnackBarModule, MAT_SNACK_BAR_DEFAULT_OPTIONS} from '@angular/material/snack-bar';
 import {MatNativeDateModule} from '@angular/material/core';
 
 
@@ -99,6 +99,9 @@ Notiflix.Block.Init({ svgColor:"#204486", });
     MatTooltipModule,
     MatSnackBarModule,
     MatNativeDateModule
+  ],
+  providers:[
+    {provide: MAT_SNACK_BAR_DEFAULT_OPTIONS, useValue: {duration: 2500}}
   ]
 })
 export class SharedModuleModule { }

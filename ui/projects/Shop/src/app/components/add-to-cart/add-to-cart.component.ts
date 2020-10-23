@@ -6,6 +6,7 @@ import { Subscription } from 'rxjs';
 import { Cart, ShopProduct } from 'src/app/lib/interfaces';
 import { CartService } from 'src/app/lib/services';
 import {environment} from '../../../environments/environment';
+import {MatSnackBar} from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-add-to-cart',
@@ -22,7 +23,8 @@ export class AddToCartComponent implements OnInit, OnDestroy {
   constructor(@Inject(MAT_DIALOG_DATA) public data: ShopProduct,
   public dialogRef: MatDialogRef<AddToCartComponent>,
   private formBuilder: FormBuilder,
-  private cartService: CartService) { }
+  private cartService: CartService,
+  private matSnackBar: MatSnackBar,) { }
 
   get f(){ return  this.addToCartFrm.controls; }
 
@@ -49,11 +51,14 @@ export class AddToCartComponent implements OnInit, OnDestroy {
     this.cart ={
       product: this.data,
       qty: this.qty,
-      price: (this.data.shop_product_selected_variant.price * this.qty)
+      price: (this.data.shop_product_selected_variant.price * this.qty),
+      message: this.f.message.value
     };
-
-
-    this.cartService.updateCart(this.cart, '++').subscribe();
+    this.cartService.updateCart(this.cart, '++').subscribe(res =>{
+      console.log(res)
+      this.matSnackBar.open(`${this.cart.product.name} - ${this.cart.product.shop_product_selected_variant.name} ( ${this.cart.qty} ) is added`);
+      this.dialogRef.close();
+    });
   }
   ngOnInit(): void {
     this.data.shop_product_selected_variant = this.data.shop_product_primary_variant;

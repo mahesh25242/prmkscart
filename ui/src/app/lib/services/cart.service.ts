@@ -43,8 +43,7 @@ export class CartService {
     }));
   }
 
-  updateCart(item: Cart = null, action: string='+'){
-    console.log(item)
+  updateCart(item: Cart = null, action: string='+'): Observable<Cart[]>{
     if(!this.shopKey){
       return throwError('shop Key not exists');
     }
@@ -63,7 +62,7 @@ export class CartService {
       cart = [...[item]];
       localStorage.setItem(`${this.shopKey}-cart`, JSON.stringify(cart));
       this.isUpdated$.next(true);
-      return empty();
+      return of(cart);
     }else{
       return from(cart).pipe(map(cItem =>{
         if(cItem.product.id == item.product.id
@@ -79,6 +78,7 @@ export class CartService {
               break;
               default:
                 cItem.qty = item.qty;
+                cItem.message = item.message;
                 cartUpdated = true;
               break;
             }

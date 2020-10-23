@@ -113,7 +113,9 @@ export class CartDetailsComponent implements OnInit, OnDestroy {
 
   deleteItem(itm: Cart){
     itm.qty = 0;
-    this.cartService.updateCart(itm, '++').subscribe();
+    this.cartService.updateCart(itm, '++').subscribe(res=>{
+      this.matSnackBar.open(`${itm.product.name} - ${itm.product.shop_product_selected_variant.name} successfully removed`);
+    });
   }
 
   changeLocation(loc: ShopDelivery){
