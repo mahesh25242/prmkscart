@@ -125,6 +125,7 @@
 
           <mat-form-field class="full-width-text" appearance="standard"  *ngIf="(f.hour.value)">
             <mat-label>Minute</mat-label>
+            {{ f.minute.errors | json}}
             <input type="number" matInput formControlName="minute" placeholder="Ex. 15" min="0" max="59">
             <mat-error *ngIf="f.minute.errors && f.minute.errors.error" >
               {{f.minute.errors.error}}
