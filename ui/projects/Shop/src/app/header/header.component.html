@@ -1,5 +1,5 @@
 <mat-toolbar color="primary" *ngIf="(layOutXSmall$ | async) as layOutXSmall">
-  <a routerLink="/">{{title}}</a>
+  <a [routerLink]="((loggedUser$ | async) ? '/admin':'/')">{{title}}</a>
 
   <div class="flex-right" *ngIf="layOutXSmall.matches">
       <button mat-icon-button (click)="onToggleSidenav()">
@@ -9,9 +9,12 @@
 
   <ng-container *ngIf="!layOutXSmall.matches">
     <div class="flex-right navmenu">
-    <a routerLink="/" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">Home</a>
-    <a routerLink="/about-us" routerLinkActive="active">About Us</a>
-    <a routerLink="/contact-us" routerLinkActive="active">Contact Us</a>
+    <ng-container *ngIf="!(loggedUser$ | async)">
+      <a routerLink="/" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">Home</a>
+      <a routerLink="/about-us" routerLinkActive="active">About Us</a>
+      <a routerLink="/contact-us" routerLinkActive="active">Contact Us</a>
+    </ng-container>
+
 
     <ng-container *ngIf="(loggedUser$ | async) as loggedUser">
 

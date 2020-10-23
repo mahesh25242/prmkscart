@@ -42,7 +42,7 @@ export class CartService {
   }
 
   updateCart(item: Cart = null, action: string='+'){
-
+    console.log(item)
     if(!this.shopKey){
       return throwError('shop Key not exists');
     }
@@ -57,30 +57,39 @@ export class CartService {
     let cart: Cart[] = this.getCart();
 
     let cartUpdated= false;
-    if(!cart.length && action == '+'){
+    if(!cart.length && action !== '-'){
       cart = [...[item]];
       localStorage.setItem(`${this.shopKey}-cart`, JSON.stringify(cart));
       this.isUpdated$.next(true);
       return empty();
     }else{
       return from(cart).pipe(map(cItem =>{
-        if(action =='+' && cItem.product.id == item.product.id
+        if(cItem.product.id == item.product.id
           && cItem.product.shop_product_selected_variant.id == item.product.shop_product_selected_variant.id){
-          cItem.qty += item.qty;
-          cartUpdated = true;
+            switch(action){
+              case '+':
+                cItem.qty += item.qty;
+                cartUpdated = true;
+              break;
+              case '-':
+                cItem.qty -= item.qty;
+                cartUpdated = true;
+              break;
+              default:
+                cItem.qty = item.qty;
+                cartUpdated = true;
+              break;
+            }
+          }
 
-        }else if(action =='-' && cItem.product.id == item.product.id
-          && cItem.product.shop_product_selected_variant.id == item.product.shop_product_selected_variant.id){
-          cItem.qty -= item.qty;
-          cartUpdated = true;
-        }
+
         if(cItem.qty >0){
           cItem.price = (cItem.qty * cItem.product.shop_product_selected_variant.price);
           return cItem;
         }
       }), toArray(), tap(cartArr=> {
         cartArr = compact(cartArr);
-        if(!cartUpdated && action =='+'){
+        if(!cartUpdated && action !== '-'){
           cartArr.push(item);
           cartUpdated = true;
         }

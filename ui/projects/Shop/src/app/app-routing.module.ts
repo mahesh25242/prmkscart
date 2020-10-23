@@ -2,6 +2,8 @@ import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { AboutUsComponent } from './about-us/about-us.component';
 import { CartDetailsComponent } from './cart-details/cart-details.component';
+import { ProductResolver } from './components/product/product-resolver';
+import { ProductComponent } from './components/product/product.component';
 import { ContactUsComponent } from './contact-us/contact-us.component';
 import { HomeComponent } from './home/home.component';
 import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
@@ -9,7 +11,23 @@ import { PageNotFoundComponent } from './page-not-found/page-not-found.component
 const routes: Routes = [
   {
     path: '',
-    component: HomeComponent
+    component: HomeComponent,
+    children:[
+      {
+        path: '',
+        component: ProductComponent,
+        resolve:{
+          product: ProductResolver
+        }
+      },
+      {
+        path: ':catUrl/varities',
+        component: ProductComponent,
+        resolve:{
+          product: ProductResolver
+        }
+      },
+    ]
   },
   {
     path: 'about-us',
@@ -24,10 +42,7 @@ const routes: Routes = [
     path: 'admin',
     loadChildren: () => import('./admin/admin.module').then(m => m.AdminModule)
   },
-  {
-    path: ':catUrl',
-    component: HomeComponent
-  },
+
   { path: '**', component: PageNotFoundComponent }
 ];
 

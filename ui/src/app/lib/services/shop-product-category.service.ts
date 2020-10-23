@@ -9,11 +9,16 @@ import { ShopProductCategory } from '../interfaces';
 })
 export class ShopProductCategoryService {
   private categories$: BehaviorSubject<ShopProductCategory[]> = new BehaviorSubject<ShopProductCategory[]>(null);
+  isCatExistsInAddressBar$: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(null);
 
   constructor(private http: HttpClient) { }
 
   get categories(){
     return this.categories$.asObservable();
+  }
+
+  get isCatExistsInAddressBar(){
+    return this.isCatExistsInAddressBar$.asObservable();
   }
 
   listCategories(postData: any = null): Observable<ShopProductCategory[]>{

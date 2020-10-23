@@ -20,9 +20,11 @@ import { ContactUsComponent } from './contact-us/contact-us.component';
 import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
 import { CategoriesComponent } from './components/categories/categories.component';
 import { ProductComponent } from './components/product/product.component';
+import { ProductResolver } from './components/product/product-resolver';
 import { CartComponent } from './components/cart/cart.component';
 import { CartDetailsComponent } from './cart-details/cart-details.component';
 import { SideNavListComponent } from './header/side-nav-list/side-nav-list.component';
+import { AddToCartComponent } from './components/add-to-cart/add-to-cart.component';
 
 @NgModule({
   declarations: [
@@ -37,7 +39,8 @@ import { SideNavListComponent } from './header/side-nav-list/side-nav-list.compo
     ProductComponent,
     CartComponent,
     CartDetailsComponent,
-    SideNavListComponent
+    SideNavListComponent,
+    AddToCartComponent
   ],
   imports: [
     BrowserModule,
@@ -51,7 +54,8 @@ import { SideNavListComponent } from './header/side-nav-list/side-nav-list.compo
     HttpClientXsrfModule.disable(),
   ],
   providers: [
-    httpInterceptorProviders
+    httpInterceptorProviders,
+    ProductResolver
   ],
   bootstrap: [AppComponent]
 })

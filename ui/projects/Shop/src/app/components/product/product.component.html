@@ -1,20 +1,22 @@
-<div class="row"> <ng-container *ngIf="(products$ | async) as products">
-<div class="col s6 m4 l3 xl3 mb1" *ngFor="let product of products">
-  <mat-card >
-    <mat-card-header>
-      <div mat-card-avatar ></div>
-      <mat-card-title> {{ product.name }}</mat-card-title>
-      <mat-card-subtitle>{{ product.shop_product_primary_variant?.name}}</mat-card-subtitle>
-    </mat-card-header>
-    <img mat-card-image *ngIf="product.shop_product_primary_variant?.shop_product_image?.image" [src]="environment.siteAddress+'/assets/shop/'+environment.shopKey+'/products/'+ product.shop_product_primary_variant.shop_product_image.image" alt="Photo of a Shiba Inu">
-    <mat-card-content>
-      <p [innerHTML]="product.description"></p>
-    </mat-card-content>
-    <mat-card-actions>
-      <button mat-button  (click)="addToCart(product)">Buy Now</button>
-      <button mat-button >Details</button>
-    </mat-card-actions>
-  </mat-card>
-</div>
+<div class="row">
+<ng-container *ngIf="(products$ | async) as products">
+  <div class="col s6 m4 l3 xl3 mb1" *ngFor="let product of products">
+    <mat-card >
+      <mat-card-header>
+        <div mat-card-avatar ></div>
+        <mat-card-title> {{ product.name }}</mat-card-title>
+        <mat-card-subtitle>{{ product.shop_product_primary_variant?.name}}</mat-card-subtitle>
+      </mat-card-header>
+      <img mat-card-image *ngIf="product.shop_product_primary_variant?.shop_product_image?.image" [src]="environment.siteAddress+'/assets/shop/'+environment.shopKey+'/products/'+ product.shop_product_primary_variant.shop_product_image.image" alt="Photo of a Shiba Inu">
+      <mat-card-content>
+        ₹ {{ product.shop_product_primary_variant?.price}}
+        <p [innerHTML]="product.description"></p>
+      </mat-card-content>
+      <mat-card-actions>
+        <button mat-button  (click)="addToCart(product)">Buy Now</button>
+        <button mat-button >Details</button>
+      </mat-card-actions>
+    </mat-card>
+  </div>
 </ng-container>
 </div>

@@ -14,20 +14,18 @@ import { ActivatedRoute } from '@angular/router';
 })
 export class CategoriesComponent implements OnInit {
   environment = environment;
-
+  isCatExistsInAddressBar$: Observable<boolean>;
   categories$: Observable<ShopProductCategory[]>;
   constructor(private shopProductCategoryService: ShopProductCategoryService,
     private shopProductService: ShopProductService,
     private route: ActivatedRoute,) { }
 
   ngOnInit(): void {
+    this.isCatExistsInAddressBar$ = this.shopProductCategoryService.isCatExistsInAddressBar;
+
     this.categories$ = this.shopProductCategoryService.showCategories().pipe(mergeMap(cats=>{
-      return this.route.params.pipe(mergeMap(parm=>{
-          if(parm?.catUrl){
-            return this.shopProductService.showProducts({
-              cat_url: parm?.catUrl
-            }).pipe(map(products=> cats));
-          }else{
+      return this.route.parent.params.pipe(mergeMap(parm=>{
+          if(!parm?.catUrl){
             const cat:ShopProductCategory = _.first(cats);
             if(cat){
               return this.shopProductService.showProducts({
@@ -36,7 +34,6 @@ export class CategoriesComponent implements OnInit {
             }else{
               return empty();
             }
-
           }
 
       }))

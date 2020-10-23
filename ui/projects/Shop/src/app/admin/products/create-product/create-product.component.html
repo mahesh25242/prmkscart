@@ -137,7 +137,7 @@
           <td>
             <mat-form-field class="full-width-text" appearance="standard">
               <mat-label>Actual Price</mat-label>
-              <input type="number" matInput formControlName="actual_price" placeholder="Ex. 200">
+              ₹ <input type="number" matInput formControlName="actual_price" placeholder="Ex. 200">
               <mat-error *ngIf="stat.get('actual_price').errors && stat.get('actual_price').errors.error">
                 {{stat.get('actual_price').errors.error}}
               </mat-error>
@@ -148,7 +148,7 @@
           <td>
             <mat-form-field class="full-width-text" appearance="standard">
               <mat-label>Sale Price</mat-label>
-              <input type="number" matInput formControlName="price" placeholder="Ex. 200">
+              ₹ <input type="number" matInput formControlName="price" placeholder="Ex. 200">
               <mat-error *ngIf="stat.get('price').errors && stat.get('price').errors.error">
                 {{stat.get('price').errors.error}}
               </mat-error>
