@@ -189,8 +189,15 @@ class ShopProductController extends Controller
     }
 
     public function delete(Request $request){
-       $shopCategory =  \App\ShopProduct::where('id', $request->input("id"))->delete();
+       $shpProduct =  \App\ShopProduct::where('id', $request->input("id"))->delete();
        return response(['message' => 'successfully deleted!', 'status' => true]);
+    }
+
+    public function showProductDetails(Request $request){
+        $shpProduct =  \App\ShopProduct::with(["shopProductCategory", "shopProductPrimaryVariant.shopProductImage",
+        "shopProductVariant.shopProductImage"])->where("status", 1)
+        ->where('url', $request->input("url"))->get()->first();
+        return response($shpProduct);
     }
 
 }

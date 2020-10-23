@@ -192,12 +192,21 @@ export class CartDetailsComponent implements OnInit, OnDestroy {
   get f(){ return this.customerFrm.controls; }
 
   ngOnInit(): void {
+    this.generalService.bc$.next({
+      siteName: environment.siteName,
+      title: `My Cart`,
+      url:'',
+      backUrl: '/'
+    });
+
     this.cartService.hideCartComponent$.next(true);
     this.shop$ = this.shopService.aShop;
     // .pipe(tap(res=>{
     //   this.changeLocation(first(res?.shop_delivery));
     // }));
     this.cart$ = this.cartService.cart().pipe(tap(res=>{
+
+
       this.total = 0;
       res.map(itm=>{
         this.total +=itm.price;
@@ -205,9 +214,17 @@ export class CartDetailsComponent implements OnInit, OnDestroy {
 
       this.grandTotal = this.total;
       if(!this.total){
-        this.matSnackBar.open('Your bag is empty.');
+        this.matSnackBar.open('Your cart is empty.');
         this.router.navigate(['/']);
       }
+
+      this.generalService.bc$.next({
+        siteName: environment.siteName,
+        title: `My Cart ( ${res.length} )`,
+        url:'',
+        backUrl: '/'
+      });
+
 
     }));
 

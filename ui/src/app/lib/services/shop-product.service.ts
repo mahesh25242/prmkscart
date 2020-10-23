@@ -38,4 +38,8 @@ export class ShopProductService {
     }));
   }
 
+  showProductDetails(postData: any = null): Observable<ShopProduct>{
+    return this.http.post<ShopProduct>("/shop/product/showProductDetails", postData);
+  }
+
 }

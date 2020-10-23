@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { GeneralService } from 'src/app/lib/services';
+import { environment } from '../../environments/environment';
 
 @Component({
   selector: 'app-about-us',
@@ -7,9 +9,15 @@ import { Component, OnInit } from '@angular/core';
 })
 export class AboutUsComponent implements OnInit {
 
-  constructor() { }
+  constructor(private generalService: GeneralService) { }
 
   ngOnInit(): void {
+    this.generalService.bc$.next({
+      siteName: environment.siteName,
+      title: 'About Us',
+      url:'',
+      backUrl: null
+    });
   }
 
 }

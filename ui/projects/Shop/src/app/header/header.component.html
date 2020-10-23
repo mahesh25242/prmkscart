@@ -1,6 +1,13 @@
 <mat-toolbar color="primary" *ngIf="(layOutXSmall$ | async) as layOutXSmall">
-  <a [routerLink]="((loggedUser$ | async) ? '/admin':'/')">{{title}}</a>
+  <ng-container *ngIf="(bc$ | async) as bc">
+    <div *ngIf="layOutXSmall.matches && bc?.backUrl">
+      <button mat-icon-button [routerLink]="bc?.backUrl">
+          <mat-icon>arrow_back_ios</mat-icon>
+      </button>
+    </div>
+  </ng-container>
 
+  <a [routerLink]="((loggedUser$ | async) ? '/admin':'/')">{{title}}</a>
   <div class="flex-right" *ngIf="layOutXSmall.matches">
       <button mat-icon-button (click)="onToggleSidenav()">
           <mat-icon>menu</mat-icon>
@@ -44,7 +51,7 @@
   </ng-container>
 
 </mat-toolbar>
-<div *ngIf="(generalService.shopDisabled | async)">
+<div *ngIf="(localGeneralService.shopDisabled | async)">
   Your shop was disabled by admin
 </div>
 

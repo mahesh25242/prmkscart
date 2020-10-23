@@ -3,10 +3,11 @@ import * as _ from 'lodash';
 import { Router } from '@angular/router';
 import { environment } from '../../environments/environment';
 import { Observable, Subscription } from 'rxjs';
-import { Shop, User } from 'src/app/lib/interfaces';
+import { BC, Shop, User } from 'src/app/lib/interfaces';
 import {  UserService, ShopService } from 'src/app/lib/services';
 import { mergeMap, map } from 'rxjs/operators';
-import { GeneralService } from '../lib/services/index';
+import { GeneralService as LocalGeneralService } from '../lib/services/index';
+import { GeneralService } from 'src/app/lib/services';
 import { BreakpointObserver, Breakpoints, BreakpointState } from '@angular/cdk/layout';
 
 @Component({
@@ -15,6 +16,7 @@ import { BreakpointObserver, Breakpoints, BreakpointState } from '@angular/cdk/l
   styleUrls: ['./header.component.scss']
 })
 export class HeaderComponent implements OnInit, OnDestroy {
+  bc$: Observable<BC>;
   title : string = environment.siteName;
   loggedUser$: Observable<User>;
   @Output() public sidenavToggle = new EventEmitter();
@@ -28,11 +30,16 @@ export class HeaderComponent implements OnInit, OnDestroy {
     private userService: UserService,
     private breakpointObserver: BreakpointObserver,
     private shopService: ShopService,
-    public generalService: GeneralService) {
+    public generalService: GeneralService,
+    public localGeneralService: LocalGeneralService,
+    ) {
 
     }
 
+
   ngOnInit(): void {
+
+    this.bc$ = this.generalService.bc;
     this.layOutXSmall$ = this.breakpointObserver.observe([
       Breakpoints.XSmall
     ])

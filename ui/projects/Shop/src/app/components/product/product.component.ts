@@ -1,12 +1,14 @@
 import { Component, OnInit } from '@angular/core';
 import { Observable } from 'rxjs';
 import { ShopProduct, Cart } from 'src/app/lib/interfaces';
-import { ShopProductService, CartService } from 'src/app/lib/services';
+import { ShopProductService, CartService, GeneralService } from 'src/app/lib/services';
 import { environment } from '../../../environments/environment';
 import Notiflix from "notiflix";
 import { ActivatedRoute } from '@angular/router';
 import {MatDialog, MatDialogRef, MAT_DIALOG_DATA} from '@angular/material/dialog';
 import { AddToCartComponent } from '../add-to-cart/add-to-cart.component';
+import { first } from 'lodash';
+import { tap } from 'rxjs/operators';
 
 @Component({
   selector: 'app-product',
@@ -19,7 +21,8 @@ export class ProductComponent implements OnInit {
   constructor(private shopProductService: ShopProductService,
     private cartService: CartService,
     private route: ActivatedRoute,
-    public dialog: MatDialog) {
+    public dialog: MatDialog,
+    private generalService: GeneralService) {
       cartService.shopKey = environment.shopKey;
     }
 
@@ -32,8 +35,15 @@ export class ProductComponent implements OnInit {
     }
 
   ngOnInit(): void {
-
-    this.products$ = this.shopProductService.products;
+    this.products$ = this.shopProductService.products.pipe(tap(res=>{
+      const product:ShopProduct = first(res);
+      this.generalService.bc$.next({
+        siteName: environment.siteName,
+        title: `${product?.shop_product_category?.name}`,
+        url:'',
+        backUrl: ''
+      });
+    }));
   }
 
 }

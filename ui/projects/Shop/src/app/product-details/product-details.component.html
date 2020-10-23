@@ -1,0 +1,49 @@
+<h3>{{ product.name}}</h3>
+<form [formGroup]="addToCartFrm" (ngSubmit)="addToCart()">
+    <img *ngIf="product.shop_product_selected_variant?.shop_product_image?.image" [src]="environment.siteAddress+'/assets/shop/'+environment.shopKey+'/products/'+ product.shop_product_selected_variant.shop_product_image.image" alt="Photo of a Shiba Inu">
+
+    <mat-form-field appearance="standard">
+      <mat-label>Choose Varient</mat-label>
+      <mat-select formControlName="shop_product_variant_id" required (selectionChange)="chooseVarient()">
+        <mat-option *ngFor="let shop_product_variant of product.shop_product_variant" [value]="shop_product_variant.id">
+          {{shop_product_variant.name}}
+        </mat-option>
+      </mat-select>
+      <mat-error *ngIf="f.shop_product_variant_id.errors && f.shop_product_variant_id.errors.error">
+        {{f.shop_product_variant_id.errors.error}}
+      </mat-error>
+    </mat-form-field>
+
+    <ng-container *ngIf="product.shop_product_selected_variant?.price">
+      <del *ngIf="product.shop_product_selected_variant?.actual_price">₹ {{ product.shop_product_selected_variant?.actual_price }}</del>
+       ₹ {{ product.shop_product_selected_variant?.price * qty }}
+      {{ product.shop_product_selected_variant?.description }}
+      <span *ngIf="product.shop_product_selected_variant?.type.id">
+        {{ product.shop_product_selected_variant?.type.name }}
+      </span>
+    </ng-container>
+
+    <button type="button" mat-icon-button color="primary" (click)="updateCart('-')" [disabled]="qty<2">
+      <mat-icon>remove_circle_outline</mat-icon>
+    </button>
+    {{qty}}
+    <button type="button" mat-icon-button color="primary" (click)="updateCart('+')">
+      <mat-icon>add_circle_outline</mat-icon>
+    </button>
+
+
+
+    <mat-form-field class="full-width-text" appearance="standard">
+      <mat-label>Message</mat-label>
+      <textarea matInput formControlName="message" placeholder="Ex. Happy Birth Day John Doe"></textarea>
+      <mat-error *ngIf="f.message.errors && f.message.errors.error">
+        {{f.message.errors.error}}
+      </mat-error>
+    </mat-form-field>
+    <button mat-raised-button color="primary" type="submit">Add</button>
+
+
+    <p *ngIf="product.description">
+      {{ product.description}}
+    </p>
+  </form>

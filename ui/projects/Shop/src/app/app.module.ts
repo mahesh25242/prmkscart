@@ -25,6 +25,8 @@ import { CartComponent } from './components/cart/cart.component';
 import { CartDetailsComponent } from './cart-details/cart-details.component';
 import { SideNavListComponent } from './header/side-nav-list/side-nav-list.component';
 import { AddToCartComponent } from './components/add-to-cart/add-to-cart.component';
+import { ProductDetailsComponent } from './product-details/product-details.component';
+import { ProductDetailsResolver } from './product-details/product-details-resolver';
 
 @NgModule({
   declarations: [
@@ -40,7 +42,8 @@ import { AddToCartComponent } from './components/add-to-cart/add-to-cart.compone
     CartComponent,
     CartDetailsComponent,
     SideNavListComponent,
-    AddToCartComponent
+    AddToCartComponent,
+    ProductDetailsComponent
   ],
   imports: [
     BrowserModule,
@@ -55,7 +58,8 @@ import { AddToCartComponent } from './components/add-to-cart/add-to-cart.compone
   ],
   providers: [
     httpInterceptorProviders,
-    ProductResolver
+    ProductResolver,
+    ProductDetailsResolver
   ],
   bootstrap: [AppComponent]
 })

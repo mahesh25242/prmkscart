@@ -34,6 +34,7 @@ $router->group(['prefix' => 'v1'], function () use ($router) {
         $router->group(['prefix' => 'product'], function () use ($router) {
             $router->get('showCategories','ShopProductCategoryController@showCategories');
             $router->post('showProducts','ShopProductController@showProducts');
+            $router->post('showProductDetails','ShopProductController@showProductDetails');
         });
     });
 

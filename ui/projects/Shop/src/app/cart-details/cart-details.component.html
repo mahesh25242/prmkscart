@@ -1,5 +1,5 @@
 <ng-container *ngIf="(cart$ | async) as cart">
-  <div *ngIf="!cart || !cart.length">Your Bag empty</div>
+  <div *ngIf="!cart || !cart.length">Your cart is empty</div>
   <ng-container *ngIf="cart && cart.length">
 
     <h1 mat-dialog-title>
