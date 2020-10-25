@@ -1,24 +1,27 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { ɵBrowserGetTestability } from '@angular/platform-browser';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { map, tap } from 'rxjs/operators';
-import { ShopProductCategory } from '../interfaces';
+import { ShopCategory, ShopProductCategory } from '../interfaces';
 
 @Injectable({
   providedIn: 'root'
 })
 export class ShopProductCategoryService {
   private categories$: BehaviorSubject<ShopProductCategory[]> = new BehaviorSubject<ShopProductCategory[]>(null);
-  isCatExistsInAddressBar$: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(null);
 
+  selectedCategory$: BehaviorSubject<ShopProductCategory> = new BehaviorSubject<ShopProductCategory>(null);
   constructor(private http: HttpClient) { }
 
   get categories(){
     return this.categories$.asObservable();
   }
 
-  get isCatExistsInAddressBar(){
-    return this.isCatExistsInAddressBar$.asObservable();
+
+
+  get selectedCategory(){
+    return this.selectedCategory$.asObservable();
   }
 
   listCategories(postData: any = null): Observable<ShopProductCategory[]>{

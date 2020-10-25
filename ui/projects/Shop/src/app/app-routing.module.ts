@@ -9,6 +9,7 @@ import { HomeComponent } from './home/home.component';
 import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
 import { ProductDetailsResolver } from './product-details/product-details-resolver';
 import { ProductDetailsComponent } from './product-details/product-details.component';
+import { SearchResultComponent } from './search-result/search-result.component';
 
 const routes: Routes = [
   {
@@ -28,7 +29,13 @@ const routes: Routes = [
     path: 'admin',
     loadChildren: () => import('./admin/admin.module').then(m => m.AdminModule)
   },
-
+  {
+    path: 'search/:q',
+    component: SearchResultComponent,
+    resolve:{
+      product: ProductResolver
+    }
+  },
   {
     path: '',
     component: HomeComponent,

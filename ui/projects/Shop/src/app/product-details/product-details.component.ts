@@ -2,7 +2,7 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Observable, Subscription } from 'rxjs';
 import { ShopProduct, Cart } from 'src/app/lib/interfaces';
-import { ShopProductService, CartService, GeneralService }  from 'src/app/lib/services';
+import { ShopProductService, CartService, GeneralService, ShopProductCategoryService }  from 'src/app/lib/services';
 import { find } from 'lodash';
 import {environment} from '../../environments/environment';
 import {MatSnackBar} from '@angular/material/snack-bar';
@@ -27,7 +27,8 @@ export class ProductDetailsComponent implements OnInit, OnDestroy {
     private formBuilder: FormBuilder,
     private cartService: CartService,
     private matSnackBar: MatSnackBar,
-    private generalService: GeneralService) { }
+    private generalService: GeneralService,
+    private shopProductCategoryService: ShopProductCategoryService) { }
 
     get f(){ return  this.addToCartFrm.controls; }
 
@@ -70,19 +71,25 @@ export class ProductDetailsComponent implements OnInit, OnDestroy {
 
     this.product = this.route.snapshot.data["product"];
 
-    this.product.shop_product_selected_variant = this.product.shop_product_primary_variant;
+    if(this.product){
+      this.shopProductCategoryService.selectedCategory$.next(this.product.shop_product_category);
+
+      this.product.shop_product_selected_variant = this.product?.shop_product_primary_variant;
+      this.generalService.bc$.next({
+        siteName: environment.siteName,
+        title: `${this.product.name}`,
+        url:'',
+        backUrl: `/${this.product.shop_product_category.url}/varities`
+      });
+    }
+
 
     this.addToCartFrm = this.formBuilder.group({
-      shop_product_variant_id: [this.product.shop_product_primary_variant.id, []],
+      shop_product_variant_id: [this.product?.shop_product_primary_variant?.id, []],
       message: [null, []]
     });
 
-    this.generalService.bc$.next({
-      siteName: environment.siteName,
-      title: `${this.product.name}`,
-      url:'',
-      backUrl: `/${this.product.shop_product_category.url}/varities`
-    });
+
   }
 
   ngOnDestroy(){

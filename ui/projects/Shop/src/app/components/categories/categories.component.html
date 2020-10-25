@@ -1,6 +1,6 @@
 <ng-container *ngIf="(categories$  | async) as categories">
   <ng-container *ngIf="categories && categories.length > 1">
-    <a *ngFor="let category of categories" routerLinkActive="active" [routerLink]="'/'+category.url+'/varities'">
+    <a *ngFor="let category of categories" [ngClass]="{ 'active': (selectedCategory$ | async)?.id == category.id}" [routerLink]="'/'+category.url+'/varities'">
       <img class="img-thumbnail" [src]="environment.siteAddress+'/assets/shop/'+environment.shopKey+'/category/'+category.icon" *ngIf="category.icon"/>
       {{ category.name }}
     </a>

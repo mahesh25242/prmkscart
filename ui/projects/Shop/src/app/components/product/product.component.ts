@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Observable } from 'rxjs';
 import { ShopProduct, Cart } from 'src/app/lib/interfaces';
-import { ShopProductService, CartService, GeneralService } from 'src/app/lib/services';
+import { ShopProductService, CartService, GeneralService, ShopProductCategoryService } from 'src/app/lib/services';
 import { environment } from '../../../environments/environment';
 import Notiflix from "notiflix";
 import { ActivatedRoute } from '@angular/router';
@@ -22,7 +22,8 @@ export class ProductComponent implements OnInit {
     private cartService: CartService,
     private route: ActivatedRoute,
     public dialog: MatDialog,
-    private generalService: GeneralService) {
+    private generalService: GeneralService,
+    private shopProductCategoryService: ShopProductCategoryService) {
       cartService.shopKey = environment.shopKey;
     }
 
@@ -35,8 +36,11 @@ export class ProductComponent implements OnInit {
     }
 
   ngOnInit(): void {
+
     this.products$ = this.shopProductService.products.pipe(tap(res=>{
       const product:ShopProduct = first(res);
+
+      this.shopProductCategoryService.selectedCategory$.next(product?.shop_product_category);
       this.generalService.bc$.next({
         siteName: environment.siteName,
         title: `${product?.shop_product_category?.name}`,

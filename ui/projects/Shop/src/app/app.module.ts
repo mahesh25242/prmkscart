@@ -1,5 +1,5 @@
-import { BrowserModule } from '@angular/platform-browser';
-import { NgModule } from '@angular/core';
+import { BrowserModule, HammerModule, HammerGestureConfig, HAMMER_GESTURE_CONFIG } from '@angular/platform-browser';
+import { Injectable, NgModule } from '@angular/core';
 
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { HttpClientModule, HttpClientXsrfModule } from '@angular/common/http';
@@ -8,7 +8,10 @@ import { httpInterceptorProviders } from './lib/interceptor'
 
 import { SharedModuleModule } from './lib/shared-module/shared-module.module';
 
+import * as Hammer from 'hammerjs';
+
 import {MatToolbarModule} from '@angular/material/toolbar';
+
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -28,6 +31,15 @@ import { AddToCartComponent } from './components/add-to-cart/add-to-cart.compone
 import { ProductDetailsComponent } from './product-details/product-details.component';
 import { ProductDetailsResolver } from './product-details/product-details-resolver';
 import { EditMessageComponent } from './cart-details/edit-message/edit-message.component';
+import { SearchComponent } from './components/search/search.component';
+import { SearchResultComponent } from './search-result/search-result.component';
+
+@Injectable()
+export class MyHammerConfig extends HammerGestureConfig {
+  overrides = <any> {
+    swipe: { direction: Hammer.DIRECTION_ALL },
+  };
+}
 
 @NgModule({
   declarations: [
@@ -45,13 +57,16 @@ import { EditMessageComponent } from './cart-details/edit-message/edit-message.c
     SideNavListComponent,
     AddToCartComponent,
     ProductDetailsComponent,
-    EditMessageComponent
+    EditMessageComponent,
+    SearchComponent,
+    SearchResultComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     BrowserAnimationsModule,
     SharedModuleModule,
+    HammerModule,
 
     MatToolbarModule,
 
@@ -61,7 +76,11 @@ import { EditMessageComponent } from './cart-details/edit-message/edit-message.c
   providers: [
     httpInterceptorProviders,
     ProductResolver,
-    ProductDetailsResolver
+    ProductDetailsResolver,
+    {
+      provide: HAMMER_GESTURE_CONFIG,
+      useClass: MyHammerConfig,
+    },
   ],
   bootstrap: [AppComponent]
 })
