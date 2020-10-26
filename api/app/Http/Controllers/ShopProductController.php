@@ -30,18 +30,25 @@ class ShopProductController extends Controller
         "shopProductVariant.shopProductImage"])->where("shop_id", $shopId);
 
         if($request->input("status", 0)){
-            $products->where("status", $request->input("status", 0));
+            $products =  $products->where("status", $request->input("status", 0));
         }
 
         if($request->input("shop_product_category_id", 0)){
-            $products->where("shop_product_category_id", $request->input("shop_product_category_id", 0));
+            $products = $products->where("shop_product_category_id", $request->input("shop_product_category_id", 0));
         }
         if($request->input("cat_url", null)){
-            $products->whereHas("shopProductCategory", function($q) use($request){
+            $products = $products->whereHas("shopProductCategory", function($q) use($request){
                 $q->where("url", $request->input("cat_url", null));
             });
         }
 
+        if($request->input("q", null)){
+            $q = $request->input("q", null);
+            $products = $products->where("name", 'like', "%{$q}%");
+            $products = $products->orwhereHas("shopProductCategory", function($qry) use($q){
+                $qry->where("name", 'like', "%{$q}%");
+            });
+        }
         return response($products->get());
     }
 

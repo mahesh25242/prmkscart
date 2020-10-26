@@ -30,19 +30,19 @@ const routes: Routes = [
     loadChildren: () => import('./admin/admin.module').then(m => m.AdminModule)
   },
   {
-    path: 'search/:q',
-    component: SearchResultComponent,
-    resolve:{
-      product: ProductResolver
-    }
-  },
-  {
     path: '',
     component: HomeComponent,
     children:[
       {
         path: '',
         component: ProductComponent,
+        resolve:{
+          product: ProductResolver
+        }
+      },
+      {
+        path: 'search/:q',
+        component: SearchResultComponent,
         resolve:{
           product: ProductResolver
         }
