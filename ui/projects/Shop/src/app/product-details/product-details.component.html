@@ -3,7 +3,7 @@
   <form [formGroup]="addToCartFrm" (ngSubmit)="addToCart()">
       <img *ngIf="product.shop_product_selected_variant?.shop_product_image?.image" [src]="environment.siteAddress+'/assets/shop/'+environment.shopKey+'/products/'+ product.shop_product_selected_variant.shop_product_image.image" alt="Photo of a Shiba Inu">
 
-      <mat-form-field appearance="standard">
+      <mat-form-field appearance="standard" *ngIf="(product.shop_product_variant.length > 1)">
         <mat-label>Choose Varient</mat-label>
         <mat-select formControlName="shop_product_variant_id" required (selectionChange)="chooseVarient()">
           <mat-option *ngFor="let shop_product_variant of product.shop_product_variant" [value]="shop_product_variant.id">
