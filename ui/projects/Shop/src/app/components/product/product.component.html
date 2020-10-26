@@ -10,6 +10,8 @@
       <img mat-card-image *ngIf="product.shop_product_primary_variant?.shop_product_image?.image" [src]="environment.siteAddress+'/assets/shop/'+environment.shopKey+'/products/'+ product.shop_product_primary_variant.shop_product_image.image" alt="Photo of a Shiba Inu">
       <mat-card-content>
         ₹ {{ product.shop_product_primary_variant?.price}}
+
+        <del *ngIf="product.shop_product_primary_variant?.actual_price">₹ {{ product.shop_product_primary_variant?.actual_price}}</del>
         <p *ngIf="product.shop_product_variant.length > 1">
           Total Varients: {{ product.shop_product_variant.length }}
         </p>
