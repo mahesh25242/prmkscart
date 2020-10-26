@@ -16,7 +16,7 @@ export class GeneralService {
 
   get bc(){
     return this.bc$.asObservable().pipe(tap(res=>{
-      this.titleService.setTitle(`${res?.siteName} ${ (res?.siteName && res?.title) ? ':': '' } ${res?.title}`);
+      this.titleService.setTitle(`${(res?.siteName) ? res?.siteName : ''} ${ (res?.siteName && res?.title) ? ':': '' } ${(res?.title) ? res?.title : ''}`);
     }));
   }
   sentContact(postData: any = null){
