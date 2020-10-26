@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { Observable } from 'rxjs';
 import { ShopProduct, Cart } from 'src/app/lib/interfaces';
 import { ShopProductService, CartService, GeneralService, ShopProductCategoryService } from 'src/app/lib/services';
@@ -16,8 +16,10 @@ import { tap } from 'rxjs/operators';
   styleUrls: ['./product.component.scss']
 })
 export class ProductComponent implements OnInit {
+  @Input() isSearch: boolean;
   products$: Observable<ShopProduct[]>;
   environment = environment;
+
   constructor(private shopProductService: ShopProductService,
     private cartService: CartService,
     private route: ActivatedRoute,
@@ -39,8 +41,10 @@ export class ProductComponent implements OnInit {
 
     this.products$ = this.shopProductService.products.pipe(tap(res=>{
       const product:ShopProduct = first(res);
+      if(!this.isSearch){
+        this.shopProductCategoryService.selectedCategory$.next(product?.shop_product_category);
+      }
 
-      this.shopProductCategoryService.selectedCategory$.next(product?.shop_product_category);
       this.generalService.bc$.next({
         siteName: environment.siteName,
         title: `${product?.shop_product_category?.name}`,
