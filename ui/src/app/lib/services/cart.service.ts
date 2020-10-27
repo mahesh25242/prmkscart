@@ -108,8 +108,8 @@ export class CartService {
     return this.http.post<City[]>(`/shop/createOrder`, postData);
   }
 
-  getAllOrders(postData:any = null){
-    return this.http.post<ShopOrderWithPagination>(`/shop/orders`, postData).pipe(tap(res=>{
+  getAllOrders(page:number= 1,postData:any = null){
+    return this.http.post<ShopOrderWithPagination>(`/shop/orders${(page) ? `?page=${page}` : ''}`, postData).pipe(tap(res=>{
       this.orders$.next(res);
     }));
   }

@@ -5,6 +5,7 @@ import { CartService, GeneralService } from 'src/app/lib/services';
 import {MatDialog, MatDialogRef, MAT_DIALOG_DATA} from '@angular/material/dialog';
 import { OrderDetailsComponent } from './order-details/order-details.component';
 import { environment } from '../../../environments/environment';
+import { PageEvent } from '@angular/material/paginator';
 
 @Component({
   selector: 'app-orders',
@@ -12,8 +13,11 @@ import { environment } from '../../../environments/environment';
   styleUrls: ['./orders.component.scss']
 })
 export class OrdersComponent implements OnInit {
+
+  pageEvent: PageEvent
+
   orders$: Observable<ShopOrderWithPagination>;
-  displayedColumns = ["no", "name", "total", "delivery_location" ,'created_at', "status"]
+  displayedColumns = ["no", "name", "total", "delivery_location", "delivery_date" ,'created_at', "status"]
   constructor(private cartService: CartService,
     public dialog: MatDialog,
     private generalService: GeneralService) { }
@@ -25,6 +29,16 @@ export class OrdersComponent implements OnInit {
 
 
   }
+
+  goto(pageEvent: PageEvent){
+    this.pageEvent = pageEvent;
+
+    const postData = {
+      pageSize : this.pageEvent.pageSize
+    }
+    this.cartService.getAllOrders((this.pageEvent.pageIndex + 1), postData).subscribe();
+
+  }
   ngOnInit(): void {
     this.generalService.bc$.next({
       siteName: environment.siteName,
@@ -32,6 +46,7 @@ export class OrdersComponent implements OnInit {
       url:'',
       backUrl: null
     });
+
 
     this.orders$ = this.cartService.orders;
   }

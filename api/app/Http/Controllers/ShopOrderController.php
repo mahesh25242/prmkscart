@@ -103,15 +103,16 @@ class ShopOrderController extends Controller
     }
 
     public function orders(Request $request){
-        $perPage = 20;
+        $perPage = $request->input("pageSize", 20);
         $shop = null;
         $shopKey = $request->header('shopKey');
         $shopKey = ( $shopKey ) ?  $shopKey  :$request->input("shop_key");
         if($shopKey){
             $shop = \App\Shop::where("shop_key", $shopKey)->get()->first();
         }
-        $orders = \App\ShopOrder::with(["shopCustomer", "shopOrderItem.ShopProductVariant.shopProduct", "shopDelivery"])->where("shop_id", $shop->id)->orderBy("id", "desc")->paginate($perPage);
-        return response($orders);
+        $orders = \App\ShopOrder::with(["shopCustomer", "shopOrderItem.ShopProductVariant.shopProduct", "shopDelivery"])
+        ->where("shop_id", $shop->id);
+        return response($orders->orderBy("id", "desc")->paginate($perPage));
     }
 
 

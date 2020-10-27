@@ -111,7 +111,7 @@
             <mat-label>Delivery Date </mat-label>
             <input [min]="todayDate" matInput [matDatepicker]="picker" formControlName="delivery_date">
             <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
-            <mat-datepicker #picker></mat-datepicker>
+            <mat-datepicker #picker touchUi></mat-datepicker>
           </mat-form-field>
 
 

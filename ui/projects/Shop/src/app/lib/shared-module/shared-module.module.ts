@@ -30,7 +30,7 @@ import {MatTooltipModule} from '@angular/material/tooltip';
 import {MatSnackBarModule, MAT_SNACK_BAR_DEFAULT_OPTIONS} from '@angular/material/snack-bar';
 import {MatNativeDateModule} from '@angular/material/core';
 import {MatButtonToggleModule} from '@angular/material/button-toggle';
-
+import {MatPaginatorModule} from '@angular/material/paginator';
 
 Notiflix.Confirm.Init({ borderRadius:"5px",titleColor:"#204486",okButtonBackground:"#204486",cancelButtonBackground:"#e2e2e2",cancelButtonColor:"#393939", });
 Notiflix.Notify.Init({ width:"390px", success: {background:"#d4edda",textColor:"#155724",}, failure: {background:"#f8d7da",textColor:"#721c24",}, warning: {background:"#fff3cd",textColor:"#856404",}, info: {background:"#cce5ff",textColor:"#004085",}, });
@@ -71,7 +71,8 @@ Notiflix.Block.Init({ svgColor:"#204486", });
     MatTooltipModule,
     MatSnackBarModule,
     MatNativeDateModule,
-    MatButtonToggleModule
+    MatButtonToggleModule,
+    MatPaginatorModule
   ],
   exports:[
     NgSelectModule,
@@ -101,7 +102,8 @@ Notiflix.Block.Init({ svgColor:"#204486", });
     MatTooltipModule,
     MatSnackBarModule,
     MatNativeDateModule,
-    MatButtonToggleModule
+    MatButtonToggleModule,
+    MatPaginatorModule
   ],
   providers:[
     DatePipe,
