@@ -30,7 +30,7 @@ class ShopOrderItem extends Model implements AuthenticatableContract, Authorizab
         return $this->belongsTo('App\ShopOrder');
     }
 
-    public function ShopProductVariant()
+    public function shopProductVariant()
     {
         return $this->belongsTo('App\ShopProductVariant');
     }

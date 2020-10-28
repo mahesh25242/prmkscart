@@ -16,6 +16,14 @@ export class OrderSearchComponent implements OnInit {
     private cartService: CartService,
     public datepipe: DatePipe) { }
 
+    reset(){
+      this.searchFrm.patchValue({
+        start_date: null,
+        end_date: null,
+        q: null
+      });
+      this.search();
+    }
   search(){
     const startDate = (this.searchFrm.controls.start_date.value) ? this.datepipe.transform(this.searchFrm.controls.start_date.value, 'yyyy-MM-dd') : null;
     const endDate = (this.searchFrm.controls.end_date.value) ? this.datepipe.transform(this.searchFrm.controls.end_date.value, 'yyyy-MM-dd') : null;

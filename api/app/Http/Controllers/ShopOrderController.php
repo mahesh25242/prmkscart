@@ -112,6 +112,25 @@ class ShopOrderController extends Controller
         }
         $orders = \App\ShopOrder::with(["shopCustomer", "shopOrderItem.ShopProductVariant.shopProduct", "shopDelivery"])
         ->where("shop_id", $shop->id);
+
+        if($request->input("q", '')){
+            $orders = $orders->where( function( $query ) use($request){
+                $query->orWhereHas("shopCustomer", function($qry) use($request){
+                    $q = $request->input("q", '');
+                    $qry->where("name", 'like', "%{$q}%");
+                });
+
+                $query->orWhereHas("shopOrderItem.shopProductVariant.shopProduct", function($qry) use($request){
+                    $q = $request->input("q", '');
+                    $qry->where("name", 'like', "%{$q}%");
+                });
+            });
+        }
+
+        if($request->input("start_date", '') && $request->input("end_date", '')){
+            $orders = $orders->whereBetween("created_at", [$request->input("start_date", ''), $request->input("end_date", '')]);
+        }
+
         return response($orders->orderBy("id", "desc")->paginate($perPage));
     }
 
