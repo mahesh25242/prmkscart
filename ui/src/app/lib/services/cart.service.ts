@@ -114,4 +114,8 @@ export class CartService {
     }));
   }
 
+  changeStatus(postData:any = null){
+    return this.http.post<any>(`/shop/orders/changeStatus`, postData);
+  }
+
 }

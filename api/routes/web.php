@@ -59,6 +59,7 @@ $router->group(['prefix' => 'v1'], function () use ($router) {
             $router->group(['prefix' => 'shop'], function () use ($router) {
                 $router->post('/store','ShopsController@updateDetails');
                 $router->post('/orders','ShopOrderController@orders');
+                $router->post('/orders/changeStatus','ShopOrderController@changeStatus');
                 $router->group(['prefix' => 'deliveries'], function () use ($router) {
                     $router->post('/','ShopDeliveryController@deliveries');
                     $router->post('delete','ShopDeliveryController@delete');

@@ -131,9 +131,22 @@ class ShopOrderController extends Controller
             $orders = $orders->whereBetween("created_at", [$request->input("start_date", ''), $request->input("end_date", '')]);
         }
 
-        return response($orders->orderBy("id", "desc")->paginate($perPage));
+        return response($orders->orderBy('status', 'asc')->orderBy("id", "desc")->paginate($perPage));
     }
 
+    public function changeStatus(Request $request){
+        $validator = Validator::make($request->all(), [
+            'status' => ['required', 'between:1,5'],
+        ]);
 
+        if($validator->fails()){
+            return response(['message' => 'Validation errors', 'errors' =>  $validator->errors(), 'status' => false], 422);
+        }
+
+        $shopOrder = \App\ShopOrder::find($request->input("id"));
+        $shopOrder->status = $request->input("status", 1);
+        $shopOrder->save();
+        return response(['message' => 'Successfully changed status', 'status' => true]);
+    }
 
 }
