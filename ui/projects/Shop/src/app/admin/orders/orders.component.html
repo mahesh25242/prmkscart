@@ -1,7 +1,7 @@
 <app-order-search [pageEvent]="pageEvent"></app-order-search>
 <ng-container *ngIf="(orders$ | async) as orders">
-
-  <table mat-table [dataSource]="orders.data" class="mat-elevation-z8">
+  <div *ngIf="!orders.total">No data found</div>
+  <table mat-table [dataSource]="orders.data" class="mat-elevation-z8" *ngIf="orders.total">
 
     <!--- Note that these columns can be defined in any order.
           The actual rendered columns are set as a property on the row definition" -->
@@ -61,7 +61,7 @@
     <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
   </table>
 
-  <mat-paginator [length]="orders.total"
+  <mat-paginator *ngIf="orders.total" [length]="orders.total"
               [pageSize]="10"
               [pageSizeOptions]="[5, 10, 25, 100]"
               (page)="goto($event)">
