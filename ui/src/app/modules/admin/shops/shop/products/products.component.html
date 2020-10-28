@@ -5,7 +5,7 @@
 </button>
 
 
-
+<ng-container *ngIf="(products$ | async) as products">
 <table class="table" *ngIf="(shopKey$ | async) as shopKey">
   <thead>
     <tr>
@@ -24,8 +24,8 @@
     </tr>
   </thead>
   <tbody>
-    <ng-container *ngIf="(products$ | async) as products">
-      <tr *ngFor="let product of products; let i = index">
+
+      <tr *ngFor="let product of products.data; let i = index">
         <td>
             {{ i+1 }}
         </td>
@@ -39,14 +39,17 @@
           <a href="javascript:{}" class="text-danger" (click)="deleteProduct(product, shopKey)">Delete</a>
         </td>
       </tr>
-      <tr *ngIf="!products || !products.length">
+      <tr *ngIf="!products || !products.data.length">
         <td colspan="4">
           <div class="alert alert-warning">
             No product found
           </div>
         </td>
       </tr>
-    </ng-container>
 
   </tbody>
 </table>
+
+<ngb-pagination [collectionSize]="products.total"  [pageSize]="products.per_page" [(page)]="products.current_page" (pageChange)="loadPage($event)" [maxSize]="5" [rotate]="true" [boundaryLinks]="true"></ngb-pagination>
+</ng-container>
+

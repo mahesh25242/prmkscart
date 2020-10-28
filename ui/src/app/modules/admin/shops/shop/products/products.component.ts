@@ -1,6 +1,6 @@
-import { Component, OnInit } from '@angular/core';
-import { BehaviorSubject, Observable } from 'rxjs';
-import { ShopProduct } from 'src/app/lib/interfaces';
+import { Component, OnDestroy, OnInit } from '@angular/core';
+import { BehaviorSubject, Observable, Subscription } from 'rxjs';
+import { ShopProduct, ShopProductWithPagination } from 'src/app/lib/interfaces';
 import { ShopProductService } from 'src/app/lib/services';
 import Notiflix from "notiflix";
 import { map, mergeMap } from 'rxjs/operators';
@@ -15,12 +15,13 @@ import { CreateProductComponent } from './create-product/create-product.componen
   templateUrl: './products.component.html',
   styleUrls: ['./products.component.scss']
 })
-export class ProductsComponent implements OnInit {
+export class ProductsComponent implements OnInit, OnDestroy {
 
-  products$: Observable<ShopProduct[]>;
+  products$: Observable<ShopProductWithPagination>;
   private product$: BehaviorSubject<ShopProduct> = new BehaviorSubject<ShopProduct>(null);
   shopKey$:Observable<any>;
 
+  pageinationSubScr: Subscription;
   constructor(private shopProductService: ShopProductService,
     private _modalService: NgbModal,
     private route: ActivatedRoute) { }
@@ -33,6 +34,15 @@ export class ProductsComponent implements OnInit {
     });
     activeModal.componentInstance.product = product;
     activeModal.componentInstance.shopKey = this.shopKey$;
+
+  }
+
+  loadPage(page){
+    this.pageinationSubScr =  this.route.parent.params.pipe(mergeMap(parms=>{
+      return this.shopProductService.listproducts(page, {
+        'shop_key': parms.id
+      });
+    })).subscribe();
 
   }
 
@@ -62,4 +72,9 @@ export class ProductsComponent implements OnInit {
     this.shopKey$ = this.route.parent.params;
   }
 
+  ngOnDestroy(){
+    if(this.pageinationSubScr){
+      this.pageinationSubScr.unsubscribe();
+    }
+  }
 }
