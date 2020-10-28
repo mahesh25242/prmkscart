@@ -1,3 +1,4 @@
+import { Pagination } from './pagination';
 import { Shop } from './shop';
 import { ShopProductCategory } from './shop-product-category';
 import { ShopProductVariant } from './shop-product-variant';
@@ -17,4 +18,8 @@ export interface ShopProduct {
   shop_product_primary_variant?: ShopProductVariant,
   shop_product_selected_variant?: ShopProductVariant,
   url?: string
+}
+
+export interface ShopProductWithPagination extends Pagination {
+  data?: ShopProduct[]
 }

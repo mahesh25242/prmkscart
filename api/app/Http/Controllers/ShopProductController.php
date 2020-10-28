@@ -15,6 +15,7 @@ class ShopProductController extends Controller
     }
 
     public function products(Request $request){
+        $perPage = $request->input("pageSize", 20);
         $shopKey = $request->header('shopKey');
         if($shopKey){
             $shop = \App\Shop::where("shop_key", $shopKey)->get()->first();
@@ -24,7 +25,6 @@ class ShopProductController extends Controller
             $shop = \App\Shop::where("shop_key", $shopKey)->get()->first();
             $shopId = ($shop) ? $shop->id : 0;
         }
-//shopProductVariant.shopProductImage
 
         $products = \App\ShopProduct::with(["shopProductCategory", "shopProductPrimaryVariant.shopProductImage",
         "shopProductVariant.shopProductImage"])->where("shop_id", $shopId);
@@ -49,7 +49,7 @@ class ShopProductController extends Controller
                 $qry->where("name", 'like', "%{$q}%");
             });
         }
-        return response($products->get());
+        return response($products->paginate($perPage ));
     }
 
     public function store(Request $request){
@@ -196,9 +196,28 @@ class ShopProductController extends Controller
     }
 
     public function delete(Request $request){
-       $shpProduct =  \App\ShopProduct::where('id', $request->input("id"))->delete();
-       return response(['message' => 'successfully deleted!', 'status' => true]);
+        $shopKey = $request->header('shopKey');
+        $shopKey = ($shopKey) ? $shopKey : $request->input("shop_key");
+        $shop = \App\Shop::where("shop_key", $shopKey)->get()->first();
+        $shopId = ($shop) ? $shop->id : 0;
+
+        $shpProduct =  \App\ShopProduct::where('id', $request->input("id"))
+        ->where('shop_id', $shopId)->delete();
+        return response(['message' => 'successfully deleted!', 'status' => true]);
     }
+
+    public function changeStatus(Request $request){
+        $shopKey = $request->header('shopKey');
+        $shopKey = ($shopKey) ? $shopKey : $request->input("shop_key");
+        $shop = \App\Shop::where("shop_key", $shopKey)->get()->first();
+        $shopId = ($shop) ? $shop->id : 0;
+
+        $shopProduct =  \App\ShopProduct::where('id', $request->input("id"))
+        ->where("shop_id", $shopId)->get()->first();
+        $shopProduct->status = !$shopProduct->status;
+        $shopProduct->save();
+        return response(['message' => 'successfully changed status!', 'status' => true]);
+     }
 
     public function showProductDetails(Request $request){
         $shpProduct =  \App\ShopProduct::with(["shopProductCategory", "shopProductPrimaryVariant.shopProductImage",

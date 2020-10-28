@@ -8,6 +8,7 @@ import { ShopProduct, ShopProductCategory } from 'src/app/lib/interfaces';
 
 import { environment } from '../../../../environments/environment';
 import {MatDialogRef, MAT_DIALOG_DATA} from '@angular/material/dialog';
+import { PageEvent } from '@angular/material/paginator';
 
 
 @Component({
@@ -49,7 +50,7 @@ export class CreateProductComponent implements OnInit, OnDestroy {
   constructor(private formBuilder: FormBuilder,
     private shopProductService: ShopProductService,
     private shopProductCategoryService: ShopProductCategoryService,
-    @Inject(MAT_DIALOG_DATA) public data: ShopProduct,
+    @Inject(MAT_DIALOG_DATA) public data: {product: ShopProduct, pageEvent: PageEvent},
     public dialogRef: MatDialogRef<CreateProductComponent>) { }
 
   get f() { return this.createProductFrm.controls}
@@ -89,7 +90,10 @@ export class CreateProductComponent implements OnInit, OnDestroy {
 
 
     this.saveProdSubScr = this.shopProductService.createProduct(formData).pipe(mergeMap(res=>{
-      return this.shopProductService.listproducts();
+      return this.shopProductService.listproducts((this.data.pageEvent.pageIndex + 1), {
+        pageSize: this.data.pageEvent.pageSize
+      });
+
     })).subscribe(res=>{
       Notiflix.Loading.Remove();
       Notiflix.Notify.Success(`Successfully saved product `);
@@ -190,15 +194,15 @@ export class CreateProductComponent implements OnInit, OnDestroy {
 
       this.varients.controls = [];
       this.createProductFrm.patchValue({
-        id: (this.data?.id) ? this.data?.id : 0,
-        name: (this.data?.name) ? this.data?.name : '',
-        description: (this.data?.description) ? this.data?.description : '',
-        status: (this.data?.status >= 0) ? this.data?.status : 1,
-        sortorder: (this.data?.sortorder) ? this.data?.sortorder : 1,
-        shop_product_category_id: (this.data?.shop_product_category?.id) ? this.data?.shop_product_category : null,
+        id: (this.data.product?.id) ? this.data.product?.id : 0,
+        name: (this.data.product?.name) ? this.data.product?.name : '',
+        description: (this.data.product?.description) ? this.data.product?.description : '',
+        status: (this.data.product?.status >= 0) ? this.data.product?.status : 1,
+        sortorder: (this.data.product?.sortorder) ? this.data.product?.sortorder : 1,
+        shop_product_category_id: (this.data.product?.shop_product_category?.id) ? this.data.product?.shop_product_category : null,
       });
-      if(this.data?.shop_product_variant){
-        this.data.shop_product_variant.map(vrnt =>{
+      if(this.data.product?.shop_product_variant){
+        this.data.product.shop_product_variant.map(vrnt =>{
           let img=null;
           if(vrnt?.shop_product_image?.image)
             img = `${environment.siteAddress}/assets/shop/${environment.shopKey}/products/${vrnt.shop_product_image.image}`;

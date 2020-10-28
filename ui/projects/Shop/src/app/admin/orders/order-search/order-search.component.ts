@@ -3,6 +3,7 @@ import { Component, Input, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { PageEvent } from '@angular/material/paginator';
 import { CartService } from 'src/app/lib/services';
+import Notiflix from "notiflix";
 
 @Component({
   selector: 'app-order-search',
@@ -33,8 +34,12 @@ export class OrderSearchComponent implements OnInit {
       start_date: startDate,
       end_date: endDate,
     }
-
-    this.cartService.getAllOrders(1, postData).subscribe();
+    Notiflix.Loading.Arrows();
+    this.cartService.getAllOrders(1, postData).subscribe(res=>{
+      Notiflix.Loading.Remove();
+    }, error=>{
+      Notiflix.Loading.Remove();
+    });
   }
 
 

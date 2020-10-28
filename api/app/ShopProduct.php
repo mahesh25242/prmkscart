@@ -40,7 +40,7 @@ class ShopProduct extends Model implements AuthenticatableContract, Authorizable
 
     public function getStatusTextAttribute()
     {
-        return (($this->status) ? 'Yes' : 'No');
+        return (($this->status) ? 'Active' : 'In-Active');
     }
 
 

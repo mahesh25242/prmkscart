@@ -25,7 +25,7 @@ class ShopProductCategoryController extends Controller
             $shopId = ($shop) ? $shop->id : 0;
         }
 
-        $categories = \App\ShopProductCategory::where("shop_id", $shopId);
+        $categories = \App\ShopProductCategory::withCount(["shopProduct"])->where("shop_id", $shopId);
         if($request->input("status", 0)){
             $categories->where("status", $request->input("status", 0));
         }
@@ -103,8 +103,27 @@ class ShopProductCategoryController extends Controller
     }
 
     public function delete(Request $request){
-       $shopCategory =  \App\ShopProductCategory::where('id', $request->input("id"))->delete();
+       $shopKey = $request->header('shopKey');
+       $shopKey = ($shopKey) ? $shopKey : $request->input("shop_key");
+       $shop = \App\Shop::where("shop_key", $shopKey)->get()->first();
+       $shopId = ($shop) ? $shop->id : 0;
+
+       $shopCategory =  \App\ShopProductCategory::where('id', $request->input("id"))
+       ->where("shop_id", $shopId)->delete();
        return response(['message' => 'successfully deleted!', 'status' => true]);
     }
+
+    public function changeStatus(Request $request){
+        $shopKey = $request->header('shopKey');
+        $shopKey = ($shopKey) ? $shopKey : $request->input("shop_key");
+        $shop = \App\Shop::where("shop_key", $shopKey)->get()->first();
+        $shopId = ($shop) ? $shop->id : 0;
+
+        $shopCategory =  \App\ShopProductCategory::where('id', $request->input("id"))
+        ->where("shop_id", $shopId)->get()->first();
+        $shopCategory->status = !$shopCategory->status;
+        $shopCategory->save();
+        return response(['message' => 'successfully changed status!', 'status' => true]);
+     }
 
 }

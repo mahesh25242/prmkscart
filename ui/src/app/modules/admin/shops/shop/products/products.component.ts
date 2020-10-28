@@ -40,7 +40,7 @@ export class ProductsComponent implements OnInit {
     Notiflix.Confirm.Show( 'delete?', `Do you want to delete ${product.name}`, 'Yes', 'No', ()=>{
       Notiflix.Loading.Arrows();
       this.shopProductService.deleteProduct(product).pipe(mergeMap(res=>{
-        return this.shopProductService.listproducts({
+        return this.shopProductService.listproducts(1, {
           "shop_key": shopKey
         }).pipe(map(()=>{
           return res;

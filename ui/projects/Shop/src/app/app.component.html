@@ -1,8 +1,8 @@
-  <mat-sidenav-container [hasBackdrop]="true">
+  <mat-sidenav-container [hasBackdrop]="true" fullscreen>
     <mat-sidenav #sidenav role="navigation" [mode]="'side'">
       <app-side-nav-list (sidenavClose)="sidenav.close()"></app-side-nav-list>
     </mat-sidenav>
-    <mat-sidenav-content>
+    <mat-sidenav-content cdkscrollable class="my-sidenav-content">
       <app-header (sidenavToggle)="sidenav.toggle()"></app-header>
       <main>
         <router-outlet></router-outlet>

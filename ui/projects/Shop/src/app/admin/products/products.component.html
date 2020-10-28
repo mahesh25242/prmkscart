@@ -1,9 +1,10 @@
 <h3>Products</h3>
 
 <button mat-raised-button color="primary" type="button"  (click)="editProduct(null)">Create Product</button>
-
+<app-search-product  [pageEvent]="pageEvent"></app-search-product>
 <ng-container *ngIf="(products$ | async) as products">
-  <table mat-table [dataSource]="products" class="mat-elevation-z8">
+  <div *ngIf="!products.data.length">No product found</div>
+  <table mat-table [dataSource]="products.data" class="mat-elevation-z8" *ngIf="products.data.length">
 
     <!--- Note that these columns can be defined in any order.
           The actual rendered columns are set as a property on the row definition" -->
@@ -22,18 +23,28 @@
       </td>
     </ng-container>
 
+    <!-- Name Column -->
+    <ng-container matColumnDef="category">
+      <th mat-header-cell *matHeaderCellDef> Category </th>
+      <td mat-cell *matCellDef="let element">
+        {{ element.shop_product_category?.name}}
+      </td>
+    </ng-container>
+
 
     <!-- Status Column -->
     <ng-container matColumnDef="status">
       <th mat-header-cell *matHeaderCellDef> Status </th>
-      <td mat-cell *matCellDef="let element"> {{element.status_text}} </td>
+      <td mat-cell *matCellDef="let element">
+        <a href="javascript:{}" (click)="changeStatus(element)"> {{element.status_text}} </a>
+      </td>
     </ng-container>
 
      <!-- Options Column -->
      <ng-container matColumnDef="options">
       <th mat-header-cell *matHeaderCellDef> Delete </th>
       <td mat-cell *matCellDef="let element">
-        <button  type="button" mat-icon-button  color="primary"
+        <button  type="button" mat-icon-button  color="warn"
           (click)="deleteProduct(element)">
           <mat-icon>delete_forever</mat-icon>
         </button>
@@ -43,5 +54,13 @@
     <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
     <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
   </table>
+
+
+  <mat-paginator *ngIf="products.total" [length]="products.total"
+              [pageSize]="10"
+              [pageSizeOptions]="[5, 10, 25, 100]"
+              (page)="goto($event)">
+  </mat-paginator>
+
 </ng-container>
 

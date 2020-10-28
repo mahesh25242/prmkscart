@@ -95,7 +95,7 @@ export class CreateProductComponent implements OnInit, OnDestroy {
     this.saveProdSubScr = this.shopKey.pipe(mergeMap(parm=>{
       formData.append(`shop_key`, parm.id);
       return this.shopProductService.createProduct(formData).pipe(mergeMap(res=>{
-        return this.shopProductService.listproducts({
+        return this.shopProductService.listproducts(1, {
           shop_key: parm.id
         });
       }))

@@ -37,6 +37,25 @@ export class CategoriesComponent implements OnInit {
 
   }
 
+  changeStatus(cat: ShopProductCategory = null){
+    Notiflix.Confirm.Show( 'Change Status?', `Do you want to change ${cat.name} status?`, 'Yes', 'No', ()=>{
+      Notiflix.Loading.Arrows();
+      this.shopProductCategoryService.changeStatus(cat).pipe(mergeMap(res=>{
+        return this.shopProductCategoryService.listCategories().pipe(map(cats=>{
+          return res;
+        }));
+      })).subscribe(res=>{
+        Notiflix.Loading.Remove();
+        Notiflix.Notify.Success(`${cat.name} Successfully deleted `);
+      }, error=>{
+        Notiflix.Loading.Remove();
+        Notiflix.Notify.Failure(`unexpected error`);
+      });
+    }, ()=>{
+      // No button callback alert('If you say so...');
+    } );
+  }
+
   deleteCategory(cat: ShopProductCategory = null){
     Notiflix.Confirm.Show( 'delete?', `Do you want to delete ${cat.name}`, 'Yes', 'No', ()=>{
       Notiflix.Loading.Arrows();

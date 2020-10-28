@@ -43,9 +43,6 @@ const routes: Routes = [
       {
         path: 'search/:q',
         component: SearchResultComponent,
-        resolve:{
-          product: ProductResolver
-        }
       },
       {
         path: ':catUrl/varities',

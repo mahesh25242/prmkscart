@@ -11,4 +11,5 @@ export const environment = {
   siteAddress: env.siteAddress,
   gMapUrl: env.gMapUrl,
   openstreetmap: env.openstreetmap,
+  productListPerPage: 200
 };

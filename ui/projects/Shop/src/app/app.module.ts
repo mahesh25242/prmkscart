@@ -34,6 +34,7 @@ import { EditMessageComponent } from './cart-details/edit-message/edit-message.c
 import { SearchComponent } from './components/search/search.component';
 import { SearchResultComponent } from './search-result/search-result.component';
 
+
 @Injectable()
 export class MyHammerConfig extends HammerGestureConfig {
   overrides = <any> {

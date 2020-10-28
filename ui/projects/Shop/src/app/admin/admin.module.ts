@@ -20,9 +20,10 @@ import { OrdersComponent } from './orders/orders.component';
 import { OrdersResolver } from './orders/orders-resolver';
 import { OrderDetailsComponent } from './orders/order-details/order-details.component';
 import { OrderSearchComponent } from './orders/order-search/order-search.component';
+import { SearchProductComponent } from './products/search-product/search-product.component';
 
 @NgModule({
-  declarations: [  SignInComponent, HomeComponent, CategoriesComponent, ProductsComponent, EditProfileComponent, CreateCategoryComponent, CreateProductComponent, ShopDeliveryComponent, CreateShopDeliveryComponent, ShopDetailsComponent, OrdersComponent, OrderDetailsComponent, OrderSearchComponent],
+  declarations: [  SignInComponent, HomeComponent, CategoriesComponent, ProductsComponent, EditProfileComponent, CreateCategoryComponent, CreateProductComponent, ShopDeliveryComponent, CreateShopDeliveryComponent, ShopDetailsComponent, OrdersComponent, OrderDetailsComponent, OrderSearchComponent, SearchProductComponent],
   imports: [
     CommonModule,
     AdminRoutingModule,

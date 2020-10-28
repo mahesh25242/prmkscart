@@ -39,6 +39,9 @@ export class ShopProductCategoryService {
     return this.http.post<ShopProductCategory>(`/shop/products/categories/delete`, postData);
   }
 
+  changeStatus(postData: any = null): Observable<any>{
+    return this.http.post<any>("/shop/products/categories/changeStatus", postData);
+  }
 
   showCategories(){
     return this.http.get<ShopProductCategory[]>("/shop/product/showCategories").pipe(tap(res=>{

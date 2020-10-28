@@ -11,6 +11,8 @@ export class ProductsResolver implements Resolve<any> {
     private shopProductService: ShopProductService) { }
 
   resolve(route: ActivatedRouteSnapshot): Observable<any> {
-    return this.shopProductService.listproducts();
+    return this.shopProductService.listproducts(1, {
+      pageSize : 10
+    });
   }
 }

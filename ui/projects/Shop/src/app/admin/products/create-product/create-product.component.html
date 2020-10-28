@@ -1,5 +1,5 @@
 <h1 mat-dialog-title>
-  {{ (this.data?.id) ? 'Edit '+this.data.name : 'Create New Product' }}
+  {{ (data.product?.id) ? 'Edit '+data.product.name : 'Create New Product' }}
 </h1>
 <form [formGroup]="createProductFrm" (ngSubmit)="saveProduct()">
 <div mat-dialog-content>

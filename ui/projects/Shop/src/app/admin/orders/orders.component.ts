@@ -6,6 +6,7 @@ import {MatDialog, MatDialogRef, MAT_DIALOG_DATA} from '@angular/material/dialog
 import { OrderDetailsComponent } from './order-details/order-details.component';
 import { environment } from '../../../environments/environment';
 import { PageEvent } from '@angular/material/paginator';
+import Notiflix from "notiflix";
 
 @Component({
   selector: 'app-orders',
@@ -32,11 +33,15 @@ export class OrdersComponent implements OnInit {
 
   goto(pageEvent: PageEvent){
     this.pageEvent = pageEvent;
-
+    Notiflix.Loading.Arrows();
     const postData = {
       pageSize : this.pageEvent.pageSize
     }
-    this.cartService.getAllOrders((this.pageEvent.pageIndex + 1), postData).subscribe();
+    this.cartService.getAllOrders((this.pageEvent.pageIndex + 1), postData).subscribe(res=>{
+      Notiflix.Loading.Remove();
+    }, error=>{
+      Notiflix.Loading.Remove();
+    });
 
   }
   ngOnInit(): void {
