@@ -1,0 +1,57 @@
+<app-modal>
+  <div header>Details - {{ order.shop_customer.name }}</div>
+  <div body>
+    <ul class="list-group">
+      <li class="list-group-item">Name: {{ order.shop_customer.name }} </li>
+      <li class="list-group-item">Phone: {{ order.shop_customer.phone}}</li>
+      <li class="list-group-item" *ngIf="order.shop_customer.email">Customer Email: {{ order.shop_customer.email}}</li>
+      <li class="list-group-item" *ngIf="order.delivery_at">Delivery At: {{ order.delivery_at | date: 'medium'}}</li>
+      <ng-container *ngIf="order.shop_delivery.need_cust_loc">
+        <li class="list-group-item">Address: {{ order.address}}</li>
+        <li class="list-group-item">Pin: {{ order.pin}}</li>
+      </ng-container>
+      <li class="list-group-item">Delivery: {{ order.shop_delivery.name}}
+        {{ (order.delivery_chage) ? ' @ ₹ '+order.delivery_chage: '' }}</li>
+        <li class="list-group-item">Total: ₹ {{ order.total}}</li>
+        <li class="list-group-item">Order Note: {{ order.note}}</li>
+    </ul>
+
+    <table class="table">
+      <thead>
+        <tr>
+          <th>
+            Name
+          </th>
+          <th>
+            Quantity
+          </th>
+          <th>
+            Message
+          </th>
+          <th>
+            Price
+          </th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let element of order.shop_order_item">
+          <td>
+            {{element.shop_product_variant.shop_product.name}} {{element.shop_product_variant.name}}
+          </td>
+          <td>
+            {{element.qty}}
+          </td>
+          <td>
+            {{element.message}}
+          </td>
+          <td>
+            ₹ {{element.price}}
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  <div footer>
+
+  </div>
+</app-modal>

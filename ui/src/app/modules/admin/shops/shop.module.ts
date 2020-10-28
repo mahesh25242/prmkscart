@@ -24,10 +24,16 @@ import { CreateCategoryComponent } from './shop/categories/create-category/creat
 import { ProductsComponent } from './shop/products/products.component';
 import { ProductsResolver } from './shop/products/products-resolver';
 import { CreateProductComponent } from './shop/products/create-product/create-product.component';
+import { OrdersComponent } from './shop/orders/orders.component';
+import { OrdersResolver } from './shop/orders/orders-resolver';
+import { OrderDetailsComponent } from './shop/orders/order-details/order-details.component';
+
 @NgModule({
   declarations: [  UsersComponent, DetailsComponent, ShopsComponent, ListComponent, CreateComponent, CreateUserComponent, ShopCategoryComponent, CreateShopCategoryComponent, ShopComponent, CreateAdminComponent,
     CategoriesComponent, CreateCategoryComponent, ProductsComponent,
-    CreateProductComponent],
+    CreateProductComponent,
+    OrdersComponent,
+    OrderDetailsComponent],
   imports: [
     CommonModule,
     SharedModuleModule,
@@ -41,7 +47,8 @@ import { CreateProductComponent } from './shop/products/create-product/create-pr
     EditShopResolver,
     ShopResolver,
     CategoriesResolver,
-    ProductsResolver
+    ProductsResolver,
+    OrdersResolver
   ]
 })
 export class ShopModule { }

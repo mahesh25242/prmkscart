@@ -1,0 +1,69 @@
+<h3>Orders</h3>
+
+
+<ng-container *ngIf="(orders$ | async) as orders">
+<table class="table" *ngIf="(shopKey$ | async) as shopKey">
+  <thead>
+    <tr>
+      <th>
+        No
+      </th>
+      <th>
+        Name
+      </th>
+      <th>
+        Total
+      </th>
+      <th>
+        Delivery Location
+      </th>
+      <th>
+        Delivery Date
+      </th>
+      <th>
+        Order Date
+      </th>
+      <th>
+        Status
+      </th>
+    </tr>
+  </thead>
+  <tbody>
+
+      <tr *ngFor="let order of orders.data; let i = index">
+        <td>
+            {{ i+1 }}
+        </td>
+        <td>
+          <a href="javascript:{}" (click)="details(order)">{{order.shop_customer.name}}</a>
+        </td>
+        <td>
+          {{ order.total }}
+        </td>
+        <td>
+          {{ order.shop_delivery.name }}
+        </td>
+        <td>
+          {{ order.delivery_at | date: 'medium' }}
+        </td>
+        <td>
+          {{ order.created_at | date:'medium'}}
+        </td>
+        <td>
+          {{ order.status_text}}
+        </td>
+      </tr>
+      <tr *ngIf="!orders || !orders.data.length">
+        <td colspan="4">
+          <div class="alert alert-warning">
+            No product found
+          </div>
+        </td>
+      </tr>
+
+  </tbody>
+</table>
+
+<ngb-pagination [collectionSize]="orders.total"  [pageSize]="orders.per_page" [(page)]="orders.current_page" (pageChange)="loadPage($event)" [maxSize]="5" [rotate]="true" [boundaryLinks]="true"></ngb-pagination>
+</ng-container>
+
