@@ -35,6 +35,6 @@ infiniteScrollContainer=".my-sidenav-content" [fromRoot]="true"
       </mat-card-actions>
     </mat-card>
   </div>
-  <a href="javascript:{}" (click)="loadMore()" *ngIf="(products.next_page_url)">Load More</a>
+  <div *ngIf="!allProduct.length">No item found</div>
 </ng-container>
 </div>
