@@ -1,7 +1,7 @@
 import { Component, EventEmitter, OnDestroy, OnInit, Output } from '@angular/core';
 import { empty, Observable,of,pipe, Subscription } from 'rxjs';
 import { mergeMap, tap, map } from 'rxjs/operators';
-import { Cart, Shop, ShopDelivery } from 'src/app/lib/interfaces';
+import { Cart, Shop, ShopDelivery, ShopOrder } from 'src/app/lib/interfaces';
 import { CartService, GeneralService, ShopService } from 'src/app/lib/services';
 import { environment } from '../../environments/environment';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
@@ -92,14 +92,14 @@ export class CartDetailsComponent implements OnInit, OnDestroy {
           minute: this.f.minute.value,
           ampm: this.f.ampm.value,
         }
-        return this.cartService.createOrder(postData).pipe(mergeMap(orderRes=>{
+        return this.cartService.createOrder(postData).pipe(mergeMap((orderRes : ShopOrder)=>{
           if(!orderRes) return empty();
           return this.breakpointObserver.observe([
             Breakpoints.Handset,
             Breakpoints.Tablet
           ]).pipe(map(bp =>{
             let txt = `%0a‎ New Order`;
-            txt += `%0a‎ Order Number: ${encodeURIComponent(`#45`)}`;
+            txt += `%0a‎ Order Number: ${encodeURIComponent(`#${orderRes.id}`)}`;
 
             cart.map(itm=>{
               txt += `%0a‎ Product: ${itm.product.name} `;
@@ -114,11 +114,11 @@ export class CartDetailsComponent implements OnInit, OnDestroy {
             let ret;
             if(bp.matches){
               ret = {
-                url: `https://api.whatsapp.com/send?phone=${shop.phone}&text=${txt}`
+                url: `https://api.whatsapp.com/send?phone=${orderRes.shop_customer.phone}&text=${txt}`
               }
             }else{
               ret = {
-                url: `https://web.whatsapp.com/send?phone=${shop.phone}&text=${txt}`
+                url: `https://web.whatsapp.com/send?phone=${orderRes.shop_customer.phone}&text=${txt}`
               }
             }
             return ret;

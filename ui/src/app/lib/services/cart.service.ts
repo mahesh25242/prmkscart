@@ -104,8 +104,8 @@ export class CartService {
 
   }
 
-  createOrder(postData:any = null){
-    return this.http.post<City[]>(`/shop/createOrder`, postData);
+  createOrder(postData:any = null): Observable<ShopOrder>{
+    return this.http.post<ShopOrder>(`/shop/createOrder`, postData);
   }
 
   getAllOrders(page:number= 1,postData:any = null){

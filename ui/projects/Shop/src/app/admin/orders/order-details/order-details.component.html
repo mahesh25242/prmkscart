@@ -1,6 +1,6 @@
 
 <h1 mat-dialog-title>
-  {{ data.shop_customer.name + 'Order'}}
+  {{ data.shop_customer.name + ' Order'}}
 </h1>
 <div mat-dialog-content>
 
@@ -9,7 +9,7 @@
           Customer Name: {{ data.shop_customer.name}}
         </mat-list-item>
         <mat-list-item role="listitem">
-          Customer Phone: {{ data.shop_customer.phone}}
+          Customer Phone: <a [href]="whastAppUrl" target="_blank" matTooltip="Click here to chat with customer in Whatsapp">{{ data.shop_customer.phone}}</a>
         </mat-list-item>
         <mat-list-item role="listitem" *ngIf="data.shop_customer.email">
           Customer Email: {{ data.shop_customer.email}}
@@ -24,6 +24,9 @@
           </mat-list-item>
           <mat-list-item role="listitem">
             Pin: {{ data.pin}}
+          </mat-list-item>
+          <mat-list-item role="listitem" *ngIf="data.loc">
+            <a *ngIf="mapUrl" [href]="mapUrl" target="_blank" matTooltip="Click here to view custoimer location in google map">Google Map</a>
           </mat-list-item>
         </ng-container>
 
@@ -92,5 +95,5 @@
 <div mat-dialog-actions>
   <button mat-stroked-button type="button" (click)="dialogRef.close()">Close</button>
   <button mat-stroked-button type="button" (click)="changeStatus(4)" *ngIf="data.status <= 3">Delivered</button>
-  <button mat-stroked-button type="button" (click)="changeStatus(5)" *ngIf="data.status <= 3">Cancel</button>
+  <button mat-stroked-button type="button" (click)="changeStatus(5)" *ngIf="data.status <= 3">Cancel Order</button>
 </div>

@@ -12,9 +12,10 @@ class ShopOrderController extends Controller
     public function createOrder(Request $request){
 
 
+
         $validator = Validator::make($request->all(), [
             'name' => ['required'],
-            'phone' => ['required'],
+            'phone' => ['required', 'regex:/^[\+]?[(]?[0-9]{3}[)]?[-\s\.]?[0-9]{3}[-\s\.]?[0-9]{4,6}$/im'],
             'cart' => ['required'],
             'selectedLocation' => ['required'],
         ],[],[
@@ -31,18 +32,31 @@ class ShopOrderController extends Controller
         if($shopKey){
             $shop = \App\Shop::where("shop_key", $shopKey)->get()->first();
         }
+        //return response([$shop->country->phonecode], 422);
         if($shop){
+            $phone = $request->input("phone", '');
+
+            if($shop->country && $shop->country->phonecode){
+                if(strlen($phone) == 10 && $shop->country->phonecode == '91'){
+                    $phone = $shop->country->phonecode.$phone;
+                }
+            }else{
+                if(strlen($phone) == 10){
+                    $phone = '91'.$phone;
+                }
+            }
+
             $shopCustomer = \App\ShopCustomer::updateOrCreate(
                 [
                     "name" => $request->input("name", ''),
                     "email" => $request->input("email", ''),
-                    "phone" => $request->input("phone", ''),
+                    "phone" => $phone,
                     "shop_id" => $shop->id,
                 ],
                 [
                     "name" => $request->input("name", ''),
                     "email" => $request->input("email", ''),
-                    "phone" => $request->input("phone", ''),
+                    "phone" => $phone,
                     "shop_id" => $shop->id,
                 ]
             );
@@ -62,6 +76,7 @@ class ShopOrderController extends Controller
                 $shopOrder->pin =  $request->input("pin", '');
                 $shopOrder->note =  $request->input("note", '');
                 $shopOrder->loc =  $request->input("loc", null);
+                $shopOrder->loc = json_encode($shopOrder->loc);
 
                 $shopOrder->total =  $request->input("grad_total", 0);
                 $shopOrder->save();
@@ -90,6 +105,8 @@ class ShopOrderController extends Controller
                     $totalPrice += $shopOrder->delivery_chage;
                     $shopOrder->total =  $totalPrice;
                     $shopOrder->save();
+
+                    return response(\App\ShopOrder::with(["shopCustomer"])->find($shopOrder->id) );
                 }else{
                     return response(['message' => 'sorry order cant\'t be created', 'status' => false], 422);
                 }
@@ -124,6 +141,8 @@ class ShopOrderController extends Controller
                     $q = $request->input("q", '');
                     $qry->where("name", 'like', "%{$q}%");
                 });
+                $q = $request->input("q", '');
+                $query->orWhere("id", $q);
             });
         }
 

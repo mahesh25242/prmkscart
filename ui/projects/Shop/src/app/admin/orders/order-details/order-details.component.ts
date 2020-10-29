@@ -1,20 +1,27 @@
-import { Component, Inject, OnInit } from '@angular/core';
+import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
+import { Component, Inject, OnDestroy, OnInit } from '@angular/core';
 import {MatDialogRef, MAT_DIALOG_DATA} from '@angular/material/dialog';
 import Notiflix from "notiflix";
+import { Subscription } from 'rxjs';
 import { mergeMap } from 'rxjs/operators';
 import { ShopOrder } from 'src/app/lib/interfaces';
 import { CartService } from 'src/app/lib/services';
+import { environment } from '../../../../environments/environment';
 
 @Component({
   selector: 'app-order-details',
   templateUrl: './order-details.component.html',
   styleUrls: ['./order-details.component.scss']
 })
-export class OrderDetailsComponent implements OnInit {
+export class OrderDetailsComponent implements OnInit, OnDestroy {
   displayedColumns = ["no", "name", "qty", "message", "price"];
+  mapUrl: string = null;
+  whastAppUrl: string = null
+  breakPointSubscr: Subscription;
   constructor(@Inject(MAT_DIALOG_DATA) public data: ShopOrder,
   public dialogRef: MatDialogRef<OrderDetailsComponent>,
-  private cartService: CartService,) { }
+  private cartService: CartService,
+  private breakpointObserver: BreakpointObserver,) { }
 
   changeStatus(status: number = 1){
     let msg: { t: string, m: string, s: string} = { t : '', m: '', s : ''};
@@ -69,6 +76,23 @@ export class OrderDetailsComponent implements OnInit {
 
   }
   ngOnInit(): void {
+    this.breakpointObserver.observe([
+      Breakpoints.XSmall,
+      Breakpoints.Tablet
+    ]).subscribe(res=>{
+      if(res.matches){
+        this.whastAppUrl = `https://api.whatsapp.com/send?phone=${this.data.shop_customer.phone}`;
+      }else{
+        this.whastAppUrl = `https://web.whatsapp.com/send?phone=${this.data.shop_customer.phone}`;
+      }
+    })
+
+    this.mapUrl = `${environment.gMapUrl}/maps?z=12&t=m&q=loc:${this.data?.loc?.lat}+${this.data?.loc?.lon}`;
   }
 
+  ngOnDestroy(){
+    if(this.breakPointSubscr){
+      this.breakPointSubscr.unsubscribe();
+    }
+  }
 }

@@ -50,6 +50,11 @@ class ShopOrder extends Model implements AuthenticatableContract, AuthorizableCo
         }
     }
 
+    public function getLocAttribute($loc)
+    {
+        return ($loc) ? json_decode($loc) : null;
+    }
+
     public function shop()
     {
         return $this->belongsTo('App\Shop');

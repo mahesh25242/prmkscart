@@ -8,8 +8,8 @@
 
     <!-- Number Column -->
     <ng-container matColumnDef="no">
-      <th mat-header-cell *matHeaderCellDef mat-sort-header> No. </th>
-      <td mat-cell *matCellDef="let element; let i = index">{{i + 1}}</td>
+      <th mat-header-cell *matHeaderCellDef mat-sort-header> Order No. </th>
+      <td mat-cell *matCellDef="let element; let i = index">{{element.id}}</td>
     </ng-container>
 
     <!-- Name Column -->
