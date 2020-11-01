@@ -33,7 +33,7 @@ import { ProductDetailsResolver } from './product-details/product-details-resolv
 import { EditMessageComponent } from './cart-details/edit-message/edit-message.component';
 import { SearchComponent } from './components/search/search.component';
 import { SearchResultComponent } from './search-result/search-result.component';
-
+import { MatCarouselModule } from '@ngmodule/material-carousel';
 
 @Injectable()
 export class MyHammerConfig extends HammerGestureConfig {
@@ -73,6 +73,8 @@ export class MyHammerConfig extends HammerGestureConfig {
 
     HttpClientModule,
     HttpClientXsrfModule.disable(),
+    MatCarouselModule.forRoot(),
+
   ],
   providers: [
     httpInterceptorProviders,
