@@ -22,7 +22,14 @@ a:hover, a:active{
     font-weight: 100;
   }
   }
-
+.mat-toolbar {
+  position: absolute;
+  z-index: 100;
+  top: 0;
+  left: 0;
+  width: 100%;
+  background:none;
+}
 @media(max-width: 959px){
   mat-toolbar{
       border-radius: 0px;

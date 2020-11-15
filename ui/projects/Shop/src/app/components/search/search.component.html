@@ -1,6 +1,6 @@
 <form [formGroup]="searchFrm">
 
-  <mat-form-field appearance="standard">
+  <mat-form-field class="searchBox" appearance="outline">
     <mat-label>Search Keyword</mat-label>
     <input matInput type="text" formControlName="q" placeholder="Ex. Black Forest">
     <button mat-icon-button matSuffix (click)="search()" >
