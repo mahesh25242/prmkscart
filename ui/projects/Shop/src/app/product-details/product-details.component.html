@@ -1,8 +1,9 @@
 <ng-container *ngIf="product">
-  <h3>{{ product.name}}</h3>
+  <h2>{{ product.name}}</h2>
   <form [formGroup]="addToCartFrm" (ngSubmit)="addToCart()">
+    <div class="product-image">
       <img *ngIf="product.shop_product_selected_variant?.shop_product_image?.image" [src]="environment.siteAddress+'/assets/shop/'+environment.shopKey+'/products/'+ product.shop_product_selected_variant.shop_product_image.image" alt="Photo of a Shiba Inu">
-
+  </div>
       <mat-form-field appearance="standard" *ngIf="(product.shop_product_variant.length > 1)">
         <mat-label>Choose Varient</mat-label>
         <mat-select formControlName="shop_product_variant_id" required (selectionChange)="chooseVarient()">
@@ -15,15 +16,8 @@
         </mat-error>
       </mat-form-field>
 
-      <ng-container *ngIf="product.shop_product_selected_variant?.price">
-        <del *ngIf="product.shop_product_selected_variant?.actual_price">₹ {{ product.shop_product_selected_variant?.actual_price }}</del>
-        ₹ {{ product.shop_product_selected_variant?.price * qty }}
-        {{ product.shop_product_selected_variant?.description }}
-        <span *ngIf="product.shop_product_selected_variant?.type.id">
-          {{ product.shop_product_selected_variant?.type.name }}
-        </span>
-      </ng-container>
-
+      
+      <div class="relativePosition">
       <button type="button" mat-icon-button color="primary" (click)="updateCart('-')" [disabled]="qty<2">
         <mat-icon>remove_circle_outline</mat-icon>
       </button>
@@ -31,20 +25,30 @@
       <button type="button" mat-icon-button color="primary" (click)="updateCart('+')">
         <mat-icon>add_circle_outline</mat-icon>
       </button>
+</div>
+      <ng-container *ngIf="product.shop_product_selected_variant?.price">
+        <div class="float-right">
+        <del *ngIf="product.shop_product_selected_variant?.actual_price">₹ {{ product.shop_product_selected_variant?.actual_price }}</del>
+        <span class="weight-bold"> ₹ {{ product.shop_product_selected_variant?.price * qty }} </span>        
+        <span *ngIf="product.shop_product_selected_variant?.type.id">
+          {{ product.shop_product_selected_variant?.type.name }}
+        </span>
+        </div>
+        <p >{{ product.shop_product_selected_variant?.description }}</p>
+      </ng-container>
 
 
-
-      <mat-form-field class="full-width-text" appearance="standard">
+      <!-- <mat-form-field class="full-width-text" appearance="standard">
         <mat-label>Message</mat-label>
         <textarea matInput formControlName="message" placeholder="Ex. Happy Birth Day John Doe"></textarea>
         <mat-error *ngIf="f.message.errors && f.message.errors.error">
           {{f.message.errors.error}}
         </mat-error>
-      </mat-form-field>
-      <button mat-raised-button color="primary" type="submit">Add</button>
+      </mat-form-field> -->
+      <button class="mat-primary_yellow" mat-raised-button color="primary" type="submit">Add</button>
 
 
-      <p *ngIf="product.description">
+      <p class="mt-5 clear-p" *ngIf="product.description">
         {{ product.description}}
       </p>
     </form>
