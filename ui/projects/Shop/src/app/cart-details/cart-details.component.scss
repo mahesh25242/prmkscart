@@ -1,0 +1,93 @@
+.grid-my-list {
+    display: grid;
+    grid-template-columns: 1fr 95px 22px 24px;
+    grid-column-gap: 6px;
+    align-items: center;
+    padding: 0 15px!important;
+    margin-bottom: 12px;
+    min-height: 67px;
+}
+.cart-item-header {
+    color: #821807;
+    font-weight: 500;
+}
+.m-15 {
+    margin-top:15px;
+}
+.tab-delivery-options a {
+    background: #b1b1b1;
+    padding: 3px 8px;
+    margin-right: 8px;
+    color: #fff;
+    border-radius: 4px;
+    display: inline-block;
+    margin-bottom: 8px;
+    &.active {
+        background-color: #007BFF!important;
+    }
+}
+
+.order-total{
+    background: #00E777;
+    padding: 15px;
+    border-radius: 5px;
+    display: grid;
+    grid-template-columns: 1fr 111px;
+    column-gap:15px;
+    .block {
+        display: block;
+    }
+    h1 {margin-bottom: 0px; font-weight: 700;}
+    .mt-10 {
+        margin-top: 10px;
+    }
+}
+.grid-form {
+    display: grid;    
+    grid-template-columns: 1fr 1fr 1fr;
+    column-gap:30px;
+
+    input {
+        margin-bottom: 0px;
+    }
+    .mat-form-field-infix {
+        padding:0px!important;
+    }
+    .relative-position {
+        position: relative;
+        .mat-button-toggle-group {
+            position:absolute;
+            right:0;
+        }
+        .mat-form-field {
+            width: 100%;
+        }
+    }
+
+}
+.mat-dialog-content {
+    max-height: inherit;
+}
+.st0{fill-rule:evenodd;clip-rule:evenodd;fill:#FFFFFF;}
+.whatsapp-btn {
+    background-color: #00E777;
+    border-radius: 50px;
+    padding: 5px 20px;
+    margin-left: auto;
+}
+svg {
+    width:25px;
+    margin-right: 8px;
+    
+}
+.actionBtn {display: flex;}
+@media only screen and (max-width: 768px) {
+    .grid-form {
+        display: grid;    
+        grid-template-columns: 1fr ;
+       }
+       .mat-dialog-content {
+           margin: 0;
+           padding: 0;
+       }
+}

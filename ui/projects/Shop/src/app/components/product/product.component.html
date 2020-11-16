@@ -23,9 +23,9 @@ infiniteScrollContainer=".my-sidenav-content" [fromRoot]="true"
         <mat-card-subtitle>{{ product.shop_product_primary_variant?.name}} <span *ngIf="product.shop_product_variant.length > 1">
           | {{ product.shop_product_variant.length }} Varients </span> </mat-card-subtitle>
       </mat-card-header>
-      <mat-card-content>
+      <!--<mat-card-content>
         <p [innerHTML]="product.description"></p>
-      </mat-card-content>
+      </mat-card-content>-->
       <mat-card-actions>
         <div class="price-grid">
        <div>₹ {{ product.shop_product_primary_variant?.price}} </div> <div *ngIf="product.shop_product_primary_variant?.actual_price">₹ {{ product.shop_product_primary_variant?.actual_price}}</div>

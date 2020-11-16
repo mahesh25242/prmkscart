@@ -1,3 +1,4 @@
+<div class="header-inner"></div>
 <app-order-search [pageEvent]="pageEvent"></app-order-search>
 <ng-container *ngIf="(orders$ | async) as orders">
   <div *ngIf="!orders.total">No data found</div>

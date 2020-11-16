@@ -1,3 +1,5 @@
+<div class="header-inner"></div>
+<div class="container">
 <ng-container *ngIf="(cart$ | async) as cart">
   <div *ngIf="!cart || !cart.length">Your cart is empty</div>
   <ng-container *ngIf="cart && cart.length">
@@ -7,20 +9,13 @@
     </h1>
     <div mat-dialog-content>
 
-      <mat-card *ngFor="let item of cart">
-        {{item.product.name}}
+      <mat-card *ngFor="let item of cart" class="grid-my-list">
+        <div class="cart-item-header">
+        {{item.product.name}} 
         {{item.product.shop_product_selected_variant.name}}
-
-        {{item.price}}
-
-        <!-- <ng-container *ngIf="item.message"> -->
-          {{item.message}}
-          <button mat-icon-button color="primary" (click)="editMessage(item)">
-            <mat-icon>edit</mat-icon>
-          </button>
-        <!-- </ng-container> -->
-
-
+        -- ₹ {{item.price}}
+      </div>
+      <div>
         <button mat-icon-button color="primary" (click)="updateCart(item, '-')">
           <mat-icon>remove_circle_outline</mat-icon>
         </button>
@@ -28,34 +23,57 @@
         <button mat-icon-button color="primary" (click)="updateCart(item, '+')">
           <mat-icon>add_circle_outline</mat-icon>
         </button>
-
+      </div>
+        <!-- <ng-container *ngIf="item.message"> -->
+          <div>
+          {{item.message}}
+          <button mat-icon-button color="primary" (click)="editMessage(item)">
+            <mat-icon>add_comment</mat-icon>
+          </button>
+        </div>
+        <!-- </ng-container> -->
+        
+<div>
         <button mat-icon-button color="warn" (click)="deleteItem(item)">
           <mat-icon>delete</mat-icon>
-        </button>
+        </button></div>
       </mat-card>
-
-      Items: {{cart.length}}
-      <ng-container *ngIf="selectedLocation && selectedLocation?.charge">
-        Delivery Cost: {{ selectedLocation?.charge }}
-      </ng-container>
-
-      Total : {{ grandTotal }}
-
-      <div>
+<div class="order-total">
+  <div>
+    <small class="block"> Items:  <b>{{cart.length}}</b> </small> 
+    <small class="block"> <ng-container *ngIf="selectedLocation && selectedLocation?.charge">
+        Delivery Cost: <b> ₹ {{ selectedLocation?.charge }}</b>
+      </ng-container></small> 
+      <small class="block mt-10">
+        You can Collect Product from our Shop Kuruppampady! 
+      </small>
+    </div>
+    <div>
+      <small>Total</small>
+      <h1>₹  {{ grandTotal }}</h1>
+      <small>Inclusive of all taxes</small>
+    </div>
+     
+    </div>
+      <div class="m-15">
         <form [formGroup]="customerFrm">
-
-          <div *ngIf="!selectedLocation?.id">Please select a delivery location</div>
+          <div *ngIf="!selectedLocation?.id">
+         <h3>Please select a delivery location</h3>
+          </div>
+          <div class="tab-delivery-options">
           <ng-container *ngIf="(shop$ | async) as shop">
             <ng-container *ngFor="let shop_delivery of shop.shop_delivery">
               <a href="javascript:{}" [ngClass]="{'active' : (selectedLocation?.id == shop_delivery.id)}"
               (click)="changeLocation(shop_delivery)">
                 {{ shop_delivery.name }}
                 <span *ngIf="shop_delivery.charge">
-                  @ {{ shop_delivery.charge}}
+                  ( + ₹ {{ shop_delivery.charge}} )
                 </span>
               </a>
             </ng-container>
           </ng-container>
+        </div>
+        <div class="grid-form">
           <mat-form-field class="full-width-text" appearance="standard">
             <mat-label>Full Name</mat-label>
             <input matInput formControlName="name" placeholder="Ex. John Doe" required>
@@ -66,8 +84,6 @@
               Name is required.
             </mat-error>
           </mat-form-field>
-
-
 
           <mat-form-field class="full-width-text" appearance="standard">
             <mat-label>Email address</mat-label>
@@ -122,7 +138,7 @@
               {{f.hour.errors.error}}
             </mat-error>
           </mat-form-field>
-
+<div class="relative-position">
           <mat-form-field class="full-width-text" appearance="standard"  *ngIf="(f.hour.value)">
             <mat-label>Minute</mat-label>
             <input type="number" matInput formControlName="minute" placeholder="Ex. 15" min="0" max="59">
@@ -134,12 +150,8 @@
           <mat-button-toggle-group name="fontStyle" aria-label="Font Style" formControlName="ampm" *ngIf="(f.hour.value)">
             <mat-button-toggle value="am">AM</mat-button-toggle>
             <mat-button-toggle value="pm">PM</mat-button-toggle>
-
           </mat-button-toggle-group>
-
-
-
-
+        </div>
           <mat-form-field class="full-width-text" appearance="standard">
             <mat-label>Order Note</mat-label>
             <textarea matInput formControlName="note" placeholder="Ex. Birth day John Doe "></textarea>
@@ -147,14 +159,29 @@
               {{f.note.errors.error}}
             </mat-error>
           </mat-form-field>
-
+        </div>
         </form>
 
       </div>
     </div>
 
-    <div mat-dialog-actions>
-      <button mat-raised-button color="primary" type="submit" (click)="sendToShop()">Send to Whatsapp</button>
+    <div mat-dialog-actions class="actionBtn">
+      <button class="whatsapp-btn" mat-raised-button color="primary" type="submit" (click)="sendToShop()">
+        <!-- Generator: Adobe Illustrator 25.0.0, SVG Export Plug-In . SVG Version: 6.00 Build 0)  -->
+        <svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" 
+           viewBox="0 0 682 682" xml:space="preserve">       
+        <path class="st0" d="M567.2,113.9C507.3,54,427.8,21,343,21C168.4,21,26.3,163.1,26.2,337.8c0,55.8,14.6,110.3,42.3,158.4
+          L23.6,660.4l168-44.1c46.3,25.2,98.4,38.5,151.4,38.6h0.1c174.6,0,316.8-142.1,316.8-316.8C659.9,253.4,627,173.8,567.2,113.9z
+           M343,601.4h-0.1c-47.3,0-93.6-12.7-134-36.7l-9.6-5.7l-99.7,26.1l26.6-97.2l-6.3-10C93.6,436,79.7,387.6,79.7,337.8
+          C79.8,192.6,197.9,74.5,343.2,74.5c70.3,0,136.5,27.4,186.2,77.2s77.1,115.9,77.1,186.3C606.3,483.2,488.2,601.4,343,601.4z
+           M487.5,404.1c-7.9-4-46.8-23.1-54.1-25.8c-7.3-2.6-12.5-4-17.8,4c-5.3,7.9-20.4,25.8-25.1,31c-4.6,5.3-9.2,5.9-17.2,2
+          c-7.9-4-33.4-12.3-63.7-39.3c-23.5-21-39.4-46.9-44-54.8c-4.6-7.9,0-11.8,3.5-16.2c8.6-10.6,17.2-21.8,19.8-27.1
+          c2.6-5.3,1.3-9.9-0.7-13.9c-2-4-17.8-42.9-24.4-58.8c-6.4-15.4-13-13.3-17.8-13.6c-4.6-0.2-9.9-0.3-15.2-0.3c-5.3,0-13.9,2-21.1,9.9
+          c-7.3,7.9-27.7,27.1-27.7,66s28.4,76.6,32.3,81.9c4,5.3,55.8,85.2,135.2,119.5c18.9,8.2,33.6,13,45.1,16.7c19,6,36.2,5.2,49.9,3.1
+          c15.2-2.3,46.8-19.2,53.4-37.6c6.6-18.5,6.6-34.3,4.6-37.6C500.7,410.1,495.4,408.1,487.5,404.1z"/>
+        </svg>
+         Send to Whatsapp </button>
     </div>
   </ng-container>
 </ng-container>
+</div>
