@@ -11,14 +11,21 @@ class ShopOrderController extends Controller
 
     public function createOrder(Request $request){
 
+        $need_cust_loc = $request->input("selectedLocation.need_cust_loc", null);
 
-
-        $validator = Validator::make($request->all(), [
+        $validationArr = [
             'name' => ['required'],
             'phone' => ['required', 'regex:/^[\+]?[(]?[0-9]{3}[)]?[-\s\.]?[0-9]{3}[-\s\.]?[0-9]{4,6}$/im'],
             'cart' => ['required'],
             'selectedLocation' => ['required'],
-        ],[],[
+        ];
+
+        if($need_cust_loc){
+            $validationArr["address"] = ["required"];
+            $validationArr["pin"] = ["required"];
+        }
+
+        $validator = Validator::make($request->all(), $validationArr,[],[
             'selectedLocation' => 'Delivery Location',
         ]);
 

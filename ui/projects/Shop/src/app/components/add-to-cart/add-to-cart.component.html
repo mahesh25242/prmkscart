@@ -2,7 +2,7 @@
   <h1 mat-dialog-title>
     Add To Cart</h1>
     <h2>{{this.data.name}}</h2>
-  
+
   <div mat-dialog-content>
 <div class="product-image">
     <img *ngIf="this.data.shop_product_selected_variant?.shop_product_image?.image" [src]="environment.siteAddress+'/assets/shop/'+environment.shopKey+'/products/'+ data.shop_product_selected_variant.shop_product_image.image" alt="Photo of a Shiba Inu">
@@ -11,8 +11,8 @@
       <mat-label>Choose Varient</mat-label>
       <mat-select formControlName="shop_product_variant_id" required (selectionChange)="chooseVarient()">
         <mat-option *ngFor="let shop_product_variant of data.shop_product_variant" [value]="shop_product_variant.id">
-          {{shop_product_variant.name}} 
-          
+          {{shop_product_variant.name}} - ₹ {{ shop_product_variant.price }}
+
         </mat-option>
       </mat-select>
       <mat-error *ngIf="f.shop_product_variant_id.errors && f.shop_product_variant_id.errors.error">
@@ -20,7 +20,7 @@
       </mat-error>
     </mat-form-field>
 
-    
+
 <div class="relativePosition">
     <button type="button" mat-icon-button color="primary" (click)="updateCart('-')" [disabled]="qty<2">
       <mat-icon>remove_circle_outline</mat-icon>

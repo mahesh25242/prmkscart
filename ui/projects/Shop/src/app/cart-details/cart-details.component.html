@@ -11,7 +11,7 @@
 
       <mat-card *ngFor="let item of cart" class="grid-my-list">
         <div class="cart-item-header">
-        {{item.product.name}} 
+        {{item.product.name}}
         {{item.product.shop_product_selected_variant.name}}
         -- ₹ {{item.price}}
       </div>
@@ -32,7 +32,7 @@
           </button>
         </div>
         <!-- </ng-container> -->
-        
+
 <div>
         <button mat-icon-button color="warn" (click)="deleteItem(item)">
           <mat-icon>delete</mat-icon>
@@ -40,12 +40,12 @@
       </mat-card>
 <div class="order-total">
   <div>
-    <small class="block"> Items:  <b>{{cart.length}}</b> </small> 
+    <small class="block"> Items:  <b>{{cart.length}}</b> </small>
     <small class="block"> <ng-container *ngIf="selectedLocation && selectedLocation?.charge">
         Delivery Cost: <b> ₹ {{ selectedLocation?.charge }}</b>
-      </ng-container></small> 
-      <small class="block mt-10">
-        You can Collect Product from our Shop Kuruppampady! 
+      </ng-container></small>
+      <small class="block mt-10" *ngIf="selectedLocation && selectedLocation?.id">
+        {{selectedLocation.description }}
       </small>
     </div>
     <div>
@@ -53,11 +53,11 @@
       <h1>₹  {{ grandTotal }}</h1>
       <small>Inclusive of all taxes</small>
     </div>
-     
+
     </div>
       <div class="m-15">
         <form [formGroup]="customerFrm">
-          <div *ngIf="!selectedLocation?.id">
+          <div >
          <h3>Please select a delivery location</h3>
           </div>
           <div class="tab-delivery-options">
@@ -73,11 +73,11 @@
             </ng-container>
           </ng-container>
         </div>
-        <div class="grid-form">
+        <div class="grid-form" *ngIf="selectedLocation?.id">
           <mat-form-field class="full-width-text" appearance="standard">
             <mat-label>Full Name</mat-label>
             <input matInput formControlName="name" placeholder="Ex. John Doe" required>
-            <mat-error *ngIf="f.name.errors && f.name.errors.error">
+            <mat-error *ngIf="f.name.invalid">
               {{f.name.errors.error}}
             </mat-error>
             <mat-error *ngIf="f.name.invalid && ((f.name.dirty || f.name.touched)) && f.name.errors.required">
@@ -112,6 +112,9 @@
               <mat-error *ngIf="f.address.errors && f.address.errors.error">
                 {{f.address.errors.error}}
               </mat-error>
+              <mat-error *ngIf="f.address.invalid && ((f.address.dirty || f.address.touched)) && f.address.errors.required">
+                Address is required.
+              </mat-error>
             </mat-form-field>
 
             <mat-form-field class="full-width-text" appearance="standard">
@@ -120,6 +123,10 @@
               <mat-error *ngIf="f.pin.errors && f.pin.errors.error">
                 {{f.pin.errors.error}}
               </mat-error>
+              <mat-error *ngIf="f.pin.invalid && ((f.pin.dirty || f.pin.touched)) && f.pin.errors.required">
+                Pin is required.
+              </mat-error>
+
             </mat-form-field>
           </ng-container>
 
@@ -139,7 +146,7 @@
             </mat-error>
           </mat-form-field>
 <div class="relative-position">
-          <mat-form-field class="full-width-text" appearance="standard"  *ngIf="(f.hour.value)">
+          <mat-form-field class="full-width-text" appearance="standard" >
             <mat-label>Minute</mat-label>
             <input type="number" matInput formControlName="minute" placeholder="Ex. 15" min="0" max="59">
             <mat-error *ngIf="f.minute.errors && f.minute.errors.error" >
@@ -147,7 +154,7 @@
             </mat-error>
           </mat-form-field>
 
-          <mat-button-toggle-group name="fontStyle" aria-label="Font Style" formControlName="ampm" *ngIf="(f.hour.value)">
+          <mat-button-toggle-group name="fontStyle" aria-label="Font Style" formControlName="ampm">
             <mat-button-toggle value="am">AM</mat-button-toggle>
             <mat-button-toggle value="pm">PM</mat-button-toggle>
           </mat-button-toggle-group>
@@ -168,8 +175,8 @@
     <div mat-dialog-actions class="actionBtn">
       <button class="whatsapp-btn" mat-raised-button color="primary" type="submit" (click)="sendToShop()">
         <!-- Generator: Adobe Illustrator 25.0.0, SVG Export Plug-In . SVG Version: 6.00 Build 0)  -->
-        <svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" 
-           viewBox="0 0 682 682" xml:space="preserve">       
+        <svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+           viewBox="0 0 682 682" xml:space="preserve">
         <path class="st0" d="M567.2,113.9C507.3,54,427.8,21,343,21C168.4,21,26.3,163.1,26.2,337.8c0,55.8,14.6,110.3,42.3,158.4
           L23.6,660.4l168-44.1c46.3,25.2,98.4,38.5,151.4,38.6h0.1c174.6,0,316.8-142.1,316.8-316.8C659.9,253.4,627,173.8,567.2,113.9z
            M343,601.4h-0.1c-47.3,0-93.6-12.7-134-36.7l-9.6-5.7l-99.7,26.1l26.6-97.2l-6.3-10C93.6,436,79.7,387.6,79.7,337.8

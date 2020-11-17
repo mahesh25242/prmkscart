@@ -40,7 +40,7 @@ export class CreateProductComponent implements OnInit, OnDestroy {
     },
     {
       name:'Non Veg',
-      id: 1
+      id: 2
     }
   ];
   categories$: Observable<ShopProductCategory[]>;
@@ -90,15 +90,18 @@ export class CreateProductComponent implements OnInit, OnDestroy {
 
 
     this.saveProdSubScr = this.shopProductService.createProduct(formData).pipe(mergeMap(res=>{
-      return this.shopProductService.listproducts((this.data.pageEvent.pageIndex + 1), {
-        pageSize: this.data.pageEvent.pageSize
+      const pageIndex = (this.data?.pageEvent?.pageIndex) ? this.data?.pageEvent?.pageIndex : 0;
+      return this.shopProductService.listproducts((pageIndex + 1), {
+        pageSize: this.data.pageEvent?.pageSize
       });
 
     })).subscribe(res=>{
+
       Notiflix.Loading.Remove();
       Notiflix.Notify.Success(`Successfully saved product `);
       this.dialogRef.close();
     }, error=>{
+
       Notiflix.Loading.Remove();
       if(error.status == 422){
         for(let result in this.createProductFrm.controls){

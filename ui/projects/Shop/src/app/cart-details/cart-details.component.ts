@@ -56,6 +56,7 @@ export class CartDetailsComponent implements OnInit, OnDestroy {
   }
 
   sendToShop(){
+
     if(!this.selectedLocation?.id){
       this.matSnackBar.open('Please choose a delivery location.');
       return;
@@ -63,6 +64,7 @@ export class CartDetailsComponent implements OnInit, OnDestroy {
     Notiflix.Loading.Arrows();
     this.sentToShop = this.cart$.pipe(mergeMap(cart=>{
       if(!cart) return empty();
+
       return this.shop$.pipe(mergeMap(shop=>{
         if(!shop) return empty();
 
@@ -76,6 +78,7 @@ export class CartDetailsComponent implements OnInit, OnDestroy {
           }
           deliveryDate = `${deliveryDate} ${ (this.f.hour.value) ? `${("0" + this.f.hour.value).slice(-2) }:` :'' }${ (minute) ? `${minute}` : '' }${(this.f.hour.value) ? this.f.ampm.value : ''}`
         }
+
         const postData = {
           cart: cart,
           name: this.f.name.value,
@@ -92,6 +95,7 @@ export class CartDetailsComponent implements OnInit, OnDestroy {
           minute: this.f.minute.value,
           ampm: this.f.ampm.value,
         }
+
         return this.cartService.createOrder(postData).pipe(mergeMap((orderRes : ShopOrder)=>{
           if(!orderRes) return empty();
           return this.breakpointObserver.observe([
@@ -103,13 +107,44 @@ export class CartDetailsComponent implements OnInit, OnDestroy {
 
             cart.map(itm=>{
               txt += `%0a‎ Product: ${itm.product.name} `;
+              if(itm.message){
+                txt += `%0a‎ Message: ${itm.message} `;
+              }
               txt += `%0a‎ Varient Name: ${itm.product.shop_product_selected_variant.name} `;
               txt += `%0a‎ Quantity: ${itm.qty} `;
-              txt += `%0a‎ Price: ${itm.price} `;
+              txt += `%0a‎ Price: ₹ ${itm.price} `;
               txt += `%0a‎ ============== `;
             });
-            txt += `%0a‎ ${ cart.length }  ${ (cart.length > 1) ? 'items' : 'item' }  %0a`;
-            txt += `%0a‎ Grand Total: ${this.grandTotal} %0a`;
+            txt += `%0a‎ ${ cart.length }  ${ (cart.length > 1) ? 'items' : 'item' } `;
+            if(postData.name){
+              txt += `%0a‎ Customer Name: ${postData.name}  `;
+            }
+
+            if(postData.delivery_date){
+              txt += `%0a‎ Delivered On: ${postData.delivery_date}  `;
+            }
+
+            if(postData.note){
+              txt += `%0a‎ Order Note: ${postData.note}  `;
+            }
+
+            if(postData.delivery_date){
+              txt += `%0a‎ Delivery Date: ${postData.delivery_date}  `;
+            }
+
+            txt += `%0a‎ Delivery Point: ${postData.selectedLocation.name} `;
+            if(postData.selectedLocation.need_cust_loc){
+              txt += `%0a‎ Address: ${postData.address} `;
+              txt += `%0a‎ Pin: ${postData.pin} `;
+            }
+            if(postData.selectedLocation.charge){
+              txt += `%0a‎ Delivery Charge: ₹ ${postData.selectedLocation.charge} %0a `;
+            }
+
+
+
+            txt += `%0a‎ Grand Total: ₹ *${this.grandTotal}* %0a`;
+
 
             let ret;
             if(bp.matches){
@@ -136,8 +171,11 @@ export class CartDetailsComponent implements OnInit, OnDestroy {
         for(let result in this.customerFrm.controls){
           if(error.error.errors[result]){
             this.customerFrm.controls[result].setErrors({ error: error.error.errors[result] });
+            this.customerFrm.controls[result].markAsDirty();
+            this.customerFrm.controls[result].markAsTouched();
           }else{
             this.customerFrm.controls[result].setErrors(null);
+
           }
         }
       }
@@ -174,8 +212,7 @@ export class CartDetailsComponent implements OnInit, OnDestroy {
     if(this.breakPointSubScr) this.breakPointSubScr.unsubscribe();
 
       this.breakPointSubScr = this.breakpointObserver.observe([
-        Breakpoints.Handset,
-        Breakpoints.Tablet
+        Breakpoints.Handset
       ]).pipe(mergeMap(brakPoints=>{
         if (brakPoints.matches && navigator.geolocation && loc.need_cust_loc) {
           return this.generalService.getLocation().pipe(mergeMap(coords=>{
@@ -256,7 +293,12 @@ export class CartDetailsComponent implements OnInit, OnDestroy {
         this.total +=itm.price;
       });
 
-      this.grandTotal = this.total;
+      if(this.selectedLocation && this.selectedLocation.charge){
+        this.grandTotal = this.total + this.selectedLocation.charge;
+      }else{
+        this.grandTotal = this.total;
+      }
+
       if(!this.total){
         this.matSnackBar.open('Your cart is empty.');
         this.router.navigate(['/']);

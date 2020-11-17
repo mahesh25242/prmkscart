@@ -8,7 +8,7 @@
         <mat-label>Choose Varient</mat-label>
         <mat-select formControlName="shop_product_variant_id" required (selectionChange)="chooseVarient()">
           <mat-option *ngFor="let shop_product_variant of product.shop_product_variant" [value]="shop_product_variant.id">
-            {{shop_product_variant.name}}
+            {{shop_product_variant.name}} - ₹ {{shop_product_variant.price}}
           </mat-option>
         </mat-select>
         <mat-error *ngIf="f.shop_product_variant_id.errors && f.shop_product_variant_id.errors.error">
@@ -16,7 +16,7 @@
         </mat-error>
       </mat-form-field>
 
-      
+
       <div class="relativePosition">
       <button type="button" mat-icon-button color="primary" (click)="updateCart('-')" [disabled]="qty<2">
         <mat-icon>remove_circle_outline</mat-icon>
@@ -29,7 +29,7 @@
       <ng-container *ngIf="product.shop_product_selected_variant?.price">
         <div class="float-right">
         <del *ngIf="product.shop_product_selected_variant?.actual_price">₹ {{ product.shop_product_selected_variant?.actual_price }}</del>
-        <span class="weight-bold"> ₹ {{ product.shop_product_selected_variant?.price * qty }} </span>        
+        <span class="weight-bold"> ₹ {{ product.shop_product_selected_variant?.price * qty }} </span>
         <span *ngIf="product.shop_product_selected_variant?.type.id">
           {{ product.shop_product_selected_variant?.type.name }}
         </span>
