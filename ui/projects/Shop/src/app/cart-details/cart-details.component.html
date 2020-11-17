@@ -10,11 +10,11 @@
     <div mat-dialog-content>
 
       <mat-card *ngFor="let item of cart" class="grid-my-list">
-        <div><img src="assets/no-image.jpg"></div>  
-        <div >        
+        <div><img src="assets/no-image.jpg"></div>
+        <div >
        <h4 class="cart-item-header pl-1"> {{item.product.name}}</h4>
         <b class="block pl-1">₹ {{item.price}}</b>
-       <small class="block pl-1">{{item.product.shop_product_selected_variant.name}}</small> 
+       <small class="block pl-1">{{item.product.shop_product_selected_variant.name}}</small>
        <div class="d-none-lg">
        <button mat-icon-button color="primary" (click)="updateCart(item, '-')">
         <mat-icon>remove_circle_outline</mat-icon>
@@ -24,7 +24,7 @@
         <mat-icon>add_circle_outline</mat-icon>
       </button>
     </div>
-      </div>  
+      </div>
       <div class="d-none-md">
         <button mat-icon-button color="primary" (click)="updateCart(item, '-')">
           <mat-icon>remove_circle_outline</mat-icon>
@@ -33,10 +33,10 @@
         <button mat-icon-button color="primary" (click)="updateCart(item, '+')">
           <mat-icon>add_circle_outline</mat-icon>
         </button>
-      </div> 
+      </div>
 
 <div>
-  
+
    <!-- <ng-container *ngIf="item.message"> -->
     <div>
       {{item.message}}
@@ -85,120 +85,33 @@
             </ng-container>
           </ng-container>
         </div>
-        <div class="grid-form" *ngIf="selectedLocation?.id">
-          <mat-form-field class="full-width-text" appearance="standard">
-            <mat-label>Full Name</mat-label>
-            <input matInput formControlName="name" placeholder="Ex. John Doe" required>
-            <mat-error *ngIf="f.name.invalid">
-              {{f.name.errors.error}}
-            </mat-error>
-            <mat-error *ngIf="f.name.invalid && ((f.name.dirty || f.name.touched)) && f.name.errors.required">
-              Name is required.
-            </mat-error>
-          </mat-form-field>
 
-        <!--  <mat-form-field class="full-width-text" appearance="standard">
-            <mat-label>Email address</mat-label>
-            <input matInput formControlName="email" placeholder="Ex. johndoe@gmail.com" >
-            <mat-error *ngIf="f.email.errors && f.email.errors.error">
-              {{f.email.errors.error}}
-            </mat-error>
-          </mat-form-field> -->
-
-          <mat-form-field class="full-width-text" appearance="standard">
-            <mat-label>Phone</mat-label>
-            <input type="tel" matInput formControlName="phone" placeholder="Ex. 91546542465" required>
-            <mat-error *ngIf="f.phone.errors && f.phone.errors.error">
-              {{f.phone.errors.error}}
-            </mat-error>
-            <mat-error *ngIf="f.phone.invalid && ((f.phone.dirty || f.phone.touched)) && f.phone.errors.required">
-              Phone is required.
-            </mat-error>
-          </mat-form-field>
-
-          <ng-container *ngIf="(selectedLocation?.need_cust_loc)">
-            <a *ngIf="mapUrl" [href]="mapUrl" target="_blank">Map</a>
-            <mat-form-field class="full-width-text" appearance="standard">
-              <mat-label>Address</mat-label>
-              <textarea matInput formControlName="address" placeholder="Ex. House Name/ Number" required></textarea>
-              <mat-error *ngIf="f.address.errors && f.address.errors.error">
-                {{f.address.errors.error}}
-              </mat-error>
-              <mat-error *ngIf="f.address.invalid && ((f.address.dirty || f.address.touched)) && f.address.errors.required">
-                Address is required.
-              </mat-error>
-            </mat-form-field>
-
-            <mat-form-field class="full-width-text" appearance="standard">
-              <mat-label>Pin Code</mat-label>
-              <input type="number" matInput formControlName="pin" placeholder="Ex. 658956" required>
-              <mat-error *ngIf="f.pin.errors && f.pin.errors.error">
-                {{f.pin.errors.error}}
-              </mat-error>
-              <mat-error *ngIf="f.pin.invalid && ((f.pin.dirty || f.pin.touched)) && f.pin.errors.required">
-                Pin is required.
-              </mat-error>
-
-            </mat-form-field>
-          </ng-container>
-
-          <mat-form-field appearance="standard">
-            <mat-label>Delivery Date </mat-label>
-            <input [min]="todayDate" matInput [matDatepicker]="picker" formControlName="delivery_date">
-            <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
-            <mat-datepicker #picker touchUi></mat-datepicker>
-          </mat-form-field>
-
-
-          <mat-form-field class="full-width-text" appearance="standard">
-            <mat-label>Hours</mat-label>
-            <input type="number" matInput formControlName="hour" placeholder="Ex. 10" min="1" max="12">
-            <mat-error *ngIf="f.hour.errors && f.hour.errors.error" >
-              {{f.hour.errors.error}}
-            </mat-error>
-          </mat-form-field>
-<div class="relative-position">
-          <mat-form-field class="full-width-text" appearance="standard" >
-            <mat-label>Minute</mat-label>
-            <input type="number" matInput formControlName="minute" placeholder="Ex. 15" min="0" max="59">
-            <mat-error *ngIf="f.minute.errors && f.minute.errors.error" >
-              {{f.minute.errors.error}}
-            </mat-error>
-          </mat-form-field>
-
-          <mat-button-toggle-group name="fontStyle" aria-label="Font Style" formControlName="ampm">
-            <mat-button-toggle value="am">AM</mat-button-toggle>
-            <mat-button-toggle value="pm">PM</mat-button-toggle>
-          </mat-button-toggle-group>
-        </div>
-          <mat-form-field class="full-width-text" appearance="standard">
-            <mat-label>Order Note</mat-label>
-            <textarea matInput formControlName="note" placeholder="Ex. Birth day John Doe "></textarea>
-            <mat-error *ngIf="f.note.errors && f.note.errors.error">
-              {{f.note.errors.error}}
-            </mat-error>
-          </mat-form-field>
-        </div>
         </form>
 
       </div>
     </div>
-    <section class="address">
-      <button mat-icon-button color="primary" class="right-position">
+    <section class="address" *ngIf="selectedLocation?.id">
+      <button mat-icon-button color="primary" class="right-position" (click)="triggerOrderForm()">
         <mat-icon>edit</mat-icon>
       </button>
 
-     <h3>Praveen Kumar</h3> 
-     <h4> Ph: 9995346404</h4>
-     <p>Delivery on: 11/18/2020</p> 
-      <p>Time: 11.55 AM</p>
-      <p>Location: Kuruppampady;</p>
+      <h3 *ngIf="f.name.valid">{{f.name.value}}</h3>
+      <h4 *ngIf="f.phone.valid"> Ph: {{ f.phone.value }}</h4>
+      <p *ngIf="f.delivery_date.value">Delivery on: {{ f.delivery_date.value | date: 'dd/MM/yyyy'}}</p>
+      <p *ngIf="f.hour.value && f.minute.value && f.ampm.value">Time: {{f.hour.value}}.{{f.minute.value}} {{f.ampm.value}}</p>
+      <p *ngIf="selectedLocation.id">Location: {{selectedLocation.name}};</p>
+      <ng-container *ngIf="selectedLocation.need_cust_loc">
+        <p *ngIf="f.address.valid">Address: {{f.address.value}}</p>
+        <p *ngIf="f.pin.valid">Pin: {{f.pin.value}}</p>
+      </ng-container>
+      <p *ngIf="f.note.value">{{ f.note.value }}</p>
     </section>
 
-    <div mat-dialog-actions class="actionBtn">
-      <section class="example-section">
-        <mat-checkbox ></mat-checkbox>&nbsp;&nbsp;I agree to the <a href="#">terms of service</a>
-        <button class="whatsapp-btn" mat-raised-button color="primary" type="submit" (click)="sendToShop()">
+    <div mat-dialog-actions class="actionBtn" *ngIf="isShowButton()">
+      <section class="example-section" [matTooltip]="(!terms) ? 'Please accept terms' : ''"
+      >
+        <mat-checkbox [(ngModel)]="terms"></mat-checkbox>&nbsp;&nbsp;I agree to the <a href="javascript:{}" (click)="triggerTerms()">terms of service</a>
+        <button class="whatsapp-btn" mat-raised-button color="primary"  type="submit" [disabled]="!terms" (click)="sendToShop()">
           <!-- Generator: Adobe Illustrator 25.0.0, SVG Export Plug-In . SVG Version: 6.00 Build 0)  -->
           <svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
              viewBox="0 0 682 682" xml:space="preserve">
@@ -212,10 +125,10 @@
             c-7.3,7.9-27.7,27.1-27.7,66s28.4,76.6,32.3,81.9c4,5.3,55.8,85.2,135.2,119.5c18.9,8.2,33.6,13,45.1,16.7c19,6,36.2,5.2,49.9,3.1
             c15.2-2.3,46.8-19.2,53.4-37.6c6.6-18.5,6.6-34.3,4.6-37.6C500.7,410.1,495.4,408.1,487.5,404.1z"/>
           </svg>
-           Send to Whatsapp </button>      
+           Send to Whatsapp </button>
       </section>
 
-      
+
     </div>
   </ng-container>
 </ng-container>

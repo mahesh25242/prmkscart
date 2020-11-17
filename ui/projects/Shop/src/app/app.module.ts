@@ -34,6 +34,8 @@ import { EditMessageComponent } from './cart-details/edit-message/edit-message.c
 import { SearchComponent } from './components/search/search.component';
 import { SearchResultComponent } from './search-result/search-result.component';
 import { MatCarouselModule } from '@ngmodule/material-carousel';
+import { OrderFormComponent } from './cart-details/order-form/order-form.component';
+import { OrderTermsComponent } from './cart-details/order-terms/order-terms.component';
 
 @Injectable()
 export class MyHammerConfig extends HammerGestureConfig {
@@ -60,7 +62,9 @@ export class MyHammerConfig extends HammerGestureConfig {
     ProductDetailsComponent,
     EditMessageComponent,
     SearchComponent,
-    SearchResultComponent
+    SearchResultComponent,
+    OrderFormComponent,
+    OrderTermsComponent
   ],
   imports: [
     BrowserModule,

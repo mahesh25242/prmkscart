@@ -1,0 +1,46 @@
+import { Component, Inject, Input, OnInit } from '@angular/core';
+import { FormGroup, Validators } from '@angular/forms';
+import { ShopDelivery } from 'src/app/lib/interfaces';
+import {MatDialogRef, MAT_DIALOG_DATA} from '@angular/material/dialog';
+import Notiflix from "notiflix";
+
+
+@Component({
+  selector: 'app-order-form',
+  templateUrl: './order-form.component.html',
+  styleUrls: ['./order-form.component.scss']
+})
+export class OrderFormComponent implements OnInit {
+
+  todayDate:Date = new Date();
+
+  constructor(public dialogRef: MatDialogRef<OrderFormComponent>,
+    @Inject(MAT_DIALOG_DATA) public data: { customerFrm: FormGroup, selectedLocation: ShopDelivery, mapUrl: string}) { }
+
+  get f() { return this.data.customerFrm.controls; }
+  ngOnInit(): void {
+
+  }
+
+  chekValidation(){
+    this.f.name.markAsTouched();
+    this.f.phone.markAsTouched();
+    if(this.data.selectedLocation?.need_cust_loc){
+      this.f.address.setValidators([Validators.required]);
+      this.f.pin.setValidators([Validators.required]);
+      this.f.address.markAsTouched();
+      this.f.pin.markAsTouched();
+    }else{
+      this.f.address.clearValidators();
+      this.f.pin.clearValidators();
+      this.f.pin.updateValueAndValidity();
+      this.f.address.updateValueAndValidity();
+    }
+
+    if(this.data.customerFrm.valid)
+      this.dialogRef.close();
+  }
+
+
+
+}

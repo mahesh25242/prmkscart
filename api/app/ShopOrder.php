@@ -52,7 +52,7 @@ class ShopOrder extends Model implements AuthenticatableContract, AuthorizableCo
 
     public function getLocAttribute($loc)
     {
-        return ($loc) ? json_decode($loc) : null;
+        return ($loc && !is_array($loc)) ? json_decode($loc) : $loc;
     }
 
     public function shop()

@@ -13,6 +13,8 @@ import {MatDialog, MatDialogRef, MAT_DIALOG_DATA} from '@angular/material/dialog
 import { EditMessageComponent } from './edit-message/edit-message.component';
 import Notiflix from "notiflix";
 import { DatePipe } from '@angular/common'
+import { OrderFormComponent } from './order-form/order-form.component';
+import { OrderTermsComponent } from './order-terms/order-terms.component';
 
 @Component({
   selector: 'app-cart-details',
@@ -31,7 +33,7 @@ export class CartDetailsComponent implements OnInit, OnDestroy {
   selectedLocation: ShopDelivery;
   mapUrl: string = '';
   loc : any =null;
-
+  terms:boolean = false;
   breakPointSubScr: Subscription;
 
   cartSubScr: Subscription;
@@ -208,6 +210,7 @@ export class CartDetailsComponent implements OnInit, OnDestroy {
     }else{
       this.grandTotal = this.total;
     }
+    this.triggerOrderForm();
 
     if(this.breakPointSubScr) this.breakPointSubScr.unsubscribe();
 
@@ -265,6 +268,32 @@ export class CartDetailsComponent implements OnInit, OnDestroy {
 
 
   }
+
+  isShowButton(){
+    if(this.selectedLocation?.need_cust_loc){
+      return (this.f.name.valid && this.f.phone.valid && this.f.address.valid && this.f.pin.valid);
+    }
+    return (this.f.name.valid && this.f.phone.valid);
+  }
+  triggerOrderForm(){
+    let dialogRef = this.dialog.open(OrderFormComponent, {
+      data: {
+        customerFrm: this.customerFrm,
+        selectedLocation: this.selectedLocation,
+        mapUrl: this.mapUrl
+      },
+      // height: '400px',
+      // width: '600px',
+    });
+
+  }
+
+  triggerTerms(){
+    let dialogRef = this.dialog.open(OrderTermsComponent, {
+      // height: '400px',
+      // width: '600px',
+    });
+  }
   get f(){ return this.customerFrm.controls; }
 
   editMessage(cart: Cart = null){
@@ -319,8 +348,8 @@ export class CartDetailsComponent implements OnInit, OnDestroy {
       note: [null, []],
       email: [null, []],
       phone: [null, [Validators.required]],
-      address: [null, [Validators.required]],
-      pin: [null, [Validators.required]],
+      address: [null, []],
+      pin: [null, []],
       delivery_date: [null, []],
       hour: [null, [Validators.min(1), Validators.max(12)]],
       minute: [null, [Validators.min(0), Validators.max(59)]],
