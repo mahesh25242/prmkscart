@@ -1,8 +1,7 @@
-<div class="grid-form" *ngIf="data.selectedLocation?.id" [formGroup]="data.customerFrm">
-  <div>
-    Selected Location: {{data.selectedLocation.name}}
-    Description: {{data.selectedLocation.description}}
-  </div>
+<h4 class="text-primary"> Delivery option: {{data.selectedLocation.name}}</h4>
+  <small>{{data.selectedLocation.description}}</small>
+<mat-dialog-content>
+<div class="grid-form" *ngIf="data.selectedLocation?.id" [formGroup]="data.customerFrm">  
   <mat-form-field class="full-width-text" appearance="standard">
     <mat-label>Full Name</mat-label>
     <input matInput formControlName="name" placeholder="Ex. John Doe" required>
@@ -99,11 +98,10 @@
     </mat-error>
   </mat-form-field>
 
-  <button mat-button color="primary" (click)="chekValidation()">
-    Save
-  </button>
-
-  <button mat-button color="primary" (click)="dialogRef.close()">
-    Cancel
-  </button>
+ 
 </div>
+</mat-dialog-content>
+<mat-dialog-actions align="end">
+<button  (click)="dialogRef.close()" mat-stroked-button color="primary">Cancel</button>
+<button (click)="chekValidation()" mat-flat-button color="primary" class="float-right">Save</button>
+</mat-dialog-actions>

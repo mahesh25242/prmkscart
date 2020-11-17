@@ -112,7 +112,9 @@ margin-top: 15px;
     }
 }
 @media only screen and (max-width: 768px) {
-    
+    .cdk-overlay-pane {
+        min-width: 94vw!important;
+    }
     .grid-form {
         display: grid;    
         grid-template-columns: 1fr ;
