@@ -28,9 +28,18 @@ h4 {
     margin-bottom: 0px;
 }
 @media only screen and (max-width: 768px) {
-    
+    .mat-dialog-content {
+        min-width: 95vw;
+        min-height:79vh;
+    }
     .grid-form {
         display: grid!important;    
         grid-template-columns: 1fr!important ;
        }
+    }
+    @media only screen and (min-width: 768px) {
+        .mat-dialog-content {
+            min-width: 66vw;           
+        }
+
     }
