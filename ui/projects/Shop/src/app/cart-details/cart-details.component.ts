@@ -347,7 +347,7 @@ export class CartDetailsComponent implements OnInit, OnDestroy {
       name: [null, [Validators.required]],
       note: [null, []],
       email: [null, []],
-      phone: [null, [Validators.required]],
+      phone: [null, [Validators.required, Validators.pattern("[0-9 ]{10}")]],
       address: [null, []],
       pin: [null, []],
       delivery_date: [null, []],

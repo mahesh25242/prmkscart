@@ -31,6 +31,9 @@
     <mat-error *ngIf="f.phone.invalid && ((f.phone.dirty || f.phone.touched)) && f.phone.errors.required">
       Phone is required.
     </mat-error>
+    <mat-error *ngIf="f.phone.invalid && ((f.phone.dirty || f.phone.touched)) && f.phone.errors.pattern">
+      In valid phone number.
+    </mat-error>
   </mat-form-field>
 
   <ng-container *ngIf="(data.selectedLocation?.need_cust_loc)">

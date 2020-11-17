@@ -96,7 +96,9 @@
       </button>
 
       <h3 *ngIf="f.name.valid">{{f.name.value}}</h3>
-      <h4 *ngIf="f.phone.valid"> Ph: {{ f.phone.value }}</h4>
+      <h4 *ngIf="f.phone.valid"> Ph: {{ f.phone.value }}
+        <mat-error *ngIf="f.phone.invalid">In valid phone number</mat-error>
+      </h4>
       <p *ngIf="f.delivery_date.value">Delivery on: {{ f.delivery_date.value | date: 'dd/MM/yyyy'}}</p>
       <p *ngIf="f.hour.value && f.minute.value && f.ampm.value">Time: {{f.hour.value}}.{{f.minute.value}} {{f.ampm.value}}</p>
       <p *ngIf="selectedLocation.id">Location: {{selectedLocation.name}};</p>
