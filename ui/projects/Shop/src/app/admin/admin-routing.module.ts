@@ -13,62 +13,70 @@ import { ShopDeliveryComponent } from './shop-delivery/shop-delivery.component';
 import { ShopDetailsComponent } from './shop-details/shop-details.component';
 import { OrdersComponent } from './orders/orders.component';
 import { OrdersResolver } from './orders/orders-resolver';
+import { AdminComponent } from './admin.component';
 
 
 
 const routes: Routes = [
   {
     path: '',
-    component: SignInComponent,
-    canActivate: [NegateAuthGuard],
+    component: AdminComponent,
+    children:[
+      {
+        path: '',
+        component: SignInComponent,
+        canActivate: [NegateAuthGuard],
+      },
+      {
+        path: 'home',
+        component: HomeComponent,
+        canActivate: [AdminAuthGuard],
+      },
+      {
+        path: 'categories',
+        component: CategoriesComponent,
+        canActivate: [AdminAuthGuard],
+        resolve:{
+          cats: CategoriesResolver
+        }
+      },
+      {
+        path: 'products',
+        component: ProductsComponent,
+        canActivate: [AdminAuthGuard],
+        resolve:{
+          products: ProductsResolver
+        }
+      },
+      {
+        path: 'deliveries',
+        component: ShopDeliveryComponent,
+        canActivate: [AdminAuthGuard],
+        resolve:{
+          deliveries: ShopDeliveryResolver
+        }
+      },
+      {
+        path: 'details',
+        component: ShopDetailsComponent,
+        canActivate: [AdminAuthGuard],
+      },
+      {
+        path: 'orders',
+        component: OrdersComponent,
+        canActivate: [AdminAuthGuard],
+        resolve:{
+          orders: OrdersResolver
+        }
+      },
+      {
+        path: 'edit-profile',
+        component: EditProfileComponent,
+        canActivate: [AdminAuthGuard],
+      },
+    ]
   },
-  {
-    path: 'home',
-    component: HomeComponent,
-    canActivate: [AdminAuthGuard],
-  },
-  {
-    path: 'categories',
-    component: CategoriesComponent,
-    canActivate: [AdminAuthGuard],
-    resolve:{
-      cats: CategoriesResolver
-    }
-  },
-  {
-    path: 'products',
-    component: ProductsComponent,
-    canActivate: [AdminAuthGuard],
-    resolve:{
-      products: ProductsResolver
-    }
-  },
-  {
-    path: 'deliveries',
-    component: ShopDeliveryComponent,
-    canActivate: [AdminAuthGuard],
-    resolve:{
-      deliveries: ShopDeliveryResolver
-    }
-  },
-  {
-    path: 'details',
-    component: ShopDetailsComponent,
-    canActivate: [AdminAuthGuard],
-  },
-  {
-    path: 'orders',
-    component: OrdersComponent,
-    canActivate: [AdminAuthGuard],
-    resolve:{
-      orders: OrdersResolver
-    }
-  },
-  {
-    path: 'edit-profile',
-    component: EditProfileComponent,
-    canActivate: [AdminAuthGuard],
-  },
+
 ];
 
 @NgModule({

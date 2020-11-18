@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import {
   Event,
   NavigationCancel,
@@ -8,15 +8,18 @@ import {
   Router
 } from '@angular/router';
 import Notiflix from 'notiflix';
+import { Observable } from 'rxjs';
+import { GeneralService } from './lib/services';
 
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss']
 })
-export class AppComponent {
+export class AppComponent implements OnInit{
   title = '';
-  constructor(public router: Router) {
+  isAdmin$: Observable<boolean>;
+  constructor(public router: Router, private generalService: GeneralService) {
     this.router.events.subscribe((event: Event) => {
       switch (true) {
         case event instanceof NavigationStart: {
@@ -34,5 +37,8 @@ export class AppComponent {
         }
       }
     });
+  }
+  ngOnInit(): void {
+    this.isAdmin$ = this.generalService.isAdmin$.asObservable();
   }
 }

@@ -16,6 +16,9 @@ import {MatToolbarModule} from '@angular/material/toolbar';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { HeaderComponent } from './header/header.component';
+import { AdminHeaderComponent } from './admin-header/admin-header.component';
+import { AdminSideNavListComponent } from './admin-header/admin-side-nav-list/admin-side-nav-list.component';
+
 import { FooterComponent } from './footer/footer.component';
 import { HomeComponent } from './home/home.component';
 import { AboutUsComponent } from './about-us/about-us.component';
@@ -49,6 +52,8 @@ export class MyHammerConfig extends HammerGestureConfig {
     AppComponent,
     HomeComponent,
     HeaderComponent,
+    AdminHeaderComponent,
+    AdminSideNavListComponent,
     FooterComponent,
     AboutUsComponent,
     ContactUsComponent,

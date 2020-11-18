@@ -10,6 +10,7 @@ import { tap } from 'rxjs/operators';
 })
 export class GeneralService {
   shopDisabled$: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(null);
+  isAdmin$: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(null);
 
   constructor(private http: HttpClient,
     ) { }

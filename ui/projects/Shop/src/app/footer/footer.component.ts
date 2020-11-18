@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
+import { Observable } from 'rxjs';
 import { environment } from '../../environments/environment';
+import { GeneralService } from '../lib/services';
 @Component({
   selector: 'app-footer',
   templateUrl: './footer.component.html',
@@ -7,9 +9,12 @@ import { environment } from '../../environments/environment';
 })
 export class FooterComponent implements OnInit {
   environment = environment;
-  constructor() { }
+  isAdmin$: Observable<boolean>;
+
+  constructor(private generalService: GeneralService) { }
 
   ngOnInit(): void {
+    this.isAdmin$ = this.generalService.isAdmin$.asObservable()
   }
 
 }

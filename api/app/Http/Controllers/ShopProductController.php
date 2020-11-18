@@ -190,6 +190,12 @@ class ShopProductController extends Controller
             }
 
             \App\ShopProductVariant::whereNotIn("id", $insVariantId)->where("shop_product_id",  $shopProduct->id)->delete();
+
+            if(!\App\ShopProductVariant::where("shop_product_id",  $shopProduct->id)->where("is_primary", 1)->exists()){
+                $shopProductVariant = \App\ShopProductVariant::where("shop_product_id",  $shopProduct->id)->get()->first();
+                $shopProductVariant->is_primary = 1;
+                $shopProductVariant->save();
+            }
         }
 
         return response(['data' => $shopProduct, 'message' => 'Account created successfully!', 'status' => true]);

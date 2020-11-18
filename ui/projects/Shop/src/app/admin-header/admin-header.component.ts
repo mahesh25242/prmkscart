@@ -5,24 +5,25 @@ import { environment } from '../../environments/environment';
 import { Observable, Subscription } from 'rxjs';
 import { BC, Shop, User } from 'src/app/lib/interfaces';
 import {  UserService, ShopService } from 'src/app/lib/services';
-import { mergeMap, map, tap } from 'rxjs/operators';
+import { mergeMap, map } from 'rxjs/operators';
 import { GeneralService as LocalGeneralService } from '../lib/services/index';
 import { GeneralService } from 'src/app/lib/services';
 import { BreakpointObserver, Breakpoints, BreakpointState } from '@angular/cdk/layout';
 
 @Component({
-  selector: 'app-header',
-  templateUrl: './header.component.html',
-  styleUrls: ['./header.component.scss']
+  selector: 'app-admin-header',
+  templateUrl: './admin-header.component.html',
+  styleUrls: ['./admin-header.component.scss']
 })
-export class HeaderComponent implements OnInit, OnDestroy {
+export class AdminHeaderComponent implements OnInit, OnDestroy {
   bc$: Observable<BC>;
   title : string = environment.siteName;
+  loggedUser$: Observable<User>;
   @Output() public sidenavToggle = new EventEmitter();
 
   layOutXSmall$:Observable<BreakpointState>;
-
-
+  loggedSubScrioption: Subscription;
+  signOutSubscription: Subscription;
 
   constructor(
     private router: Router,
@@ -38,26 +39,45 @@ export class HeaderComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
 
-
+    this.bc$ = this.generalService.bc;
     this.layOutXSmall$ = this.breakpointObserver.observe([
       Breakpoints.XSmall
     ])
 
 
 
-
-    this.bc$ = this.generalService.bc.pipe(mergeMap(res=>{
-      return this.shopService.shopDetail().pipe(map(shop=>res))
+    this.loggedUser$ = this.userService.getloggedUser.pipe(mergeMap(user=>{
+      return this.shopService.shopDetail().pipe(map(res=>{
+        return user;
+      }))
     }));
+    this.loggedSubScrioption = this.userService.authUser().subscribe();
+
   }
 
   onToggleSidenav = () => {
     this.sidenavToggle.emit();
   }
 
+  signOut(){
+    this.signOutSubscription = this.userService.setUserLogin({action:'SignOut'}).pipe(mergeMap(sRes=>{
+      return this.userService.signOut().pipe(mergeMap(res=>{
+        localStorage.removeItem('token');
+        return this.userService.authUser();
+      }))
+    })).subscribe(res=>{
 
+    }, err=>{
+      this.router.navigate(['/']);
+    });
+  }
   ngOnDestroy(){
-
+    if(this.loggedSubScrioption){
+      this.loggedSubScrioption.unsubscribe();
+    }
+    if(this.signOutSubscription){
+      this.signOutSubscription.unsubscribe();
+    }
 
   }
 }

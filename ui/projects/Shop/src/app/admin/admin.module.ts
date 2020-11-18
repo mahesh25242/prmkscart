@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { SharedModuleModule } from '../lib/shared-module/shared-module.module';
 
 import {  AdminRoutingModule } from './admin-routing.module';
+import { AdminComponent } from './admin.component';
 import { SignInComponent } from './sign-in/sign-in.component';
 import { HomeComponent } from './home/home.component';
 import { CategoriesComponent } from './categories/categories.component';
@@ -23,7 +24,7 @@ import { OrderSearchComponent } from './orders/order-search/order-search.compone
 import { SearchProductComponent } from './products/search-product/search-product.component';
 
 @NgModule({
-  declarations: [  SignInComponent, HomeComponent, CategoriesComponent, ProductsComponent, EditProfileComponent, CreateCategoryComponent, CreateProductComponent, ShopDeliveryComponent, CreateShopDeliveryComponent, ShopDetailsComponent, OrdersComponent, OrderDetailsComponent, OrderSearchComponent, SearchProductComponent],
+  declarations: [  AdminComponent, SignInComponent, HomeComponent, CategoriesComponent, ProductsComponent, EditProfileComponent, CreateCategoryComponent, CreateProductComponent, ShopDeliveryComponent, CreateShopDeliveryComponent, ShopDetailsComponent, OrdersComponent, OrderDetailsComponent, OrderSearchComponent, SearchProductComponent],
   imports: [
     CommonModule,
     AdminRoutingModule,
