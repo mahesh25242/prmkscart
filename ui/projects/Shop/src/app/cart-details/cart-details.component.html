@@ -103,8 +103,8 @@
       <p *ngIf="f.hour.value && f.minute.value && f.ampm.value">Time: {{f.hour.value}}.{{f.minute.value}} {{f.ampm.value}}</p>
       <p *ngIf="selectedLocation.id">Location: {{selectedLocation.name}};</p>
       <ng-container *ngIf="selectedLocation.need_cust_loc">
-        <p *ngIf="f.address.valid">Address: {{f.address.value}}</p>
-        <p *ngIf="f.pin.valid">Pin: {{f.pin.value}}</p>
+        <p *ngIf="f.address.value">Address: {{f.address.value}}</p>
+        <p *ngIf="f.pin.value">Pin: {{f.pin.value}}</p>
       </ng-container>
       <p *ngIf="f.note.value">{{ f.note.value }}</p>
     </section>
