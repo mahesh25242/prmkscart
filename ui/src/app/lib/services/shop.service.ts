@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable } from 'rxjs';
-import { map, tap } from 'rxjs/operators';
+import { map, share, tap } from 'rxjs/operators';
 import { Shop, ShopDelivery } from '../interfaces';
 
 @Injectable({
@@ -66,6 +66,6 @@ export class ShopService {
   shopDetail(){
     return this.http.get<Shop>(`/shop`).pipe(tap(res=>{
       this.shop$.next(res);
-    }));
+    })).pipe(share());
   }
 }
