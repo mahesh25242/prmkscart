@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { Observable } from 'rxjs';
+import { ShopOrder } from 'src/app/lib/interfaces';
 import { GeneralService } from 'src/app/lib/services';
 import { environment } from '../../../environments/environment';
 @Component({
@@ -7,7 +9,17 @@ import { environment } from '../../../environments/environment';
   styleUrls: ['./home.component.scss']
 })
 export class HomeComponent implements OnInit {
-
+  stat$: Observable<{
+    active_categories?: number,
+    active_products?: number,
+    cancelled?: number,
+    categories?: number,
+    delivered?: number,
+    delivery_locations?: number,
+    latest_orders?: ShopOrder[],
+    orders?: number,
+    products?: number,
+  }>;
   constructor(private generalService: GeneralService) { }
 
   ngOnInit(): void {
@@ -18,9 +30,7 @@ export class HomeComponent implements OnInit {
       backUrl: null
     });
 
-    this.generalService.adminHomeStat().subscribe(res=>{
-
-    });
+    this.stat$ = this.generalService.adminHomeStat();
 
   }
 

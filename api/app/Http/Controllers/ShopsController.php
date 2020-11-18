@@ -112,7 +112,30 @@ class ShopsController extends Controller
         return response(['message' => 'successfully saved',  'status' => true]);
     }
 
-    public function adminHomeStat(){
+    public function adminHomeStat(Request $request){
 
+        $shopKey = $request->header('shopKey');
+        $shopKey = ($shopKey) ? $shopKey : $request->input("shop_key",'');
+
+        $shop = null;
+        if($shopKey){
+            $shop = \App\Shop::where("shop_key", $shopKey)->get()->first();
+        }else{
+            $shopKey = $request->input("shop_key");
+            $shop = \App\Shop::where("shop_key", $shopKey)->get()->first();
+        }
+        $stat = [
+            "products" => \App\ShopProduct::where("shop_id", $shop->id)->count(),
+            "active_products" => \App\ShopProduct::where("shop_id", $shop->id)->where("status", 1)->count(),
+            "categories" => \App\ShopProductCategory::where("shop_id", $shop->id)->count(),
+            "active_categories" => \App\ShopProductCategory::where("shop_id", $shop->id)->where("status", 1)->count(),
+            "orders" => \App\ShopOrder::where("shop_id", $shop->id)->count(),
+            "cancelled" => \App\ShopOrder::where("shop_id", $shop->id)->where("status", 5)->count(),
+            "delivered" => \App\ShopOrder::where("shop_id", $shop->id)->where("status", 4)->count(),
+            "latest_orders" => \App\ShopOrder::with(["shopCustomer", 'shopDelivery'])->where("shop_id", $shop->id)->orderBy("id", "DESC")->take(10)->get(),
+            "delivery_locations" => \App\ShopDelivery::where("shop_id", $shop->id)->count(),
+        ];
+
+        return response($stat);
     }
 }
