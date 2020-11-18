@@ -30,6 +30,7 @@ $router->group(['prefix' => 'v1'], function () use ($router) {
 
     $router->group(['prefix' => 'shop'], function () use ($router) {
         $router->get('/','ShopsController@shopDetails');
+        $router->get('/adminHomeStat','ShopsController@adminHomeStat');
         $router->post('createOrder','ShopOrderController@createOrder');
         $router->group(['prefix' => 'product'], function () use ($router) {
             $router->get('showCategories','ShopProductCategoryController@showCategories');

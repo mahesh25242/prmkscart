@@ -1,4 +1,4 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, OnChanges, OnDestroy, OnInit } from '@angular/core';
 import { GeneralService } from '../lib/services';
 
 @Component({
@@ -11,8 +11,13 @@ export class AdminComponent implements OnInit, OnDestroy {
   constructor(    private generalService: GeneralService ) { }
 
   ngOnInit(): void {
-    this.generalService.isAdmin$.next(true);
+    setTimeout(() => {
+      this.generalService.isAdmin$.next(true);
+    });
+
   }
+
+
 
   ngOnDestroy(){
     this.generalService.isAdmin$.next(null);

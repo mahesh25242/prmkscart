@@ -22,7 +22,7 @@ class ShopProductCategory extends Model implements AuthenticatableContract, Auth
      */
     protected $fillable = [
         'shop_id', 'name', 'description', 'icon', 'url', 'status', 'sortorder',
-        'created_by', 'updated_by', 'deleted_by',
+        'created_by', 'updated_by', 'deleted_by', 'is_maticon'
     ];
 
     protected $appends = array('status_text');

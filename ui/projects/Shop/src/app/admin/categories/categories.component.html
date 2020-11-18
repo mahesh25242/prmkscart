@@ -28,7 +28,8 @@
     <ng-container matColumnDef="icon">
       <th mat-header-cell *matHeaderCellDef> Icon </th>
       <td mat-cell *matCellDef="let element">
-        <img class="img-thumbnail" [src]="environment.siteAddress+'/assets/shop/'+environment.shopKey+'/category/'+element.icon" *ngIf="element.icon"/>
+        <mat-icon *ngIf="element.is_maticon && element.icon">{{element.icon}}</mat-icon>
+        <img class="img-thumbnail" *ngIf="!element.is_maticon && element.icon" [src]="environment.siteAddress+'/assets/shop/'+environment.shopKey+'/category/'+element.icon" />
       </td>
     </ng-container>
 

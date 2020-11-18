@@ -6,7 +6,7 @@ import { ShopProductCategoryService } from 'src/app/lib/services/shop-product-ca
 import Notiflix from "notiflix";
 import { ShopProductCategory } from 'src/app/lib/interfaces';
 import {MatDialogRef, MAT_DIALOG_DATA} from '@angular/material/dialog';
-
+import { catIcon } from './cat-icons';
 
 
 
@@ -17,6 +17,8 @@ import {MatDialogRef, MAT_DIALOG_DATA} from '@angular/material/dialog';
 })
 export class CreateCategoryComponent implements OnInit, OnDestroy {
   createCatFrm: FormGroup;
+  selected = 'option2';
+  catIcon = catIcon;
 
   statuses = [
     {
@@ -49,7 +51,13 @@ export class CreateCategoryComponent implements OnInit, OnDestroy {
     formData.append('description', (this.f.description.value) ? this.f.description.value : '');
     formData.append('status', `${this.f.status.value}`);
     formData.append('sortorder', `${this.f.sortorder.value}`);
-    formData.append(`icon`, this.f.icon.value);
+
+    formData.append(`is_maticon`, (this.f.is_maticon.value) ? `1` : `0`);
+    if(this.f.is_maticon.value){
+      formData.append(`icon`, (this.f.icon.value?.icon ? this.f.icon.value?.icon : ''));
+    }else{
+      formData.append(`icon`, this.f.icon.value);
+    }
 
     this.saveCatSubScr = this.shopProductCategoryService.createCategory(formData).pipe(mergeMap(res=>{
       return this.shopProductCategoryService.listCategories();
@@ -84,7 +92,8 @@ export class CreateCategoryComponent implements OnInit, OnDestroy {
       description: [null, []],
       status: [1, []],
       sortorder: [1, []],
-      icon: [null, []]
+      icon: [null, []],
+      is_maticon: [null, []]
     });
 
 
@@ -96,8 +105,16 @@ export class CreateCategoryComponent implements OnInit, OnDestroy {
         description: this.data?.description,
         status: (this.data?.status >= 0) ? this.data?.status : 1,
         sortorder: (this.data?.sortorder) ? this.data?.sortorder : 1,
+        is_maticon: (this.data?.is_maticon) ? this.data?.is_maticon : 1
       });
 
+      if(this.data?.is_maticon){
+        catIcon.map(ico =>{
+          if(ico.icon == this.data?.icon)
+            this.f.icon.setValue(ico);
+        })
+
+      }
 
   }
 

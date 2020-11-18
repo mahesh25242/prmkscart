@@ -52,6 +52,12 @@ class ShopProductCategoryController extends Controller
         $input["name"] = $request->input("name", '');
         $input["sortorder"] = $request->input("sortorder", '');
         $input["status"] = $request->input("status", '');
+        $input["is_maticon"] = $request->input("is_maticon", 0);
+        $input["is_maticon"] = ($input["is_maticon"]) ? $input["is_maticon"] : 0;
+        if($input["is_maticon"] && $request->input("icon", null)){
+            $input["icon"] =  $request->input("icon", null);
+        }
+
         $input["url"] = \Illuminate\Support\Str::slug($input["name"], '-');
 
 
@@ -95,6 +101,7 @@ class ShopProductCategoryController extends Controller
             $img->save($destinationPath.'/'.$iconImage, 60);
 
             $shopProductCategory->icon = $iconImage;
+
             $shopProductCategory->save();
         }
 

@@ -112,4 +112,7 @@ class ShopsController extends Controller
         return response(['message' => 'successfully saved',  'status' => true]);
     }
 
+    public function adminHomeStat(){
+
+    }
 }

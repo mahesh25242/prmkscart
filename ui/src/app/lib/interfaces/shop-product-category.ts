@@ -12,5 +12,6 @@ export interface ShopProductCategory {
   shop?: Shop,
   icon?: string,
   shop_product: ShopProduct[],
-  url?: string
+  url?: string,
+  is_maticon?: number
 }

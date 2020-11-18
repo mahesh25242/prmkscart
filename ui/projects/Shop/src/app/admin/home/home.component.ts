@@ -17,6 +17,11 @@ export class HomeComponent implements OnInit {
       url:'',
       backUrl: null
     });
+
+    this.generalService.adminHomeStat().subscribe(res=>{
+
+    });
+
   }
 
 }

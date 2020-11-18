@@ -41,4 +41,8 @@ export class GeneralService {
     });
   }
 
+  adminHomeStat(){
+    return this.http.get<any>("/shop/adminHomeStat");
+  }
+
 }
