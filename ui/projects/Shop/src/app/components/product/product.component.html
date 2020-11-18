@@ -14,8 +14,11 @@ infiniteScrollContainer=".my-sidenav-content" [fromRoot]="true"
 
   <div class="grid-col" *ngFor="let product of allProduct" >
     <mat-card >
-      <div class="mat-card-headerimage" [ngStyle]="{'background-image': (product.shop_product_primary_variant?.shop_product_image?.image) ? 'url(' + environment.siteAddress+'/assets/shop/'+environment.shopKey+'/products/'+ product.shop_product_primary_variant.shop_product_image.image + ')' : ''}" [routerLink]="'/'+product.shop_product_category?.url+'/'+product.url">
-      <div mat-card-avatar [ngClass]="{'veg': product.shop_product_primary_variant?.type.id == 1, 'nonveg': product.shop_product_primary_variant?.type.id == 2}"></div>
+
+      <div class="mat-card-headerimage"
+      [ngStyle]="{'background-image': (product.shop_product_primary_variant?.shop_product_image?.image) ? 'url(' + environment.siteAddress+'/assets/shop/'+environment.shopKey+'/products/'+ product.shop_product_primary_variant.shop_product_image.image + ')' : 'url(/assets/no-image.jpg)'}"
+      [routerLink]="'/'+product.shop_product_category?.url+'/'+product.url">
+      <div *ngIf="product.shop_product_primary_variant?.type.id" mat-card-avatar [ngClass]="{'veg': product.shop_product_primary_variant?.type.id == 1, 'nonveg': product.shop_product_primary_variant?.type.id == 2}"></div>
         <!-- <img mat-card-image *ngIf="product.shop_product_primary_variant?.shop_product_image?.image" [src]="environment.siteAddress+'/assets/shop/'+environment.shopKey+'/products/'+ product.shop_product_primary_variant.shop_product_image.image" [alt]="product.shop_product_primary_variant.name"> -->
       </div>
       <mat-card-header>

@@ -29,6 +29,8 @@ export class CartDetailsComponent implements OnInit, OnDestroy {
   grandTotal:number = 0;
   todayDate:Date = new Date();
 
+  environment = environment;
+
   shop$:Observable<Shop>;
   selectedLocation: ShopDelivery;
   mapUrl: string = '';

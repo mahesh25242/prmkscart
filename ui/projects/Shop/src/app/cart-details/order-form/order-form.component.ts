@@ -5,6 +5,19 @@ import {MatDialogRef, MAT_DIALOG_DATA} from '@angular/material/dialog';
 import Notiflix from "notiflix";
 
 
+export const MY_FORMATS = {
+  parse: {
+    dateInput: 'LL',
+  },
+  display: {
+    dateInput: 'YYYY-MM-DD',
+    monthYearLabel: 'YYYY',
+    dateA11yLabel: 'LL',
+    monthYearA11yLabel: 'YYYY',
+  },
+};
+
+
 @Component({
   selector: 'app-order-form',
   templateUrl: './order-form.component.html',

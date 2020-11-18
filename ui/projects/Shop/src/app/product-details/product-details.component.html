@@ -2,7 +2,7 @@
   <h2>{{ product.name}}</h2>
   <form [formGroup]="addToCartFrm" (ngSubmit)="addToCart()">
     <div class="product-image">
-      <img *ngIf="product.shop_product_selected_variant?.shop_product_image?.image" [src]="environment.siteAddress+'/assets/shop/'+environment.shopKey+'/products/'+ product.shop_product_selected_variant.shop_product_image.image" alt="Photo of a Shiba Inu">
+      <img  [src]="(product.shop_product_selected_variant?.shop_product_image?.image) ? environment.siteAddress+'/assets/shop/'+environment.shopKey+'/products/'+ product.shop_product_selected_variant.shop_product_image.image : 'assets/no-image.jpg'" alt="Photo of a Shiba Inu">
   </div>
       <mat-form-field appearance="standard" *ngIf="(product.shop_product_variant.length > 1)">
         <mat-label>Choose Varient</mat-label>

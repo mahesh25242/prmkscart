@@ -5,7 +5,8 @@
 
   <div mat-dialog-content>
 <div class="product-image">
-    <img *ngIf="this.data.shop_product_selected_variant?.shop_product_image?.image" [src]="environment.siteAddress+'/assets/shop/'+environment.shopKey+'/products/'+ data.shop_product_selected_variant.shop_product_image.image" alt="Photo of a Shiba Inu">
+    <img
+    [src]="(data?.shop_product_selected_variant?.shop_product_image?.image) ? environment.siteAddress+'/assets/shop/'+environment.shopKey+'/products/'+ data.shop_product_selected_variant.shop_product_image.image : 'assets/no-image.jpg'" alt="Photo of a Shiba Inu">
   </div>
     <mat-form-field appearance="standard" *ngIf="this.data.shop_product_variant.length > 1">
       <mat-label>Choose Varient</mat-label>
