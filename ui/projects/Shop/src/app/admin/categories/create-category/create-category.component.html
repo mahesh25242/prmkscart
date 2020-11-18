@@ -47,7 +47,7 @@
       </mat-radio-group>
 
 
-      <mat-form-field>
+      <mat-form-field *ngIf="f.is_maticon.value">
         <mat-select placeholder="Select icon" formControlName="icon">
           <mat-select-trigger>
             <mat-icon>{{f.icon.value?.icon}}</mat-icon> {{f.icon.value?.name}}
