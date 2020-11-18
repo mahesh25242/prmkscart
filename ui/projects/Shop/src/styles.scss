@@ -198,3 +198,8 @@ mat-card {
         margin: 0;
     }
 }
+.full-width-text {
+    .mat-form-field-infix {
+        padding-bottom: 0px!important;
+    }
+}
