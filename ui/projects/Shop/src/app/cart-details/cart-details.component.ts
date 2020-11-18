@@ -106,11 +106,11 @@ export class CartDetailsComponent implements OnInit, OnDestroy {
             Breakpoints.Handset,
             Breakpoints.Tablet
           ]).pipe(map(bp =>{
-            let txt = `%0a‎ New Order`;
-            txt += `%0a‎ Order Number: ${encodeURIComponent(`#${orderRes.id}`)}`;
+            let txt = `%0a‎ Order from *${postData.name}*`;
+            txt += `%0a‎ Order Number: *${encodeURIComponent(`#${orderRes.id}`)}*`;
 
-            cart.map(itm=>{
-              txt += `%0a‎ Product: ${itm.product.name} `;
+            cart.map((itm, idx)=>{
+              txt += `%0a‎ Product - ${idx+1}: ${itm.product.name} `;
               if(itm.message){
                 txt += `%0a‎ Message: ${itm.message} `;
               }
@@ -148,7 +148,8 @@ export class CartDetailsComponent implements OnInit, OnDestroy {
 
 
             txt += `%0a‎ Grand Total: ₹ *${this.grandTotal}* %0a`;
-
+            txt += `%0a‎ ============== %0a`;
+            txt += `%0a‎ *Confirm order via reply or call* %0a`;
 
             let ret;
             if(bp.matches){
