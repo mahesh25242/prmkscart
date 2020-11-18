@@ -15,6 +15,7 @@
        <h4 class="cart-item-header pl-1"> {{item.product.name}}</h4>
         <b class="block pl-1">₹ {{item.price}}</b>
        <small class="block pl-1">{{item.product.shop_product_selected_variant.name}}</small>
+       <small class="block pl-1"> {{item.message}}</small>      
        <div class="d-none-lg">
        <button mat-icon-button color="primary" (click)="updateCart(item, '-')">
         <mat-icon>remove_circle_outline</mat-icon>
@@ -38,8 +39,7 @@
 <div>
 
    <!-- <ng-container *ngIf="item.message"> -->
-    <div>
-      {{item.message}}
+    <div>    
       <button mat-icon-button color="primary" (click)="editMessage(item)">
         <mat-icon>add_comment</mat-icon>
       </button>
@@ -110,8 +110,7 @@
     </section>
 
     <div mat-dialog-actions class="actionBtn" *ngIf="isShowButton()">
-      <section class="example-section" [matTooltip]="(!terms) ? 'Please accept terms' : ''"
-      >
+      <section class="example-section" [matTooltip]="(!terms) ? 'Please accept terms' : ''">
         <mat-checkbox [(ngModel)]="terms"></mat-checkbox>&nbsp;&nbsp;I agree to the <a href="javascript:{}" (click)="triggerTerms()">terms of service</a>
         <button class="whatsapp-btn" mat-raised-button color="primary"  type="submit" [disabled]="!terms" (click)="sendToShop()">
           <!-- Generator: Adobe Illustrator 25.0.0, SVG Export Plug-In . SVG Version: 6.00 Build 0)  -->
