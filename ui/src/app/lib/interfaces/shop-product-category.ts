@@ -13,5 +13,6 @@ export interface ShopProductCategory {
   icon?: string,
   shop_product: ShopProduct[],
   url?: string,
-  is_maticon?: number
+  is_maticon?: number,
+  shop_product_count?: number
 }

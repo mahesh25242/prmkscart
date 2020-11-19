@@ -3,58 +3,60 @@
 <h1>Categories</h1>
 
 <button mat-raised-button color="primary" class="mb-10" type="button" (click)="editCategory(null)">Create Category</button>
-
 <ng-container *ngIf="(categories$ | async) as categories">
-  <table mat-table [dataSource]="categories" class="mat-elevation-z8 ">
 
-    <!--- Note that these columns can be defined in any order.
-          The actual rendered columns are set as a property on the row definition" -->
-
-    <!-- Number Column -->
-    <ng-container matColumnDef="no">
-      <th mat-header-cell *matHeaderCellDef mat-sort-header width="100"> No. </th>
-      <td mat-cell *matCellDef="let element; let i = index">{{i + 1}}</td>
-    </ng-container>
-
-    <!-- Name Column -->
-    <ng-container matColumnDef="name">
-      <th mat-header-cell *matHeaderCellDef> Name </th>
-      <td mat-cell *matCellDef="let element">
-        <a href="javascript:{}" (click)="editCategory(element)" matTooltip="Click here to view or edit this category">{{element.name}}</a>
-        <span matTooltip="Products count"> ( {{element.shop_product_count}} )</span>
-      </td>
-    </ng-container>
-
-    <!-- Icon Column -->
-    <ng-container matColumnDef="icon">
-      <th mat-header-cell *matHeaderCellDef width="100"> Icon </th>
-      <td mat-cell *matCellDef="let element">
-        <mat-icon *ngIf="element.is_maticon && element.icon">{{element.icon}}</mat-icon>
-        <img class="img-thumbnail" *ngIf="!element.is_maticon && element.icon" [src]="environment.siteAddress+'/assets/shop/'+environment.shopKey+'/category/'+element.icon" />
-      </td>
-    </ng-container>
-
-    <!-- Status Column -->
-    <ng-container matColumnDef="status">
-      <th width="100" mat-header-cell *matHeaderCellDef> Status </th>
-      <td mat-cell *matCellDef="let element">
-      <a href="javascript:{}" (click)="changeStatus(element)">{{element.status_text}}</a>
-      </td>
-    </ng-container>
-
-     <!-- Options Column -->
-     <ng-container matColumnDef="options">
-      <th width="70" mat-header-cell *matHeaderCellDef> Delete </th>
-      <td mat-cell *matCellDef="let element">
-        <button type="button" mat-icon-button  color="warn"
-          (click)="deleteCategory(element)">
-          <mat-icon>delete_forever</mat-icon>
-        </button>
-      </td>
-    </ng-container>
-
-    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+  <table class="responsive-table highlight">
+      <thead>
+        <tr>
+          <th>
+            No.
+          </th>
+          <th>
+            Name
+          </th>
+          <th>
+            Icon
+          </th>
+          <th>
+            Status
+          </th>
+          <th>
+            Delete
+          </th>
+        </tr>
+      </thead>
+      <tbody>
+        <ng-container *ngIf="categories && categories.length">
+          <tr *ngFor="let element of categories; let i = index;">
+            <td>
+              {{i+1}}
+            </td>
+            <td>
+              <a href="javascript:{}" (click)="editCategory(element)" matTooltip="Click here to view or edit this category">{{element.name}}</a>
+              <span matTooltip="Products count"> ( {{element.shop_product_count}} )</span>
+            </td>
+            <td>
+              <mat-icon *ngIf="element.is_maticon && element.icon">{{element.icon}}</mat-icon>
+              <img class="img-thumbnail" *ngIf="!element.is_maticon && element.icon" [src]="environment.siteAddress+'/assets/shop/'+environment.shopKey+'/category/'+element.icon" />
+            </td>
+            <td>
+              <a href="javascript:{}" (click)="changeStatus(element)">{{element.status_text}}</a>
+            </td>
+            <td>
+              <button type="button" mat-icon-button  color="warn"
+                (click)="deleteCategory(element)">
+                <mat-icon>delete_forever</mat-icon>
+              </button>
+            </td>
+          </tr>
+        </ng-container>
+        <tr *ngIf="!categories || !categories.length">
+          <td colspan="5">
+            No category found
+          </td>
+        </tr>
+      </tbody>
   </table>
+
 </ng-container>
 </div>
