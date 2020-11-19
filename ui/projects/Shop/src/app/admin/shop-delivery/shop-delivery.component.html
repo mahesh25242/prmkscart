@@ -1,25 +1,27 @@
 <div class="header-inner"></div>
-<button mat-raised-button color="primary" type="button" (click)="editDeliveryLoc(null)">Add Delivery Location</button>
-
+<div class="container">
+  <h1>Add Delivery Location</h1>
+<button mat-raised-button color="primary" type="button" (click)="editDeliveryLoc(null)" class="mb-30"><mat-icon class="add-icon-position">add</mat-icon>Add Delivery Location</button>
+<mat-card>
 <ng-container *ngIf="(deliveries$ | async) as deliveries">
 
 
   <table class="responsive-table highlight">
     <thead>
       <tr>
-        <th>
+        <th class="w-80">
           No.
         </th>
         <th>
           Name
         </th>
-        <th>
+        <th class="w-180" >
           Customer Location
         </th>
-        <th>
+        <th class="w-100" >
           Charge
         </th>
-        <th>
+        <th class="w-60">
           Delete
         </th>
       </tr>
@@ -56,3 +58,5 @@
   </table>
 
 </ng-container>
+</mat-card>
+</div>

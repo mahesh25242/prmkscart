@@ -1,0 +1,32 @@
+.input-bordernone {
+    
+input {
+    margin-bottom: 0px;
+}
+
+}
+
+.product-grid-admin-bs-1 {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr ;
+    column-gap: 15px;
+    align-items: flex-end;
+    input {
+        margin-bottom: 0px!important;
+    }
+}
+
+.product-grid-admin {
+    display: grid;
+    grid-template-columns: 31px  27px 1fr 1fr 1fr 100px 100px 1fr 80px ;
+    column-gap: 15px;
+    align-items: center;
+    border: 1px solid #ececec;
+    margin-bottom: 10px;
+    padding: 0 15px;
+    border-radius: 5px;
+
+    input {
+        margin-bottom: 0px!important;
+    }
+}

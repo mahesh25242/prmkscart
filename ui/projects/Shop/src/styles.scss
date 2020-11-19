@@ -5,7 +5,10 @@
 
 html, body { height: 100%; margin: 0; }
 body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
-
+.add-icon-position {
+    left: -5px;
+    position: relative;
+}
 .mb1 {
     margin-bottom:1.5rem;
 }
@@ -63,6 +66,31 @@ mat-card {
 .carousel-slide {
     min-height:200px;
 }
+.grid-form-container {
+    .mat-form-field-infix {
+      padding-bottom: 0px!important;
+    }
+    }
+    .input-bordernone {
+        .mat-form-field-infix {
+            padding-bottom: 0px!important;
+          }
+    }
+    .product-grid-admin {
+        .mat-form-field-infix {
+            padding-bottom: 0px!important;
+            width: auto!important;
+          }
+
+    }
+    .product-grid-admin-bs-1 {
+
+        .mat-form-field-infix {
+            padding-bottom: 0px!important;
+          }
+    }
+
+
 .product-grid {
     display: grid;
     grid-template-columns: 1fr 1fr 1fr 1fr;

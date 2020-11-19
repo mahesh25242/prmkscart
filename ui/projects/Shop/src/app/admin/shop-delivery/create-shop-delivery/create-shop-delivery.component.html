@@ -4,6 +4,7 @@
 </h1>
 <form [formGroup]="createDeliveryFrm" (ngSubmit)="saveDelivery()">
   <div mat-dialog-content>
+    <div class="grid-form-container">
       <mat-form-field class="full-width-text" appearance="standard">
         <mat-label>Name</mat-label>
         <input matInput formControlName="name" placeholder="Ex. Kochi" required>
@@ -45,14 +46,14 @@
           {{f.min_amount.errors.error}}
         </mat-error>
       </mat-form-field>
-
-
       <mat-checkbox class="example-margin" formControlName="need_cust_loc" matTooltip="If it checked then while customer fill his/her details it will ask his/her location details too"
       aria-label="Button that displays a tooltip when focused or hovered over">Need customer Location Details?</mat-checkbox>
 
+    </div>
+     
 
   </div>
-  <div mat-dialog-actions>
+  <div mat-dialog-actions align="end" >
     <button mat-stroked-button type="button" (click)="dialogRef.close()">Close</button>
     <button mat-raised-button color="primary" type="submit">Save changes</button>
   </div>

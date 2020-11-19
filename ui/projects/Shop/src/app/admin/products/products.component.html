@@ -1,24 +1,27 @@
 <div class="header-inner"></div>
-<h3>Products</h3>
+<div class="container">
+<h1>Products</h1>
 
-<button mat-raised-button color="primary" type="button"  (click)="editProduct(null)">Create Product</button>
+<button mat-raised-button color="primary" type="button"  (click)="editProduct(null)"><mat-icon class="add-icon-position">add</mat-icon>Create Product</button>
 <app-search-product  [pageEvent]="pageEvent"></app-search-product>
+<mat-card>
 <ng-container *ngIf="(products$ | async) as products">
+ 
   <table class="responsive-table highlight">
     <thead>
-      <th>
+      <th class="w-80">
         No.
       </th>
       <th>
         Name
       </th>
-      <th>
+      <th class="w-180">
         Category
       </th>
-      <th>
+      <th class="w-100">
         Status
       </th>
-      <th>
+      <th class="w-60">
         Delete
       </th>
     </thead>
@@ -63,4 +66,5 @@
   </mat-paginator>
 
 </ng-container>
-
+</mat-card>
+</div>

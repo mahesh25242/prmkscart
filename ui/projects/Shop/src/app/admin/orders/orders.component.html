@@ -1,7 +1,9 @@
 <div class="header-inner"></div>
+<div class="container">
 <app-order-search [pageEvent]="pageEvent"></app-order-search>
 <ng-container *ngIf="(orders$ | async) as orders">
   <div *ngIf="!orders.total">No data found</div>
+  <mat-card>
   <table class="responsive-table highlight">
     <thead>
       <tr>
@@ -67,4 +69,6 @@
               [pageSizeOptions]="[5, 10, 25, 100]"
               (page)="goto($event)">
   </mat-paginator>
+</mat-card>
 </ng-container>
+</div>

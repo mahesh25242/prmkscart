@@ -4,6 +4,7 @@
 <form [formGroup]="createProductFrm" (ngSubmit)="saveProduct()">
 <div mat-dialog-content>
 
+  <div>
       <ng-select [items]="(categories$ | async)"
       [ngClass]="{'is-invalid': ( f.shop_product_category_id.errors && f.shop_product_category_id.errors.error)}"
         bindLabel="name"
@@ -14,9 +15,8 @@
       <mat-error *ngIf="f.shop_product_category_id.errors && f.shop_product_category_id.errors.error">
         {{f.shop_product_category_id.errors.error}}
       </mat-error>
-
-
-
+    </div>
+    <div class="product-grid-admin-bs-1">
     <mat-form-field class="full-width-text" appearance="standard">
       <mat-label>Name</mat-label>
       <input matInput formControlName="name" placeholder="Ex. Black Forest" required>
@@ -55,47 +55,55 @@
       </mat-error>
     </mat-form-field>
 
-
+  </div>
     <h3>Varients</h3>
 
-    <table class="table">
-      <thead>
-        <tr>
-          <th>
+  
+    <ng-container>
+       <!-- <div class="product-grid">
+          <div>
             id
-          </th>
-          <th>
+          </div>
+          <div>
             Varient Name
-          </th>
-          <th>
+          </div>
+          <div>
             Description
-          </th>
-          <th>
+          </div>
+          <div>
             Is Primary
-          </th>
-          <th>
+          </div>
+          <div>
             Type
-          </th>
-          <th>
+          </div>
+          <div>
             Actual Price
-          </th>
-          <th>
+          </div>
+          <div>
             Sale Price
-          </th>
-          <th>
+          </div>
+          <div>
             Image
-          </th>
-          <th>
+          </div>
+          <div>
             Options
-          </th>
-        </tr>
-      </thead>
-      <tbody formArrayName="varients" >
-        <tr *ngFor="let stat of varients.controls; let i=index; let last = last" [formGroupName]="i">
-          <td>
+          </div>
+        </div>-->
+     
+        <ng-container formArrayName="varients" >
+        <div class="product-grid-admin" *ngFor="let stat of varients.controls; let i=index; let last = last" [formGroupName]="i">
+          <div>
             {{ i+ 1}}
-          </td>
-          <td>
+          </div>
+          <div>
+
+            <mat-checkbox formControlName="is_primary">&nbsp;</mat-checkbox>
+            <mat-error *ngIf="stat.get('is_primary').errors && stat.get('is_primary').errors.error">
+              {{stat.get('is_primary').errors.error}}
+            </mat-error>
+
+          </div>
+          <div>
 
             <mat-form-field class="full-width-text" appearance="standard">
               <mat-label>Name</mat-label>
@@ -105,8 +113,8 @@
               </mat-error>
             </mat-form-field>
 
-          </td>
-          <td>
+          </div>
+          <div>
 
             <mat-form-field class="full-width-text" appearance="standard">
               <mat-label>Description</mat-label>
@@ -116,16 +124,9 @@
               </mat-error>
             </mat-form-field>
 
-          </td>
-          <td>
-
-            <mat-checkbox formControlName="is_primary">&nbsp;</mat-checkbox>
-            <mat-error *ngIf="stat.get('is_primary').errors && stat.get('is_primary').errors.error">
-              {{stat.get('is_primary').errors.error}}
-            </mat-error>
-
-          </td>
-          <th>
+          </div>
+       
+          <div>
             <label for="type">Type</label>
               <ng-select [items]="varientTypes"
               bindLabel="name"
@@ -133,37 +134,37 @@
               </ng-select>
 
 
-          </th>
-          <td>
+          </div>
+          <div>
             <mat-form-field class="full-width-text" appearance="standard">
-              <mat-label>Actual Price</mat-label>
-              ₹ <input type="number" matInput formControlName="actual_price" placeholder="Ex. 200">
+              <mat-label>Actual Price  ₹ </mat-label>
+              <input type="number" matInput formControlName="actual_price" placeholder="Ex. 200">
               <mat-error *ngIf="stat.get('actual_price').errors && stat.get('actual_price').errors.error">
                 {{stat.get('actual_price').errors.error}}
               </mat-error>
             </mat-form-field>
 
 
-          </td>
-          <td>
+          </div>
+          <div>
             <mat-form-field class="full-width-text" appearance="standard">
-              <mat-label>Sale Price</mat-label>
-              ₹ <input type="number" matInput formControlName="price" placeholder="Ex. 200">
+              <mat-label>Sale Price  ₹ </mat-label>
+             <input type="number" matInput formControlName="price" placeholder="Ex. 200">
               <mat-error *ngIf="stat.get('price').errors && stat.get('price').errors.error">
                 {{stat.get('price').errors.error}}
               </mat-error>
             </mat-form-field>
-          </td>
-          <td>
+          </div>
+          <div>
             <button (click)="fileInput.click()" type="button" mat-stroked-button color="primary">
               <span>Choose Image</span>
               <input #fileInput type="file" (change)="handleImageSelection(stat, $event.target.files)"
                style="display:none;"  accept="image/*" />
-            </button>
-            <a [href]="stat.get('currImage').value" target="_blank" *ngIf="stat.get('currImage').value">Image</a>
+            </button>&nbsp; &nbsp;
+            <a [href]="stat.get('currImage').value" target="_blank" *ngIf="stat.get('currImage').value">View image</a>
 
-          </td>
-          <td>
+          </div>
+          <div>
             <button type="button" mat-icon-button  color="primary"
             (click)="addVarient(stat)">
             <mat-icon>add_circle_outline</mat-icon>
@@ -172,19 +173,16 @@
             (click)="removeVarient(i)">
             <mat-icon>delete_forever</mat-icon>
             </button>
-          </td>
-        </tr>
-      </tbody>
-    </table>
+          </div>
+        </div>
+      </ng-container>
 
+    </ng-container></div>
 
-
-</div>
-
-
-<div mat-dialog-actions>
+<div mat-dialog-actions align="end">
   <button type="button" mat-stroked-button  (click)="dialogRef.close()">Close</button>
   <button type="submit" mat-raised-button  color="primary">Save changes</button>
 
 </div>
+
 </form>

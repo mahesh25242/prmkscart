@@ -1,5 +1,5 @@
 <form [formGroup]="searchFrm" (ngSubmit)="search()">
-
+<div class="grid-form-container"> 
   <mat-form-field appearance="standard">
     <mat-label>Search Keyword</mat-label>
     <input matInput type="text" formControlName="q" placeholder="Ex. Black Forest">
@@ -15,12 +15,11 @@
     <mat-date-range-picker #picker touchUi></mat-date-range-picker>
   </mat-form-field>
 
-
-
   <button mat-icon-button matSuffix  >
     <mat-icon>search</mat-icon>
   </button>
-  <button mat-icon-button matSuffix (click)="reset()" type="button">
+  <button mat-stroked-button color="primary" (click)="reset()" type="button">
     Reset
   </button>
+</div>
 </form>
