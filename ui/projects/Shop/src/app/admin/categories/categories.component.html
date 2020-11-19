@@ -1,17 +1,18 @@
 <div class="header-inner"></div>
-<h3>Categories</h3>
+<div class="container">
+<h1>Categories</h1>
 
-<button mat-raised-button color="primary" type="button" (click)="editCategory(null)">Create Category</button>
+<button mat-raised-button color="primary" class="mb-10" type="button" (click)="editCategory(null)">Create Category</button>
 
 <ng-container *ngIf="(categories$ | async) as categories">
-  <table mat-table [dataSource]="categories" class="mat-elevation-z8">
+  <table mat-table [dataSource]="categories" class="mat-elevation-z8 ">
 
     <!--- Note that these columns can be defined in any order.
           The actual rendered columns are set as a property on the row definition" -->
 
     <!-- Number Column -->
     <ng-container matColumnDef="no">
-      <th mat-header-cell *matHeaderCellDef mat-sort-header> No. </th>
+      <th mat-header-cell *matHeaderCellDef mat-sort-header width="100"> No. </th>
       <td mat-cell *matCellDef="let element; let i = index">{{i + 1}}</td>
     </ng-container>
 
@@ -26,7 +27,7 @@
 
     <!-- Icon Column -->
     <ng-container matColumnDef="icon">
-      <th mat-header-cell *matHeaderCellDef> Icon </th>
+      <th mat-header-cell *matHeaderCellDef width="100"> Icon </th>
       <td mat-cell *matCellDef="let element">
         <mat-icon *ngIf="element.is_maticon && element.icon">{{element.icon}}</mat-icon>
         <img class="img-thumbnail" *ngIf="!element.is_maticon && element.icon" [src]="environment.siteAddress+'/assets/shop/'+environment.shopKey+'/category/'+element.icon" />
@@ -35,7 +36,7 @@
 
     <!-- Status Column -->
     <ng-container matColumnDef="status">
-      <th mat-header-cell *matHeaderCellDef> Status </th>
+      <th width="100" mat-header-cell *matHeaderCellDef> Status </th>
       <td mat-cell *matCellDef="let element">
       <a href="javascript:{}" (click)="changeStatus(element)">{{element.status_text}}</a>
       </td>
@@ -43,7 +44,7 @@
 
      <!-- Options Column -->
      <ng-container matColumnDef="options">
-      <th mat-header-cell *matHeaderCellDef> Delete </th>
+      <th width="70" mat-header-cell *matHeaderCellDef> Delete </th>
       <td mat-cell *matCellDef="let element">
         <button type="button" mat-icon-button  color="warn"
           (click)="deleteCategory(element)">
@@ -56,3 +57,4 @@
     <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
   </table>
 </ng-container>
+</div>
