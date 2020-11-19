@@ -1,7 +1,7 @@
 <h4 class="text-primary"> Delivery option: {{data.selectedLocation.name}}</h4>
   <small>{{data.selectedLocation.description}}</small>
 <mat-dialog-content>
-<div class="grid-form" *ngIf="data.selectedLocation?.id" [formGroup]="data.customerFrm">  
+<div class="grid-form" *ngIf="data.selectedLocation?.id" [formGroup]="data.customerFrm">
   <mat-form-field class="full-width-text" appearance="standard">
     <mat-label>Full Name</mat-label>
     <input matInput formControlName="name" placeholder="Ex. John Doe" required>
@@ -92,13 +92,13 @@
 </div>
   <mat-form-field class="full-width-text" appearance="standard">
     <mat-label>Order Note</mat-label>
-    <textarea matInput formControlName="note" placeholder="Ex. Birth day John Doe "></textarea>
+    <textarea matInput formControlName="note" placeholder="Any additional note"></textarea>
     <mat-error *ngIf="f.note.errors && f.note.errors.error">
       {{f.note.errors.error}}
     </mat-error>
   </mat-form-field>
 
- 
+
 </div>
 </mat-dialog-content>
 <mat-dialog-actions align="end">
