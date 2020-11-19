@@ -34,11 +34,12 @@ export class AdminSideNavListComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
-    this.loggedUser$ = this.userService.getloggedUser.pipe(mergeMap(user=>{
-      return this.shopService.shopDetail().pipe(map(res=>{
-        return user;
-      }))
-    }));
+    // this.loggedUser$ = this.userService.getloggedUser.pipe(mergeMap(user=>{
+    //   return this.shopService.shopDetail().pipe(map(res=>{
+    //     return user;
+    //   }))
+    // }));
+    this.loggedUser$ = this.userService.getloggedUser;
   }
 
   public onSidenavClose = () => {

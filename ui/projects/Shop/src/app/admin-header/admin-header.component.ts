@@ -46,12 +46,15 @@ export class AdminHeaderComponent implements OnInit, OnDestroy {
 
 
 
-    this.loggedUser$ = this.userService.getloggedUser.pipe(mergeMap(user=>{
-      return this.shopService.shopDetail().pipe(map(res=>{
-        return user;
-      }))
-    }));
-    this.loggedSubScrioption = this.userService.authUser().subscribe();
+    // this.loggedUser$ = this.userService.getloggedUser.pipe(mergeMap(user=>{
+    //   return this.shopService.shopDetail().pipe(map(res=>{
+    //     return user;
+    //   }))
+    // }));
+
+    this.loggedUser$ = this.userService.getloggedUser;
+
+    //this.loggedSubScrioption = this.userService.authUser().subscribe();
 
   }
 
