@@ -28,7 +28,8 @@ export class SearchProductComponent implements OnInit {
     });
   }
   reset(){
-
+    this.searchFrm.controls.q.setValue('');
+    this.search();
   }
   ngOnInit(): void {
     this.searchFrm = this.formBuilder.group({

@@ -10,7 +10,7 @@ import { GeneralService } from '../lib/services';
 export class FooterComponent implements OnInit {
   environment = environment;
   isAdmin$: Observable<boolean>;
-
+  currentYear: number = new Date().getFullYear();
   constructor(private generalService: GeneralService) { }
 
   ngOnInit(): void {
