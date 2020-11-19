@@ -124,6 +124,10 @@ export class CartDetailsComponent implements OnInit, OnDestroy {
               txt += `%0a‎ Customer Name: ${encodeURIComponent(postData.name)}  `;
             }
 
+            if(postData.phone){
+              txt += `%0a‎ Phone: ${encodeURIComponent(postData.phone)}  `;
+            }
+
             if(postData.delivery_date){
               txt += `%0a‎ Delivered On: ${encodeURIComponent(postData.delivery_date)}  `;
             }
