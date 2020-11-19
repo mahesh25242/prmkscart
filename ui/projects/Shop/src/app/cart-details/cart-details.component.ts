@@ -110,42 +110,47 @@ export class CartDetailsComponent implements OnInit, OnDestroy {
             txt += `%0a‎ Order Number: *${encodeURIComponent(`#${orderRes.id}`)}*`;
 
             cart.map((itm, idx)=>{
-              txt += `%0a‎ Product - ${idx+1}: ${itm.product.name} `;
+              txt += `%0a‎ Product - ${encodeURIComponent(idx+1)}: ${encodeURIComponent(itm.product.name)} `;
               if(itm.message){
-                txt += `%0a‎ Message: ${itm.message} `;
+                txt += `%0a‎ Message: ${encodeURIComponent(itm.message)} `;
               }
-              txt += `%0a‎ Varient Name: ${itm.product.shop_product_selected_variant.name} `;
-              txt += `%0a‎ Quantity: ${itm.qty} `;
-              txt += `%0a‎ Price: ₹ ${itm.price} `;
+              txt += `%0a‎ Varient Name: ${encodeURIComponent(itm.product.shop_product_selected_variant.name)} `;
+              txt += `%0a‎ Quantity: ${encodeURIComponent(itm.qty)} `;
+              txt += `%0a‎ Price: ₹ ${encodeURIComponent(itm.price)} `;
               txt += `%0a‎ ============== `;
             });
             txt += `%0a‎ ${ cart.length }  ${ (cart.length > 1) ? 'items' : 'item' } `;
             if(postData.name){
-              txt += `%0a‎ Customer Name: ${postData.name}  `;
+              txt += `%0a‎ Customer Name: ${encodeURIComponent(postData.name)}  `;
             }
 
             if(postData.delivery_date){
-              txt += `%0a‎ Delivered On: ${postData.delivery_date}  `;
+              txt += `%0a‎ Delivered On: ${encodeURIComponent(postData.delivery_date)}  `;
             }
 
             if(postData.note){
-              txt += `%0a‎ Order Note: ${postData.note}  `;
+              txt += `%0a‎ Order Note: ${encodeURIComponent(postData.note)}  `;
             }
 
             if(postData.delivery_date){
-              txt += `%0a‎ Delivery Date: ${postData.delivery_date}  `;
+              txt += `%0a‎ Delivery Date: ${encodeURIComponent(postData.delivery_date)}  `;
             }
 
-            txt += `%0a‎ Delivery Point: ${postData.selectedLocation.name} `;
+            txt += `%0a‎ Delivery Point: ${encodeURIComponent(postData.selectedLocation.name)} `;
             if(postData.selectedLocation.need_cust_loc){
-              txt += `%0a‎ Address: ${postData.address} `;
-              txt += `%0a‎ Pin: ${postData.pin} `;
+              txt += `%0a‎ Address: ${encodeURIComponent(postData.address)} `;
+              txt += `%0a‎ Pin: ${encodeURIComponent(postData.pin)} `;
             }
             if(postData.selectedLocation.charge){
-              txt += `%0a‎ Delivery Charge: ₹ ${postData.selectedLocation.charge} %0a `;
+              txt += `%0a‎ Delivery Charge: ₹ ${encodeURIComponent(postData.selectedLocation.charge)} %0a `;
             }
-
-
+            let locUrl= null;
+            if(postData.loc?.lat && postData.loc?.lon){
+              locUrl = `https://www.google.com/maps/search/?api=1&query=${postData.loc.lat},${postData.loc.lon}`;
+              locUrl = encodeURIComponent(locUrl);
+            }
+            if(locUrl)
+              txt += `%0a‎ Location: ${locUrl} %0a`;
 
             txt += `%0a‎ Grand Total: ₹ *${this.grandTotal}* %0a`;
             txt += `%0a‎ ============== %0a`;
