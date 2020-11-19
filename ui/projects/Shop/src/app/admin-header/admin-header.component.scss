@@ -17,9 +17,11 @@ a:hover, a:active{
 .flex-right { margin-left: auto;}
 
 .navmenu {  
+  display: flex;
   a {
     margin-left: 20px;
-    font-weight: 100;
+    font-weight: 100;    
+    font-size: 14px
   }
   }
 .mat-toolbar {
@@ -29,6 +31,16 @@ a:hover, a:active{
   left: 0;
   width: 100%;
   background:none;
+}
+.ml-15 {margin-left:30px;}
+.mat-toolbar-row, .mat-toolbar-single-row {
+  height: 56px;
+}
+.profile-icon {
+  position: relative;
+  top: -1px;
+  left: 5px;
+  font-size: 22px;
 }
 @media(max-width: 959px){
   mat-toolbar{

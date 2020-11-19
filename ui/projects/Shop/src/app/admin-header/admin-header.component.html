@@ -24,11 +24,11 @@
         <a routerLink="/admin/deliveries"  routerLinkActive="active">Delivery Locations</a>
         <a routerLink="/admin/details"  routerLinkActive="active">Shop Info</a>
         <a routerLink="/admin/orders" routerLinkActive="active">Orders</a>
-        <div>
-          <button mat-button [matMenuTriggerFor]="menu">{{loggedUser.fname}}</button>
+        <div class="ml-15">
+          <button mat-button [matMenuTriggerFor]="menu">{{loggedUser.fname}} <mat-icon class="profile-icon">person</mat-icon> </button>
           <mat-menu #menu="matMenu">
-            <button mat-menu-item routerLink="/admin/edit-profile">Edit Profile</button>
-            <button mat-menu-item (click)="signOut()">Sign Out</button>
+            <button mat-menu-item routerLink="/admin/edit-profile"><mat-icon>perm_identity</mat-icon>Edit Profile</button>
+            <button mat-menu-item (click)="signOut()"><mat-icon>power_settings_new</mat-icon>Sign Out</button>
           </mat-menu>
         </div>
     </ng-container>
