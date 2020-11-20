@@ -8,15 +8,16 @@
 <ng-container *ngIf="(products$ | async) as products">
   <table class="responsive-table highlight">
     <thead>
-      <th class="w-80">
+      <th class="w-60">
         No.
+      </th>
+      <th class="w-80">
+        Image
       </th>
       <th>
         Name
       </th>
-      <th>
-        Image
-      </th>
+     
       <th class="w-180">
         Category
       </th>
@@ -34,12 +35,15 @@
             {{i + 1}}
           </td>
           <td>
-            <a href="javascript:{}" [routerLink]="'add/'+element.id" matTooltip="Click here to view or edit this product">{{element.name}}</a>
-          </td>
-          <td>
+            <div class="image-wrap">
             <span *ngIf="!element.shop_product_primary_variant?.shop_product_image?.image">--</span>
             <img *ngIf="element.shop_product_primary_variant?.shop_product_image?.image" [src]="environment.siteAddress+'/assets/shop/'+environment.shopKey+'/products/'+element.shop_product_primary_variant?.shop_product_image?.image" />
+          </div>
           </td>
+          <td>
+            <a href="javascript:{}" [routerLink]="'add/'+element.id" matTooltip="Click here to view or edit this product">{{element.name}}</a>
+          </td>
+          
           <td>
             {{ element.shop_product_category?.name}}
           </td>

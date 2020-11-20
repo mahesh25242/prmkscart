@@ -5,7 +5,7 @@
     {{ (product?.id) ? 'Edit '+product.name : 'Create New Product' }}
   </h1>
   <form [formGroup]="createProductFrm" (ngSubmit)="saveProduct()">
-  <div>
+ <mat-card class="p-20">
 
     <div class="col-s6">
         <ng-select [items]="(categories$ | async)"
@@ -160,7 +160,9 @@
               </mat-form-field>
             </div>
             <div>
+              <div class="image-wrap"> 
               <img *ngIf="stat.get('currImage').value" [src]="stat.get('currImage').value" [alt]="stat.get('currImage').value">
+            </div>
             </div>
             <div>
               <button (click)="fileInput.click()" type="button" mat-stroked-button color="primary">
@@ -184,7 +186,8 @@
           </div>
         </ng-container>
 
-      </ng-container></div>
+      </ng-container>
+    </mat-card>
 
   <div mat-dialog-actions align="end">
     <button type="submit" mat-raised-button  color="primary">Save changes</button>

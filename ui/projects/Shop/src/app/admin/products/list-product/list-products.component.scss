@@ -10,12 +10,25 @@
 }
 td, th {
 
-    padding: 15px;
+    padding: 6px 15px;
 }
 .mb-30 {
     margin-bottom: 20px;
 }
-
+.image-wrap {
+    height: 50px; width:50px;
+    overflow: hidden;
+    border:1px solid #eee;
+    border-radius: 5px;
+    img {
+        height:100%;
+    }
+    span {
+        text-align: center;
+    display: block;
+    line-height: 50px;
+    }
+}
 
 @media only screen and (min-width: 768px) {
 .w-80   { width: 80px;}
