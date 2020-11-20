@@ -69,8 +69,8 @@
     </div>
       <div class="m-15">
         <form [formGroup]="customerFrm">
-          <div >
-         <h3>Please select a delivery location</h3>
+          <div class="selectDelevery" >
+         <h3>Please choose your delivery location from below.</h3>
           </div>
           <div class="tab-delivery-options">
           <ng-container *ngIf="(shop$ | async) as shop">
