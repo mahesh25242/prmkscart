@@ -17,7 +17,8 @@ input {
 :host ::ng-deep {
   .mat-date-range-input-start-wrapper{
     overflow: inherit !important;
-    position: inherit !important;
+    top: -15px;
+    width: 50%;
   }
   input {
     margin-bottom: 0px;
