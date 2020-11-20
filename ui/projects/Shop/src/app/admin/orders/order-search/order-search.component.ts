@@ -26,11 +26,11 @@ export class OrderSearchComponent implements OnInit {
       this.search();
     }
   search(){
-    const startDate = (this.searchFrm.controls.start_date.value) ? this.datepipe.transform(this.searchFrm.controls.start_date.value, 'yyyy-MM-dd') : null;
-    const endDate = (this.searchFrm.controls.end_date.value) ? this.datepipe.transform(this.searchFrm.controls.end_date.value, 'yyyy-MM-dd') : null;
+    const startDate = (this.f.start_date.value) ? this.datepipe.transform(this.f.start_date.value, 'yyyy-MM-dd') : null;
+    const endDate = (this.f.end_date.value) ? this.datepipe.transform(this.f.end_date.value, 'yyyy-MM-dd') : null;
     const postData = {
       pageSize : (this.pageEvent?.pageSize) ? this.pageEvent?.pageSize : 20,
-      q: this.searchFrm.controls.q.value,
+      q: this.f.q.value,
       start_date: startDate,
       end_date: endDate,
     }
@@ -42,7 +42,7 @@ export class OrderSearchComponent implements OnInit {
     });
   }
 
-
+  get f(){ return this.searchFrm.controls}
   ngOnInit(): void {
     this.searchFrm = this.formBuilder.group({
       q: [null, []],

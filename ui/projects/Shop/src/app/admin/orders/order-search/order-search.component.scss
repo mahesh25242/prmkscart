@@ -1,7 +1,7 @@
 .grid-form-container {
     display: grid;
     grid-template-columns: 1fr 1fr 50px 50px;
-    column-gap: 20px;   
+    column-gap: 20px;
     max-width:60%;
     align-items: center;
 input {
@@ -10,6 +10,18 @@ input {
 .mat-form-field-infix {
     padding-bottom: 0px;
 }
+
+}
+
+
+:host ::ng-deep {
+  .mat-date-range-input-start-wrapper{
+    overflow: inherit !important;
+    position: inherit !important;
+  }
+  input {
+    margin-bottom: 0px;
+  }
 }
 
 @media only screen and (max-width: 768px) {
@@ -18,5 +30,5 @@ input {
         max-width:100%;
         margin-bottom: 30px;
     }
-    
+
 }
