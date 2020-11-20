@@ -1,5 +1,6 @@
 <div class="header-inner"></div>
 <div class="container">
+<<<<<<< HEAD
 <form [formGroup]="editProfileFrm" *ngIf="(loggedUser$ | async) as loggedUser" (ngSubmit)="updateProfile()">
   <!-- <img [src]="loggedUser.avatar" class="avatar-img img-thumbnail" /> -->
 
@@ -75,3 +76,82 @@
 </div>
 </form>
 </div>
+=======
+  <form [formGroup]="editProfileFrm" *ngIf="(loggedUser$ | async) as loggedUser" (ngSubmit)="updateProfile()">
+    <!-- <mat-card>
+      <h2>Created At: {{ loggedUser?.created_at |  date:'dd/MM/yy'}} </h2>
+      <h2>Last Login: {{ loggedUser?.last_login?.created_at  |  date:'dd/MM/yy'}} </h2>
+    </mat-card> -->
+    <mat-card>
+      <div class="grid-form-container">
+        <!-- <img [src]="loggedUser.avatar" class="avatar-img img-thumbnail" /> -->
+
+        <!-- <button (click)="fileInput.click()" type="button" mat-stroked-button color="primary">
+          <span>Choose Photo</span>
+          <input #fileInput type="file" (change)="onFileInput($event.target.files)"
+          style="display:none;"  accept="image/*" />
+        </button> -->
+
+
+
+
+
+
+        <mat-form-field class="full-width-text" appearance="standard">
+          <mat-label>First Name</mat-label>
+          <input matInput formControlName="fname" placeholder="Ex. John" required>
+          <mat-error *ngIf="f.fname.errors && f.fname.errors.error">
+            {{f.fname.errors.error}}
+          </mat-error>
+        </mat-form-field>
+
+        <mat-form-field class="full-width-text" appearance="standard">
+          <mat-label>Last Name</mat-label>
+          <input matInput formControlName="lname" placeholder="Ex. Doe">
+          <mat-error *ngIf="f.lname.errors && f.lname.errors.error">
+            {{f.lname.errors.error}}
+          </mat-error>
+        </mat-form-field>
+
+        <mat-form-field class="full-width-text" appearance="standard">
+          <mat-label>Mobile</mat-label>
+          <input type="tel" matInput formControlName="phone" placeholder="Ex. 9186569856" required>
+          <mat-error *ngIf="f.phone.errors && f.phone.errors.error">
+            {{f.phone.errors.error}}
+          </mat-error>
+        </mat-form-field>
+
+        <mat-form-field class="full-width-text" appearance="standard">
+          <mat-label>Email</mat-label>
+          <input type="email" matInput formControlName="email" placeholder="Ex. johndoe@gmail.com" required>
+          <mat-error *ngIf="f.email.errors && f.email.errors.error">
+            {{f.email.errors.error}}
+          </mat-error>
+        </mat-form-field>
+
+
+        <mat-checkbox formControlName="isChanegPassword">Change Password?</mat-checkbox>
+
+
+        <mat-form-field class="full-width-text" appearance="standard">
+          <mat-label>Password</mat-label>
+          <input type="password" matInput formControlName="password" placeholder="Ex. ********" required>
+          <mat-error *ngIf="f.password && f.password.errors && f.password.errors.error">
+            {{f.password.errors.error}}
+          </mat-error>
+        </mat-form-field>
+
+        <mat-form-field class="full-width-text" appearance="standard">
+          <mat-label>Confirm Password</mat-label>
+          <input type="password" matInput formControlName="password_confirmation" placeholder="Ex. ********" required>
+          <mat-error *ngIf="f.password_confirmation && f.password_confirmation.errors && f.password_confirmation.errors.error">
+            {{f.password_confirmation.errors.error}}
+          </mat-error>
+        </mat-form-field>
+
+      </div>
+    </mat-card>
+    <button type="submit" mat-raised-button color="primary">Submit</button>
+  </form>
+</div>
+>>>>>>> e959a34595c1261ffc7b0dd9340a21e0bfe34814

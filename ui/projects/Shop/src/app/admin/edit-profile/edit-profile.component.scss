@@ -1,4 +1,5 @@
 .container {
+<<<<<<< HEAD
     width:100%;
     max-width: calc(100% - 83px);
 }
@@ -51,3 +52,32 @@ input {
     }
     
 }
+=======
+  width:100%;
+  max-width: calc(100% - 83px);
+}
+.grid-form-container {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  column-gap: 20px;
+  align-items: flex-end;
+input {
+  margin-bottom: 0px;
+}
+}
+
+mat-card {
+  padding: 15px!important;
+  margin-bottom: 30px;
+
+}
+@media only screen and (max-width: 768px) {
+  .grid-form-container {
+      grid-template-columns:1fr;
+  }
+  .container {
+      max-width: calc(100% - 15px);
+  }
+
+}
+>>>>>>> e959a34595c1261ffc7b0dd9340a21e0bfe34814

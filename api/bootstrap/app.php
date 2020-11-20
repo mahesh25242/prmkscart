@@ -42,6 +42,10 @@ $app = new Laravel\Lumen\Application(
 |
 */
 
+use Dusterio\LumenPassport\LumenPassport;
+LumenPassport::allowMultipleTokens();
+
+
 $app->singleton(
     Illuminate\Contracts\Debug\ExceptionHandler::class,
     App\Exceptions\Handler::class
@@ -147,6 +151,7 @@ $app->configure('filesystems');
 $app->configure('dompdf');
 
 \Dusterio\LumenPassport\LumenPassport::routes($app, ['prefix' => 'v1/oauth']);
+
 
 $app->router->group([
     'namespace' => 'App\Http\Controllers',
