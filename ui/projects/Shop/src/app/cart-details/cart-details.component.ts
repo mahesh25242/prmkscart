@@ -136,9 +136,7 @@ export class CartDetailsComponent implements OnInit, OnDestroy {
               txt += `%0a‎ Order Note: ${encodeURIComponent(postData.note)}  `;
             }
 
-            if(postData.delivery_date){
-              txt += `%0a‎ Delivery Date: ${encodeURIComponent(postData.delivery_date)}  `;
-            }
+
 
             txt += `%0a‎ Delivery Point: ${encodeURIComponent(postData.selectedLocation.name)} `;
             if(postData.selectedLocation.need_cust_loc){
