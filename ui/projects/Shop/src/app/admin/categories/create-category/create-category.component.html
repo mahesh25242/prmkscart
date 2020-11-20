@@ -4,19 +4,12 @@
 </h1>
 <form [formGroup]="createCatFrm" (ngSubmit)="saveCategory()">
   <div mat-dialog-content>
+    <div class="grid-form-container">
       <mat-form-field class="full-width-text" appearance="standard">
         <mat-label>Name</mat-label>
         <input matInput formControlName="name" placeholder="Ex. Cake" required>
         <mat-error *ngIf="f.name.errors && f.name.errors.error">
           {{f.name.errors.error}}
-        </mat-error>
-      </mat-form-field>
-
-      <mat-form-field class="full-width-text" appearance="standard">
-        <mat-label>Description</mat-label>
-        <textarea matInput formControlName="description" placeholder="Ex. Cake related itesm listed under this"></textarea>
-        <mat-error *ngIf="f.description.errors && f.description.errors.error">
-          {{f.description.errors.error}}
         </mat-error>
       </mat-form-field>
 
@@ -32,7 +25,6 @@
         </mat-error>
       </mat-form-field>
 
-
       <mat-form-field class="full-width-text" appearance="standard">
         <mat-label>Sortorder</mat-label>
         <input type="number" matInput formControlName="sortorder" placeholder="Ex. 1" >
@@ -41,13 +33,20 @@
         </mat-error>
       </mat-form-field>
 
-      <mat-radio-group aria-label="Select an option" formControlName="is_maticon">
-        <mat-radio-button [value]="1" >Is Material Icon</mat-radio-button>
+      <mat-form-field class="col-item" appearance="standard">
+        <mat-label>Description</mat-label>
+        <textarea matInput formControlName="description" placeholder="Ex. Cake related itesm listed under this"></textarea>
+        <mat-error *ngIf="f.description.errors && f.description.errors.error">
+          {{f.description.errors.error}}
+        </mat-error>
+      </mat-form-field>
+
+      <mat-radio-group  class="align-self" aria-label="Select an option" formControlName="is_maticon">
+        <mat-radio-button [value]="1" >Is Material Icon</mat-radio-button> &nbsp; &nbsp;
         <mat-radio-button [value]="0">Icon Upload</mat-radio-button>
       </mat-radio-group>
 
-
-      <mat-form-field *ngIf="f.is_maticon.value">
+      <mat-form-field *ngIf="f.is_maticon.value" class="col-item2">
         <mat-select placeholder="Select icon" formControlName="icon">
           <mat-select-trigger>
             <mat-icon>{{f.icon.value?.icon}}</mat-icon> {{f.icon.value?.name}}
@@ -60,7 +59,7 @@
       </mat-form-field>
 
 
-
+<div>
       <button (click)="fileInput.click()" type="button" mat-stroked-button color="primary" *ngIf="!f.is_maticon.value">
         <span>Choose Icon</span>
         <input #fileInput type="file" (change)="handleIconSelection($event.target.files)"
@@ -69,10 +68,11 @@
       <mat-error *ngIf="f.icon.errors && f.icon.errors.error">
         {{f.icon.errors.error}}
       </mat-error>
-
+    </div>
+    </div>
 
   </div>
-  <div mat-dialog-actions>
+  <div mat-dialog-actions align="end">
     <button mat-stroked-button type="button" (click)="dialogRef.close()">Close</button>
     <button mat-raised-button color="primary" type="submit">Save changes</button>
   </div>

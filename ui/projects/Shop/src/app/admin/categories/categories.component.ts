@@ -29,9 +29,8 @@ export class CategoriesComponent implements OnInit {
   editCategory(cat: ShopProductCategory = null){
 
     let dialogRef = this.dialog.open(CreateCategoryComponent, {
-      data: cat,
-      height: '400px',
-      width: '600px',
+      data: cat,     
+     
     });
 
 

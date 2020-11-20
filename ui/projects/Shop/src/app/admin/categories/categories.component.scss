@@ -32,5 +32,9 @@ td, th {
     .container {
         max-width: calc(100% - 15px);
     }
+    tr {
+        border-right: 1px solid #eaeaea;
+       
+    }
 
 }
