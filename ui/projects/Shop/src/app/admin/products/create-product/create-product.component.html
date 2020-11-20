@@ -4,7 +4,7 @@
 <form [formGroup]="createProductFrm" (ngSubmit)="saveProduct()">
 <div mat-dialog-content>
 
-  <div>
+  <div class="col-s6">
       <ng-select [items]="(categories$ | async)"
       [ngClass]="{'is-invalid': ( f.shop_product_category_id.errors && f.shop_product_category_id.errors.error)}"
         bindLabel="name"
