@@ -88,10 +88,11 @@ class ShopsController extends Controller
         if($validator->fails()){
             return response(['message' => 'Validation errors', 'errors' =>  $validator->errors(), 'status' => false], 422);
         }
-
+        $phone = $request->input("phone", '');
+        $phone = $request->input("country_id.phonecode", '91').$phone;
         $shopInput = [
             "name" => $request->input("name", ''),
-            "phone" => $request->input("phone", ''),
+            "phone" => $phone,
             "address" => $request->input("address", ''),
             "pin" => $request->input("pin", ''),
             "country_id" => $request->input("country_id.id", 0),

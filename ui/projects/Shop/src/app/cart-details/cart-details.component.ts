@@ -163,11 +163,11 @@ export class CartDetailsComponent implements OnInit, OnDestroy {
             let ret;
             if(bp.matches){
               ret = {
-                url: `https://api.whatsapp.com/send?phone=${orderRes.shop_customer.phone}&text=${txt}`
+                url: `https://api.whatsapp.com/send?phone=${shop.phone}&text=${txt}`
               }
             }else{
               ret = {
-                url: `https://web.whatsapp.com/send?phone=${orderRes.shop_customer.phone}&text=${txt}`
+                url: `https://web.whatsapp.com/send?phone=${shop.phone}&text=${txt}`
               }
             }
             return ret;
