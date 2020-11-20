@@ -29,6 +29,10 @@ a:hover, a:active{
   left: 0;
   width: 100%;
   background:none;
+  height: 56px;
+  a{
+    font-size: 14px;
+  }
 }
 @media(max-width: 959px){
   mat-toolbar{
