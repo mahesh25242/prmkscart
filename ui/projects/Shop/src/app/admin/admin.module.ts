@@ -9,6 +9,7 @@ import { HomeComponent } from './home/home.component';
 import { CategoriesComponent } from './categories/categories.component';
 import { CategoriesResolver } from './categories/categories-resolver';
 import { ProductsComponent } from './products/products.component';
+import { ListProductsComponent } from './products/list-product/list-products.component';
 import { ProductsResolver } from './products/products-resolver';
 import { EditProfileComponent } from './edit-profile/edit-profile.component';
 import { CreateCategoryComponent } from './categories/create-category/create-category.component';
@@ -24,7 +25,7 @@ import { OrderSearchComponent } from './orders/order-search/order-search.compone
 import { SearchProductComponent } from './products/search-product/search-product.component';
 
 @NgModule({
-  declarations: [  AdminComponent, SignInComponent, HomeComponent, CategoriesComponent, ProductsComponent, EditProfileComponent, CreateCategoryComponent, CreateProductComponent, ShopDeliveryComponent, CreateShopDeliveryComponent, ShopDetailsComponent, OrdersComponent, OrderDetailsComponent, OrderSearchComponent, SearchProductComponent],
+  declarations: [  AdminComponent, SignInComponent, HomeComponent, CategoriesComponent, ProductsComponent, ListProductsComponent, EditProfileComponent, CreateCategoryComponent, CreateProductComponent, ShopDeliveryComponent, CreateShopDeliveryComponent, ShopDetailsComponent, OrdersComponent, OrderDetailsComponent, OrderSearchComponent, SearchProductComponent],
   imports: [
     CommonModule,
     AdminRoutingModule,

@@ -36,6 +36,7 @@
               <span matTooltip="Products count"> ( {{element.shop_product_count}} )</span>
             </td>
             <td>
+              <span *ngIf="!element.icon">--</span>
               <mat-icon *ngIf="element.is_maticon && element.icon">{{element.icon}}</mat-icon>
               <img class="img-thumbnail" *ngIf="!element.is_maticon && element.icon" [src]="environment.siteAddress+'/assets/shop/'+environment.shopKey+'/category/'+element.icon" />
             </td>

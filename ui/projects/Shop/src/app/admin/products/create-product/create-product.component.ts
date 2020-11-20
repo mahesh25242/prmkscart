@@ -1,14 +1,17 @@
 import { Component, Inject, Input, OnDestroy, OnInit } from '@angular/core';
 import { FormArray, FormBuilder, FormControl, FormGroup } from '@angular/forms';
-import { Observable, Subscription } from 'rxjs';
-import { mergeMap } from 'rxjs/operators';
-import { ShopProductService, ShopProductCategoryService } from 'src/app/lib/services';
+import { empty, from, Observable, of, Subscription } from 'rxjs';
+import { map, mergeMap } from 'rxjs/operators';
+import { ShopProductService, ShopProductCategoryService, GeneralService } from 'src/app/lib/services';
 import Notiflix from "notiflix";
 import { ShopProduct, ShopProductCategory } from 'src/app/lib/interfaces';
 
 import { environment } from '../../../../environments/environment';
-import {MatDialogRef, MAT_DIALOG_DATA} from '@angular/material/dialog';
+//import {MatDialogRef, MAT_DIALOG_DATA} from '@angular/material/dialog';
 import { PageEvent } from '@angular/material/paginator';
+import { ActivatedRoute, Router } from '@angular/router';
+import { find } from 'lodash';
+
 
 
 @Component({
@@ -17,7 +20,7 @@ import { PageEvent } from '@angular/material/paginator';
   styleUrls: ['./create-product.component.scss']
 })
 export class CreateProductComponent implements OnInit, OnDestroy {
-
+  product: ShopProduct;
   createProductFrm: FormGroup;
   statuses = [
     {
@@ -47,11 +50,16 @@ export class CreateProductComponent implements OnInit, OnDestroy {
 
   saveProdSubScr: Subscription;
   formPathSubScr: Subscription;
+  productSubScr: Subscription;
   constructor(private formBuilder: FormBuilder,
     private shopProductService: ShopProductService,
     private shopProductCategoryService: ShopProductCategoryService,
-    @Inject(MAT_DIALOG_DATA) public data: {product: ShopProduct, pageEvent: PageEvent},
-    public dialogRef: MatDialogRef<CreateProductComponent>) { }
+    private route:ActivatedRoute,
+    private generalService: GeneralService,
+    private router: Router,
+    //@Inject(MAT_DIALOG_DATA) public data: {product: ShopProduct, pageEvent: PageEvent},
+    //public dialogRef: MatDialogRef<CreateProductComponent>
+    ) { }
 
   get f() { return this.createProductFrm.controls}
 
@@ -89,17 +97,12 @@ export class CreateProductComponent implements OnInit, OnDestroy {
 
 
 
-    this.saveProdSubScr = this.shopProductService.createProduct(formData).pipe(mergeMap(res=>{
-      const pageIndex = (this.data?.pageEvent?.pageIndex) ? this.data?.pageEvent?.pageIndex : 0;
-      return this.shopProductService.listproducts((pageIndex + 1), {
-        pageSize: this.data.pageEvent?.pageSize
-      });
-
-    })).subscribe(res=>{
+    this.saveProdSubScr = this.shopProductService.createProduct(formData).subscribe(res=>{
 
       Notiflix.Loading.Remove();
       Notiflix.Notify.Success(`Successfully saved product `);
-      this.dialogRef.close();
+      this.router.navigate([`/admin/products/0`]);
+      //this.dialogRef.close();
     }, error=>{
 
       Notiflix.Loading.Remove();
@@ -139,16 +142,19 @@ export class CreateProductComponent implements OnInit, OnDestroy {
     let validation = true;
     if(!stat.controls.name.value){
       validation = false;
-      stat.controls.name.setErrors({"error": 'The variant name field is required'})
+      stat.controls.name.setErrors({"error": 'The variant name field is required'});
+      stat.controls.name.markAsTouched()
     }
     if(!stat.controls.price.value && stat.controls.price.value !== 0){
       validation = false;
-      stat.controls.name.setErrors({"error": 'The price field is required'})
+      stat.controls.price.setErrors({"error": 'The price field is required'})
+      stat.controls.price.markAsTouched()
     }
 
     if(stat.controls.actual_price.value && (stat.controls.actual_price.value < stat.controls.price.value)){
       validation = false;
       stat.controls.price.setErrors({"error": 'Sale price is greater than actual price'})
+      stat.controls.price.markAsTouched()
     }
     if(validation){
       this.varients.push(this.formBuilder.group(this.varientFormBuild()));
@@ -192,20 +198,38 @@ export class CreateProductComponent implements OnInit, OnDestroy {
 
 
 
+    this.productSubScr = this.route.params.pipe(mergeMap(res=>{
+      const id = parseInt(res.id, 10);
+      if(id){
+        return this.shopProductService.products.pipe(map(products =>{
+          const product = find(products.data, (res) => res.id==id);
+          return product;
+        }));
+      }else{
+        return of(null);
+      }
 
+    })).subscribe(product=> {
+      this.product = product;
+    this.generalService.bc$.next({
+      siteName: environment.siteName,
+      title: `${(this.product?.id) ? `Edit ${this.product.name}` : `Create new product`}`,
+      url:'',
+      backUrl: 'admin/products/0'
+    });
 
 
       this.varients.controls = [];
       this.createProductFrm.patchValue({
-        id: (this.data.product?.id) ? this.data.product?.id : 0,
-        name: (this.data.product?.name) ? this.data.product?.name : '',
-        description: (this.data.product?.description) ? this.data.product?.description : '',
-        status: (this.data.product?.status >= 0) ? this.data.product?.status : 1,
-        sortorder: (this.data.product?.sortorder) ? this.data.product?.sortorder : 1,
-        shop_product_category_id: (this.data.product?.shop_product_category?.id) ? this.data.product?.shop_product_category : null,
+        id: (this.product?.id) ? this.product?.id : 0,
+        name: (this.product?.name) ? this.product?.name : '',
+        description: (this.product?.description) ? this.product?.description : '',
+        status: (this.product?.status >= 0) ? this.product?.status : 1,
+        sortorder: (this.product?.sortorder) ? this.product?.sortorder : 1,
+        shop_product_category_id: (this.product?.shop_product_category?.id) ? this.product?.shop_product_category : null,
       });
-      if(this.data.product?.shop_product_variant){
-        this.data.product.shop_product_variant.map(vrnt =>{
+      if(this.product?.shop_product_variant){
+        this.product.shop_product_variant.map(vrnt =>{
           let img=null;
           if(vrnt?.shop_product_image?.image)
             img = `${environment.siteAddress}/assets/shop/${environment.shopKey}/products/${vrnt.shop_product_image.image}`;
@@ -218,8 +242,19 @@ export class CreateProductComponent implements OnInit, OnDestroy {
         this.varients.controls = [];
         this.varients.push(this.formBuilder.group(this.varientFormBuild()));
       }
+    });
 
 
+
+
+
+  }
+
+  setPrimary( stat: FormControl){
+    this.varients.controls.map((res: FormGroup)=> {
+      res.controls.is_primary.setValue(0);
+    })
+    stat.get('is_primary').setValue(1);
   }
 
   ngOnDestroy(){
@@ -228,6 +263,9 @@ export class CreateProductComponent implements OnInit, OnDestroy {
     }
     if(this.formPathSubScr){
       this.formPathSubScr.unsubscribe();
+    }
+    if(this.productSubScr){
+      this.productSubScr.unsubscribe();
     }
   }
 }

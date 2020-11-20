@@ -14,6 +14,8 @@ import { ShopDetailsComponent } from './shop-details/shop-details.component';
 import { OrdersComponent } from './orders/orders.component';
 import { OrdersResolver } from './orders/orders-resolver';
 import { AdminComponent } from './admin.component';
+import { CreateProductComponent } from './products/create-product/create-product.component';
+import { ListProductsComponent } from './products/list-product/list-products.component';
 
 
 
@@ -41,13 +43,26 @@ const routes: Routes = [
         }
       },
       {
-        path: 'products',
+        path: 'products/:page',
         component: ProductsComponent,
         canActivate: [AdminAuthGuard],
         resolve:{
           products: ProductsResolver
-        }
+        },
+        children:[
+          {
+            path: '',
+            component: ListProductsComponent,
+          },
+          {
+            path: 'add/:id',
+            component: CreateProductComponent,
+          },
+        ],
+
+        runGuardsAndResolvers: 'always',
       },
+
       {
         path: 'deliveries',
         component: ShopDeliveryComponent,
