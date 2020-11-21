@@ -107,26 +107,22 @@ export class CartDetailsComponent implements OnInit, OnDestroy {
             Breakpoints.Tablet
           ]).pipe(map(bp =>{
             let txt = `%0a‎ Order from *${postData.name}*`;
-            txt += `%0a‎ Order Number: *${encodeURIComponent(`#${orderRes.id}`)}*`;
 
+            txt += `%0a‎ Order: *${encodeURIComponent(`#${orderRes.id}`)}* ( ${cart.length} ${ (cart.length > 1) ? 'items' : 'item' } )`;
+            if(postData.phone){
+              txt += `%0a‎ Phone: ${encodeURIComponent(postData.phone)}  `;
+            }
             cart.map((itm, idx)=>{
-              txt += `%0a‎ Product - ${encodeURIComponent(idx+1)}: ${encodeURIComponent(itm.product.name)} `;
+              txt += `%0a‎ *${encodeURIComponent(itm.product.name)}* `;
               if(itm.message){
                 txt += `%0a‎ Message: ${encodeURIComponent(itm.message)} `;
               }
               txt += `%0a‎ Varient Name: ${encodeURIComponent(itm.product.shop_product_selected_variant.name)} `;
               txt += `%0a‎ Quantity: ${encodeURIComponent(itm.qty)} `;
-              txt += `%0a‎ Price: ₹ ${encodeURIComponent(itm.price)} `;
+              txt += `%0a‎ Price: ₹ *${encodeURIComponent(itm.price)}* `;
               txt += `%0a‎ ============== `;
             });
-            txt += `%0a‎ ${ cart.length }  ${ (cart.length > 1) ? 'items' : 'item' } `;
-            if(postData.name){
-              txt += `%0a‎ Customer Name: ${encodeURIComponent(postData.name)}  `;
-            }
-
-            if(postData.phone){
-              txt += `%0a‎ Phone: ${encodeURIComponent(postData.phone)}  `;
-            }
+            //txt += `%0a‎ ${ cart.length }  ${ (cart.length > 1) ? 'items' : 'item' } `;
 
             if(postData.delivery_date){
               txt += `%0a‎ Delivered On: ${encodeURIComponent(postData.delivery_date)}  `;
@@ -156,7 +152,7 @@ export class CartDetailsComponent implements OnInit, OnDestroy {
 
             txt += `%0a‎ Grand Total: ₹ *${this.grandTotal}* %0a`;
             txt += `%0a‎ ============== %0a`;
-            txt += `%0a‎ *Confirm order via reply or call* %0a`;
+            txt += `%0a‎ *Order confirmation through reply/call* %0a`;
 
             let ret;
             if(bp.matches){
