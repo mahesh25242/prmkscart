@@ -17,7 +17,8 @@
   <div class="grid-form-container">
   <mat-form-field class="full-width-text" appearance="standard">
     <mat-label>First Name</mat-label>
-    <input matInput formControlName="fname" placeholder="Ex. John" required>
+    <input matInput formControlName="fname" placeholder="Ex. John" required maxlength="200">
+    <mat-hint align="end" *ngIf="f.fname?.value?.length">{{f.fname?.value?.length}} / 200</mat-hint>
     <mat-error *ngIf="f.fname.errors && f.fname.errors.error">
       {{f.fname.errors.error}}
     </mat-error>
@@ -25,7 +26,8 @@
 
   <mat-form-field class="full-width-text" appearance="standard">
     <mat-label>Last Name</mat-label>
-    <input matInput formControlName="lname" placeholder="Ex. Doe">
+    <input matInput formControlName="lname" placeholder="Ex. Doe" maxlength="200">
+    <mat-hint align="end" *ngIf="f.lname?.value?.length">{{f.lname?.value?.length}} / 200</mat-hint>
     <mat-error *ngIf="f.lname.errors && f.lname.errors.error">
       {{f.lname.errors.error}}
     </mat-error>
@@ -41,7 +43,8 @@
 
   <mat-form-field class="full-width-text" appearance="standard">
     <mat-label>Email</mat-label>
-    <input type="email" matInput formControlName="email" placeholder="Ex. johndoe@gmail.com" required>
+    <input type="email" matInput formControlName="email" placeholder="Ex. johndoe@gmail.com" required maxlength="200">
+    <mat-hint align="end" *ngIf="f.email?.value?.length">{{f.email?.value?.length}} / 200</mat-hint>
     <mat-error *ngIf="f.email.errors && f.email.errors.error">
       {{f.email.errors.error}}
     </mat-error>
@@ -53,7 +56,8 @@
 
   <mat-form-field class="full-width-text" appearance="standard">
     <mat-label>Password</mat-label>
-    <input type="password" matInput formControlName="password" placeholder="Ex. ********" required>
+    <input type="password" matInput formControlName="password" placeholder="Ex. ********" required maxlength="200">
+    <mat-hint align="end" *ngIf="f.password?.value?.length">{{f.password?.value?.length}} / 200</mat-hint>
     <mat-error *ngIf="f.password && f.password.errors && f.password.errors.error">
       {{f.password.errors.error}}
     </mat-error>
@@ -61,7 +65,8 @@
 
   <mat-form-field class="full-width-text" appearance="standard">
     <mat-label>Confirm Password</mat-label>
-    <input type="password" matInput formControlName="password_confirmation" placeholder="Ex. ********" required>
+    <input type="password" matInput formControlName="password_confirmation" placeholder="Ex. ********" required maxlength="200">
+    <mat-hint align="end" *ngIf="f.password_confirmation?.value?.length">{{f.password_confirmation?.value?.length}} / 200</mat-hint>
     <mat-error *ngIf="f.password_confirmation && f.password_confirmation.errors && f.password_confirmation.errors.error">
       {{f.password_confirmation.errors.error}}
     </mat-error>

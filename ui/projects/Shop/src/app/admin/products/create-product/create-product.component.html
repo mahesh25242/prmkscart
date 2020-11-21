@@ -22,7 +22,8 @@
       <div class="product-grid-admin-bs-1">
       <mat-form-field class="full-width-text" appearance="standard">
         <mat-label>Name</mat-label>
-        <input matInput formControlName="name" placeholder="Ex. Black Forest" required>
+        <input matInput formControlName="name" placeholder="Ex. Black Forest" required maxlength="200">
+        <mat-hint align="end" *ngIf="f.name?.value?.length">{{f.name?.value?.length}} / 200</mat-hint>
         <mat-error *ngIf="f.name.errors && f.name.errors.error">
           {{f.name.errors.error}}
         </mat-error>
@@ -31,7 +32,8 @@
 
       <mat-form-field class="full-width-text" appearance="standard">
         <mat-label>Description /  Ingredients</mat-label>
-        <textarea matInput formControlName="description" placeholder="Description /  Ingredients"></textarea>
+        <textarea matInput formControlName="description" placeholder="Description /  Ingredients" maxlength="200"></textarea>
+        <mat-hint align="end" *ngIf="f.description?.value?.length">{{f.description?.value?.length}} / 200</mat-hint>
         <mat-error *ngIf="f.description.errors && f.description.errors.error">
           {{f.description.errors.error}}
         </mat-error>
@@ -111,7 +113,8 @@
 
               <mat-form-field class="full-width-text" appearance="standard">
                 <mat-label>Name</mat-label>
-                <input matInput formControlName="name" placeholder="Ex. 1 Kg" required>
+                <input matInput formControlName="name" placeholder="Ex. 1 Kg" required maxlength="200">
+                <mat-hint align="end" *ngIf="stat.get('name').value?.length">{{stat.get('name').value?.length}} / 200</mat-hint>
                 <mat-error *ngIf="stat.get('name').errors && stat.get('name').errors.error">
                   {{stat.get('name').errors.error}}
                 </mat-error>
@@ -122,7 +125,8 @@
 
               <mat-form-field class="full-width-text" appearance="standard">
                 <mat-label>Description</mat-label>
-                <textarea matInput formControlName="description" placeholder="Ex. descrtion about varient"></textarea>
+                <textarea matInput formControlName="description" placeholder="Ex. descrtion about varient" maxlength="200"></textarea>
+                <mat-hint align="end" *ngIf="stat.get('description').value?.length">{{stat.get('description').value?.length}} / 200</mat-hint>
                 <mat-error *ngIf="stat.get('description').errors && stat.get('description').errors.error">
                   {{stat.get('description').errors.error}}
                 </mat-error>

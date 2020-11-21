@@ -4,7 +4,9 @@
 
       <mat-form-field class="full-width-text" appearance="standard">
         <mat-label>Message</mat-label>
-        <textarea matInput formControlName="message" placeholder="Ex. Happy Birth Day John Doe"></textarea>
+        <textarea matInput formControlName="message"
+         placeholder="Ex. Happy Birth Day John Doe" maxlength="200"></textarea>
+         <mat-hint align="end" *ngIf="f.message?.value?.length">{{f.message.value.length}} / 200</mat-hint>
         <mat-error *ngIf="f.message.errors && f.message.errors.error">
           {{f.message.errors.error}}
         </mat-error>

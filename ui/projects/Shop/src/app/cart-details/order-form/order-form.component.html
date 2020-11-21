@@ -4,7 +4,7 @@
 <div class="grid-form" *ngIf="data.selectedLocation?.id" [formGroup]="data.customerFrm">
   <mat-form-field class="full-width-text" appearance="standard">
     <mat-label>Full Name</mat-label>
-    <input matInput formControlName="name" placeholder="Ex. John Doe" required>
+    <input matInput formControlName="name" placeholder="Ex. John Doe" required maxlength="200">
     <mat-error *ngIf="f.name.invalid">
       {{f.name.errors.error}}
     </mat-error>
@@ -23,7 +23,7 @@
 
   <mat-form-field class="full-width-text" appearance="standard">
     <mat-label>Phone</mat-label>
-    <input type="tel" matInput formControlName="phone" placeholder="Ex. 91546542465" required>
+    <input type="tel" matInput formControlName="phone" placeholder="Ex. 91546542465" required maxlength="200">
     <mat-error *ngIf="f.phone.errors && f.phone.errors.error">
       {{f.phone.errors.error}}
     </mat-error>
@@ -39,7 +39,7 @@
     <a *ngIf="data.mapUrl" [href]="data.mapUrl" target="_blank">Map</a>
     <mat-form-field class="full-width-text" appearance="standard">
       <mat-label>Address</mat-label>
-      <textarea matInput formControlName="address" placeholder="Ex. House Name/ Number" required></textarea>
+      <textarea matInput formControlName="address" placeholder="Ex. House Name/ Number" required maxlength="200"></textarea>
       <mat-error *ngIf="f.address.errors && f.address.errors.error">
         {{f.address.errors.error}}
       </mat-error>
@@ -50,7 +50,7 @@
 
     <mat-form-field class="full-width-text" appearance="standard">
       <mat-label>Pin Code</mat-label>
-      <input type="number" matInput formControlName="pin" placeholder="Ex. 658956" required>
+      <input type="number" matInput formControlName="pin" placeholder="Ex. 658956" required maxlength="200">
       <mat-error *ngIf="f.pin.errors && f.pin.errors.error">
         {{f.pin.errors.error}}
       </mat-error>
@@ -63,7 +63,7 @@
 
   <mat-form-field appearance="standard">
     <mat-label>Delivery Date </mat-label>
-    <input [min]="todayDate" matInput [matDatepicker]="picker" formControlName="delivery_date">
+    <input [min]="todayDate" matInput [matDatepicker]="picker" formControlName="delivery_date" maxlength="150">
     <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
     <mat-datepicker #picker touchUi></mat-datepicker>
   </mat-form-field>
@@ -92,7 +92,8 @@
 </div>
   <mat-form-field class="full-width-text" appearance="standard">
     <mat-label>Order Note</mat-label>
-    <textarea matInput formControlName="note" placeholder="Any additional note"></textarea>
+    <textarea matInput formControlName="note" placeholder="Any additional note" maxlength="200"></textarea>
+    <mat-hint align="end" *ngIf="f.note?.value?.length">{{f.note?.value?.length}} / 200</mat-hint>
     <mat-error *ngIf="f.note.errors && f.note.errors.error">
       {{f.note.errors.error}}
     </mat-error>

@@ -8,7 +8,8 @@
 <div class="grid-form-container">
   <mat-form-field class="full-width-text" appearance="standard">
     <mat-label>Name</mat-label>
-    <input matInput formControlName="name" placeholder="Ex. KFC" required>
+    <input matInput formControlName="name" placeholder="Ex. KFC" required maxlength="200">
+    <mat-hint align="end" *ngIf="f.name?.value?.length">{{f.name?.value?.length}} / 200</mat-hint>
     <mat-error *ngIf="f.name.errors && f.name.errors.error">
       {{ f.name.errors.error }}
     </mat-error>
@@ -16,13 +17,14 @@
 
   <mat-form-field class="full-width-text" appearance="standard">
     <mat-label>Email</mat-label>
-    <input matInput formControlName="email" placeholder="Ex. kfc@gmail.com">
+    <input matInput formControlName="email" placeholder="Ex. kfc@gmail.com" maxlength="200">
+    <mat-hint align="end" *ngIf="f.email?.value?.length">{{f.email?.value?.length}} / 200</mat-hint>
     <mat-error *ngIf="f.email.errors && f.email.errors.error">
       {{ f.email.errors.error }}
     </mat-error>
   </mat-form-field>
 
-  
+
 
   <div>
     <ng-select [items]="(countries$ | async)"
@@ -58,18 +60,20 @@
         {{ f.phone.errors.error }}
       </mat-error>
     </mat-form-field>
-  
+
     <mat-form-field class="full-width-text" appearance="standard">
       <mat-label>Address</mat-label>
-      <input matInput formControlName="address" placeholder="Ex. Kochi" required>
+      <input matInput formControlName="address" placeholder="Ex. Kochi" required maxlength="200">
+      <mat-hint align="end" *ngIf="f.address?.value?.length">{{f.address?.value?.length}} / 200</mat-hint>
       <mat-error *ngIf="f.address.errors && f.address.errors.error">
         {{ f.address.errors.error }}
       </mat-error>
     </mat-form-field>
-  
+
     <mat-form-field class="full-width-text" appearance="standard">
       <mat-label>Pin</mat-label>
-      <input matInput formControlName="pin" placeholder="Ex. 566456" required>
+      <input matInput formControlName="pin" placeholder="Ex. 566456" required maxlength="200">
+      <mat-hint align="end" *ngIf="f.pin?.value?.length">{{f.pin?.value?.length}} / 200</mat-hint>
       <mat-error *ngIf="f.pin.errors && f.pin.errors.error">
         {{ f.pin.errors.error }}
       </mat-error>
