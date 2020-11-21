@@ -160,7 +160,7 @@
               </mat-form-field>
             </div>
             <div>
-              <div class="image-wrap"> 
+              <div class="image-wrap">
               <img *ngIf="stat.get('currImage').value" [src]="stat.get('currImage').value" [alt]="stat.get('currImage').value">
             </div>
             </div>
@@ -170,6 +170,7 @@
                 <input #fileInput type="file" (change)="handleImageSelection(stat, $event.target.files)"
                 style="display:none;"  accept="image/*" />
               </button>&nbsp; &nbsp;
+                (350 x 224)
               <!-- <a [href]="stat.get('currImage').value" target="_blank" *ngIf="stat.get('currImage').value">View image</a> -->
 
             </div>

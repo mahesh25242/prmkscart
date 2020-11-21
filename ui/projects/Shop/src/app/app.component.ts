@@ -39,7 +39,7 @@ export class AppComponent implements OnInit{
     this.router.events.subscribe((event: Event) => {
       switch (true) {
         case event instanceof NavigationStart: {
-          Notiflix.Loading.Arrows();
+          Notiflix.Loading.Pulse();
           break;
         }
         case event instanceof NavigationEnd:
