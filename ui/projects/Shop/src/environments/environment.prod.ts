@@ -1,4 +1,4 @@
-import { environment as env  } from '../../../../src/environments/environment';
+import { environment as env  } from '../../../../src/environments/environment.prod';
 
 export const environment = {
   production: true,

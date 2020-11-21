@@ -1,7 +1,7 @@
 .grid-my-list {
     display: grid;
-   
-    grid-column-gap: 6px;    
+
+    grid-column-gap: 6px;
     padding: 0 10px!important;
     margin-bottom: 12px;
     min-height: 67px;
@@ -38,7 +38,7 @@
     }
 }
 
-.order-total{   
+.order-total{
     background: #00E777;
     padding: 15px;
     border-radius: 5px;
@@ -55,7 +55,7 @@
     }
 }
 .grid-form {
-    display: grid;    
+    display: grid;
     grid-template-columns: 1fr 1fr 1fr;
     column-gap:30px;
 
@@ -91,9 +91,9 @@
 svg {
     width:25px;
     margin-right: 8px;
-    
+
 }
-.actionBtn {   
+.actionBtn {
     margin-top: 30px;
     .example-section {margin-left: auto;}
 }
@@ -102,7 +102,7 @@ margin-top: 15px;
     h3,h4,p { margin-bottom: 0;}
     background: #FFF;
     padding: 15px;
-    border-radius: 5px;  
+    border-radius: 5px;
     border:#ddd 1px solid;
     position: relative;
     .right-position {
@@ -129,7 +129,7 @@ margin-top: 15px;
         min-width: 94vw!important;
     }
     .grid-form {
-        display: grid;    
+        display: grid;
         grid-template-columns: 1fr ;
        }
        .mat-dialog-content {
@@ -147,7 +147,7 @@ margin-top: 15px;
         display: none;
     }
     .actionBtn {
-         
+
         .example-section {display: table;
             margin: 0 auto;
             max-width: 222px;
@@ -156,7 +156,7 @@ margin-top: 15px;
                 margin-top:20px;
                 margin-bottom: 20px;
             }
-        }  
+        }
 
     }
 }
@@ -172,8 +172,8 @@ margin-top: 15px;
         }
     }
     .actionBtn {
-        display: flex;  
-            
+        display: flex;
+
     }
     .d-block-lg {
         display: block;
@@ -186,3 +186,32 @@ margin-top: 15px;
         align-items:center;
     }
 }
+
+.veg {
+  border: 2px solid #35D200;
+  &::after{
+    content: '';
+    border-radius:50%;
+    position: relative;
+    top:2px;
+    left:2px;
+    display: block;
+    background-color:#35D200 ;
+    width:8px;
+    height: 8px;
+  }
+}
+.nonveg {
+  border: 2px solid#FF0000;
+    &::after{
+      content: '';
+      border-radius:50%;
+      position: relative;
+      top:2px;
+      left:2px;
+      display: block;
+    background-color:#FF0000 ;
+    width:8px;
+    height: 8px;
+    }
+  }

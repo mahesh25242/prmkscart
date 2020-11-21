@@ -10,12 +10,15 @@
     <div mat-dialog-content>
 
       <mat-card *ngFor="let item of cart" class="grid-my-list">
-        <div><img [src]="(item.product?.shop_product_selected_variant?.shop_product_image?.image) ? environment.siteAddress+'/assets/shop/'+environment.shopKey+'/products/'+ item.product?.shop_product_selected_variant.shop_product_image.image: 'assets/no-image.jpg'"></div>
+        <div>
+          <div *ngIf="item.product?.shop_product_selected_variant?.type.id" mat-card-avatar [ngClass]="{'veg': item.product?.shop_product_selected_variant?.type.id == 1, 'nonveg': item.product?.shop_product_selected_variant?.type.id == 2}"></div>
+          <img [src]="(item.product?.shop_product_selected_variant?.shop_product_image?.image) ? environment.siteAddress+'/assets/shop/'+environment.shopKey+'/products/'+ item.product?.shop_product_selected_variant.shop_product_image.image: 'assets/no-image.jpg'">
+        </div>
         <div >
        <h4 class="cart-item-header pl-1"> {{item.product.name}}</h4>
         <b class="block pl-1">₹ {{item.price}}</b>
        <small class="block pl-1">{{item.product.shop_product_selected_variant.name}}</small>
-       <small class="block pl-1"> {{item.message}}</small>      
+       <small class="block pl-1"> {{item.message}}</small>
        <div class="d-none-lg">
        <button mat-icon-button color="primary" (click)="updateCart(item, '-')">
         <mat-icon>remove_circle_outline</mat-icon>
@@ -39,7 +42,7 @@
 <div>
 
    <!-- <ng-container *ngIf="item.message"> -->
-    <div>    
+    <div>
       <button mat-icon-button color="primary" (click)="editMessage(item)">
         <mat-icon>add_comment</mat-icon>
       </button>
