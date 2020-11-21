@@ -276,7 +276,8 @@
             "aot": true,
             "assets": [
               "projects/Shop/src/favicon.ico",
-              "projects/Shop/src/assets"
+              "projects/Shop/src/assets",
+              "projects/Shop/src/manifest.webmanifest"
             ],
             "styles": [
               "./node_modules/@angular/material/prebuilt-themes/indigo-pink.css",
@@ -311,7 +312,9 @@
                   "maximumWarning": "6kb",
                   "maximumError": "10kb"
                 }
-              ]
+              ],
+              "serviceWorker": true,
+              "ngswConfigPath": "projects/Shop/ngsw-config.json"
             }
           }
         },
@@ -341,7 +344,8 @@
             "karmaConfig": "projects/Shop/karma.conf.js",
             "assets": [
               "projects/Shop/src/favicon.ico",
-              "projects/Shop/src/assets"
+              "projects/Shop/src/assets",
+              "projects/Shop/src/manifest.webmanifest"
             ],
             "styles": [
               "./node_modules/@angular/material/prebuilt-themes/indigo-pink.css",
