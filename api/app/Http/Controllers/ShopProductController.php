@@ -6,6 +6,7 @@ use Illuminate\Support\Facades\Auth;
 use Validator;
 use Image;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Str;
 
 class ShopProductController extends Controller
 {
@@ -135,8 +136,8 @@ class ShopProductController extends Controller
                 $productImg = null;
 
                 if ($request->hasFile("variants.{$ind}.image")) {
-
-                    $productImg = sprintf("%s.%s",time(), $request->file("variants.{$ind}.image")->extension());
+                    $uniqid = Str::random(9);
+                    $productImg = sprintf("%s.%s",time().$uniqid, $request->file("variants.{$ind}.image")->extension());
                     $destinationPath = "assets/shop/".$shopProduct->shop->shop_key.'/products';
                     $request->file("variants.{$ind}.image")->move($destinationPath, $productImg);
 
@@ -156,11 +157,12 @@ class ShopProductController extends Controller
                         Storage::disk('public')->put("shop/{$shopProduct->shop->shop_key}/products/index.html", 'unauthorised access');
                     }
 
-                    $img = Image::make($destinationPath.'/'.$productImg)->resize(150, null, function ($constraint) {
+                    $img = Image::make($destinationPath.'/'.$productImg)->resize(350, null, function ($constraint) {
                         $constraint->aspectRatio();
                     });
                     $img->save($destinationPath.'/'.$productImg, 60);
                 }
+
                 if($productImg){
                     $shopProductImage = \App\ShopProductImage::where("shop_product_id", $shopProduct->id)
                     ->where("shop_product_variant_id", $shopProductVariant->id)->get()->first();
