@@ -18,6 +18,8 @@ import { ProductsComponent } from './shop/products/products.component';
 import { ProductsResolver } from './shop/products/products-resolver';
 import { OrdersComponent } from './shop/orders/orders.component';
 import { OrdersResolver } from './shop/orders/orders-resolver';
+import { DeliveryLocationsComponent } from './shop/delivery-locations/delivery-locations.component';
+import { DeliveryLocationsResolver } from './shop/delivery-locations/delivery-locations-resolver';
 
 
 const routes: Routes = [
@@ -69,6 +71,13 @@ const routes: Routes = [
             component: ProductsComponent,
             resolve:{
               products: ProductsResolver
+            },
+          },
+          {
+            path: 'delivery-locations',
+            component: DeliveryLocationsComponent,
+            resolve:{
+              delivaries: DeliveryLocationsResolver
             },
           },
           {

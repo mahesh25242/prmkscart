@@ -1,0 +1,40 @@
+<div>
+<h3>Deliveries</h3>
+<table class="table">
+  <thead>
+    <tr>
+      <th>
+        Name
+      </th>
+      <th>
+        Charge
+      </th>
+      <th>
+        Need Customer Location
+      </th>
+      <th>
+        Min Amount
+      </th>
+    </tr>
+  </thead>
+  <tbody>
+    <ng-container *ngIf="(deliveries$ | async) as deliveries">
+      <tr *ngFor="let delivery of deliveries">
+        <td>
+          {{delivery.name}}
+        </td>
+        <td>
+          {{delivery.charge}}
+        </td>
+        <td>
+          {{ (delivery.need_cust_loc) ? 'Yes':' No' }}
+        </td>
+        <td>
+          {{ delivery.min_amount}}
+        </td>
+      </tr>
+    </ng-container>
+  </tbody>
+</table>
+
+</div>
