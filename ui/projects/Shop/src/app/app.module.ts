@@ -42,6 +42,11 @@ import { OrderTermsComponent } from './cart-details/order-terms/order-terms.comp
 import { ServiceWorkerModule } from '@angular/service-worker';
 import { environment } from '../environments/environment';
 
+import { AngularFireModule } from "@angular/fire";
+import { MessagingService } from './lib/services';
+import { AngularFireFunctionsModule, REGION } from '@angular/fire/functions';
+
+
 @Injectable()
 export class MyHammerConfig extends HammerGestureConfig {
   overrides = <any> {
@@ -86,7 +91,7 @@ export class MyHammerConfig extends HammerGestureConfig {
     HttpClientXsrfModule.disable(),
     MatCarouselModule.forRoot(),
     ServiceWorkerModule.register('ngsw-worker.js', { enabled: environment.production }),
-
+    AngularFireModule.initializeApp(environment.firebaseConfig),
   ],
   providers: [
     httpInterceptorProviders,
@@ -96,6 +101,8 @@ export class MyHammerConfig extends HammerGestureConfig {
       provide: HAMMER_GESTURE_CONFIG,
       useClass: MyHammerConfig,
     },
+    MessagingService,
+    { provide: REGION, useValue: 'asia-northeast1' }
   ],
   bootstrap: [AppComponent]
 })

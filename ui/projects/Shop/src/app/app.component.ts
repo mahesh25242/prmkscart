@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
+import { MatSnackBar } from '@angular/material/snack-bar';
 import {
   Event,
   NavigationCancel,
@@ -9,19 +10,24 @@ import {
 } from '@angular/router';
 import { SwUpdate } from '@angular/service-worker';
 import Notiflix from 'notiflix';
-import { Observable } from 'rxjs';
-import { GeneralService } from './lib/services';
+import { empty, Observable, of, Subscription } from 'rxjs';
+import { mergeMap } from 'rxjs/operators';
+import { GeneralService, MessagingService } from './lib/services';
 
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss']
 })
-export class AppComponent implements OnInit{
+export class AppComponent implements OnInit, OnDestroy{
   title = '';
+  showPushNoti: Subscription;
+  receiveMessageSubScr: Subscription;
   isAdmin$: Observable<boolean>;
   constructor(public router: Router, private generalService: GeneralService,
-    private swUpdate: SwUpdate) {
+    private swUpdate: SwUpdate,
+    private messagingService: MessagingService,
+    private matSnackBar: MatSnackBar,) {
 
       swUpdate.available.subscribe(event => {
         console.log('current version is', event.current);
@@ -56,11 +62,33 @@ export class AppComponent implements OnInit{
   }
   ngOnInit(): void {
     this.isAdmin$ = this.generalService.isAdmin$.asObservable();
+
+
+  	this.receiveMessageSubScr = this.messagingService.requestPermission().pipe(mergeMap(res=>{
+      if(res)
+        return this.messagingService.receiveMessage()
+      else
+        of(false);
+    })).subscribe();
+  	this.showPushNoti = this.messagingService.currentMessage.asObservable().subscribe(msg=>{
+      console.log(msg)
+      if(msg)
+        this.matSnackBar.open(`${msg.notification?.title} - ${msg.notification?.body}`);
+    })
   }
 
   updateApp(){
     document.location.reload();
     console.log("The app is updating right now");
 
+   }
+
+   ngOnDestroy(){
+     if(this.showPushNoti){
+       this.showPushNoti.unsubscribe();
+     }
+     if(this.receiveMessageSubScr){
+      this.receiveMessageSubScr.unsubscribe();
+     }
    }
 }

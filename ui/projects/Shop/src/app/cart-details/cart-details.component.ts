@@ -15,6 +15,7 @@ import Notiflix from "notiflix";
 import { DatePipe } from '@angular/common'
 import { OrderFormComponent } from './order-form/order-form.component';
 import { OrderTermsComponent } from './order-terms/order-terms.component';
+import { MessagingService } from '../lib/services';
 
 @Component({
   selector: 'app-cart-details',
@@ -48,7 +49,8 @@ export class CartDetailsComponent implements OnInit, OnDestroy {
     private generalService: GeneralService,
     private router: Router,
     public dialog: MatDialog,
-    public datepipe: DatePipe) {
+    public datepipe: DatePipe,
+    private messagingService: MessagingService) {
     cartService.shopKey = environment.shopKey;
   }
 
@@ -98,73 +100,77 @@ export class CartDetailsComponent implements OnInit, OnDestroy {
           hour: this.f.hour.value,
           minute: this.f.minute.value,
           ampm: this.f.ampm.value,
+          token: ''
         }
 
-        return this.cartService.createOrder(postData).pipe(mergeMap((orderRes : ShopOrder)=>{
-          if(!orderRes) return empty();
-          return this.breakpointObserver.observe([
-            Breakpoints.Handset,
-            Breakpoints.Tablet
-          ]).pipe(map(bp =>{
-            let txt = `%0a‎ Order from *${postData.name}*`;
+        return this.messagingService.getToken().pipe(mergeMap(tkn=>{
+          postData.token = (tkn) ? tkn : '';
+          return this.cartService.createOrder(postData).pipe(mergeMap((orderRes : ShopOrder)=>{
+            if(!orderRes) return empty();
+            return this.breakpointObserver.observe([
+              Breakpoints.Handset,
+              Breakpoints.Tablet
+            ]).pipe(map(bp =>{
+              let txt = `%0a‎ Order from *${postData.name}*`;
 
-            txt += `%0a‎ Order: *${encodeURIComponent(`#${orderRes.id}`)}* ( ${cart.length} ${ (cart.length > 1) ? 'items' : 'item' } )`;
-            if(postData.phone){
-              txt += `%0a‎ Phone: ${encodeURIComponent(postData.phone)}  `;
-            }
-            cart.map((itm, idx)=>{
-              txt += `%0a‎ *${encodeURIComponent(itm.product.name)}* `;
-              if(itm.message){
-                txt += `%0a‎ Message: ${encodeURIComponent(itm.message)} `;
+              txt += `%0a‎ Order: *${encodeURIComponent(`#${orderRes.id}`)}* ( ${cart.length} ${ (cart.length > 1) ? 'items' : 'item' } )`;
+              if(postData.phone){
+                txt += `%0a‎ Phone: ${encodeURIComponent(postData.phone)}  `;
               }
-              txt += `%0a‎ Varient Name: ${encodeURIComponent(itm.product.shop_product_selected_variant.name)} `;
-              txt += `%0a‎ Quantity: ${encodeURIComponent(itm.qty)} `;
-              txt += `%0a‎ Price: ₹ *${encodeURIComponent(itm.price)}* `;
-              txt += `%0a‎ ============== `;
-            });
-            //txt += `%0a‎ ${ cart.length }  ${ (cart.length > 1) ? 'items' : 'item' } `;
+              cart.map((itm, idx)=>{
+                txt += `%0a‎ *${encodeURIComponent(itm.product.name)}* `;
+                if(itm.message){
+                  txt += `%0a‎ Message: ${encodeURIComponent(itm.message)} `;
+                }
+                txt += `%0a‎ Varient Name: ${encodeURIComponent(itm.product.shop_product_selected_variant.name)} `;
+                txt += `%0a‎ Quantity: ${encodeURIComponent(itm.qty)} `;
+                txt += `%0a‎ Price: ₹ *${encodeURIComponent(itm.price)}* `;
+                txt += `%0a‎ ============== `;
+              });
+              //txt += `%0a‎ ${ cart.length }  ${ (cart.length > 1) ? 'items' : 'item' } `;
 
-            if(postData.delivery_date){
-              txt += `%0a‎ Delivered On: ${encodeURIComponent(postData.delivery_date)}  `;
-            }
-
-            if(postData.note){
-              txt += `%0a‎ Order Note: ${encodeURIComponent(postData.note)}  `;
-            }
-
-
-
-            txt += `%0a‎ Delivery Point: ${encodeURIComponent(postData.selectedLocation.name)} `;
-            if(postData.selectedLocation.need_cust_loc){
-              txt += `%0a‎ Address: ${encodeURIComponent(postData.address)} `;
-              txt += `%0a‎ Pin: ${encodeURIComponent(postData.pin)} `;
-            }
-            if(postData.selectedLocation.charge){
-              txt += `%0a‎ Delivery Charge: ₹ ${encodeURIComponent(postData.selectedLocation.charge)} %0a `;
-            }
-            let locUrl= null;
-            if(postData.loc?.lat && postData.loc?.lon){
-              locUrl = `https://www.google.com/maps/search/?api=1&query=${postData.loc.lat},${postData.loc.lon}`;
-              locUrl = encodeURIComponent(locUrl);
-            }
-            if(locUrl)
-              txt += `%0a‎ Location: ${locUrl} %0a`;
-
-            txt += `%0a‎ Grand Total: ₹ *${this.grandTotal}* %0a`;
-            txt += `%0a‎ ============== %0a`;
-            txt += `%0a‎ *Order confirmation through reply/call* %0a`;
-
-            let ret;
-            if(bp.matches){
-              ret = {
-                url: `https://api.whatsapp.com/send?phone=${shop.phone}&text=${txt}`
+              if(postData.delivery_date){
+                txt += `%0a‎ Delivered On: ${encodeURIComponent(postData.delivery_date)}  `;
               }
-            }else{
-              ret = {
-                url: `https://web.whatsapp.com/send?phone=${shop.phone}&text=${txt}`
+
+              if(postData.note){
+                txt += `%0a‎ Order Note: ${encodeURIComponent(postData.note)}  `;
               }
-            }
-            return ret;
+
+
+
+              txt += `%0a‎ Delivery Point: ${encodeURIComponent(postData.selectedLocation.name)} `;
+              if(postData.selectedLocation.need_cust_loc){
+                txt += `%0a‎ Address: ${encodeURIComponent(postData.address)} `;
+                txt += `%0a‎ Pin: ${encodeURIComponent(postData.pin)} `;
+              }
+              if(postData.selectedLocation.charge){
+                txt += `%0a‎ Delivery Charge: ₹ ${encodeURIComponent(postData.selectedLocation.charge)} %0a `;
+              }
+              let locUrl= null;
+              if(postData.loc?.lat && postData.loc?.lon){
+                locUrl = `https://www.google.com/maps/search/?api=1&query=${postData.loc.lat},${postData.loc.lon}`;
+                locUrl = encodeURIComponent(locUrl);
+              }
+              if(locUrl)
+                txt += `%0a‎ Location: ${locUrl} %0a`;
+
+              txt += `%0a‎ Grand Total: ₹ *${this.grandTotal}* %0a`;
+              txt += `%0a‎ ============== %0a`;
+              txt += `%0a‎ *Order confirmation through reply/call* %0a`;
+
+              let ret;
+              if(bp.matches){
+                ret = {
+                  url: `https://api.whatsapp.com/send?phone=${shop.phone}&text=${txt}`
+                }
+              }else{
+                ret = {
+                  url: `https://web.whatsapp.com/send?phone=${shop.phone}&text=${txt}`
+                }
+              }
+              return ret;
+            }))
           }))
         }))
       }));

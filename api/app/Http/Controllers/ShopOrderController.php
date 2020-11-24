@@ -86,6 +86,7 @@ class ShopOrderController extends Controller
                 $shopOrder->loc = json_encode($shopOrder->loc);
 
                 $shopOrder->total =  $request->input("grad_total", 0);
+                $shopOrder->web_push_token =  $request->input("token", '');
                 $shopOrder->save();
                 $totalPrice = 0;
                 if($shopOrder->id){
@@ -112,6 +113,8 @@ class ShopOrderController extends Controller
                     $totalPrice += $shopOrder->delivery_chage;
                     $shopOrder->total =  $totalPrice;
                     $shopOrder->save();
+
+
 
                     return response(\App\ShopOrder::with(["shopCustomer"])->find($shopOrder->id) );
                 }else{
@@ -172,6 +175,9 @@ class ShopOrderController extends Controller
         $shopOrder = \App\ShopOrder::find($request->input("id"));
         $shopOrder->status = $request->input("status", 1);
         $shopOrder->save();
+
+        event(new \App\Events\OrderChangedEvent($shopOrder));
+
         return response(['message' => 'Successfully changed status', 'status' => true]);
     }
 

@@ -31,6 +31,12 @@ $app = new Laravel\Lumen\Application(
     'Intervention\Image\Facades\Image' => 'Image',
     'Illuminate\Support\Facades\Mail' => 'Mail',
 ]);
+
+
+class_alias(\LaravelFCM\Facades\FCM::class, 'FCM');
+class_alias(\LaravelFCM\Facades\FCMGroup::class, 'FCMGroup');
+
+
 /*
 |--------------------------------------------------------------------------
 | Register Container Bindings
@@ -133,7 +139,7 @@ $app->register(\Barryvdh\DomPDF\ServiceProvider::class);
 $app->register(Irazasyed\Larasupport\Providers\ArtisanServiceProvider::class);
 
 
-
+$app->register(LaravelFCM\FCMServiceProvider::class);
 /*
 |--------------------------------------------------------------------------
 | Load The Application Routes
