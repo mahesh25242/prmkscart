@@ -1,0 +1,95 @@
+<div class="header-inner"></div>
+<div class="container">
+  <h1>Order Details #{{ this.order.id }}</h1>
+  <mat-list role="list">
+    <mat-list-item role="listitem">
+      Status:&nbsp;&nbsp;{{ this.order.status_text}}
+    </mat-list-item>
+    <mat-list-item role="listitem">
+      Name:&nbsp;&nbsp;{{ this.order.shop_customer.name}}
+    </mat-list-item>
+    <mat-list-item role="listitem">
+      Phone:&nbsp;&nbsp; {{ this.order.shop_customer.phone}}
+    </mat-list-item>
+    <mat-list-item role="listitem" *ngIf="this.order.shop_customer.email">
+      CEmail:&nbsp;&nbsp;{{ this.order.shop_customer.email}}
+    </mat-list-item>
+    <mat-list-item role="listitem" *ngIf="this.order.delivery_at">
+      Delivery At:&nbsp;&nbsp;{{ this.order.delivery_at | date: 'medium'}}
+    </mat-list-item>
+
+    <ng-container *ngIf="this.order.shop_delivery.need_cust_loc">
+      <mat-list-item role="listitem">
+        Address:&nbsp;&nbsp;{{ this.order.address}}
+      </mat-list-item>
+      <mat-list-item role="listitem">
+        Pin:&nbsp;&nbsp;{{ this.order.pin}}
+      </mat-list-item>
+      <mat-list-item role="listitem" *ngIf="this.order.loc">
+        <a *ngIf="mapUrl" [href]="mapUrl" target="_blank" matTooltip="Click here to view custoimer location in google map">Google Map</a>
+      </mat-list-item>
+    </ng-container>
+
+    <mat-list-item role="listitem">
+      Delivery:&nbsp;&nbsp;{{ this.order.shop_delivery.name}}
+      {{ (this.order.delivery_chage) ? ' @ ₹ '+this.order.delivery_chage: '' }}
+    </mat-list-item>
+    <mat-list-item role="listitem">
+    <h2>Total:&nbsp;&nbsp;₹ {{ this.order.total}}</h2>
+    </mat-list-item>
+
+    <mat-list-item role="listitem" *ngIf="this.order.note">
+      Order Note:&nbsp;&nbsp;{{ this.order.note}}
+    </mat-list-item>
+  </mat-list>
+
+
+
+
+  <table mat-table [dataSource]="this.order.shop_order_item" class="mat-elevation-z8">
+
+    <!--- Note that these columns can be defined in any order.
+          The actual rendered columns are set as a property on the row definition" -->
+
+    <!-- Number Column -->
+    <ng-container matColumnDef="no">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header> No. </th>
+      <td mat-cell *matCellDef="let element; let i = index">{{i + 1}}</td>
+    </ng-container>
+
+    <!-- Name Column -->
+    <ng-container matColumnDef="name">
+      <th mat-header-cell *matHeaderCellDef> Name </th>
+      <td mat-cell *matCellDef="let element">
+        {{element.shop_product_variant.shop_product.name}} {{element.shop_product_variant.name}}
+      </td>
+    </ng-container>
+
+    <!-- Icon Column -->
+    <ng-container matColumnDef="qty">
+      <th mat-header-cell *matHeaderCellDef> Quantity </th>
+      <td mat-cell *matCellDef="let element">
+        {{element.qty}}
+      </td>
+    </ng-container>
+
+    <!-- Icon Column -->
+    <ng-container matColumnDef="message">
+      <th mat-header-cell *matHeaderCellDef> Message </th>
+      <td mat-cell *matCellDef="let element">
+        {{element.message}}
+      </td>
+    </ng-container>
+
+    <!-- Status Column -->
+    <ng-container matColumnDef="price">
+      <th mat-header-cell *matHeaderCellDef> Price </th>
+      <td mat-cell *matCellDef="let element">
+        ₹ {{element.price}}
+      </td>
+    </ng-container>
+
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+  </table>
+</div>

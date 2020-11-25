@@ -71,7 +71,7 @@ export class AppComponent implements OnInit, OnDestroy{
         of(false);
     })).subscribe();
   	this.showPushNoti = this.messagingService.currentMessage.asObservable().subscribe(msg=>{
-      console.log(msg)
+      //console.log(msg)
       if(msg)
         this.matSnackBar.open(`${msg.notification?.title} - ${msg.notification?.body}`);
     })

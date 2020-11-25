@@ -14,7 +14,7 @@ export interface ShopOrder {
   note?: string,
   loc?: any,
   status?: number,
-  created_at: string,
+  created_at?: string,
   shop?: Shop
   shop_customer?:  ShopCustomer,
   shop_order_item?: ShopOrderItem,

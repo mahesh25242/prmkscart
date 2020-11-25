@@ -6,6 +6,8 @@ import { ProductResolver } from './components/product/product-resolver';
 import { ProductComponent } from './components/product/product.component';
 import { ContactUsComponent } from './contact-us/contact-us.component';
 import { HomeComponent } from './home/home.component';
+import { OrderDeatilResolver } from './order-deatil/order-deatil-resolver';
+import { OrderDeatilComponent } from './order-deatil/order-deatil.component';
 import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
 import { ProductDetailsResolver } from './product-details/product-details-resolver';
 import { ProductDetailsComponent } from './product-details/product-details.component';
@@ -24,7 +26,13 @@ const routes: Routes = [
     path: 'bag',
     component: CartDetailsComponent
   },
-
+  {
+    path: 'order/:id',
+    component: OrderDeatilComponent,
+    resolve:{
+      order: OrderDeatilResolver
+    }
+  },
   {
     path: 'admin',
     loadChildren: () => import('./admin/admin.module').then(m => m.AdminModule)

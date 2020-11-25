@@ -39,7 +39,14 @@ class OrderChangedListener
             $optionBuilder->setTimeToLive(60*20);
 
             $notificationBuilder = new PayloadNotificationBuilder("Hi {$event->order->shopCustomer->name}");
-            $notificationBuilder->setClickAction("NOTIFICATION");
+
+            if(!$event->order->sec_key){
+                $event->order->sec_key =  sha1(time().'-'.$event->order->id);
+                $event->order->save();
+            }
+
+
+            $notificationBuilder->setClickAction("shop/order/{$event->order->sec_key}");
             $notificationBuilder->setBody("Your order #{$event->order->id} set as {$event->order->status_text}")
                                 ->setSound('default');
 
@@ -67,6 +74,7 @@ class OrderChangedListener
                         $orders= \App\ShopOrder::where("web_push_token", $token)->get();
                         if($orders){
                             foreach($orders as $order){
+                                $orders->shopCustomer->web_push_token = '';
                                 $order->web_push_token = '';
                                 $order->save();
                             }
@@ -83,6 +91,7 @@ class OrderChangedListener
                         $orders= \App\ShopOrder::where("web_push_token", $oldToken)->get();
                         if($orders){
                             foreach($orders as $order){
+                                $orders->shopCustomer->web_push_token = $token;
                                 $order->web_push_token = $token;
                                 $order->save();
                             }

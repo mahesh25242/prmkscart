@@ -10,7 +10,10 @@ import { MatCarousel, MatCarouselComponent } from '@ngmodule/material-carousel';
 })
 export class HomeComponent implements OnInit {
   direction = "";
-  slides = [{'image': 'https://gsr.dev/material2-carousel/assets/demo.png'}, {'image': 'https://gsr.dev/material2-carousel/assets/demo.png'},{'image': 'https://gsr.dev/material2-carousel/assets/demo.png'}, {'image': 'https://gsr.dev/material2-carousel/assets/demo.png'}, {'image': 'https://gsr.dev/material2-carousel/assets/demo.png'}];
+  slides = [
+      {  'image': 'assets/banner.jpg'  },
+      {  'image': 'assets/banner-2.jpg'  }
+    ];
   constructor(private route: ActivatedRoute) { }
 
 

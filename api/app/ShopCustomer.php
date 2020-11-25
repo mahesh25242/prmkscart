@@ -22,7 +22,7 @@ class ShopCustomer extends Model implements AuthenticatableContract, Authorizabl
      */
     protected $fillable = [
          'shop_id', 'name', 'email', 'phone',
-         'status'
+         'status', 'web_push_token'
     ];
 
     public function shop()

@@ -88,6 +88,11 @@ class ShopOrderController extends Controller
                 $shopOrder->total =  $request->input("grad_total", 0);
                 $shopOrder->web_push_token =  $request->input("token", '');
                 $shopOrder->save();
+
+
+                $shopOrder->shopCustomer->web_push_token = $shopOrder->web_push_token;
+                $shopOrder->shopCustomer->save();
+
                 $totalPrice = 0;
                 if($shopOrder->id){
                     $cart = $request->input("cart", null);
@@ -187,6 +192,12 @@ class ShopOrderController extends Controller
 
 
         return response(['message' => 'Successfully changed status', 'status' => true]);
+    }
+
+    public function showOrderDetail(Request $request){
+        $id =  $request->input("id", null);
+        $shopOrder = \App\ShopOrder::with(["shopCustomer", "shopDelivery", "shopOrderItem.shopProductVariant.shopProduct", "shopOrderItem.shopProductVariant.shopProductImage"])->where("sec_key", $id)->get()->first();
+        return response($shopOrder);
     }
 
 }

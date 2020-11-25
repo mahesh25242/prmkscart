@@ -57,7 +57,6 @@ export class AddToCartComponent implements OnInit, OnDestroy {
     };
     if(this.cartSubScr) this.cartSubScr.unsubscribe();
     this.cartSubScr = this.cartService.updateCart(this.cart, '++').subscribe(res =>{
-      console.log(res)
       this.matSnackBar.open(`${this.cart.product.name} - ${this.cart.product.shop_product_selected_variant.name} ( ${this.cart.qty} ) is added`);
       this.dialogRef.close();
     });

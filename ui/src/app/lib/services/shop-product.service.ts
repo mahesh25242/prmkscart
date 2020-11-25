@@ -2,7 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
-import { ShopProduct, ShopProductWithPagination } from '../interfaces';
+import { ShopOrder, ShopProduct, ShopProductWithPagination } from '../interfaces';
 
 @Injectable({
   providedIn: 'root'
@@ -45,6 +45,10 @@ export class ShopProductService {
 
   showProductDetails(postData: any = null): Observable<ShopProduct>{
     return this.http.post<ShopProduct>("/shop/product/showProductDetails", postData);
+  }
+
+  showOrderDetail(postData: any = null): Observable<ShopOrder>{
+    return this.http.post<ShopOrder>("/shop/showOrderDetail", postData);
   }
 
 }
