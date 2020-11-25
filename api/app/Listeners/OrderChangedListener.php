@@ -39,6 +39,7 @@ class OrderChangedListener
             $optionBuilder->setTimeToLive(60*20);
 
             $notificationBuilder = new PayloadNotificationBuilder("Hi {$event->order->shopCustomer->name}");
+            $notificationBuilder->setClickAction("NOTIFICATION");
             $notificationBuilder->setBody("Your order #{$event->order->id} set as {$event->order->status_text}")
                                 ->setSound('default');
 

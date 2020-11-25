@@ -171,12 +171,20 @@ class ShopOrderController extends Controller
         if($validator->fails()){
             return response(['message' => 'Validation errors', 'errors' =>  $validator->errors(), 'status' => false], 422);
         }
-
+        $isChanged = false;
         $shopOrder = \App\ShopOrder::find($request->input("id"));
         $shopOrder->status = $request->input("status", 1);
+        if($shopOrder->isDirty("status")){
+            $isChanged = true;
+        }
         $shopOrder->save();
 
-        event(new \App\Events\OrderChangedEvent($shopOrder));
+        if($isChanged && $shopOrder->web_push_token){
+            event(new \App\Events\OrderChangedEvent($shopOrder));
+        }
+
+
+
 
         return response(['message' => 'Successfully changed status', 'status' => true]);
     }

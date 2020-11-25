@@ -35,13 +35,25 @@
           {{ (data.delivery_chage) ? ' @ ₹ '+data.delivery_chage: '' }}
         </mat-list-item>
         <mat-list-item role="listitem">
-         <h2>Total:&nbsp;&nbsp;₹ {{ data.total}}</h2> 
+         <h2>Total:&nbsp;&nbsp;₹ {{ data.total}}</h2>
         </mat-list-item>
 
         <mat-list-item role="listitem" *ngIf="data.note">
           Order Note:&nbsp;&nbsp;{{ data.note}}
         </mat-list-item>
       </mat-list>
+
+      <mat-form-field appearance="fill">
+        <mat-label>Status</mat-label>
+        <mat-select [(ngModel)]="status" matInput>
+          <mat-option [value]="1">Ordered</mat-option>
+          <mat-option [value]="2">Processing</mat-option>
+          <mat-option [value]="3">Out For Delivery</mat-option>
+          <mat-option [value]="4">Delivered</mat-option>
+          <mat-option [value]="5">Canceled</mat-option>
+        </mat-select>
+      </mat-form-field>
+
 
 
       <table mat-table [dataSource]="data.shop_order_item" class="mat-elevation-z8">
@@ -91,9 +103,9 @@
         <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
       </table>
 
+
 </div>
 <div mat-dialog-actions>
   <button mat-stroked-button type="button" (click)="dialogRef.close()">Close</button>
-  <button mat-stroked-button type="button" (click)="changeStatus(4)" *ngIf="data.status <= 3">Delivered</button>
-  <button mat-stroked-button type="button" (click)="changeStatus(5)" *ngIf="data.status <= 3">Cancel Order</button>
+  <button mat-stroked-button type="button" (click)="changeStatus()">Change Status</button>
 </div>

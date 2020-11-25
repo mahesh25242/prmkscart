@@ -44,7 +44,7 @@ import { environment } from '../environments/environment';
 
 import { AngularFireModule } from "@angular/fire";
 import { MessagingService } from './lib/services';
-import { AngularFireFunctionsModule, REGION } from '@angular/fire/functions';
+
 
 
 @Injectable()
@@ -101,8 +101,7 @@ export class MyHammerConfig extends HammerGestureConfig {
       provide: HAMMER_GESTURE_CONFIG,
       useClass: MyHammerConfig,
     },
-    MessagingService,
-    { provide: REGION, useValue: 'asia-northeast1' }
+    MessagingService
   ],
   bootstrap: [AppComponent]
 })

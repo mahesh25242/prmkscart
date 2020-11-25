@@ -16,6 +16,7 @@ import { environment } from '../../../../environments/environment';
 export class OrderDetailsComponent implements OnInit, OnDestroy {
   displayedColumns = ["no", "name", "qty", "message", "price"];
   mapUrl: string = null;
+  status: number;
   whastAppUrl: string = null
   breakPointSubscr: Subscription;
   constructor(@Inject(MAT_DIALOG_DATA) public data: ShopOrder,
@@ -23,10 +24,10 @@ export class OrderDetailsComponent implements OnInit, OnDestroy {
   private cartService: CartService,
   private breakpointObserver: BreakpointObserver,) { }
 
-  changeStatus(status: number = 1){
+  changeStatus(){
     let msg: { t: string, m: string, s: string} = { t : '', m: '', s : ''};
 
-    switch(status){
+    switch(this.status){
       case 1:
         msg.t = 'Set as orderd';
         msg.m = 'Do you want to set as ordered';
@@ -56,7 +57,7 @@ export class OrderDetailsComponent implements OnInit, OnDestroy {
     Notiflix.Confirm.Show( msg.t, msg.m, 'Yes', 'No', ()=>{
       Notiflix.Loading.Arrows();
       const postData = {
-        status :status,
+        status :this.status,
         id: this.data.id
       };
       this.cartService.changeStatus(postData).pipe(mergeMap(res=>{
@@ -76,6 +77,7 @@ export class OrderDetailsComponent implements OnInit, OnDestroy {
 
   }
   ngOnInit(): void {
+    this.status = this.data.status;
     this.breakpointObserver.observe([
       Breakpoints.XSmall,
       Breakpoints.Tablet

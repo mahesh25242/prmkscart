@@ -268,6 +268,13 @@
         "build": {
           "builder": "@angular-devkit/build-angular:browser",
           "options": {
+            "allowedCommonJsDependencies": [
+              "firebase",
+              "@firebase/app",
+              "firebase/app",
+              "notiflix",
+              "lodash"
+            ],
             "outputPath": "dist/Shop",
             "index": "projects/Shop/src/index.html",
             "main": "projects/Shop/src/main.ts",
