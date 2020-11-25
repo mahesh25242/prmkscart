@@ -273,7 +273,9 @@
               "@firebase/app",
               "firebase/app",
               "notiflix",
-              "lodash"
+              "lodash",
+              "hammerjs",
+              "@firebase/functions"
             ],
             "outputPath": "dist/Shop",
             "index": "projects/Shop/src/index.html",
