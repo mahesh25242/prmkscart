@@ -47,11 +47,12 @@ class OrderChangedListener
 
 
             $notificationBuilder->setClickAction("shop/order/{$event->order->sec_key}");
+            $notificationBuilder->setSound("default");
             $notificationBuilder->setBody("Your order #{$event->order->id} set as {$event->order->status_text}")
-                                ->setSound('default');
+                                ->setBadge('1');
 
             $dataBuilder = new PayloadDataBuilder();
-            $dataBuilder->addData(['a_data' => 'my_data']);
+            $dataBuilder->addData(['a_data' => 'notofication']);
 
             $option = $optionBuilder->build();
             $notification = $notificationBuilder->build();

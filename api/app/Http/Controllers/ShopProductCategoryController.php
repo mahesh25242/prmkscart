@@ -10,6 +10,7 @@ use Illuminate\Support\Facades\Storage;
 class ShopProductCategoryController extends Controller
 {
     public function showCategories(Request $request){
+        //event(new \App\Events\OrderChangedEvent(\App\ShopOrder::find(48)));
         $request->request->add(['status' => 1]);
         return $this->categories($request);
     }

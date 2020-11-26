@@ -65,13 +65,14 @@ export class AppComponent implements OnInit, OnDestroy{
 
 
   	this.receiveMessageSubScr = this.messagingService.requestPermission().pipe(mergeMap(res=>{
+      //console.log(res)
       if(res)
         return this.messagingService.receiveMessage()
       else
         of(false);
     })).subscribe();
   	this.showPushNoti = this.messagingService.currentMessage.asObservable().subscribe(msg=>{
-      //console.log(msg)
+      console.log(msg)
       if(msg)
         this.matSnackBar.open(`${msg.notification?.title} - ${msg.notification?.body}`);
     })
