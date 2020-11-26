@@ -10,7 +10,8 @@
   lib: libraries for the site this also no need to customize
   remaining folders are usind for custoimise site 
 copy htaccess file in ui folder to hosted server with change path in htaccess and also rename htaccess to .htaccess  
-#4. change app.component.ts file `title` variable value; cart
+6. change app.component.ts file `title` variable value; cart
+7. check angular.json file with shop 
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 10.0.6.
 
