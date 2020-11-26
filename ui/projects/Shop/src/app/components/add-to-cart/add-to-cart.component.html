@@ -7,7 +7,7 @@
   <div mat-dialog-content>
 <div class="product-image">
   <div *ngIf="data.shop_product_selected_variant?.type.id" mat-card-avatar [ngClass]="{'veg': data.shop_product_selected_variant?.type.id == 1, 'nonveg': data.shop_product_selected_variant?.type.id == 2}"></div>
-    <img
+    <img loading="lazy"
     [src]="(data?.shop_product_selected_variant?.shop_product_image?.image) ? environment.siteAddress+'/assets/shop/'+environment.shopKey+'/products/'+ data.shop_product_selected_variant.shop_product_image.image : 'assets/no-image.jpg'" alt="Photo of a Shiba Inu">
   </div>
     <mat-form-field appearance="standard" *ngIf="data.shop_product_variant.length > 1">
