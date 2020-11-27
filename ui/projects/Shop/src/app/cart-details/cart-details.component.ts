@@ -130,7 +130,13 @@ export class CartDetailsComponent implements OnInit, OnDestroy {
               //txt += `%0a‎ ${ cart.length }  ${ (cart.length > 1) ? 'items' : 'item' } `;
 
               if(postData.delivery_date){
-                txt += `%0a‎ Delivered On: ${encodeURIComponent(postData.delivery_date)}  `;
+                let deliveryDate = this.datepipe.transform(this.f.delivery_date.value, 'dd/MM/yyyy');
+                let minute;
+                if(this.f.hour.value){
+                  minute = (this.f.minute.value) ? ("0" + this.f.minute.value).slice(-2) : '00';
+                }
+                deliveryDate = `${deliveryDate} ${ (this.f.hour.value) ? `${("0" + this.f.hour.value).slice(-2) }:` :'' }${ (minute) ? `${minute}` : '' }${(this.f.hour.value) ? this.f.ampm.value : ''}`
+                txt += `%0a‎ Delivered On: ${encodeURIComponent(deliveryDate)}  `;
               }
 
               if(postData.note){

@@ -1,6 +1,6 @@
 <ng-container class="example-button-container" *ngIf="(cart$ | async) as cart">
   <ng-container *ngIf="cart && cart.length && !(hideCartComponent$ | async) ">
-    <a mat-fab color="primary" class="extended-fab-button" routerLink="/bag" aria-label="Example icon button with a delete icon">
+    <a  [@enterAnimation] mat-fab color="primary" class="extended-fab-button" routerLink="/bag" aria-label="Example icon button with a delete icon">
       <div class="extend-btn-cart">
         <div class="left-align">
           On Your Bag

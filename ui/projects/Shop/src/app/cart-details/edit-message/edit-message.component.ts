@@ -1,5 +1,5 @@
 import { Component, Inject, OnDestroy, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import {MatDialogRef, MAT_DIALOG_DATA} from '@angular/material/dialog';
 import { Cart } from 'src/app/lib/interfaces';
 import {MatSnackBar} from '@angular/material/snack-bar';
@@ -24,17 +24,22 @@ export class EditMessageComponent implements OnInit, OnDestroy {
 
   updateMessage(){
     this.data.message = this.f.message.value;
-    this.cartSubScr = this.cartService.updateCart(this.data, '++').subscribe(res=>{
-      this.matSnackBar.open('Message updated successfully.');
-      this.dialogRef.close();
-    });
+    if(this.data.message){
+      this.cartSubScr = this.cartService.updateCart(this.data, '++').subscribe(res=>{
+        this.matSnackBar.open('Message updated successfully.');
+        this.dialogRef.close();
+      });
+    }else{
+      this.f.message.markAsTouched();
+    }
+
 
 
 
   }
   ngOnInit(): void {
     this.editMessageFrm = this.formBuilder.group({
-      message: [this.data.message, []]
+      message: [this.data.message, [Validators.required]]
     });
   }
 
