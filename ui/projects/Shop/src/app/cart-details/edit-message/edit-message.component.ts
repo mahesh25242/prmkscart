@@ -1,4 +1,4 @@
-import { Component, Inject, OnDestroy, OnInit } from '@angular/core';
+import { Component, EventEmitter, Inject, OnDestroy, OnInit, Output } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import {MatDialogRef, MAT_DIALOG_DATA} from '@angular/material/dialog';
 import { Cart } from 'src/app/lib/interfaces';
@@ -14,6 +14,8 @@ import { CartService } from 'src/app/lib/services';
 export class EditMessageComponent implements OnInit, OnDestroy {
   editMessageFrm: FormGroup;
   cartSubScr: Subscription;
+  //@Output() onUpdated = new EventEmitter();
+
   constructor(private formBuilder: FormBuilder,
     @Inject(MAT_DIALOG_DATA) public data: Cart,
     public dialogRef: MatDialogRef<EditMessageComponent>,
@@ -24,18 +26,14 @@ export class EditMessageComponent implements OnInit, OnDestroy {
 
   updateMessage(){
     this.data.message = this.f.message.value;
-    if(this.data.message){
-      this.cartSubScr = this.cartService.updateCart(this.data, '++').subscribe(res=>{
+    this.cartSubScr = this.cartService.updateCart(this.data, '++').subscribe(res=>{
+      if(this.data.message)
         this.matSnackBar.open('Message updated successfully.');
-        this.dialogRef.close();
-      });
-    }else{
-      this.f.message.markAsTouched();
-    }
-
-
-
-
+      else
+        this.matSnackBar.open('Removed message successfully.');
+//      this.onUpdated.emit();
+      this.dialogRef.close();
+    });
   }
   ngOnInit(): void {
     this.editMessageFrm = this.formBuilder.group({
