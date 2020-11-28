@@ -1,3 +1,4 @@
+import { animate, state, style, transition, trigger } from '@angular/animations';
 import { Component, Input, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { find } from 'lodash';
@@ -10,7 +11,15 @@ import { AddToCartComponent } from '../../add-to-cart/add-to-cart.component';
 @Component({
   selector: 'app-product-item',
   templateUrl: './product-item.component.html',
-  styleUrls: ['./product-item.component.scss']
+  styleUrls: ['./product-item.component.scss'],
+  animations: [
+    trigger('openClose', [
+      // ...
+      transition('false <=> true', [
+        animate('1s', style({ opacity: 1}))
+      ]),
+    ]),
+  ],
 })
 export class ProductItemComponent implements OnInit {
   @Input() shopProduct: ShopProduct;

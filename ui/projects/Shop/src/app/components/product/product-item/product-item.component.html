@@ -18,6 +18,6 @@
    <div>₹ {{ product.shop_product_primary_variant?.price}} </div> <div *ngIf="product.shop_product_primary_variant?.actual_price">₹ {{ product.shop_product_primary_variant?.actual_price}}</div>
    <div></div>
   </div>
-   <button class="addCart-btn" [ngClass]="{'active': product.incart}" (click)="addToCart(product)"><mat-icon aria-hidden="false" aria-label="Add Icon">add</mat-icon></button>
+   <button [@openClose]="product.incart" class="addCart-btn" [ngClass]="{'active': product.incart}" (click)="addToCart(product)"><mat-icon aria-hidden="false" aria-label="Add Icon">add</mat-icon></button>
   </mat-card-actions>
 </mat-card>
