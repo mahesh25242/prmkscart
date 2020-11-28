@@ -46,6 +46,7 @@ import { AngularFireModule } from "@angular/fire";
 import { MessagingService } from './lib/services';
 import { OrderDeatilComponent } from './order-deatil/order-deatil.component';
 import { OrderDeatilResolver } from './order-deatil/order-deatil-resolver';
+import { ProductItemComponent } from './components/product/product-item/product-item.component';
 
 
 
@@ -79,7 +80,8 @@ export class MyHammerConfig extends HammerGestureConfig {
     SearchResultComponent,
     OrderFormComponent,
     OrderTermsComponent,
-    OrderDeatilComponent
+    OrderDeatilComponent,
+    ProductItemComponent
   ],
   imports: [
     BrowserModule,

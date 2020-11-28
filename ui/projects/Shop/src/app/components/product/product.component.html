@@ -13,30 +13,8 @@ infiniteScrollContainer=".my-sidenav-content" [fromRoot]="true"
 <ng-container *ngIf="(products$ | async) as products">
 
   <div class="grid-col" *ngFor="let product of allProduct" >
-    <mat-card >
+    <app-product-item [shopProduct]="product"></app-product-item>
 
-      <div class="mat-card-headerimage"
-      [ngStyle]="{'background-image': (product.shop_product_primary_variant?.shop_product_image?.image) ? 'url(' +  product.shop_product_primary_variant.shop_product_image.image_path + ')' : 'url(/assets/no-image.jpg)'}"
-      [routerLink]="'/'+product.shop_product_category?.url+'/'+product.url">
-      <div *ngIf="product.shop_product_primary_variant?.type.id" mat-card-avatar [ngClass]="{'veg': product.shop_product_primary_variant?.type.id == 1, 'nonveg': product.shop_product_primary_variant?.type.id == 2}"></div>
-        <!-- <img mat-card-image *ngIf="product.shop_product_primary_variant?.shop_product_image?.image" [src]="environment.siteAddress+'/assets/shop/'+environment.shopKey+'/products/'+ product.shop_product_primary_variant.shop_product_image.image" [alt]="product.shop_product_primary_variant.name"> -->
-      </div>
-      <mat-card-header>
-        <mat-card-title [routerLink]="'/'+product.shop_product_category?.url+'/'+product.url"> {{ product.name }}</mat-card-title>
-        <mat-card-subtitle>{{ product.shop_product_primary_variant?.name}} <span *ngIf="product.shop_product_variant.length > 1">
-          | {{ product.shop_product_variant.length }} Varients </span> </mat-card-subtitle>
-      </mat-card-header>
-      <!--<mat-card-content>
-        <p [innerHTML]="product.description"></p>
-      </mat-card-content>-->
-      <mat-card-actions>
-        <div class="price-grid">
-       <div>₹ {{ product.shop_product_primary_variant?.price}} </div> <div *ngIf="product.shop_product_primary_variant?.actual_price">₹ {{ product.shop_product_primary_variant?.actual_price}}</div>
-       <div></div>
-      </div>
-       <button class="addCart-btn" (click)="addToCart(product)"><mat-icon aria-hidden="false" aria-label="Add Icon">add</mat-icon></button>
-      </mat-card-actions>
-    </mat-card>
   </div>
   <div *ngIf="!allProduct.length">No item found</div>
 </ng-container>

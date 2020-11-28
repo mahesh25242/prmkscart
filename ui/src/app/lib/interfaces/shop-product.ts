@@ -17,7 +17,8 @@ export interface ShopProduct {
   shop_product_variant?: ShopProductVariant[],
   shop_product_primary_variant?: ShopProductVariant,
   shop_product_selected_variant?: ShopProductVariant,
-  url?: string
+  url?: string,
+  incart?: boolean
 }
 
 export interface ShopProductWithPagination extends Pagination {

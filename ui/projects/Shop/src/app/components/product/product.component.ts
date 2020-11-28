@@ -34,12 +34,6 @@ export class ProductComponent implements OnInit, OnDestroy {
     }
 
 
-  addToCart(product: ShopProduct){
-    let dialogRef = this.dialog.open(AddToCartComponent, {
-      data: product,
-    });
-    /*  this.cartService.cart$.next(cart);*/
-    }
 
 
 
