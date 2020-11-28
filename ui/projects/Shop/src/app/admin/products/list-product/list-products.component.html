@@ -17,7 +17,7 @@
       <th>
         Name
       </th>
-     
+
       <th class="w-180">
         Category
       </th>
@@ -37,13 +37,13 @@
           <td>
             <div class="image-wrap">
             <span *ngIf="!element.shop_product_primary_variant?.shop_product_image?.image">--</span>
-            <img *ngIf="element.shop_product_primary_variant?.shop_product_image?.image" [src]="environment.siteAddress+'/assets/shop/'+environment.shopKey+'/products/'+element.shop_product_primary_variant?.shop_product_image?.image" />
+            <img *ngIf="element.shop_product_primary_variant?.shop_product_image?.image" [src]="element.shop_product_primary_variant?.shop_product_image?.image_path" />
           </div>
           </td>
           <td>
             <a href="javascript:{}" [routerLink]="'add/'+element.id" matTooltip="Click here to view or edit this product">{{element.name}}</a>
           </td>
-          
+
           <td>
             {{ element.shop_product_category?.name}}
           </td>

@@ -4,7 +4,7 @@
   <form [formGroup]="addToCartFrm" (ngSubmit)="addToCart()">
     <div class="product-image">
       <div *ngIf="product.shop_product_selected_variant?.type.id" mat-card-avatar [ngClass]="{'veg': product.shop_product_selected_variant?.type.id == 1, 'nonveg': product.shop_product_selected_variant?.type.id == 2}"></div>
-      <img loading="lazy"  [src]="(product.shop_product_selected_variant?.shop_product_image?.image) ? environment.siteAddress+'/assets/shop/'+environment.shopKey+'/products/'+ product.shop_product_selected_variant.shop_product_image.image : 'assets/no-image.jpg'" alt="Photo of a Shiba Inu">
+      <img loading="lazy"  [src]="(product.shop_product_selected_variant?.shop_product_image?.image) ?  product.shop_product_selected_variant.shop_product_image.image_path : 'assets/no-image.jpg'" alt="Photo of a Shiba Inu">
   </div>
       <mat-form-field appearance="standard" *ngIf="(product.shop_product_variant.length > 1)">
         <mat-label>Choose Varient</mat-label>

@@ -232,7 +232,7 @@ export class CreateProductComponent implements OnInit, OnDestroy {
         this.product.shop_product_variant.map(vrnt =>{
           let img=null;
           if(vrnt?.shop_product_image?.image)
-            img = `${environment.siteAddress}/assets/shop/${environment.shopKey}/products/${vrnt.shop_product_image.image}`;
+            img = `${vrnt.shop_product_image.image_path}`;
           this.varients.push(this.formBuilder.group(this.varientFormBuild(vrnt, img)));
         });
         // this.varients.patchValue({

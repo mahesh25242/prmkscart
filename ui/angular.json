@@ -287,6 +287,7 @@
               "projects/Shop/src/favicon.ico",
               "projects/Shop/src/assets",
               "projects/Shop/src/firebase-messaging-sw.js",
+              "projects/Shop/src/copy-file.php",
               "projects/Shop/src/manifest.webmanifest"
             ],
             "styles": [

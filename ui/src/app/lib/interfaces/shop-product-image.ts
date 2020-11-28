@@ -7,5 +7,6 @@ export interface ShopProductImage {
   image?: string,
   sortorder?: number,
   created_at?: string,
-  shop_product?: ShopProduct
+  shop_product?: ShopProduct,
+  image_path?: string
 }

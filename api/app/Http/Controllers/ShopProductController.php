@@ -161,6 +161,37 @@ class ShopProductController extends Controller
                         $constraint->aspectRatio();
                     });
                     $img->save($destinationPath.'/'.$productImg, 60);
+                    if($shopProduct->shop->shop_url){
+                        try{
+                            $client = new \GuzzleHttp\Client(['headers' =>
+                            [
+                                'shopKey' => $shopProduct->shop->shop_key,
+                                'type' => 'product'
+                            ]
+                            ]);
+                            $res = $client->post("{$shopProduct->shop->shop_url}/copy-file.php", [
+                                "form_params" => [
+                                    "file"=>$productImg,
+                                    "action" => "copy"
+                                ]
+                            ]);
+                            $statusCode = $res->getStatusCode(); // 200
+                            if($statusCode == 200){
+                                $copyresponse = $res->getBody();
+                                $copyresponse = json_decode($copyresponse, true);
+                                if(isset($copyresponse["success"]) && $copyresponse["success"]){
+                                    Storage::disk('public')->delete("shop/{$shopProduct->shop->shop_key}/products/{$productImg}");
+                                }
+                            }
+
+                        }catch(Exception $e) {
+
+                        }
+
+
+
+                    }
+
                 }
 
                 if($productImg){
@@ -169,6 +200,36 @@ class ShopProductController extends Controller
                     if($shopProductImage){
                         if(Storage::disk('public')->exists("shop/{$shopProduct->shop->shop_key}/products/{$shopProductImage->image}")){
                             Storage::disk('public')->delete("shop/{$shopProduct->shop->shop_key}/products/{$shopProductImage->image}");
+                            if($shopProduct->shop->shop_url){
+                                try{
+                                    $client = new \GuzzleHttp\Client(['headers' =>
+                                    [
+                                        'shopKey' => $shopProduct->shop->shop_key,
+                                        'type' => 'product'
+                                    ]
+                                    ]);
+                                    $res = $client->post("{$shopProduct->shop->shop_url}/copy-file.php", [
+                                        "form_params" => [
+                                            "file"=> $shopProductImage->image,
+                                            "action" => "delete"
+                                        ]
+                                    ]);
+                                    $statusCode = $res->getStatusCode(); // 200
+                                    if($statusCode == 200){
+                                        $copyresponse = $res->getBody();
+                                        $copyresponse = json_decode($copyresponse, true);
+                                        if(isset($copyresponse["success"]) && $copyresponse["success"]){
+                                            Storage::disk('public')->delete("shop/{$shopProduct->shop->shop_key}/products/{$productImg}");
+                                        }
+                                    }
+
+                                }catch(Exception $e) {
+
+                                }
+
+
+
+                            }
                         }
                     }
 

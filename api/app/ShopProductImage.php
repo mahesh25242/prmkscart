@@ -25,7 +25,20 @@ class ShopProductImage extends Model implements AuthenticatableContract, Authori
         'created_by', 'updated_by', 'deleted_by'
     ];
 
+    protected $appends = array('image_path');
 
+    public function getImagePathAttribute()
+    {
+        if($this->image && $this->shopProduct->shop->shop_key){
+            if(file_exists("assets/shop/{$this->shopProduct->shop->shop_key}/products/{$this->image}")){
+                return url("assets/shop/{$this->shopProduct->shop->shop_key}/products/{$this->image}");
+            }else{
+                return "{$this->shopProduct->shop->shop_key}/products/{$this->image}";
+            }
+        }else{
+            return null;
+        }
+    }
 
 
 

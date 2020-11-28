@@ -12,7 +12,7 @@
 copy htaccess file in ui folder to hosted server with change path in htaccess and also rename htaccess to .htaccess  
 6. change app.component.ts file `title` variable value; cart
 7. check angular.json file with shop 
-
+8. check api url is correct copy-file.php in file
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 10.0.6.
 
 ## Development server

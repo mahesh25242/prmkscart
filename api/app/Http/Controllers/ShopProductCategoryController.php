@@ -104,6 +104,30 @@ class ShopProductCategoryController extends Controller
             $shopProductCategory->icon = $iconImage;
 
             $shopProductCategory->save();
+
+            if($shopProductCategory->shop->shop_url){
+                try{
+                    $client = new \GuzzleHttp\Client(['headers' =>
+                    [
+                        'shopKey' => $shopProductCategory->shop->shop_key,
+                        'type' => 'category'
+                    ]
+                    ]);
+                    $res = $client->post("{$shopProductCategory->shop->shop_url}/copy-file.php", [
+                        "form_params" => [
+                            "file" => $iconImage,
+                            "action" => "copy"
+                        ]
+                    ]);
+                    $statusCode = $res->getStatusCode(); // 200
+                    if($statusCode == 200){
+
+                    }
+                }catch(Exception $e) {
+
+                }
+            }
+
         }
 
 
