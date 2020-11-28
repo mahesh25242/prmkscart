@@ -9,6 +9,7 @@ import { ShopCategory, ShopProductCategory } from '../interfaces';
   providedIn: 'root'
 })
 export class ShopProductCategoryService {
+  public hideTopCat$: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
   private categories$: BehaviorSubject<ShopProductCategory[]> = new BehaviorSubject<ShopProductCategory[]>(null);
 
   selectedCategory$: BehaviorSubject<ShopProductCategory> = new BehaviorSubject<ShopProductCategory>(null);
@@ -18,6 +19,9 @@ export class ShopProductCategoryService {
     return this.categories$.asObservable();
   }
 
+  get hideTopCat(){
+    return this.hideTopCat$.asObservable();
+  }
 
 
   get selectedCategory(){

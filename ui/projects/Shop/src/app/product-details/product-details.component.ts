@@ -68,7 +68,7 @@ export class ProductDetailsComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
 
-
+    this.shopProductCategoryService.hideTopCat$.next(true);
     this.product = this.route.snapshot.data["product"];
 
     if(this.product){
@@ -96,6 +96,7 @@ export class ProductDetailsComponent implements OnInit, OnDestroy {
     if(this.cartSubScr){
       this.cartSubScr.unsubscribe();
     }
+    this.shopProductCategoryService.hideTopCat$.next(false);
   }
 
 }
