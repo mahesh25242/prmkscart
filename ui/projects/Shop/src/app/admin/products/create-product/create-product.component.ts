@@ -7,12 +7,11 @@ import Notiflix from "notiflix";
 import { ShopProduct, ShopProductCategory } from 'src/app/lib/interfaces';
 
 import { environment } from '../../../../environments/environment';
-//import {MatDialogRef, MAT_DIALOG_DATA} from '@angular/material/dialog';
 import { PageEvent } from '@angular/material/paginator';
 import { ActivatedRoute, Router } from '@angular/router';
 import { find } from 'lodash';
-
-
+import {MatDialog, MatDialogRef, MAT_DIALOG_DATA} from '@angular/material/dialog';
+import { CreateCategoryComponent } from '../../categories/create-category/create-category.component';
 
 @Component({
   selector: 'app-create-product',
@@ -57,8 +56,7 @@ export class CreateProductComponent implements OnInit, OnDestroy {
     private route:ActivatedRoute,
     private generalService: GeneralService,
     private router: Router,
-    //@Inject(MAT_DIALOG_DATA) public data: {product: ShopProduct, pageEvent: PageEvent},
-    //public dialogRef: MatDialogRef<CreateProductComponent>
+    public dialog: MatDialog,
     ) { }
 
   get f() { return this.createProductFrm.controls}
@@ -134,6 +132,18 @@ export class CreateProductComponent implements OnInit, OnDestroy {
 
   }
 
+  createCategory(){
+    let dialogRef = this.dialog.open(CreateCategoryComponent, {
+      data: null,
+    });
+
+    dialogRef.componentInstance.onCreation.subscribe(res=>{
+      if(res){
+        this.categories$ = this.listCategories();
+        this.f.shop_product_category_id.setValue(res);
+      }
+    })
+  }
   handleImageSelection(stat:FormGroup, files: FileList) {
     stat.controls.image.setValue(files.item(0));
   }
@@ -180,6 +190,13 @@ export class CreateProductComponent implements OnInit, OnDestroy {
         currImage: new FormControl(img)
       }
   }
+
+  listCategories(){
+    return this.shopProductCategoryService.listCategories({
+      status: 1
+    });
+  }
+
   ngOnInit(): void {
 
     this.createProductFrm= this.formBuilder.group({
@@ -192,9 +209,7 @@ export class CreateProductComponent implements OnInit, OnDestroy {
       varients:this.formBuilder.array([]),
     });
 
-    this.categories$ = this.shopProductCategoryService.listCategories({
-      status: 1
-    });
+    this.categories$ = this.listCategories();
 
 
 

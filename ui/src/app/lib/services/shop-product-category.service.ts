@@ -35,8 +35,8 @@ export class ShopProductCategoryService {
     }));
   }
 
-  createCategory(postData: any = null): Observable<ShopProductCategory>{
-    return this.http.post<ShopProductCategory>("/shop/products/categories/store", postData);
+  createCategory(postData: any = null): Observable<{data? : ShopProductCategory}>{
+    return this.http.post<{data? :ShopProductCategory}>("/shop/products/categories/store", postData);
   }
 
   deleteCategory(postData: any = null): Observable<ShopProductCategory>{

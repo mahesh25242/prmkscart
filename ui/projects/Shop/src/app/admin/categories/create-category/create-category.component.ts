@@ -1,4 +1,4 @@
-import { Component, Inject, Input, OnDestroy, OnInit } from '@angular/core';
+import { Component, EventEmitter, Inject, Input, OnDestroy, OnInit, Output } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { Observable, Subscription } from 'rxjs';
 import { mergeMap } from 'rxjs/operators';
@@ -19,6 +19,8 @@ export class CreateCategoryComponent implements OnInit, OnDestroy {
   createCatFrm: FormGroup;
   selected = 'option2';
   catIcon = catIcon;
+  @Output() onCreation = new EventEmitter();
+
 
   statuses = [
     {
@@ -60,10 +62,12 @@ export class CreateCategoryComponent implements OnInit, OnDestroy {
     }
 
     this.saveCatSubScr = this.shopProductCategoryService.createCategory(formData).pipe(mergeMap(res=>{
+      this.onCreation.emit(res.data);
       return this.shopProductCategoryService.listCategories();
     })).subscribe(res=>{
       Notiflix.Loading.Remove();
       Notiflix.Notify.Success(`Successfully saved category `);
+
       this.dialogRef.close();
     }, error=>{
       Notiflix.Loading.Remove();
