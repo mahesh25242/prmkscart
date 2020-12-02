@@ -39,7 +39,7 @@ export class CategoriesComponent implements OnInit {
   ngOnInit(): void {
     this.hideTopCat$ = this.shopProductCategoryService.hideTopCat;
     this.selectedCategory$ = this.shopProductCategoryService.selectedCategory;
-    this.categories$ = this.shopProductCategoryService.showCategories();
+    this.categories$ = this.shopProductCategoryService.categories;
   }
 
 }

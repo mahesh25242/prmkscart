@@ -2,7 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { ɵBrowserGetTestability } from '@angular/platform-browser';
 import { BehaviorSubject, Observable, of, throwError } from 'rxjs';
-import { catchError, map, tap } from 'rxjs/operators';
+import { catchError, map, share, shareReplay, tap } from 'rxjs/operators';
 import { ShopCategory, ShopProductCategory } from '../interfaces';
 
 @Injectable({
@@ -50,7 +50,8 @@ export class ShopProductCategoryService {
   showCategories(){
     return this.http.get<ShopProductCategory[]>("/shop/product/showCategories").pipe(tap(res=>{
       this.categories$.next(res);
-    }), catchError(err=>{
+    }),
+    catchError(err=>{
       return of(null);
     }));
   }
