@@ -123,7 +123,7 @@ class ShopProductController extends Controller
                      "description" =>  $variant["description"],
                      "is_primary" =>  $variant["is_primary"],
                      "type" =>  $variant["type"],
-                     "actual_price" =>  $variant["actual_price"],
+                     "actual_price" =>  ($variant["price"] >= $variant["actual_price"]) ? 0 : $variant["actual_price"],
                      "price" =>  $variant["price"],
                      "sortorder" =>  $variant["sortorder"],
                      "status" =>  1,
