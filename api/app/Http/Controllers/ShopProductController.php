@@ -50,7 +50,7 @@ class ShopProductController extends Controller
                 $qry->where("name", 'like', "%{$q}%");
             });
         }
-        return response($products->paginate($perPage ));
+        return response($products->orderBy("sortorder", 'ASC')->paginate($perPage ));
     }
 
     public function store(Request $request){
