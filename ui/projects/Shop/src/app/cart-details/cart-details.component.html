@@ -30,7 +30,7 @@
     </div>
       </div>
       <div class="d-none-md">
-        <button mat-icon-button color="primary" (click)="updateCart(item, '-')">
+        <button mat-icon-button color="primary"  (click)="updateCart(item, '-')">
           <mat-icon>remove_circle_outline</mat-icon>
         </button>
         {{item.qty}}
@@ -78,7 +78,7 @@
           <div class="tab-delivery-options">
           <ng-container *ngIf="(shop$ | async) as shop">
             <ng-container *ngFor="let shop_delivery of shop.shop_delivery">
-              <a href="javascript:{}" [ngClass]="{'active' : (selectedLocation?.id == shop_delivery.id)}"
+              <a matRipple href="javascript:{}" [ngClass]="{'active' : (selectedLocation?.id == shop_delivery.id)}"
               (click)="changeLocation(shop_delivery)">
                 {{ shop_delivery.name }}
                 <span *ngIf="shop_delivery.charge">

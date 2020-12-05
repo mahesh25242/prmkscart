@@ -1,12 +1,12 @@
 <mat-card *ngIf="product$ | async as product">
-  <div class="mat-card-headerimage"
+  <div class="mat-card-headerimage" matRipple [matRippleCentered]="true"
   [ngStyle]="{'background-image': (product.shop_product_primary_variant?.shop_product_image?.image) ? 'url(' +  product.shop_product_primary_variant.shop_product_image.image_path + ')' : 'url(/assets/no-image.jpg)'}"
   [routerLink]="'/'+product.shop_product_category?.url+'/'+product.url">
   <div *ngIf="product.shop_product_primary_variant?.type.id" mat-card-avatar [ngClass]="{'veg': product.shop_product_primary_variant?.type.id == 1, 'nonveg': product.shop_product_primary_variant?.type.id == 2}"></div>
     <!-- <img mat-card-image *ngIf="product.shop_product_primary_variant?.shop_product_image?.image" [src]="environment.siteAddress+'/assets/shop/'+environment.shopKey+'/products/'+ product.shop_product_primary_variant.shop_product_image.image" [alt]="product.shop_product_primary_variant.name"> -->
   </div>
   <mat-card-header>
-    <mat-card-title [routerLink]="'/'+product.shop_product_category?.url+'/'+product.url"> {{ product.name }}</mat-card-title>
+    <mat-card-title matRipple [matRippleCentered]="true" [routerLink]="'/'+product.shop_product_category?.url+'/'+product.url"> {{ product.name }}</mat-card-title>
     <mat-card-subtitle>{{ product.shop_product_primary_variant?.name}} <span *ngIf="product.shop_product_variant.length > 1">
       | {{ product.shop_product_variant.length }} Varients </span> </mat-card-subtitle>
   </mat-card-header>
@@ -18,6 +18,6 @@
    <div>₹ {{ product.shop_product_primary_variant?.price}} </div> <div *ngIf="product.shop_product_primary_variant?.actual_price">₹ {{ product.shop_product_primary_variant?.actual_price}}</div>
    <div></div>
   </div>
-   <button [@openClose]="product.incart" class="addCart-btn" [ngClass]="{'active': product.incart}" (click)="addToCart(product)"><mat-icon aria-hidden="false" aria-label="Add Icon">add</mat-icon></button>
+   <button matRipple [matRippleCentered]="true" [@openClose]="product.incart" class="addCart-btn" [ngClass]="{'active': product.incart}" (click)="addToCart(product)"><mat-icon aria-hidden="false" aria-label="Add Icon">add</mat-icon></button>
   </mat-card-actions>
 </mat-card>

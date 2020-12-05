@@ -16,7 +16,7 @@ a:hover, a:active{
 }
 .flex-right { margin-left: auto;}
 
-.navmenu {  
+.navmenu {
   a {
     margin-left: 20px;
     font-weight: 100;
@@ -32,6 +32,9 @@ a:hover, a:active{
   height: 56px;
   a{
     font-size: 14px;
+  }
+  a.active{
+
   }
 }
 @media(max-width: 959px){
