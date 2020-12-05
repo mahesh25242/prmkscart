@@ -160,7 +160,19 @@ class ShopProductController extends Controller
                     $img = Image::make($destinationPath.'/'.$productImg)->resize(350, null, function ($constraint) {
                         $constraint->aspectRatio();
                     });
+
+
+                    $img->text($shopProduct->shop->name, 20, 20, function($font) {
+                        $font->size(24);
+                        $font->color(array(255, 255, 255, 0.5));
+
+                    });
+
+
                     $img->save($destinationPath.'/'.$productImg, 60);
+
+
+
                     if($shopProduct->shop->shop_url){
                         try{
                             $client = new \GuzzleHttp\Client(['headers' =>
