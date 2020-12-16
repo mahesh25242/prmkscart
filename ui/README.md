@@ -15,6 +15,7 @@ copy htaccess file in ui folder to hosted server with change path in htaccess an
 8. check api url is correct copy-file.php in file
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 10.0.6.
 
+## build command for shop site `ng build Shop --prod  --baseHref=/shop/`
 ## Development server
 
 Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
