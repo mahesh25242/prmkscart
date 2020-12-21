@@ -70,7 +70,11 @@ export class AppComponent implements OnInit, OnDestroy{
         return this.messagingService.receiveMessage()
       else
         of(false);
-    })).subscribe();
+    })).subscribe(res=>{
+
+    }, error =>{
+      this.matSnackBar.open(`You are disabled notification`);
+    });
   	this.showPushNoti = this.messagingService.currentMessage.asObservable().subscribe(msg=>{
       //console.log(msg)
       if(msg)
