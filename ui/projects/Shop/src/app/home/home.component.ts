@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { MatCarousel, MatCarouselComponent } from '@ngmodule/material-carousel';
+import { Observable } from 'rxjs';
+import { GeneralService } from '../lib/services';
 
 
 @Component({
@@ -10,11 +12,9 @@ import { MatCarousel, MatCarouselComponent } from '@ngmodule/material-carousel';
 })
 export class HomeComponent implements OnInit {
   direction = "";
-  slides = [
-      {  'image': 'assets/banner.jpg'  },
-      {  'image': 'assets/banner-2.jpg'  }
-    ];
-  constructor(private route: ActivatedRoute) { }
+  slides$: Observable<[{image: string}]>;
+  constructor(private route: ActivatedRoute,
+    private generalService: GeneralService) { }
 
 
   onSwipe(event) {
@@ -30,7 +30,7 @@ export class HomeComponent implements OnInit {
      }
 
   ngOnInit(): void {
-
+    this.slides$ = this.generalService.getAllBanners();
   }
 
 }
