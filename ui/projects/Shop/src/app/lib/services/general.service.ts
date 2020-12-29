@@ -3,6 +3,7 @@ import { HttpClient, HttpBackend } from '@angular/common/http';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { BreakpointObserver, Breakpoints, BreakpointState } from '@angular/cdk/layout';
 import { tap } from 'rxjs/operators';
+import {PlatformLocation } from '@angular/common';
 
 
 @Injectable({
@@ -14,7 +15,8 @@ export class GeneralService {
   private httpClient: HttpClient;
 
   constructor(private http: HttpClient,
-    handler: HttpBackend
+    private handler: HttpBackend,
+    private platformLocation: PlatformLocation
     ) {
       this.httpClient = new HttpClient(handler);
 
@@ -30,7 +32,8 @@ export class GeneralService {
   }
 
   getAllBanners(): Observable<[{image: string}]>{
-    return this.httpClient.get<[{image: string}]>('/assets/json/home-banner.json');
+    const baseUrl = (this.platformLocation as any).location.href;
+    return this.httpClient.get<[{image: string}]>(`${baseUrl}/assets/json/home-banner.json`);
   }
 
 

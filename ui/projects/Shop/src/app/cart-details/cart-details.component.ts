@@ -64,7 +64,7 @@ export class CartDetailsComponent implements OnInit, OnDestroy {
   sendToShop(){
 
     if(!this.selectedLocation?.id){
-      this.matSnackBar.open('Please choose a delivery location.');
+      this.matSnackBar.open('Please choose a delivery location.', 'close');
       return;
     }
     Notiflix.Loading.Arrows();
@@ -212,14 +212,14 @@ export class CartDetailsComponent implements OnInit, OnDestroy {
     itm.qty = 0;
     if(this.cartSubScr) this.cartSubScr.unsubscribe();
     this.cartSubScr = this.cartService.updateCart(itm, '++').subscribe(res=>{
-      this.matSnackBar.open(`${itm.product.name} - ${itm.product.shop_product_selected_variant.name} successfully removed`);
+      this.matSnackBar.open(`${itm.product.name} - ${itm.product.shop_product_selected_variant.name} successfully removed`, 'close');
     });
   }
 
   changeLocation(loc: ShopDelivery){
     if(!loc) return;
     if(loc.min_amount && this.grandTotal < loc.min_amount){
-      this.matSnackBar.open(`Sorry you cant choose ${loc.name} as your delivery. Because it has miinum order amount is ${loc.min_amount}`);
+      this.matSnackBar.open(`Sorry you cant choose ${loc.name} as your delivery. Because it has miinum order amount is ${loc.min_amount}`, 'close');
       return;
     }
     this.selectedLocation = loc;
@@ -269,16 +269,16 @@ export class CartDetailsComponent implements OnInit, OnDestroy {
       }, err=>{
         switch(err?.code){
               case 1:
-                this.matSnackBar.open('Location Permission denied.');
+                this.matSnackBar.open('Location Permission denied.', 'close');
               break;
               case 2:
-                this.matSnackBar.open('Sorry your position is unavailable.');
+                this.matSnackBar.open('Sorry your position is unavailable.', 'close');
               break;
               case 3:
-                this.matSnackBar.open('Sorry your position request was timeout. Please try again.');
+                this.matSnackBar.open('Sorry your position request was timeout. Please try again.', 'close');
               break;
               default:
-                this.matSnackBar.open('Sorry unexpected error occur.');
+                this.matSnackBar.open('Sorry unexpected error occur.', 'close');
               break;
             }
       })
@@ -347,7 +347,7 @@ export class CartDetailsComponent implements OnInit, OnDestroy {
       }
 
       if(!this.total){
-        this.matSnackBar.open('Your cart is empty.');
+        this.matSnackBar.open('Your cart is empty.', 'close');
         this.router.navigate(['/']);
       }
 

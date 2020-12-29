@@ -28,9 +28,9 @@ export class EditMessageComponent implements OnInit, OnDestroy {
     this.data.message = this.f.message.value;
     this.cartSubScr = this.cartService.updateCart(this.data, '++').subscribe(res=>{
       if(this.data.message)
-        this.matSnackBar.open('Message updated successfully.');
+        this.matSnackBar.open('Message updated successfully.', 'close');
       else
-        this.matSnackBar.open('Removed message successfully.');
+        this.matSnackBar.open('Removed message successfully.', 'close');
 //      this.onUpdated.emit();
       this.dialogRef.close();
     });
