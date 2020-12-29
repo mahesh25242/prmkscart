@@ -23,7 +23,15 @@ import { environment } from '../../../environments/environment';
           animate('500ms', style({transform: 'translateX(100%)', opacity: 0}))
         ])
       ]
-    )
+    ),
+    trigger('openClose', [
+      // ...
+      transition('open => closed', [
+        style({transform: 'translateY(100%)', opacity: 0}),
+        animate('500ms', style({transform: 'translateY(0)', opacity: 1}))
+      ]),
+
+    ]),
   ]
 
 })
@@ -32,9 +40,14 @@ export class CartComponent implements OnInit {
   cart$: Observable<Cart[]>;
   total:number = 0;
   cartDetails: boolean = false;
+  isChanged = true;
+
   constructor(private cartService: CartService) {
     cartService.shopKey = environment.shopKey;
   }
+
+
+
 
   updateCart(cart: Cart, action: string='+'){
     const itm =Object.assign({}, cart);
@@ -45,12 +58,25 @@ export class CartComponent implements OnInit {
 
   ngOnInit(): void {
     this.hideCartComponent$ = this.cartService.hideCartComponent$.asObservable();
-
+    let anyChange = 0;
     this.cart$ = this.cartService.cart().pipe(tap(res=>{
       this.total = 0;
+
       res.map(itm=>{
         this.total +=itm.price;
       });
+
+
+      if(anyChange != this.total){
+        if(anyChange){
+          this.isChanged = false;
+          setTimeout(() => { this.isChanged = true}, 1000)
+        }
+
+        anyChange = this.total;
+
+      }
+
     }));
   }
 
