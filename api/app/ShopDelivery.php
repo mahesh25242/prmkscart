@@ -22,7 +22,8 @@ class ShopDelivery extends Model implements AuthenticatableContract, Authorizabl
      */
     protected $fillable = [
          'shop_id', 'name', 'description', 'charge',
-         'sortorder', 'need_cust_loc', 'min_amount'
+         'sortorder', 'need_cust_loc', 'min_amount',
+         'map_url', 'address'
     ];
 
     public function shop()

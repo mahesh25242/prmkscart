@@ -10,5 +10,7 @@ export interface ShopDelivery {
   sortorder?: number,
   need_cust_loc?: number,
   shop?: Shop,
-  min_amount?: number
+  min_amount?: number,
+  address?: string,
+  map_url?: string
 }

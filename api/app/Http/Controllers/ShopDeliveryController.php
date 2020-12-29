@@ -44,6 +44,8 @@ class ShopDeliveryController extends Controller
             "sortorder" => $request->input("sortorder", 0),
             "min_amount" => ($request->input("min_amount", 0) ? $request->input("min_amount", 0) : 0) ,
             "need_cust_loc" => $request->input("need_cust_loc", 0),
+            "map_url" => $request->input("map_url", ''),
+            "address" => $request->input("address", ''),
         ];
         if($request->input("id", 0)){
             \App\ShopDelivery::where('id', $request->input("id", 0))->update($deliveryInput);
