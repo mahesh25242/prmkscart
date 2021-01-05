@@ -27,8 +27,7 @@ export class ProductItemComponent implements OnInit {
     });
 
     dialogRef.afterClosed().subscribe(result => {
-
-      this.isAnimate = product.incart && true;
+      this.isAnimate = result && product.incart && true;
     });
 
     /*  this.cartService.cart$.next(cart);*/

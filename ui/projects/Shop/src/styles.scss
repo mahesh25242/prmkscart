@@ -19,7 +19,7 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
 
 main { min-height: calc(100vh - 44px); padding:0!important;}
 .container {
-    width: 100%;    
+    width: 100%;
     padding: 0 15px;
     padding-top: 12px;
 }
@@ -27,7 +27,7 @@ mat-card {
     padding: 0px!important;
 }
 .mat-card-image {
-    margin: 0 !important;   
+    margin: 0 !important;
     height: 120px!important;
     overflow: hidden;
 }
@@ -64,7 +64,7 @@ mat-card {
     min-width: 46px!important;
 }
 .carousel-slide {
-    min-height:200px;    
+    min-height:200px;
 }
 .grid-form-container {
     .mat-form-field-infix {
@@ -97,7 +97,7 @@ mat-card {
     grid-column-gap: 10px;
     grid-row-gap:10px;
     .mat-card-headerimage {
-        overflow: hidden;        
+        overflow: hidden;
         width:100%;
         border-radius: 9px 9px 0 0;
         background-repeat: no-repeat;
@@ -111,12 +111,12 @@ mat-card {
         overflow: hidden;
         background-size: cover;
         background-position: center;
-        background-repeat: no-repeat;    
+        background-repeat: no-repeat;
         color: #821807;
         cursor: pointer;
     }
     .mat-card-subtitle {
-        padding:0; 
+        padding:0;
         margin: 0;
         font-size: 12px;
     }
@@ -139,7 +139,7 @@ mat-card {
     width: 100%;
     }
     .mat-card {
-        border-radius: 8px;       
+        border-radius: 8px;
     }
     .mat-card-title {
         max-height: 40px;
@@ -149,7 +149,7 @@ mat-card {
         display: grid;
         grid-template-columns:auto auto 40px;
         grid-column-gap: 5px;
-        height: 45px;   
+        height: 45px;
     align-items: center;
     & > div:nth-child(1) {
         font-weight: bold;
@@ -188,11 +188,11 @@ mat-card {
     background-color:#343A40;
     margin-bottom: 20px;
 }
-.grid-form {    
+.grid-form {
     .mat-form-field-infix {
         padding:0px!important;
     }
-    .mat-form-field-suffix {       
+    .mat-form-field-suffix {
         position: absolute;
         right: 0;
         top: 20px;
@@ -208,38 +208,38 @@ mat-card {
 }
 @media only screen and (min-width: 768px) {
     .product-grid {
-       
+
         .mat-card-headerimage {
-           
+
             height: 160px;
         }
-        .mat-card {      
+        .mat-card {
             min-height: 300px;
         }
     }
-    
+
 }
 
 @media only screen and (max-width: 768px) {
 
     .product-grid {
-       
+
         .mat-card-headerimage {
-           
+
             height: 130px;
         }
-        .mat-card {      
+        .mat-card {
             min-height: 245px;
         }
     }
-   
+
     app-home {
     .container {
         position: relative;
         top: -32px;
         border-radius: 36px;
         background: #fafafa;
-        
+
     }
 }
 .product-grid {
@@ -247,7 +247,7 @@ mat-card {
 }
 .cdk-overlay-pane {
     max-width:95vw!important ;
-    
+
 }
 .vw-80 {
     min-width: 80vw;

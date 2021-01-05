@@ -1,4 +1,5 @@
 <ng-container *ngIf="product">
+
   <h2>{{ product.name}}</h2>
   <mat-card-subtitle>{{ product.shop_product_selected_variant?.name}}</mat-card-subtitle>
   <form [formGroup]="addToCartFrm" (ngSubmit)="addToCart()">
@@ -31,7 +32,7 @@
       <ng-container *ngIf="product.shop_product_selected_variant?.price">
         <div class="float-right">
         <del *ngIf="product.shop_product_selected_variant?.actual_price">₹ {{ product.shop_product_selected_variant?.actual_price }}</del>
-        <span class="weight-bold"> ₹ {{ product.shop_product_selected_variant?.price * qty }} </span>
+        <span class="weight-bold animate__animated animate__flipInX"> ₹ {{ product.shop_product_selected_variant?.price * qty }} </span>
         <!-- <span *ngIf="product.shop_product_selected_variant?.type.id">
           {{ product.shop_product_selected_variant?.type.name }}
         </span> -->
