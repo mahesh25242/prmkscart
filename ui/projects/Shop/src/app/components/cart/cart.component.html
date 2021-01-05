@@ -1,7 +1,7 @@
 <ng-container class="example-button-container" *ngIf="(cart$ | async) as cart">
   <ng-container *ngIf="cart && cart.length && !(hideCartComponent$ | async) ">
-    <a  [@enterAnimation] mat-fab color="primary" class="extended-fab-button" routerLink="/bag" aria-label="Example icon button with a delete icon">
-      <div class="extend-btn-cart" [@openClose]="isChanged ? 'open' : 'closed'">
+    <a   mat-fab color="primary" class="extended-fab-button animate__animated animate__slideInUp animate__faster" routerLink="/bag" aria-label="Example icon button with a delete icon">
+      <div class="extend-btn-cart" [ngClass]="!isChanged ? 'animate__animated animate__headShake animate__faster' : ''">
         <div class="left-align">
           On Your Bag
           <span class="d-block">{{cart.length}} <span class="items">{{ (cart.length > 1) ? 'Items' : 'Item' }}</span> </span>

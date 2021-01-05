@@ -11,19 +11,13 @@ import { AddToCartComponent } from '../../add-to-cart/add-to-cart.component';
 @Component({
   selector: 'app-product-item',
   templateUrl: './product-item.component.html',
-  styleUrls: ['./product-item.component.scss'],
-  animations: [
-    trigger('openClose', [
-      // ...
-      transition('false <=> true', [
-        animate('1s', style({ opacity: 1}))
-      ]),
-    ]),
-  ],
+  styleUrls: ['./product-item.component.scss']
 })
 export class ProductItemComponent implements OnInit {
   @Input() shopProduct: ShopProduct;
   product$: Observable<ShopProduct>;
+
+  isAnimate: boolean = false;
   constructor(public dialog: MatDialog,
     private cartService: CartService) { }
 
@@ -31,6 +25,12 @@ export class ProductItemComponent implements OnInit {
     let dialogRef = this.dialog.open(AddToCartComponent, {
       data: product,
     });
+
+    dialogRef.afterClosed().subscribe(result => {
+
+      this.isAnimate = product.incart && true;
+    });
+
     /*  this.cartService.cart$.next(cart);*/
     }
 
