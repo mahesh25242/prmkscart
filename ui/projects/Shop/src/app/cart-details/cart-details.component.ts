@@ -69,10 +69,17 @@ export class CartDetailsComponent implements OnInit, OnDestroy {
     }
     Notiflix.Loading.Arrows();
     this.sentToShop = this.cart$.pipe(mergeMap(cart=>{
-      if(!cart) return empty();
+      if(!cart) {
+        console.log("no cart exists")
+        return empty();
+      }
 
       return this.shop$.pipe(mergeMap(shop=>{
-        if(!shop) return empty();
+        if(!shop) {
+          console.log("no shop exists");
+          return empty();
+        }
+
 
         let deliveryDate = '';
 
@@ -100,7 +107,7 @@ export class CartDetailsComponent implements OnInit, OnDestroy {
           hour: this.f.hour.value,
           minute: this.f.minute.value,
           ampm: this.f.ampm.value,
-          token: ''
+          token: null
         }
 
         return this.messagingService.getToken().pipe(mergeMap(tkn=>{

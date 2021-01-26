@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { AngularFireMessaging } from '@angular/fire/messaging';
-import { BehaviorSubject } from 'rxjs'
-import { mergeMap, tap } from 'rxjs/operators';
+import { BehaviorSubject, of } from 'rxjs'
+import { catchError, mergeMap, tap } from 'rxjs/operators';
 import { AngularFireFunctions } from '@angular/fire/functions';
 
 
@@ -28,7 +28,9 @@ constructor(private angularFireMessaging: AngularFireMessaging,
   }
 
   getToken(){
-    return this.angularFireMessaging.getToken;
+    return this.angularFireMessaging.getToken.pipe(catchError(err=>{
+      return of(null);
+    }));
   }
 
   receiveMessage() {
