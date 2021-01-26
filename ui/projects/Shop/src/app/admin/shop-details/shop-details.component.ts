@@ -67,10 +67,11 @@ export class ShopDetailsComponent implements OnInit, OnDestroy {
     });
 
     this.shop$ = this.shopService.aShop.pipe(tap(res=>{
+      const phone = (res?.phone) ? res?.phone.slice(2): '';
       this.shopDetailsFrm.patchValue({
         name: res?.name,
         email: res?.email,
-        phone: res?.phone.slice(2),
+        phone: phone,
         address: res?.address,
         country_id: res?.country,
         state_id: res?.state,
