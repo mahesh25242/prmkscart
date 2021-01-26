@@ -70,7 +70,7 @@ export class ShopDetailsComponent implements OnInit, OnDestroy {
       this.shopDetailsFrm.patchValue({
         name: res?.name,
         email: res?.email,
-        phone: res?.phone,
+        phone: res?.phone.slice(2),
         address: res?.address,
         country_id: res?.country,
         state_id: res?.state,
