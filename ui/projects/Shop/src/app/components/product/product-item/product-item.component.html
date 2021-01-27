@@ -1,4 +1,4 @@
-<mat-card *ngIf="product$ | async as product"  [ngClass]="{'active animate__animated animate__pulse': isAnimate }">
+<mat-card *ngIf="product$ | async as product" class="animate__animated "  [ngClass]="{'active  animate__pulse': isAnimate, 'animate__zoomIn': !isAnimate}">
   <div class="mat-card-headerimage" matRipple [matRippleCentered]="true"
   [ngStyle]="{'background-image': (product.shop_product_primary_variant?.shop_product_image?.image) ? 'url(' +  product.shop_product_primary_variant.shop_product_image.image_path + ')' : 'url(/assets/no-image.jpg)'}"
   [routerLink]="'/'+product.shop_product_category?.url+'/'+product.url">
