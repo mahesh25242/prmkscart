@@ -29,15 +29,20 @@ class AdminAndShopAuthenticate
 
         if (Auth::check() )
         {
-            // $user = \App\User::find(Auth::id())->get()->first();
+            if(\App\User::find(Auth::id())->isSuperAdmin()->exists())
+                return $next($request);
 
-            // if($user->userRole->shop && $user->userRole->shop->first()->shop_key){
-            //     $request->headers->set('shop_key', $user->userRole->shop->shop_key);
-            //     return $next($request);
-            // }
+            $isApps = $request->header('IsApps');
+            if($isApps){
+                $user = \App\User::find(Auth::id());
+                if($user->userRole->count() && $user->userRole->first()->shop()->count() &&
+                $user->userRole->first()->shop()->get()->first()->shop_key){
+                    $request->headers->set('shopKey', $user->userRole->first()->shop()->get()->first()->shop_key);
+                    return $next($request);
+                }
+            }
 
-             if(\App\User::find(Auth::id())->isSuperAdmin()->exists())
-                 return $next($request);
+
         }
         return response('Unauthorized.', 401);
     }
