@@ -26,9 +26,17 @@ class AdminAndShopAuthenticate
             if($exists)
                 return $next($request);
         }
+
         if (Auth::check() )
         {
-             if(\App\User::has("isSuperAdmin")->find(Auth::id())->exists())
+            // $user = \App\User::find(Auth::id())->get()->first();
+
+            // if($user->userRole->shop && $user->userRole->shop->first()->shop_key){
+            //     $request->headers->set('shop_key', $user->userRole->shop->shop_key);
+            //     return $next($request);
+            // }
+
+             if(\App\User::find(Auth::id())->isSuperAdmin()->exists())
                  return $next($request);
         }
         return response('Unauthorized.', 401);

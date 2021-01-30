@@ -16,6 +16,10 @@ class ShopProductController extends Controller
     }
 
     public function products(Request $request){
+
+        // $user = \App\User::find(Auth::id())->get()->first();
+        // return $user;
+
         $perPage = $request->input("pageSize", 20);
         $shopKey = $request->header('shopKey');
         if($shopKey){
