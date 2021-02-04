@@ -72,6 +72,7 @@ $app->routeMiddleware([
     'admin' => \App\Http\Middleware\AdminAuthenticate::class,
     'shop' => \App\Http\Middleware\ShopAuthenticate::class,
     'adminAndShop' => \App\Http\Middleware\AdminAndShopAuthenticate::class,
+    'AppMiddleware' => \App\Http\Middleware\AppMiddleware::class,
 ]);
 /*
 |--------------------------------------------------------------------------

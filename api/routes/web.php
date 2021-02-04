@@ -28,7 +28,7 @@ $router->group(['prefix' => 'v1'], function () use ($router) {
     $router->get('cities','CityController@cities');
 
 
-    $router->group(['prefix' => 'shop'], function () use ($router) {
+    $router->group(['prefix' => 'shop', 'middleware' =>  'AppMiddleware'], function () use ($router) {
         $router->get('/','ShopsController@shopDetails');
         $router->get('/adminHomeStat','ShopsController@adminHomeStat');
         $router->post('createOrder','ShopOrderController@createOrder');
