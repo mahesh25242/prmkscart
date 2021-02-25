@@ -12,13 +12,21 @@ class ShopOrderController extends Controller
     public function createOrder(Request $request){
 
         $need_cust_loc = $request->input("selectedLocation.need_cust_loc", null);
+        $isApps = $request->header('IsApps');
+        $isApps = (isset($isApps) && $isApps) ? $isApps : null;
+        if($isApps){
+            $validationArr = [
+                'cart' => ['required']
+            ];
+        }else{
+            $validationArr = [
+                'name' => ['required'],
+                'phone' => ['required', 'regex:/^[\+]?[(]?[0-9]{3}[)]?[-\s\.]?[0-9]{3}[-\s\.]?[0-9]{4,6}$/im'],
+                'cart' => ['required'],
+                'selectedLocation' => ['required'],
+            ];
+        }
 
-        $validationArr = [
-            'name' => ['required'],
-            'phone' => ['required', 'regex:/^[\+]?[(]?[0-9]{3}[)]?[-\s\.]?[0-9]{3}[-\s\.]?[0-9]{4,6}$/im'],
-            'cart' => ['required'],
-            'selectedLocation' => ['required'],
-        ];
 
         if($need_cust_loc){
             $validationArr["address"] = ["required"];
@@ -43,16 +51,16 @@ class ShopOrderController extends Controller
         if($shop){
             $phone = $request->input("phone", '');
 
-            if($shop->country && $shop->country->phonecode){
+            if($shop->country && $shop->country->phonecode && $phone){
                 if(strlen($phone) == 10 && $shop->country->phonecode == '91'){
                     $phone = $shop->country->phonecode.$phone;
                 }
             }else{
-                if(strlen($phone) == 10){
+                if(strlen($phone) == 10 && !$isApps){
                     $phone = '91'.$phone;
                 }
             }
-
+            $phone = ($phone) ? $phone : ' ';
             $shopCustomer = \App\ShopCustomer::updateOrCreate(
                 [
                     "name" => $request->input("name", ''),
@@ -84,7 +92,9 @@ class ShopOrderController extends Controller
                 $shopOrder->note =  $request->input("note", '');
                 $shopOrder->loc =  $request->input("loc", null);
                 $shopOrder->loc = json_encode($shopOrder->loc);
-
+                if($isApps){
+                    $shopOrder->status = 5;
+                }
                 $shopOrder->total =  $request->input("grad_total", 0);
                 $shopOrder->web_push_token =  $request->input("token", '');
                 $shopOrder->save();
@@ -163,6 +173,10 @@ class ShopOrderController extends Controller
 
         if($request->input("start_date", '') && $request->input("end_date", '')){
             $orders = $orders->whereBetween("created_at", [$request->input("start_date", ''), $request->input("end_date", '')]);
+        }
+
+        if($request->input("status", '')){
+            $orders = $orders->whereIn("status", $request->input("status", []));
         }
 
         return response($orders->orderBy('status', 'asc')->orderBy("id", "desc")->paginate($perPage));

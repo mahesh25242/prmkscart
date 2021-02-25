@@ -45,7 +45,7 @@ class ShopOrder extends Model implements AuthenticatableContract, AuthorizableCo
                 return 'Ordered';
             break;
             case 2:
-                return 'Processing';
+                return 'Confirm';
             break;
             case 3:
                 return 'Out For Delivery';
