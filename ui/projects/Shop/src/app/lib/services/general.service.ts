@@ -32,8 +32,8 @@ export class GeneralService {
   }
 
   getAllBanners(): Observable<[{image: string}]>{
-    const baseUrl = (this.platformLocation as any).location.origin;
-    return this.httpClient.get<[{image: string}]>(`${baseUrl}/assets/json/home-banner.json`);
+    const baseUrl = document.querySelector("base").getAttribute("href");//(this.platformLocation as any).location.origin;
+    return this.httpClient.get<[{image: string}]>(`${baseUrl}assets/json/home-banner.json`);
   }
 
 

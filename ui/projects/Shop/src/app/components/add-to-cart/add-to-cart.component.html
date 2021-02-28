@@ -8,7 +8,7 @@
 <div class="product-image">
   <div *ngIf="data.shop_product_selected_variant?.type.id" mat-card-avatar [ngClass]="{'veg': data.shop_product_selected_variant?.type.id == 1, 'nonveg': data.shop_product_selected_variant?.type.id == 2}"></div>
     <img loading="lazy"
-    [src]="(data?.shop_product_selected_variant?.shop_product_image?.image) ?  data.shop_product_selected_variant.shop_product_image.image_path : 'assets/no-image.jpg'" alt="Photo of a Shiba Inu">
+    [src]="(data?.shop_product_selected_variant?.shop_product_image?.image) ?  data.shop_product_selected_variant.shop_product_image.image_path : 'assets/no-image.jpg'" [alt]="data.name+' '+data.shop_product_selected_variant?.name">
   </div>
     <mat-form-field appearance="standard" *ngIf="data.shop_product_variant.length > 1">
       <mat-label>Choose Varient</mat-label>
