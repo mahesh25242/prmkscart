@@ -18,7 +18,7 @@
         <mat-error *ngIf="f.shop_product_category_id.errors && f.shop_product_category_id.errors.error">
           {{f.shop_product_category_id.errors.error}}
         </mat-error>
-        <a href="javascript:{}" (click)="createCategory()">Add New Category</a>
+        <a href="javascript:{}" (click)="createCategory()" matTooltip="Add new category if it not exists in select box">Add New Category</a>
       </div>
       <div class="product-grid-admin-bs-1">
       <mat-form-field class="full-width-text" appearance="standard">
