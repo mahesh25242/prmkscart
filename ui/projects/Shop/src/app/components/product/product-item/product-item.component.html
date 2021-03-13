@@ -2,7 +2,9 @@
   <div class="mat-card-headerimage" matRipple [matRippleCentered]="true"
   [ngStyle]="{'background-image': (product.shop_product_primary_variant?.shop_product_image?.image) ? 'url(' +  product.shop_product_primary_variant.shop_product_image.image_path + ')' : 'url(/assets/no-image.jpg)'}"
   [routerLink]="'/'+product.shop_product_category?.url+'/'+product.url">
-  <div *ngIf="product.shop_product_primary_variant?.type.id"  [ngClass]="{'veg': product.shop_product_primary_variant?.type.id == 1, 'nonveg': product.shop_product_primary_variant?.type.id == 2}"></div>
+  <div *ngIf="product.shop_product_primary_variant?.type.id"
+  [matTooltip]="(product?.shop_product_selected_variant?.type.id == 1) ? 'Veg' : ( (product?.shop_product_selected_variant?.type.id == 2) ? 'Non-Veg':'' )"
+   [ngClass]="{'veg': product.shop_product_primary_variant?.type.id == 1, 'nonveg': product.shop_product_primary_variant?.type.id == 2}"></div>
     <!-- <img mat-card-image *ngIf="product.shop_product_primary_variant?.shop_product_image?.image" [src]="environment.siteAddress+'/assets/shop/'+environment.shopKey+'/products/'+ product.shop_product_primary_variant.shop_product_image.image" [alt]="product.shop_product_primary_variant.name"> -->
   </div>
   <mat-card-header>
@@ -18,6 +20,8 @@
    <div>₹ {{ product.shop_product_primary_variant?.price}} </div> <div *ngIf="product.shop_product_primary_variant?.actual_price">₹ {{ product.shop_product_primary_variant?.actual_price}}</div>
    <div></div>
   </div>
-   <button matRipple [matRippleCentered]="true" class="addCart-btn" [ngClass]="{'active': product.incart}" (click)="addToCart(product)"><mat-icon aria-hidden="false" aria-label="Add Icon">add</mat-icon></button>
+   <button matRipple [matRippleCentered]="true" class="addCart-btn"
+   [matTooltip]="(product.incart) ? product.name+' is already added' : 'Click here for add this item to cart'"
+   [ngClass]="{'active': product.incart}" (click)="addToCart(product)"><mat-icon aria-hidden="false" aria-label="Add Icon">add</mat-icon></button>
   </mat-card-actions>
 </mat-card>

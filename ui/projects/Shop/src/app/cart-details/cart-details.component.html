@@ -11,11 +11,15 @@
 
       <mat-card *ngFor="let item of cart" class="grid-my-list" >
         <div>
-          <div *ngIf="item.product?.shop_product_selected_variant?.type.id" [ngClass]="{'veg': item.product?.shop_product_selected_variant?.type.id == 1, 'nonveg': item.product?.shop_product_selected_variant?.type.id == 2}"></div>
+          <div *ngIf="item.product?.shop_product_selected_variant?.type.id"
+          [matTooltip]="(item.product?.shop_product_selected_variant?.type.id == 1) ? 'Veg' : ( (item.product?.shop_product_selected_variant?.type.id == 2) ? 'Non-Veg':'' )"
+         [ngClass]="{'veg': item.product?.shop_product_selected_variant?.type.id == 1, 'nonveg': item.product?.shop_product_selected_variant?.type.id == 2}"></div>
+         <a href="javascript:{}"  [routerLink]="'/'+item.product.shop_product_category?.url+'/'+item.product.url">
           <img [src]="(item.product?.shop_product_selected_variant?.shop_product_image?.image) ? item.product?.shop_product_selected_variant.shop_product_image.image_path: 'assets/no-image.jpg'">
+         </a>
         </div>
         <div >
-       <h4 class="cart-item-header pl-1"> {{item.product.name}}</h4>
+       <h4 class="cart-item-header pl-1" > {{item.product.name}}</h4>
         <b class="block pl-1">₹ {{item.price}}</b>
        <small class="block pl-1">{{item.product.shop_product_selected_variant.name}}</small>
        <small class="block pl-1" *ngIf="item.message"> {{item.message}}</small>
@@ -30,11 +34,13 @@
     </div>
       </div>
       <div class="d-none-md">
-        <button mat-icon-button color="primary"  (click)="updateCart(item, '-')">
+        <button mat-icon-button color="primary"  (click)="updateCart(item, '-')"
+        [matTooltip]="'Decrease ' +item.product.name+ ' quantity'">
           <mat-icon>remove_circle_outline</mat-icon>
         </button>
         {{item.qty}}
-        <button mat-icon-button color="primary" (click)="updateCart(item, '+')">
+        <button mat-icon-button color="primary" (click)="updateCart(item, '+')"
+        [matTooltip]="'Increase ' +item.product.name+ ' quantity'">
           <mat-icon>add_circle_outline</mat-icon>
         </button>
       </div>
@@ -43,11 +49,13 @@
 
    <!-- <ng-container *ngIf="item.message"> -->
     <div>
-      <button mat-icon-button color="primary" (click)="editMessage(item)">
+      <button mat-icon-button color="primary" (click)="editMessage(item)"
+      [matTooltip]="'Add a custom message for '+item.product.name">
         <mat-icon>add_comment</mat-icon>
       </button>
     <!-- </ng-container> -->
-        <button mat-icon-button color="warn" (click)="deleteItem(item)">
+        <button mat-icon-button color="warn" (click)="deleteItem(item)"
+        [matTooltip]="'Remove ' +item.product.name+ ' from cart'">
           <mat-icon>delete</mat-icon>
         </button>
       </div>
@@ -78,7 +86,10 @@
           <div class="tab-delivery-options">
           <ng-container *ngIf="(shop$ | async) as shop">
             <ng-container *ngFor="let shop_delivery of shop.shop_delivery">
-              <a matRipple href="javascript:{}" [ngClass]="{'active' : (selectedLocation?.id == shop_delivery.id)}"
+              <a matRipple href="javascript:{}"
+              class="animate__animated"
+              [matTooltip]="'Select '+shop_delivery.name+' as your delivery location' "
+               [ngClass]="{'active animate__headShake' : (selectedLocation?.id == shop_delivery.id)}"
               (click)="changeLocation(shop_delivery)">
                 {{ shop_delivery.name }}
                 <span *ngIf="shop_delivery.charge">

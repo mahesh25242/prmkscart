@@ -4,7 +4,9 @@
   <mat-card-subtitle>{{ product.shop_product_selected_variant?.name}}</mat-card-subtitle>
   <form [formGroup]="addToCartFrm" (ngSubmit)="addToCart()">
     <div class="product-image">
-      <div *ngIf="product.shop_product_selected_variant?.type.id"  [ngClass]="{'veg': product.shop_product_selected_variant?.type.id == 1, 'nonveg': product.shop_product_selected_variant?.type.id == 2}"></div>
+      <div *ngIf="product.shop_product_selected_variant?.type.id"
+      [matTooltip]="(product?.shop_product_selected_variant?.type.id == 1) ? 'Veg' : ( (product?.shop_product_selected_variant?.type.id == 2) ? 'Non-Veg':'' )"
+      [ngClass]="{'veg': product.shop_product_selected_variant?.type.id == 1, 'nonveg': product.shop_product_selected_variant?.type.id == 2}"></div>
       <img loading="lazy"  [src]="(product.shop_product_selected_variant?.shop_product_image?.image) ?  product.shop_product_selected_variant.shop_product_image.image_path : 'assets/no-image.jpg'" [alt]="product.name+' '+product.shop_product_selected_variant?.name">
   </div>
       <mat-form-field appearance="standard" *ngIf="(product.shop_product_variant.length > 1)">
@@ -21,11 +23,14 @@
 
 
       <div class="relativePosition">
-      <button type="button" mat-icon-button color="primary" (click)="updateCart('-')" [disabled]="qty<2">
+      <button type="button" mat-icon-button color="primary" (click)="updateCart('-')" [disabled]="qty<2"
+      matTooltip="Decrease the quantity" class="animate__animated"
+      [ngClass]="{'animate__flipInY' : qty<2 }">
         <mat-icon>remove_circle_outline</mat-icon>
       </button>
       {{qty}}
-      <button type="button" mat-icon-button color="primary" (click)="updateCart('+')">
+      <button type="button" mat-icon-button color="primary" (click)="updateCart('+')"
+      matTooltip="Increase the quantity">
         <mat-icon>add_circle_outline</mat-icon>
       </button>
 </div>

@@ -6,7 +6,9 @@
 
   <div mat-dialog-content>
 <div class="product-image">
-  <div *ngIf="data.shop_product_selected_variant?.type.id" [ngClass]="{'veg': data.shop_product_selected_variant?.type.id == 1, 'nonveg': data.shop_product_selected_variant?.type.id == 2}"></div>
+  <div *ngIf="data.shop_product_selected_variant?.type.id"
+  [matTooltip]="(data?.shop_product_selected_variant?.type.id == 1) ? 'Veg' : ( (data?.shop_product_selected_variant?.type.id == 2) ? 'Non-Veg':'' )"
+  [ngClass]="{'veg': data.shop_product_selected_variant?.type.id == 1, 'nonveg': data.shop_product_selected_variant?.type.id == 2}"></div>
     <img loading="lazy"
     [src]="(data?.shop_product_selected_variant?.shop_product_image?.image) ?  data.shop_product_selected_variant.shop_product_image.image_path : 'assets/no-image.jpg'" [alt]="data.name+' '+data.shop_product_selected_variant?.name">
   </div>
@@ -25,11 +27,13 @@
 
 
 <div class="relativePosition">
-    <button type="button" mat-icon-button color="primary" (click)="updateCart('-')" [disabled]="qty<2">
+    <button type="button" class="animate__animated" mat-icon-button color="primary" (click)="updateCart('-')" [disabled]="qty<2"
+    matTooltip="Decrease the quantity" [ngClass]="{'animate__flipInY' : qty<2 }">
       <mat-icon>remove_circle_outline</mat-icon>
     </button>
     {{qty}}
-    <button type="button" mat-icon-button color="primary" (click)="updateCart('+')">
+    <button type="button" mat-icon-button color="primary" (click)="updateCart('+')"
+    matTooltip="Increase the quantity">
       <mat-icon>add_circle_outline</mat-icon>
     </button>
   </div>
