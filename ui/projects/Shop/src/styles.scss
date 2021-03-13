@@ -156,7 +156,9 @@ mat-card {
         width: 45px;
         color: #fff;
         border-radius: 9px 0 9px 0;
-        cursor: pointer;
+        &.active{
+          background: rgb(239, 239, 239);
+        }
     }
     .mat-card-actions {
         padding:0 0 0 11px;
