@@ -11,7 +11,7 @@
 
       <mat-card *ngFor="let item of cart" class="grid-my-list" >
         <div>
-          <div *ngIf="item.product?.shop_product_selected_variant?.type.id" mat-card-avatar [ngClass]="{'veg': item.product?.shop_product_selected_variant?.type.id == 1, 'nonveg': item.product?.shop_product_selected_variant?.type.id == 2}"></div>
+          <div *ngIf="item.product?.shop_product_selected_variant?.type.id" [ngClass]="{'veg': item.product?.shop_product_selected_variant?.type.id == 1, 'nonveg': item.product?.shop_product_selected_variant?.type.id == 2}"></div>
           <img [src]="(item.product?.shop_product_selected_variant?.shop_product_image?.image) ? item.product?.shop_product_selected_variant.shop_product_image.image_path: 'assets/no-image.jpg'">
         </div>
         <div >
