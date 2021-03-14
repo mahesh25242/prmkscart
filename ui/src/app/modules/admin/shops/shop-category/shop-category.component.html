@@ -1,4 +1,5 @@
-<button (click)="create()" class="btn btn-primary">Create Category</button>
+<button (click)="create()" class="btn btn-primary float-right">Create Category</button>
+<div class="clearfix mb-3 mt-2"></div>
 <table class="table">
   <thead>
     <tr>
@@ -29,7 +30,9 @@
           {{ cat.status_text}}
         </td>
         <td>
-          <a href="javascript:{}" (click)="delete(cat)" class="btn btn-danger btn-sm">Delete</a>
+          <a href="javascript:{}" (click)="delete(cat)" class="btn btn-danger btn-sm">
+            <fa-icon [icon]="faTrash"></fa-icon>
+          </a>
         </td>
       </tr>
     </ng-container>

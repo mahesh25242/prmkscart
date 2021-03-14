@@ -1,4 +1,4 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { delay, map, share, tap } from 'rxjs/operators';
@@ -39,6 +39,16 @@ export class ShopService {
 
   deleteShop(shopId:number = 0, postData: any = null){
     return this.http.post<any>(`/admin/shops/delete/${shopId}`, postData);
+  }
+
+  generateSite(postData: any = null){
+    return this.http.post<any>(`/admin/shops/generateSite`, postData);
+  }
+
+  downloadSite(postData: any = null){
+    return this.http.post(`/admin/shops/downloadSite`, postData
+    , { responseType: 'arraybuffer' }
+    );
   }
 
   shop(shopId:number = 0){

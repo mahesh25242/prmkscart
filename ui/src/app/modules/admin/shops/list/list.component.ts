@@ -4,6 +4,7 @@ import { Shop } from 'src/app/lib/interfaces';
 import { ShopService } from 'src/app/lib/services';
 import Notiflix from "notiflix";
 import { map, mergeMap } from 'rxjs/operators';
+import { faEdit, faTrash } from '@fortawesome/free-solid-svg-icons';
 
 @Component({
   selector: 'app-list',
@@ -11,6 +12,8 @@ import { map, mergeMap } from 'rxjs/operators';
   styleUrls: ['./list.component.scss']
 })
 export class ListComponent implements OnInit {
+  faEdit = faEdit;
+  faTrash = faTrash;
   shops$: Observable<Shop[]>;
   constructor(private shopService: ShopService) { }
 

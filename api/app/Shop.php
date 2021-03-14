@@ -9,6 +9,7 @@ use Illuminate\Database\Eloquent\Model;
 use Laravel\Lumen\Auth\Authorizable;
 use Laravel\Passport\HasApiTokens;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Support\Facades\Storage;
 
 class Shop extends Model implements AuthenticatableContract, AuthorizableContract
 {
@@ -24,14 +25,20 @@ class Shop extends Model implements AuthenticatableContract, AuthorizableContrac
         'name', 'email', 'phone', 'address', 'country_id',
         'state_id', 'city_id', 'pin', 'local', 'map',
         'shop_key', 'shop_url', 'status', 'shop_category_id',
-         'created_by', 'updated_by', 'deleted_by'
+        'created_by', 'updated_by', 'deleted_by', 'base_path', 'favicon',
+        'theme_color', 'bg_color', 'short_name', 'icons', 'logo'
     ];
 
-    protected $appends = array('status_text');
+    protected $appends = array('status_text','is_generated');
 
     public function getStatusTextAttribute()
     {
         return (($this->status) ? 'Active' : 'In-Active');
+    }
+
+    public function getIsGeneratedAttribute()
+    {
+        return Storage::disk('public')->exists("shop/{$this->shop_key}/www");
     }
 
 

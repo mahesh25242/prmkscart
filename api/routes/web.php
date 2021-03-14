@@ -19,6 +19,10 @@ $router->get('/', function () use ($router) {
     return $router->app->version();
 });
 
+
+
+
+
 //$router->get('/{sitemap}','SiteMapController@index');
 
 $router->group(['prefix' => 'v1'], function () use ($router) {
@@ -97,7 +101,8 @@ $router->group(['prefix' => 'v1'], function () use ($router) {
                 $router->get('/shop/{id}','ShopsController@getAShop');
                 $router->post('store','ShopsController@store');
                 $router->post('delete/{id}','ShopsController@delete');
-
+                $router->post('/generateSite','ShopsController@generateSite');
+                $router->post('/downloadSite','ShopsController@downloadSite');
                 $router->group(['prefix' => 'categories'], function () use ($router) {
                     $router->post('/','ShopsCategoryController@categories');
                     $router->post('store','ShopsCategoryController@store');

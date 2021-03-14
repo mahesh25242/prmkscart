@@ -1,35 +1,78 @@
-<div *ngIf="(shop$ | async) as shop">
+<div *ngIf="(shop$ | async) as shop" class="mt-2 ">
 
 
-  <h3>{{shop.name}}</h3>
-  <div>shopKey: {{shop.shop_key}}</div>
-  <div>Status: {{shop.status_text}}</div>
-  <div>Category: {{ shop.shop_category?.name }}</div>
-  <div>Created At: {{shop.created_at | date:'medium'}}</div>
-  <ul>
-    <li>
+  <h3>
+    {{shop.name}}
+    <a href="javascript:{}" *ngIf="!shop.is_generated"
+    class="btn btn-primary float-right" (click)="generateIt(shop)">
+      Generate
+    </a>
+
+    <div  *ngIf="shop.is_generated" class="float-right">
+      <a href="javascript:{}"
+      class="btn btn-primary" (click)="downloadSite(shop)">
+        Download
+      </a>
+
+      <a href="javascript:{}"
+      class="btn btn-danger ml-2" (click)="generateIt(shop)">
+        Re- Generate
+      </a>
+    </div>
+  </h3>
+
+  <div class="row">
+    <div class="col">
+      shopKey: {{shop.shop_key}}
+    </div>
+    <div class="col" [ngClass]="{'text-warning': !shop.status, 'text-success': shop.status}">Status: {{shop.status_text}}</div>
+    <div class="col">Category: {{ (shop.shop_category?.name) ? shop.shop_category?.name : 'Nill' }}</div>
+  </div>
+
+  <div class="row">
+    <div class="col">Created At: {{shop.created_at | date:'medium'}}</div>
+  </div>
+
+
+  <ul class="row list-group">
+    <li class="list-group-item col">
       Email: {{ shop.email}}
     </li>
-    <li>
+    <li class="list-group-item col">
       Phone: {{ shop.phone}}
     </li>
-    <li>
+    <li class="list-group-item col">
       Address: {{ shop.address}}
     </li>
-    <li>
+    <li class="list-group-item col">
       Pin: {{ shop.pin}}
     </li>
-    <li>
+    <li class="list-group-item col">
       Country: {{ shop.country?.name}}
     </li>
-    <li>
+    <li class="list-group-item col">
       State: {{ shop.state?.name}}
     </li>
-    <li>
+    <li class="list-group-item col">
       City: {{ shop.city?.name}}
     </li>
-        <li>
-      City: {{ shop.city?.name}}
+    <li class="list-group-item col">
+      Shop Shor Name: {{ shop.short_name}}
+    </li>
+    <li class="list-group-item col">
+      Base Path: {{ shop.base_path}}
+    </li>
+    <li class="list-group-item col">
+      favicon: {{ shop.favicon}}
+    </li>
+    <li class="list-group-item col">
+      theme_color: {{ shop.theme_color}}
+    </li>
+    <li class="list-group-item col">
+      bg_color: {{ shop.bg_color}}
+    </li>
+    <li class="list-group-item col">
+      icons: {{ shop.icons}}
     </li>
   </ul>
   <div >

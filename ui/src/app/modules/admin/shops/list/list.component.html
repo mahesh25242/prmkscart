@@ -1,4 +1,6 @@
-<a routerLink="create" class="btn btn-primary">Create Shop</a>
+<a routerLink="create" class="btn btn-primary float-right">Create Shop</a>
+<div class="clearfix mb-3 mt-2"></div>
+
 <table class="table">
   <thead>
     <tr>
@@ -29,8 +31,12 @@
           {{ shop.status_text }}
         </td>
         <td>
-          <a href="javascript:{}" [routerLink]="'edit/'+shop.shop_key">Edit</a>
-          <a href="javascript:{}" (click)="delete(shop)">Delete</a>
+          <a href="javascript:{}" [routerLink]="'edit/'+shop.shop_key" class="btn btn-primary btn-sm">
+            <fa-icon [icon]="faEdit"></fa-icon>
+          </a> |
+          <a href="javascript:{}" (click)="delete(shop)" class="btn btn-danger btn-sm">
+            <fa-icon [icon]="faTrash"></fa-icon>
+          </a>
         </td>
       </tr>
     </ng-container>

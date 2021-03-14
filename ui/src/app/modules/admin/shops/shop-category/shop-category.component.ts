@@ -6,6 +6,7 @@ import { ShopCategoryService } from 'src/app/lib/services';
 import { CreateShopCategoryComponent } from './create-shop-category/create-shop-category.component';
 import Notiflix from "notiflix";
 import { map, mergeMap } from 'rxjs/operators';
+import {  faTrash } from '@fortawesome/free-solid-svg-icons';
 
 @Component({
   selector: 'app-shop-category',
@@ -13,6 +14,7 @@ import { map, mergeMap } from 'rxjs/operators';
   styleUrls: ['./shop-category.component.scss']
 })
 export class ShopCategoryComponent implements OnInit {
+  faTrash =  faTrash;
   categories$: Observable<ShopCategory[]>;
   constructor(private _modalService: NgbModal,
     private shopCategoryService: ShopCategoryService) { }

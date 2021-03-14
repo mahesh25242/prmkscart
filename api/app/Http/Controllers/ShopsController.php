@@ -4,9 +4,13 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Validator;
+use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\File;
+use Image;
 
 class ShopsController extends Controller
 {
+
 
 
     public function shops(Request $request){
@@ -32,19 +36,47 @@ class ShopsController extends Controller
             return response(['message' => 'Validation errors', 'errors' =>  $validator->errors(), 'status' => false], 422);
         }
         $input = $request->all();
+
+        $country_id = ($request->input("country_id", null)) ? json_decode($request->input("country_id", null), true) : '' ;
+        $state_id = ($request->input("state_id", null)) ? json_decode($request->input("state_id", null), true) : '' ;
+        $city_id = ($request->input("city_id", null)) ? json_decode($request->input("city_id", null), true) : '' ;
+
         $input["shop_category_id"] = $request->input("shop_category_id.id", 0);
-        $input["country_id"] = $request->input("country_id.id", 0);
-        $input["state_id"] = $request->input("state_id.id", 0);
-        $input["city_id"] = $request->input("city_id.id", 0);
+        $input["country_id"] = $country_id["id"] ?? null;
+        $input["state_id"] = $state_id["id"] ?? null;
+        $input["city_id"] = $city_id["id"] ?? null;
         $input["shop_url"] = $request->input("shop_url", '');
         $input["shop_url"] = ($input["shop_url"]) ? trim($input["shop_url"]) : '';
         $input["shop_url"] = ($input["shop_url"]) ? rtrim($input["shop_url"], "/") : '';
 
+
+
         if($request->input("id", 0)){
             $shop = \App\Shop::where('id', $request->input("id", 0))->update($input);
+            $shop =  \App\Shop::find( $request->input("id", 0));
         }else{
             $input["shop_key"] = sha1(time());
             $shop = \App\Shop::create($input);
+        }
+
+        if ($request->hasFile('favicon')) {
+            $destinationPath = "assets/shop/{$shop->shop_key}/www";
+            $request->file('favicon')->move($destinationPath, "favicon.ico");
+            $shop->favicon = 'favicon.ico';
+            $shop->save();
+        }
+
+        if ($request->hasFile('logo')) {
+            $destinationPath = "assets/shop/{$shop->shop_key}/www";
+
+            $logoName = sprintf("%s.%s",time(), $request->file('logo')->extension());
+            $destinationPath = "assets/shop/{$shop->shop_key}/www";
+            $request->file('logo')->move($destinationPath, $logoName);
+
+            $png = Image::make($destinationPath.'/'.$logoName)->encode('png');
+            $png->save($destinationPath.'/logo.png');
+            $shop->logo = 'logo.png';
+            $shop->save();
         }
 
 
@@ -139,5 +171,70 @@ class ShopsController extends Controller
         ];
 
         return response($stat);
+    }
+
+    public function generateSite(Request $request){
+        $files = Storage::allFiles("shopSite");
+        $shopKey = $request->input("shop_key", '3d9f5a8eec71764c7c2df5a56496c8a1320dd921');
+        $shop =  \App\Shop::where("shop_key", $shopKey)->get()->first();
+
+        $toBasePath = 'shop/'.$shopKey.'/www';
+
+        $replacer["shopSite/index.html"] = [
+            "CART_SITE_PATH" => $shop->base_path ??  '/',
+            "CART_FAVICON_ICO" => $shop->favicon ?? 'favicon.ico',
+            "CART_THEME_COLOR" => $shop->theme_color ?? '#1976d2',
+            "CART_SHOP_KEY" => $shopKey,
+            "CART_SHOP_NAME" => $shop->name,
+        ];
+
+        $replacer["shopSite/manifest.webmanifest"] = [
+            "CART_BACKGROUND_COLOR" => $shop->bg_color ?? '#fafafa',
+            "CART_SHOP_NAME" =>  $shop->name,
+            "CART_SHOP_SHORT_NAME" =>  $shop->short_name ?? $shop->name,
+            "CART_THEME_COLOR" => $shop->name ?? '#1976d2'
+        ];
+        foreach($files as $file){
+            $toFile = str_replace("shopSite/", "", $file);
+
+            if($toFile != "favicon.ico" || (!$shop->favicon && $toFile == "favicon.ico"))
+                Storage::disk('public')->delete("{$toBasePath}/{$toFile}");
+            if(isset($replacer[$file])){
+                $html =  Storage::get($file);
+                foreach($replacer[$file] as $key => $val){
+                    $html = str_replace($key, $val, $html);
+                }
+                Storage::disk('public')->put("{$toBasePath}/{$toFile}", $html);
+            }else{
+                if($toFile != "favicon.ico" || (!$shop->favicon && $toFile == "favicon.ico"))
+                    Storage::disk('public')->writeStream("{$toBasePath}/{$toFile}", Storage::readStream($file));
+            }
+         }
+         return response(['message' => 'successfully generated',  'status' => true]);
+    }
+
+    public function downloadSite(Request $request){
+        $toBasePath = 'assets/shop/'.$request->input("shop_key", '3d9f5a8eec71764c7c2df5a56496c8a1320dd921').'/www';
+
+        $zip_file = 'assets/shop/'.$request->input("shop_key", '3d9f5a8eec71764c7c2df5a56496c8a1320dd921').'www.zip';
+        $zip = new \ZipArchive();
+        $zip->open($zip_file, \ZipArchive::CREATE | \ZipArchive::OVERWRITE);
+
+        $path = public_path($toBasePath);
+        $files = new \RecursiveIteratorIterator(new \RecursiveDirectoryIterator($path));
+        foreach ($files as $name => $file)
+        {
+            // We're skipping all subfolders
+            if (!$file->isDir()) {
+                $filePath     = $file->getRealPath();
+
+                // extracting filename with substr/strlen
+                $relativePath = substr($filePath, strlen($path) + 1);
+
+                $zip->addFile($filePath, $relativePath);
+            }
+        }
+        $zip->close();
+        return response()->download($zip_file)->deleteFileAfterSend(true);
     }
 }

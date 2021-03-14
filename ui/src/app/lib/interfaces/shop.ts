@@ -31,5 +31,13 @@ export interface Shop {
   created_at?: string,
   user_role?: UserRole,
   shop_url?: string,
-  shop_delivery?: ShopDelivery[]
+  shop_delivery?: ShopDelivery[],
+  is_generated?: boolean,
+  base_path?: string,
+  favicon?: string,
+  theme_color?: string,
+  bg_color?: string,
+  short_name?: string,
+  logo?: string,
+  icons?: any
 }
