@@ -194,6 +194,10 @@ class ShopsController extends Controller
             "CART_SHOP_SHORT_NAME" =>  $shop->short_name ?? $shop->name,
             "CART_THEME_COLOR" => $shop->name ?? '#1976d2'
         ];
+        $replacer["shopSite/ngsw.json"] = [
+            "CART_SITE_PATH" => $shop->base_path ??  '/',
+        ];
+
         foreach($files as $file){
             $toFile = str_replace("shopSite/", "", $file);
 
