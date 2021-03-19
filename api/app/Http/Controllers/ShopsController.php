@@ -79,6 +79,31 @@ class ShopsController extends Controller
             $png->save($destinationPath.'/logo.png');
 
 
+            $png = Image::make($destinationPath.'/logo.png')->resize(72, 72);
+            $png->save($destinationPath.'/icon-72x72.png');
+
+            $png = Image::make($destinationPath.'/logo.png')->resize(96, 96);
+            $png->save($destinationPath.'/icon-96x96.png');
+
+            $png = Image::make($destinationPath.'/logo.png')->resize(128, 128);
+            $png->save($destinationPath.'/icon-128x128.png');
+
+            $png = Image::make($destinationPath.'/logo.png')->resize(144, 144);
+            $png->save($destinationPath.'/icon-144x144.png');
+
+            $png = Image::make($destinationPath.'/logo.png')->resize(152, 152);
+            $png->save($destinationPath.'/icon-152x152.png');
+
+            $png = Image::make($destinationPath.'/logo.png')->resize(192, 192);
+            $png->save($destinationPath.'/icon-192x192.png');
+
+            $png = Image::make($destinationPath.'/logo.png')->resize(384, 384);
+            $png->save($destinationPath.'/icon-384x384.png');
+
+            $png = Image::make($destinationPath.'/logo.png')->resize(512, 512);
+            $png->save($destinationPath.'/icon-512x512.png');
+
+
             Storage::disk('public')->delete(str_replace("assets/", "", $destinationPath).'/'.$logoName);
             $shop->logo = 'logo.png';
             $shop->save();

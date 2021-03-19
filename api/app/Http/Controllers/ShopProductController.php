@@ -141,6 +141,15 @@ class ShopProductController extends Controller
                     $destinationPath = "assets/shop/".$shopProduct->shop->shop_key.'/products';
                     $request->file("variants.{$ind}.image")->move($destinationPath, $productImg);
 
+                    // $img = Image::make($destinationPath.'/'.$productImg)->encode('webp');
+                    // $img->save($destinationPath.pathinfo($productImg, PATHINFO_FILENAME).'.webp');
+
+                    // $productImg = pathinfo($productImg, PATHINFO_FILENAME).'.webp';
+
+                    if(Storage::disk('public')->exists(str_replace("assets/", "", $destinationPath)."/{$productImg}")){
+                        Storage::disk('public')->delete(str_replace("assets/", "", $destinationPath)."/{$productImg}");
+                    }
+
                     if(!Storage::disk('public')->exists("shop/index.html")){
                         Storage::disk('public')->put("shop/index.html", 'unauthorised access');
                     }
