@@ -51,6 +51,10 @@ class ShopsController extends Controller
 
 
 
+        unset($input["logo"]);
+        unset($input["favicon"]);
+
+
         if($request->input("id", 0)){
             $shop = \App\Shop::where('id', $request->input("id", 0))->update($input);
             $shop =  \App\Shop::find( $request->input("id", 0));
@@ -60,21 +64,22 @@ class ShopsController extends Controller
         }
 
         if ($request->hasFile('favicon')) {
-            $destinationPath = "assets/shop/{$shop->shop_key}/www";
+            $destinationPath = "assets/shop/{$shop->shop_key}/general";
             $request->file('favicon')->move($destinationPath, "favicon.ico");
             $shop->favicon = 'favicon.ico';
             $shop->save();
         }
 
         if ($request->hasFile('logo')) {
-            $destinationPath = "assets/shop/{$shop->shop_key}/www";
-
             $logoName = sprintf("%s.%s",time(), $request->file('logo')->extension());
-            $destinationPath = "assets/shop/{$shop->shop_key}/www";
+            $destinationPath = "assets/shop/{$shop->shop_key}/general";
             $request->file('logo')->move($destinationPath, $logoName);
 
             $png = Image::make($destinationPath.'/'.$logoName)->encode('png');
             $png->save($destinationPath.'/logo.png');
+
+
+            Storage::disk('public')->delete(str_replace("assets/", "", $destinationPath).'/'.$logoName);
             $shop->logo = 'logo.png';
             $shop->save();
         }
@@ -198,11 +203,15 @@ class ShopsController extends Controller
             "CART_SITE_PATH" => $shop->base_path ??  '/',
         ];
 
+        $customFiles = [
+            "favicon.ico"=>"favicon",
+            "logo.png"=>"logo",
+        ];
         foreach($files as $file){
             $toFile = str_replace("shopSite/", "", $file);
 
-            if($toFile != "favicon.ico" || (!$shop->favicon && $toFile == "favicon.ico"))
-                Storage::disk('public')->delete("{$toBasePath}/{$toFile}");
+
+            Storage::disk('public')->delete("{$toBasePath}/{$toFile}");
             if(isset($replacer[$file])){
                 $html =  Storage::get($file);
                 foreach($replacer[$file] as $key => $val){
@@ -210,8 +219,22 @@ class ShopsController extends Controller
                 }
                 Storage::disk('public')->put("{$toBasePath}/{$toFile}", $html);
             }else{
-                if($toFile != "favicon.ico" || (!$shop->favicon && $toFile == "favicon.ico"))
-                    Storage::disk('public')->writeStream("{$toBasePath}/{$toFile}", Storage::readStream($file));
+                Storage::disk('public')->writeStream("{$toBasePath}/{$toFile}", Storage::readStream($file));
+            }
+         }
+
+         foreach($customFiles as $key => $file){
+            if(($shop->{$file})){
+                $filePath = "shop/{$shopKey}/general/{$key}";
+                if(Storage::disk('public')->exists($filePath)){
+
+                    if(Storage::disk('public')->exists("{$toBasePath}/{$key}")){
+                        Storage::disk('public')->delete("{$toBasePath}/{$key}");
+                    }
+
+                    Storage::disk('public')->writeStream("{$toBasePath}/{$key}", Storage::disk('public')->readStream($filePath));
+                }
+
             }
          }
          return response(['message' => 'successfully generated',  'status' => true]);
