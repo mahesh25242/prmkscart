@@ -231,6 +231,14 @@ class ShopsController extends Controller
         $customFiles = [
             "favicon.ico"=>"favicon",
             "logo.png"=>"logo",
+            "icon-72x72.png"=>"icons",
+            "icon-96x96.png"=>"icons",
+            "icon-128x128.png"=>"icons",
+            "icon-144x144.png"=>"icons",
+            "icon-152x152.png"=>"icons",
+            "icon-192x192.png"=>"icons",
+            "icon-384x384.png"=>"icons",
+            "icon-512x512.png"=>"icons",
         ];
         foreach($files as $file){
             $toFile = str_replace("shopSite/", "", $file);
@@ -252,14 +260,19 @@ class ShopsController extends Controller
             if(($shop->{$file})){
                 $filePath = "shop/{$shopKey}/general/{$key}";
                 if(Storage::disk('public')->exists($filePath)){
-
                     if(Storage::disk('public')->exists("{$toBasePath}/{$key}")){
                         Storage::disk('public')->delete("{$toBasePath}/{$key}");
                     }
-
                     Storage::disk('public')->writeStream("{$toBasePath}/{$key}", Storage::disk('public')->readStream($filePath));
                 }
-
+            }else{
+                $filePath = "shop/{$shopKey}/general/{$key}";
+                if(Storage::disk('public')->exists($filePath)){
+                    if(Storage::disk('public')->exists("{$toBasePath}/assets/icons/{$key}")){
+                        Storage::disk('public')->delete("{$toBasePath}/assets/icons/{$key}");
+                    }
+                    Storage::disk('public')->writeStream("{$toBasePath}/assets/icons/{$key}", Storage::disk('public')->readStream($filePath));
+                }
             }
          }
          return response(['message' => 'successfully generated',  'status' => true]);
