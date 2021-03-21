@@ -1,0 +1,111 @@
+
+<h1 mat-dialog-title>
+  {{ data.shop_customer.name + ' Order'}}
+</h1>
+<div mat-dialog-content>
+
+      <mat-list role="list">
+        <mat-list-item role="listitem">
+          Name:&nbsp;&nbsp;{{ data.shop_customer.name}}
+        </mat-list-item>
+        <mat-list-item role="listitem">
+          Phone:&nbsp;&nbsp;<a [href]="whastAppUrl" target="_blank" matTooltip="Click here to chat with customer in Whatsapp"> {{ data.shop_customer.phone}}</a>
+        </mat-list-item>
+        <mat-list-item role="listitem" *ngIf="data.shop_customer.email">
+          CEmail:&nbsp;&nbsp;{{ data.shop_customer.email}}
+        </mat-list-item>
+        <mat-list-item role="listitem" *ngIf="data.delivery_at">
+          Delivery At:&nbsp;&nbsp;{{ data.delivery_at | date: 'medium'}}
+        </mat-list-item>
+
+        <ng-container *ngIf="data.shop_delivery.need_cust_loc">
+          <mat-list-item role="listitem">
+            Address:&nbsp;&nbsp;{{ data.address}}
+          </mat-list-item>
+          <mat-list-item role="listitem">
+            Pin:&nbsp;&nbsp;{{ data.pin}}
+          </mat-list-item>
+          <mat-list-item role="listitem" *ngIf="data.loc">
+            <a *ngIf="mapUrl" [href]="mapUrl" target="_blank" matTooltip="Click here to view custoimer location in google map">Google Map</a>
+          </mat-list-item>
+        </ng-container>
+
+        <mat-list-item role="listitem">
+          Delivery:&nbsp;&nbsp;{{ data.shop_delivery.name}}
+          {{ (data.delivery_chage) ? ' @ ₹ '+data.delivery_chage: '' }}
+        </mat-list-item>
+        <mat-list-item role="listitem">
+         <h2>Total:&nbsp;&nbsp;₹ {{ data.total}}</h2>
+        </mat-list-item>
+
+        <mat-list-item role="listitem" *ngIf="data.note">
+          Order Note:&nbsp;&nbsp;{{ data.note}}
+        </mat-list-item>
+      </mat-list>
+
+      <mat-form-field appearance="fill">
+        <mat-label>Status</mat-label>
+        <mat-select [(ngModel)]="status" matInput>
+          <mat-option [value]="1">Ordered</mat-option>
+          <mat-option [value]="2">Processing</mat-option>
+          <mat-option [value]="3">Out For Delivery</mat-option>
+          <mat-option [value]="4">Delivered</mat-option>
+          <mat-option [value]="5">Canceled</mat-option>
+        </mat-select>
+      </mat-form-field>
+
+
+
+      <table mat-table [dataSource]="data.shop_order_item" class="mat-elevation-z8">
+
+        <!--- Note that these columns can be defined in any order.
+              The actual rendered columns are set as a property on the row definition" -->
+
+        <!-- Number Column -->
+        <ng-container matColumnDef="no">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header> No. </th>
+          <td mat-cell *matCellDef="let element; let i = index">{{i + 1}}</td>
+        </ng-container>
+
+        <!-- Name Column -->
+        <ng-container matColumnDef="name">
+          <th mat-header-cell *matHeaderCellDef> Name </th>
+          <td mat-cell *matCellDef="let element">
+            {{element.shop_product_variant.shop_product.name}} {{element.shop_product_variant.name}}
+          </td>
+        </ng-container>
+
+        <!-- Icon Column -->
+        <ng-container matColumnDef="qty">
+          <th mat-header-cell *matHeaderCellDef> Quantity </th>
+          <td mat-cell *matCellDef="let element">
+            {{element.qty}}
+          </td>
+        </ng-container>
+
+        <!-- Icon Column -->
+        <ng-container matColumnDef="message">
+          <th mat-header-cell *matHeaderCellDef> Message </th>
+          <td mat-cell *matCellDef="let element">
+            {{element.message}}
+          </td>
+        </ng-container>
+
+        <!-- Status Column -->
+        <ng-container matColumnDef="price">
+          <th mat-header-cell *matHeaderCellDef> Price </th>
+          <td mat-cell *matCellDef="let element">
+            ₹ {{element.price}}
+          </td>
+        </ng-container>
+
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+      </table>
+
+
+</div>
+<div mat-dialog-actions>
+  <button mat-stroked-button type="button" (click)="dialogRef.close()">Close</button>
+  <button mat-stroked-button type="button" (click)="changeStatus()">Change Status</button>
+</div>

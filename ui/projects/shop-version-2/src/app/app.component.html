@@ -1,0 +1,14 @@
+  <mat-sidenav-container [hasBackdrop]="true" fullscreen>
+    <mat-sidenav #sidenav role="navigation" [mode]="'over'">
+      <app-side-nav-list (sidenavClose)="sidenav.close()" *ngIf="!(isAdmin$ | async)"></app-side-nav-list>
+      <app-admin-side-nav-list (sidenavClose)="sidenav.close()" *ngIf="(isAdmin$ | async)"></app-admin-side-nav-list>
+    </mat-sidenav>
+    <mat-sidenav-content cdkscrollable class="my-sidenav-content">
+      <app-header (sidenavToggle)="sidenav.toggle()" *ngIf="!(isAdmin$ | async)"></app-header>
+      <app-admin-header (sidenavToggle)="sidenav.toggle()" *ngIf="(isAdmin$ | async)"></app-admin-header>
+      <main>
+        <router-outlet></router-outlet>
+      </main>
+      <app-footer></app-footer>
+    </mat-sidenav-content>
+  </mat-sidenav-container>

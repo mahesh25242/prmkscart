@@ -1,0 +1,28 @@
+<form  [formGroup]="signInFrm"  (ngSubmit)="signIn()"
+[ngClass]="{'animate__animated animate__shakeX' : invalidlogin}">
+  <div >Login</div>
+
+  <mat-error *ngIf="invalidlogin">
+    Invalid login credentials
+  </mat-error>
+
+  <mat-form-field class="full-width-text" appearance="standard">
+    <mat-label>Email / Mobile</mat-label>
+    <input matInput formControlName="mobile" placeholder="Ex. pat@example.com" required autofocus>
+    <mat-error *ngIf="f.mobile.invalid && ((f.mobile.dirty || f.mobile.touched)) && f.mobile.errors.required">
+      Email is required.
+    </mat-error>
+
+  </mat-form-field>
+
+  <mat-form-field class="full-width-text" appearance="standard">
+    <mat-label>Password</mat-label>
+    <input type="password" matInput formControlName="password" placeholder="*******" required>
+    <mat-error *ngIf="f.password.invalid && ((f.password.dirty || f.password.touched)) && f.password.errors.required">
+      Password is required.
+    </mat-error>
+  </mat-form-field>
+
+  <button mat-flat-button color="primary" type="submit">Sign In</button>
+  </form>
+

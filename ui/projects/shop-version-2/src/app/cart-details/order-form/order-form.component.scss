@@ -1,0 +1,45 @@
+.grid-form {
+    display: grid;    
+    grid-template-columns: 1fr 1fr 1fr;
+    column-gap:30px;
+
+    input {
+        margin-bottom: 0px;
+    }
+    .mat-form-field-infix {
+        padding:0px!important;
+    }
+    .relative-position {
+        position: relative;
+        .mat-button-toggle-group {
+            position:absolute;
+            right:0;
+            top: 10px;
+        }
+        .mat-form-field {
+            width: 100%;
+        }
+    }
+
+}
+.float-right {float: right;}
+.text-primary{color: royalblue;}
+h4 {
+    margin-bottom: 0px;
+}
+@media only screen and (max-width: 768px) {
+    .mat-dialog-content {
+        min-width: 95vw;
+       
+    }
+    .grid-form {
+        display: grid!important;    
+        grid-template-columns: 1fr!important ;
+       }
+    }
+    @media only screen and (min-width: 768px) {
+        .mat-dialog-content {
+            min-width: 66vw;           
+        }
+
+    }

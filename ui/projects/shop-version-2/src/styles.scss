@@ -1,0 +1,285 @@
+// /* You can add global styles to this file, and also import other style files */
+
+ @import "~@ng-select/ng-select/themes/material.theme.css";
+ @import '~ngx-sharebuttons/themes/default/default-theme';
+
+ html, body { height: 100%; margin: 0; }
+ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+.add-icon-position {
+    left: -5px;
+    position: relative;
+}
+
+.veg, .nonveg {
+  border: 2px solid #35D200;
+  width: 16px;
+  height: 16px;
+  margin:4px;
+  &::after{
+    content: '';
+    border-radius:50%;
+    position: relative;
+    top:2px;
+    left:2px;
+    display: block;
+    background-color:#35D200 ;
+    width:8px;
+    height: 8px;
+  }
+}
+.nonveg {
+    border: 2px solid #FF0000;
+    &::after{
+      background-color:#FF0000 ;
+    }
+  }
+
+
+.mb1 {
+    margin-bottom:1.5rem;
+}
+.mat-fab .mat-button-wrapper {
+    padding: 0px!important;
+    line-height: 16px!important;
+}
+
+ main { min-height: calc(100vh - 44px); }
+.container {
+  margin-top:55px !important;
+    width: 97%;
+    padding: 0 15px;
+    padding-top: 12px;
+}
+
+.mat-card-image {
+    margin: 0 !important;
+    height: 120px!important;
+    overflow: hidden;
+}
+
+.mat-card-header-text {
+    margin:10px 0 0!important;
+    padding: 0 10px;
+    width: 100%;
+}
+
+.mat-card-actions, .mat-card-content {
+    padding: 0 10px;
+    margin: 0!important;
+}
+
+// .mat-form-field-appearance-outline.mat-form-field-can-float.mat-form-field-should-float .mat-form-field-label {
+//     left: 27px!important;
+// }
+// .mat-form-field-appearance-outline .mat-form-field-infix
+// {
+//     padding: 0px;
+// }
+// .mat-form-field-appearance-outline .mat-form-field-label{
+//     margin-top: 0px;
+// }
+// .mat-form-field-appearance-outline .mat-form-field-prefix, .mat-form-field-appearance-outline .mat-form-field-suffix {
+//     top: -8px!important;
+// }
+// .mat-form-field-appearance-outline .mat-form-field-outline-end {
+//     border-radius: 0 30px 30px 0!important;
+// }
+// .mat-form-field-appearance-outline .mat-form-field-outline-start {
+//     border-radius: 34px 0 0 34px!important;
+//     min-width: 46px!important;
+// }
+// .carousel-slide {
+//     min-height:200px;
+// }
+// .grid-form-container {
+//     .mat-form-field-infix {
+//       padding-bottom: 0px!important;
+//     }
+//     }
+//     .input-bordernone {
+//         .mat-form-field-infix {
+//             padding-bottom: 0px!important;
+//           }
+//     }
+//     .product-grid-admin {
+//         .mat-form-field-infix {
+//             padding-bottom: 0px!important;
+//             width: auto!important;
+//           }
+
+//     }
+//     .product-grid-admin-bs-1 {
+
+//         .mat-form-field-infix {
+//             padding-bottom: 0px!important;
+//           }
+//     }
+
+
+// .product-grid {
+//     display: grid;
+//     grid-template-columns: 1fr 1fr 1fr 1fr;
+//     grid-column-gap: 10px;
+//     grid-row-gap:10px;
+//     .mat-card-headerimage {
+//         overflow: hidden;
+//         width:100%;
+//         border-radius: 9px 9px 0 0;
+//         background-repeat: no-repeat;
+//     background-size: cover;
+//     background-position: center;
+//     cursor: pointer;
+//     }
+//     .mat-card-header .mat-card-title {
+//         margin-bottom: 12px;
+//         font-size: 15px;
+//         overflow: hidden;
+//         background-size: cover;
+//         background-position: center;
+//         background-repeat: no-repeat;
+//         color: #821807;
+//         cursor: pointer;
+//     }
+//     .mat-card-subtitle {
+//         padding:0;
+//         margin: 0;
+//         font-size: 12px;
+//     }
+//     .addCart-btn {
+//         position: absolute;
+//         right: 0;
+//         bottom: 0;
+//         background: #fdc913;
+//         border: none;
+//         height: 45px;
+//         width: 45px;
+//         color: #fff;
+//         border-radius: 9px 0 9px 0;
+//         &.active{
+//           background: rgb(239, 239, 239);
+//         }
+//     }
+//     .mat-card-actions {
+//         padding:0 0 0 11px;
+//         position: absolute;
+//     bottom: 0;
+//     width: 100%;
+//     }
+//     .mat-card {
+//         border-radius: 8px;
+//     }
+//     .mat-card-title {
+//         max-height: 40px;
+//     overflow: hidden;
+//     }
+//     .price-grid {
+//         display: grid;
+//         grid-template-columns:auto auto 40px;
+//         grid-column-gap: 5px;
+//         height: 45px;
+//     align-items: center;
+//     & > div:nth-child(1) {
+//         font-weight: bold;
+//         font-size: 16px;
+//     }
+//     & > div:nth-child(2) {
+//         text-decoration:line-through;
+//         color:#adacac;
+
+//     }
+//     }
+// }
+// .searchBox{
+//     .mat-form-field-wrapper {
+//         padding-bottom: 0px;
+//         background-color: #fff;
+//         border-radius: 30px;
+//         .mat-form-field-flex  {
+//             padding: 0 .75em 0 23px!important;
+//         }
+//         .mat-form-field-underline {
+//             background-color: none!important;
+//             box-shadow: none!important;
+//         }
+//     }
+// }
+
+// .vw-80 {
+//     min-width: 480px;
+// }
+
+
+// .header-inner {
+//     width: 100%;
+//     height: 55px;
+//     background-color:#343A40;
+//     margin-bottom: 20px;
+// }
+// .grid-form {
+//     .mat-form-field-infix {
+//         padding:0px!important;
+//     }
+//     .mat-form-field-suffix {
+//         position: absolute;
+//         right: 0;
+//         top: 20px;
+//     }
+//     textarea.mat-input-element {
+//         margin: 0;
+//     }
+// }
+// .full-width-text {
+//     .mat-form-field-infix {
+//         padding-bottom: 0px!important;
+//     }
+// }
+// @media only screen and (min-width: 768px) {
+//     .product-grid {
+
+//         .mat-card-headerimage {
+
+//             height: 160px;
+//         }
+//         .mat-card {
+//             min-height: 300px;
+//         }
+//     }
+
+// }
+
+// @media only screen and (max-width: 768px) {
+
+//     .product-grid {
+
+//         .mat-card-headerimage {
+
+//             height: 130px;
+//         }
+//         .mat-card {
+//             min-height: 245px;
+//         }
+//     }
+
+//     app-home {
+//     .container {
+//         position: relative;
+//         top: -32px;
+//         border-radius: 36px;
+//         background: #fafafa;
+
+//     }
+// }
+// .product-grid {
+//     grid-template-columns: 1fr 1fr;
+// }
+// .cdk-overlay-pane {
+//     max-width:95vw!important ;
+
+// }
+// .vw-80 {
+//     min-width: 80vw;
+// }
+// .header-inner {
+//     margin-bottom: 7px!important;
+// }
+// }

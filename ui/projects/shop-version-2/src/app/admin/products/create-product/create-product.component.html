@@ -1,0 +1,204 @@
+<div class="header-inner"></div>
+<div class="container">
+
+  <h1 >
+    {{ (product?.id) ? 'Edit '+product.name : 'Create New Product' }}
+  </h1>
+  <form [formGroup]="createProductFrm" (ngSubmit)="saveProduct()">
+ <mat-card class="p-20">
+
+    <div class="col-s6">
+        <ng-select [items]="(categories$ | async)"
+        [ngClass]="{'is-invalid': ( f.shop_product_category_id.errors && f.shop_product_category_id.errors.error)}"
+          bindLabel="name"
+          id="shop_product_category_id"
+          placeholder="Select Category"
+          formControlName="shop_product_category_id">
+          </ng-select>
+        <mat-error *ngIf="f.shop_product_category_id.errors && f.shop_product_category_id.errors.error">
+          {{f.shop_product_category_id.errors.error}}
+        </mat-error>
+        <a href="javascript:{}" (click)="createCategory()" matTooltip="Add new category if it not exists in select box">Add New Category</a>
+      </div>
+      <div class="product-grid-admin-bs-1">
+      <mat-form-field class="full-width-text" appearance="standard">
+        <mat-label>Name</mat-label>
+        <input matInput formControlName="name" placeholder="Ex. Black Forest" required maxlength="200">
+        <mat-hint align="end" *ngIf="f.name?.value?.length">{{f.name?.value?.length}} / 200</mat-hint>
+        <mat-error *ngIf="f.name.errors && f.name.errors.error">
+          {{f.name.errors.error}}
+        </mat-error>
+      </mat-form-field>
+
+
+      <mat-form-field class="full-width-text" appearance="standard">
+        <mat-label>Description /  Ingredients</mat-label>
+        <textarea matInput formControlName="description" placeholder="Description /  Ingredients" maxlength="200"></textarea>
+        <mat-hint align="end" *ngIf="f.description?.value?.length">{{f.description?.value?.length}} / 200</mat-hint>
+        <mat-error *ngIf="f.description.errors && f.description.errors.error">
+          {{f.description.errors.error}}
+        </mat-error>
+      </mat-form-field>
+
+
+      <mat-form-field appearance="standard">
+        <mat-label>Status</mat-label>
+        <mat-select formControlName="status" required>
+          <mat-option *ngFor="let status of statuses" [value]="status.id">
+            {{status.name}}
+          </mat-option>
+        </mat-select>
+        <mat-error *ngIf="f.status.errors && f.status.errors.error">
+          {{f.status.errors.error}}
+        </mat-error>
+      </mat-form-field>
+
+      <mat-form-field class="full-width-text" appearance="standard">
+        <mat-label>Sortorder</mat-label>
+        <input type="number" matInput formControlName="sortorder" placeholder="Ex. Cake" >
+        <mat-error *ngIf="f.sortorder.errors && f.sortorder.errors.error">
+          {{f.sortorder.errors.error}}
+        </mat-error>
+      </mat-form-field>
+
+    </div>
+      <h3>Varients</h3>
+
+
+      <ng-container>
+        <!-- <div class="product-grid">
+            <div>
+              id
+            </div>
+            <div>
+              Varient Name
+            </div>
+            <div>
+              Description
+            </div>
+            <div>
+              Is Primary
+            </div>
+            <div>
+              Type
+            </div>
+            <div>
+              Actual Price
+            </div>
+            <div>
+              Sale Price
+            </div>
+            <div>
+              Image
+            </div>
+            <div>
+              Options
+            </div>
+          </div>-->
+
+          <ng-container formArrayName="varients" >
+          <div class="product-grid-admin" *ngFor="let stat of varients.controls; let i=index; let last = last" [formGroupName]="i">
+            <div>
+              {{ i+ 1}}
+            </div>
+            <div>
+
+                <mat-radio-button  [checked]="stat.get('is_primary').value == 1"  [value]="1" (click)="setPrimary(stat)"  matTooltip="Set one as primary " radioGroup="is_primary">&nbsp;</mat-radio-button>
+
+              <mat-error *ngIf="stat.get('is_primary').errors && stat.get('is_primary').errors.error">
+                {{stat.get('is_primary').errors.error}}
+              </mat-error>
+
+            </div>
+            <div>
+
+              <mat-form-field class="full-width-text" appearance="standard">
+                <mat-label>Name</mat-label>
+                <input matInput formControlName="name" placeholder="Ex. 1 Kg" required maxlength="200">
+                <mat-hint align="end" *ngIf="stat.get('name').value?.length">{{stat.get('name').value?.length}} / 200</mat-hint>
+                <mat-error *ngIf="stat.get('name').errors && stat.get('name').errors.error">
+                  {{stat.get('name').errors.error}}
+                </mat-error>
+              </mat-form-field>
+
+            </div>
+            <div>
+
+              <mat-form-field class="full-width-text" appearance="standard">
+                <mat-label>Description</mat-label>
+                <textarea matInput formControlName="description" placeholder="Ex. descrtion about varient" maxlength="200"></textarea>
+                <mat-hint align="end" *ngIf="stat.get('description').value?.length">{{stat.get('description').value?.length}} / 200</mat-hint>
+                <mat-error *ngIf="stat.get('description').errors && stat.get('description').errors.error">
+                  {{stat.get('description').errors.error}}
+                </mat-error>
+              </mat-form-field>
+
+            </div>
+
+            <div>
+              <label for="type">Type</label>
+                <ng-select [items]="varientTypes"
+                bindLabel="name"
+                formControlName="type">
+                </ng-select>
+
+
+            </div>
+            <div>
+              <mat-form-field class="full-width-text" appearance="standard">
+                <mat-label>Actual Price  ₹ </mat-label>
+                <input type="number" matInput formControlName="actual_price" placeholder="Ex. 200">
+                <mat-error *ngIf="stat.get('actual_price').errors && stat.get('actual_price').errors.error">
+                  {{stat.get('actual_price').errors.error}}
+                </mat-error>
+              </mat-form-field>
+
+
+            </div>
+            <div>
+              <mat-form-field class="full-width-text" appearance="standard">
+                <mat-label>Sale Price  ₹ </mat-label>
+              <input type="number" matInput formControlName="price" placeholder="Ex. 200">
+                <mat-error *ngIf="stat.get('price').errors && stat.get('price').errors.error">
+                  {{stat.get('price').errors.error}}
+                </mat-error>
+              </mat-form-field>
+            </div>
+            <div>
+              <div class="image-wrap">
+              <img *ngIf="stat.get('currImage').value" [src]="stat.get('currImage').value" [alt]="stat.get('currImage').value">
+            </div>
+            </div>
+            <div>
+              <button (click)="fileInput.click()" type="button" mat-stroked-button color="primary">
+                <span>Choose Image</span>
+                <input #fileInput type="file" (change)="handleImageSelection(stat, $event.target.files)"
+                style="display:none;"  accept="image/*" />
+              </button>&nbsp; &nbsp;
+                (350 x 224)
+              <!-- <a [href]="stat.get('currImage').value" target="_blank" *ngIf="stat.get('currImage').value">View image</a> -->
+
+            </div>
+            <div>
+              <button type="button" mat-icon-button  color="primary"
+              (click)="addVarient(stat)">
+              <mat-icon>add_circle_outline</mat-icon>
+              </button>
+              <button  *ngIf="varients.controls.length > 1" type="button" mat-icon-button  color="primary"
+              (click)="removeVarient(i)">
+              <mat-icon>delete_forever</mat-icon>
+              </button>
+            </div>
+          </div>
+        </ng-container>
+
+      </ng-container>
+    </mat-card>
+
+  <div mat-dialog-actions align="end">
+    <a routerLink="/admin/products/0" mat-raised-button  color="primary" >Cancel</a>
+    <button type="submit" mat-raised-button  color="primary">Save changes</button>
+  </div>
+
+  </form>
+</div>

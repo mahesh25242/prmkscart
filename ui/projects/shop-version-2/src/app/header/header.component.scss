@@ -1,0 +1,44 @@
+.example-spacer {
+  flex: 1 1 auto;
+}
+
+a {
+  text-decoration: none;
+  color: white;
+}
+a:hover, a:active{
+  color: lightgray;
+}
+.navigation-items{
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
+}
+.flex-right { margin-left: auto;}
+
+.navmenu {
+  a {
+    margin-left: 20px;
+    font-weight: 100;
+  }
+  }
+.mat-toolbar {
+  position: absolute;
+  z-index: 100;
+  top: 0;
+  left: 0;
+  width: 100%;
+  background:none;
+  height: 56px;
+  a{
+    font-size: 14px;
+  }
+  a.active{
+
+  }
+}
+@media(max-width: 959px){
+  mat-toolbar{
+      border-radius: 0px;
+  }
+}

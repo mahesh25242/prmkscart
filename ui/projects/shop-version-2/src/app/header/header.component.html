@@ -1,0 +1,29 @@
+<mat-toolbar color="primary" *ngIf="(layOutXSmall$ | async) as layOutXSmall">
+  <ng-container *ngIf="(bc$ | async) as bc">
+    <div *ngIf="layOutXSmall.matches && bc?.backUrl">
+      <button mat-icon-button [routerLink]="bc?.backUrl">
+          <mat-icon>arrow_back_ios</mat-icon>
+      </button>
+    </div>
+  </ng-container>
+
+  <a routerLink="/" matRipple>{{title}}</a>
+  <div class="flex-right" *ngIf="layOutXSmall.matches">
+      <button mat-icon-button (click)="onToggleSidenav()" matRipple>
+          <mat-icon>menu</mat-icon>
+      </button>
+  </div>
+
+  <ng-container *ngIf="!layOutXSmall.matches">
+    <div class="flex-right navmenu">
+      <a routerLink="/" matRipple routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">Home</a>
+      <a matRipple routerLink="/about-us" routerLinkActive="active">About Us</a>
+      <a matRipple routerLink="/contact-us" routerLinkActive="active">Contact Us</a>
+  </div>
+  </ng-container>
+
+</mat-toolbar>
+<div *ngIf="(localGeneralService.shopDisabled | async)">
+  Your shop was disabled by admin
+</div>
+

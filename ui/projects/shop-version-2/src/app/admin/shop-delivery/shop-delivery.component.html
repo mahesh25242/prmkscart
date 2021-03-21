@@ -1,0 +1,68 @@
+<div class="header-inner"></div>
+<div class="container">
+  <h1>Add Delivery Location</h1>
+<button mat-raised-button color="primary" type="button" (click)="editDeliveryLoc(null)" class="mb-30"><mat-icon class="add-icon-position">add</mat-icon>Add Delivery Location</button>
+<mat-card>
+<ng-container *ngIf="(deliveries$ | async) as deliveries">
+
+
+  <table class="responsive-table highlight">
+    <thead>
+      <tr>
+        <th class="w-80">
+          No.
+        </th>
+        <th>
+          Name
+        </th>
+        <th class="w-180" >
+          Home Delivery
+        </th>
+        <th class="w-100" >
+          Charge
+        </th>
+        <th class="w-100" >
+          Min Amount
+        </th>
+        <th class="w-60">
+          Delete
+        </th>
+      </tr>
+    </thead>
+    <tbody>
+      <ng-container *ngIf="deliveries && deliveries.length">
+        <tr *ngFor="let element of deliveries; let i = index;">
+          <td>
+            {{i + 1}}
+          </td>
+          <td>
+            <a href="javascript:{}" (click)="editDeliveryLoc(element)" matTooltip="Click here to view or edit this delivery">{{element.name}}</a>
+          </td>
+          <td>
+            {{ (element.need_cust_loc) ? 'Yes' : 'No' }}
+          </td>
+          <td>
+            {{ element.charge }}
+          </td>
+          <td>
+            {{ element.min_amount }}
+          </td>
+          <td>
+            <button type="button" mat-icon-button  color="warn"
+              (click)="deleteDeliveryLoc(element)">
+              <mat-icon>delete_forever</mat-icon>
+            </button>
+          </td>
+        </tr>
+      </ng-container>
+      <tr *ngIf="!deliveries && !deliveries.length">
+        <td colspan="5">
+          No delivery location
+        </td>
+      </tr>
+    </tbody>
+  </table>
+
+</ng-container>
+</mat-card>
+</div>

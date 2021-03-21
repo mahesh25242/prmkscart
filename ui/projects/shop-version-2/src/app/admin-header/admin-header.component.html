@@ -1,0 +1,42 @@
+<mat-toolbar color="primary" *ngIf="(layOutXSmall$ | async) as layOutXSmall">
+  <ng-container *ngIf="(bc$ | async) as bc">
+    <div *ngIf="layOutXSmall.matches && bc?.backUrl">
+      <button mat-icon-button [routerLink]="bc?.backUrl">
+          <mat-icon>arrow_back_ios</mat-icon>
+      </button>
+    </div>
+  </ng-container>
+
+  <a routerLink="/admin">{{title}}</a>
+  <div class="flex-right" *ngIf="layOutXSmall.matches">
+      <button mat-icon-button (click)="onToggleSidenav()">
+          <mat-icon>menu</mat-icon>
+      </button>
+  </div>
+
+  <ng-container *ngIf="!layOutXSmall.matches">
+    <div class="flex-right navmenu">
+
+
+    <ng-container *ngIf="(loggedUser$ | async) as loggedUser">
+        <a routerLink="/admin/categories" routerLinkActive="active">Categories</a>
+        <a routerLink="/admin/products/0"  routerLinkActive="active">Products</a>
+        <a routerLink="/admin/deliveries"  routerLinkActive="active">Delivery Locations</a>
+        <a routerLink="/admin/details"  routerLinkActive="active">Shop Info</a>
+        <a routerLink="/admin/orders" routerLinkActive="active">Orders</a>
+        <div class="ml-15">
+          <button mat-button [matMenuTriggerFor]="menu">{{loggedUser.fname}} <mat-icon class="profile-icon">person</mat-icon> </button>
+          <mat-menu #menu="matMenu">
+            <button mat-menu-item routerLink="/admin/edit-profile"><mat-icon>perm_identity</mat-icon>Edit Profile</button>
+            <button mat-menu-item (click)="signOut()"><mat-icon>power_settings_new</mat-icon>Sign Out</button>
+          </mat-menu>
+        </div>
+    </ng-container>
+  </div>
+  </ng-container>
+
+</mat-toolbar>
+<div *ngIf="(localGeneralService.shopDisabled | async)">
+  Your shop was disabled by admin
+</div>
+

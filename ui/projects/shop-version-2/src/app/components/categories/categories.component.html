@@ -1,0 +1,13 @@
+<div class="category-menu" *ngIf="!(hideTopCat$  | async)">
+<ng-container  *ngIf="(categories$  | async) as categories">
+  <ng-container  *ngIf="categories && categories.length > 1">
+    <a *ngFor="let category of categories" [ngClass]="{ 'active': (selectedCategory$ | async)?.id == category.id}" [routerLink]="'/'+category.url+'/varities'">
+      <mat-icon *ngIf="category.icon && category.is_maticon">{{category.icon}}</mat-icon>
+      <img class="img-thumbnail" [src]="environment.siteAddress+'/assets/shop/'+environment.shopKey+'/category/'+category.icon" *ngIf="category.icon && !category.is_maticon"/>
+      {{ category.name }}
+    </a>
+
+
+  </ng-container>
+</ng-container>
+</div>

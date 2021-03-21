@@ -1,0 +1,28 @@
+.active{ color: #821807;
+    position: relative;
+font-weight: 700;
+}
+.active::after {
+    content:'';
+    width:100%;
+    height:3px;
+    display: block;
+    position: absolute;
+    bottom: -3px;
+    left: 0;
+    background-color:#fdc913;
+}
+.category-menu {padding: 15px 0;}
+a {
+    color:#929292dd;
+    text-transform: uppercase;
+    margin-bottom: 15px;
+    display: inline-block;    
+    margin-right:39px;
+  }
+  @media only screen and (max-width: 768px) {
+  .category-menu {
+    display: flex;
+    overflow: scroll;
+  }
+}

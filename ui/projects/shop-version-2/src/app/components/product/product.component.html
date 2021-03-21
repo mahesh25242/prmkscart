@@ -1,0 +1,21 @@
+
+<div
+class="search-results"
+infiniteScroll
+[infiniteScrollDistance]="2"
+[infiniteScrollThrottle]="50"
+(scrolled)="loadMore()"
+infiniteScrollContainer=".my-sidenav-content" [fromRoot]="true"
+></div>
+
+<div class="product-grid" >
+
+<ng-container *ngIf="(products$ | async) as products">
+
+  <div class="grid-col" *ngFor="let product of allProduct" >
+    <app-product-item [shopProduct]="product"></app-product-item>
+
+  </div>
+  <div *ngIf="!allProduct.length">No item found</div>
+</ng-container>
+</div>

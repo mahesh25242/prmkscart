@@ -1,0 +1,63 @@
+<div class="header-inner"></div>
+<div class="container">
+<h1>Categories</h1>
+
+<button mat-raised-button color="primary" class="mb-10" type="button" (click)="editCategory(null)"><mat-icon class="add-icon-position">add</mat-icon>Create Category</button>
+<ng-container *ngIf="(categories$ | async) as categories">
+<mat-card>
+  <table class="responsive-table highlight">
+      <thead>
+        <tr>
+          <th class="w-60">
+            No.
+          </th>
+          <th>
+            Name
+          </th>
+          <th class="w-180">
+            Icon
+          </th>
+          <th class="w-180">
+            Status
+          </th>
+          <th class="w-80">
+            Delete
+          </th>
+        </tr>
+      </thead>
+      <tbody>
+        <ng-container *ngIf="categories && categories.length">
+          <tr *ngFor="let element of categories; let i = index;">
+            <td>
+              {{i+1}}
+            </td>
+            <td>
+              <a href="javascript:{}" (click)="editCategory(element)" matTooltip="Click here to view or edit this category">{{element.name}}</a>
+              <span matTooltip="Products count"> ( {{element.shop_product_count}} )</span>
+            </td>
+            <td>
+              <span *ngIf="!element.icon">--</span>
+              <mat-icon *ngIf="element.is_maticon && element.icon">{{element.icon}}</mat-icon>
+              <img class="img-thumbnail" *ngIf="!element.is_maticon && element.icon" [src]="environment.siteAddress+'/assets/shop/'+environment.shopKey+'/category/'+element.icon" />
+            </td>
+            <td>
+              <a href="javascript:{}" (click)="changeStatus(element)">{{element.status_text}}</a>
+            </td>
+            <td>
+              <button type="button" mat-icon-button  color="warn"
+                (click)="deleteCategory(element)">
+                <mat-icon>delete_forever</mat-icon>
+              </button>
+            </td>
+          </tr>
+        </ng-container>
+        <tr *ngIf="!categories || !categories.length">
+          <td colspan="5">
+            No category found
+          </td>
+        </tr>
+      </tbody>
+  </table>
+</mat-card>
+</ng-container>
+</div>

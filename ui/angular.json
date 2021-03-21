@@ -133,32 +133,46 @@
         }
       }
     },
-    "BreadNButter": {
+    "shop-version-2": {
       "projectType": "application",
       "schematics": {
         "@schematics/angular:component": {
           "style": "scss"
         }
       },
-      "root": "projects/BreadNButter",
-      "sourceRoot": "projects/BreadNButter/src",
+      "root": "projects/shop-version-2",
+      "sourceRoot": "projects/shop-version-2/src",
       "prefix": "app",
       "architect": {
         "build": {
           "builder": "@angular-devkit/build-angular:browser",
           "options": {
-            "outputPath": "dist/BreadNButter",
-            "index": "projects/BreadNButter/src/index.html",
-            "main": "projects/BreadNButter/src/main.ts",
-            "polyfills": "projects/BreadNButter/src/polyfills.ts",
-            "tsConfig": "projects/BreadNButter/tsconfig.app.json",
+            "allowedCommonJsDependencies": [
+              "firebase",
+              "@firebase/app",
+              "firebase/app",
+              "notiflix",
+              "lodash",
+              "hammerjs",
+              "@firebase/functions"
+            ],
+            "outputPath": "dist/shop-version-2",
+            "index": "projects/shop-version-2/src/index.html",
+            "main": "projects/shop-version-2/src/main.ts",
+            "polyfills": "projects/shop-version-2/src/polyfills.ts",
+            "tsConfig": "projects/shop-version-2/tsconfig.app.json",
             "aot": true,
             "assets": [
-              "projects/BreadNButter/src/favicon.ico",
-              "projects/BreadNButter/src/assets"
+              "projects/shop-version-2/src/favicon.ico",
+              "projects/shop-version-2/src/assets",
+              "projects/shop-version-2/src/firebase-messaging-sw.js",
+              "projects/shop-version-2/src/copy-file.php",
+              "projects/shop-version-2/src/manifest.webmanifest"
             ],
             "styles": [
-              "projects/BreadNButter/src/styles.scss"
+              "./node_modules/@angular/material/prebuilt-themes/indigo-pink.css",
+              "projects/shop-version-2/src/styles.scss",
+              "./node_modules/animate.css/animate.min.css"
             ],
             "scripts": []
           },
@@ -166,8 +180,8 @@
             "production": {
               "fileReplacements": [
                 {
-                  "replace": "projects/BreadNButter/src/environments/environment.ts",
-                  "with": "projects/BreadNButter/src/environments/environment.prod.ts"
+                  "replace": "projects/shop-version-2/src/environments/environment.ts",
+                  "with": "projects/shop-version-2/src/environments/environment.prod.ts"
                 }
               ],
               "optimization": true,
@@ -196,33 +210,36 @@
         "serve": {
           "builder": "@angular-devkit/build-angular:dev-server",
           "options": {
-            "browserTarget": "BreadNButter:build"
+            "browserTarget": "shop-version-2:build"
           },
           "configurations": {
             "production": {
-              "browserTarget": "BreadNButter:build:production"
+              "browserTarget": "shop-version-2:build:production"
             }
           }
         },
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
           "options": {
-            "browserTarget": "BreadNButter:build"
+            "browserTarget": "shop-version-2:build"
           }
         },
         "test": {
           "builder": "@angular-devkit/build-angular:karma",
           "options": {
-            "main": "projects/BreadNButter/src/test.ts",
-            "polyfills": "projects/BreadNButter/src/polyfills.ts",
-            "tsConfig": "projects/BreadNButter/tsconfig.spec.json",
-            "karmaConfig": "projects/BreadNButter/karma.conf.js",
+            "main": "projects/shop-version-2/src/test.ts",
+            "polyfills": "projects/shop-version-2/src/polyfills.ts",
+            "tsConfig": "projects/shop-version-2/tsconfig.spec.json",
+            "karmaConfig": "projects/shop-version-2/karma.conf.js",
             "assets": [
-              "projects/BreadNButter/src/favicon.ico",
-              "projects/BreadNButter/src/assets"
+              "projects/shop-version-2/src/favicon.ico",
+              "projects/shop-version-2/src/assets",
+              "projects/shop-version-2/src/firebase-messaging-sw.js",
+              "projects/shop-version-2/src/copy-file.php",
+              "projects/shop-version-2/src/manifest.webmanifest"
             ],
             "styles": [
-              "projects/BreadNButter/src/styles.scss"
+              "projects/shop-version-2/src/styles.scss"
             ],
             "scripts": []
           }
@@ -231,9 +248,9 @@
           "builder": "@angular-devkit/build-angular:tslint",
           "options": {
             "tsConfig": [
-              "projects/BreadNButter/tsconfig.app.json",
-              "projects/BreadNButter/tsconfig.spec.json",
-              "projects/BreadNButter/e2e/tsconfig.json"
+              "projects/shop-version-2/tsconfig.app.json",
+              "projects/shop-version-2/tsconfig.spec.json",
+              "projects/shop-version-2/e2e/tsconfig.json"
             ],
             "exclude": [
               "**/node_modules/**"
@@ -243,12 +260,12 @@
         "e2e": {
           "builder": "@angular-devkit/build-angular:protractor",
           "options": {
-            "protractorConfig": "projects/BreadNButter/e2e/protractor.conf.js",
-            "devServerTarget": "BreadNButter:serve"
+            "protractorConfig": "projects/shop-version-2/e2e/protractor.conf.js",
+            "devServerTarget": "shop-version-2:serve"
           },
           "configurations": {
             "production": {
-              "devServerTarget": "BreadNButter:serve:production"
+              "devServerTarget": "shop-version-2:serve:production"
             }
           }
         }

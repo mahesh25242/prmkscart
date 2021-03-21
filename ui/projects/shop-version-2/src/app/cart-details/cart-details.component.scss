@@ -1,0 +1,217 @@
+.grid-my-list {
+    display: grid;
+
+    grid-column-gap: 6px;
+    padding: 0 10px!important;
+    margin-bottom: 12px;
+    min-height: 67px;
+    img {
+        width: 93px;
+        border-radius: 5px;
+    }
+    > div {
+        padding:10px 5px;
+    }
+    .pl-1 {padding-left: 10px;}
+}
+.block {
+    display: block;
+}
+.cart-item-header {
+    color: #821807;
+    font-weight: 500;
+    margin-bottom: 0px;
+}
+.m-15 {
+    margin-top:15px;
+}
+.tab-delivery-options a {
+    background: #b1b1b1;
+    padding: 3px 8px;
+    margin-right: 8px;
+    color: #fff;
+    border-radius: 4px;
+    display: inline-block;
+    margin-bottom: 8px;
+    &.active {
+        background-color: #007BFF!important;
+    }
+}
+
+.order-total{
+    background: #00E777;
+    padding: 15px;
+    border-radius: 5px;
+    display: grid;
+    grid-template-columns: 1fr 111px;
+    column-gap: 15px;
+    border:#00E777 1px solid;
+    .block {
+        display: block;
+    }
+    h1 {margin-bottom: 0px; font-weight: 700;}
+    .mt-10 {
+        margin-top: 10px;
+    }
+}
+.grid-form {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    column-gap:30px;
+
+    input {
+        margin-bottom: 0px;
+    }
+    .mat-form-field-infix {
+        padding:0px!important;
+    }
+    .relative-position {
+        position: relative;
+        .mat-button-toggle-group {
+            position:absolute;
+            right:0;
+            top: 10px;
+        }
+        .mat-form-field {
+            width: 100%;
+        }
+    }
+
+}
+.mat-dialog-content {
+    max-height: inherit;
+}
+.st0{fill-rule:evenodd;clip-rule:evenodd;fill:#FFFFFF;}
+.whatsapp-btn {
+    background-color: #00E777;
+    border-radius: 50px;
+    padding: 5px 20px;
+    margin-left: 30px;
+}
+svg {
+    width:25px;
+    margin-right: 8px;
+
+}
+.actionBtn {
+    margin-top: 30px;
+    .example-section {margin-left: auto;}
+}
+.address {
+margin-top: 15px;
+    h3,h4,p { margin-bottom: 0;}
+    background: #FFF;
+    padding: 15px;
+    border-radius: 5px;
+    border:#ddd 1px solid;
+    position: relative;
+    .right-position {
+        position: absolute;
+        right: 10px;
+        top:10px;
+    }
+}
+@media only screen and (max-width: 768px) {
+
+    .selectDelevery {
+        background-color: #02615b;
+        padding: 10px 11px;
+        border-radius: 5px;
+        color: #fff;
+        margin-bottom: 15px;
+        text-align: center;
+        h3 {
+            margin-bottom: 0px;
+        }
+    }
+
+    .cdk-overlay-pane {
+        min-width: 94vw!important;
+    }
+    .grid-form {
+        display: grid;
+        grid-template-columns: 1fr ;
+       }
+       .mat-dialog-content {
+           margin: 0;
+           padding: 0;
+       }
+       .grid-my-list {
+        grid-template-columns: 95px 1fr  41px;
+        align-items:flex-start;
+    }
+    .d-none-md {
+        display: none;
+    }
+    .d-block-md {
+        display: none;
+    }
+    .actionBtn {
+
+        .example-section {display: table;
+            margin: 0 auto;
+            max-width: 222px;
+            .whatsapp-btn {
+                margin-left: 10px;
+                margin-top:20px;
+                margin-bottom: 20px;
+            }
+        }
+
+    }
+}
+@media only screen and (min-width: 768px) {
+    .selectDelevery {
+        background-color: #02615b;
+        padding: 10px 11px;
+        border-radius: 5px;
+        color: #fff;
+        margin-bottom: 15px;
+        h3 {
+            margin-bottom: 0px;
+        }
+    }
+    .actionBtn {
+        display: flex;
+
+    }
+    .d-block-lg {
+        display: block;
+    }
+    .d-none-lg {
+        display: none;
+    }
+    .grid-my-list {
+        grid-template-columns: 95px 1fr 105px 90px;
+        align-items:center;
+    }
+}
+
+.veg {
+  border: 2px solid #35D200;
+  &::after{
+    content: '';
+    border-radius:50%;
+    position: relative;
+    top:2px;
+    left:2px;
+    display: block;
+    background-color:#35D200 ;
+    width:8px;
+    height: 8px;
+  }
+}
+.nonveg {
+  border: 2px solid#FF0000;
+    &::after{
+      content: '';
+      border-radius:50%;
+      position: relative;
+      top:2px;
+      left:2px;
+      display: block;
+    background-color:#FF0000 ;
+    width:8px;
+    height: 8px;
+    }
+  }

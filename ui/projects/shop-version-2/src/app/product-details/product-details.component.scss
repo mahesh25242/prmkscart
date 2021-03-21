@@ -1,0 +1,40 @@
+.mat-form-field {
+    width: 100%;
+}
+.product-image {
+    text-align: center;
+
+    img {
+        max-width: 140px;
+    }
+}
+.relativePosition {
+    position: relative;
+    top: -12px;
+    left: -11px;
+    display: inline-block;
+}
+.weight-bold {
+    font-weight: bold;
+    font-size: 34px;
+}
+h2 {
+    color: #821807;
+}
+.float-right {
+    float: right;
+}
+.mt-5 {
+    margin-top: 20px;
+}
+.mat-primary_yellow {
+    float: right;
+    background-color: #fdc913;
+    min-width: 125px;
+    border-radius: 50px;
+}
+.clear-p {
+    clear: both;
+    display: block;
+    margin-top: 15px;
+}

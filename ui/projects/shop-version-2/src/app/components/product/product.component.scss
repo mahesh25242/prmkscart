@@ -1,0 +1,44 @@
+.h{
+  height: 300px
+}
+.mat-card-avatar {
+  height: 15px;
+    width: 15px;
+    border-radius: 0;
+    flex-shrink: 0;
+    object-fit: cover;
+    position: absolute;
+    left: 13px;
+    top: 13px;
+    background: #fff;
+    &.veg {
+      border: 2px solid #35D200;
+    &::after{
+      content: '';
+      border-radius:50%;
+      position: relative;
+      top:2px;
+      left:2px;
+      display: block;
+background-color:#35D200 ;
+width:8px;
+height: 8px;
+    }
+  }
+
+  &.nonveg {
+    border: 2px solid#FF0000;
+  &::after{
+    content: '';
+    border-radius:50%;
+    position: relative;
+    top:2px;
+    left:2px;
+    display: block;
+background-color:#FF0000 ;
+width:8px;
+height: 8px;
+  }
+}
+    
+  }

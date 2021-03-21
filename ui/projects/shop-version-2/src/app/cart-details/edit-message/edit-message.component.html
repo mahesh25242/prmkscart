@@ -1,0 +1,21 @@
+<form [formGroup]="editMessageFrm" (ngSubmit)="updateMessage()">
+  <h1 mat-dialog-title>Edit {{this.data.product.name }} Message</h1>
+  <mat-dialog-content>
+
+      <mat-form-field class="full-width-text" appearance="standard">
+        <mat-label>Message</mat-label>
+        <textarea matInput formControlName="message"
+         placeholder="Ex. Happy Birth Day John Doe" maxlength="200"></textarea>
+         <mat-hint align="end" *ngIf="f.message?.value?.length">{{f.message.value.length}} / 200</mat-hint>
+        <mat-error *ngIf="f.message.invalid && ((f.message.dirty || f.message.touched)) && f.message.errors.required">
+          Message is required.
+        </mat-error>
+      </mat-form-field>
+
+
+    </mat-dialog-content>
+    <mat-dialog-actions align="end">
+    <button mat-stroked-button type="button" (click)="dialogRef.close()">Close</button>
+    <button mat-raised-button color="primary" type="submit">Ok</button>
+  </mat-dialog-actions>
+</form>

@@ -1,0 +1,27 @@
+<mat-card *ngIf="product$ | async as product" class="animate__animated "  [ngClass]="{'active  animate__pulse': isAnimate, 'animate__zoomIn': !isAnimate}">
+  <div class="mat-card-headerimage" matRipple [matRippleCentered]="true"
+  [ngStyle]="{'background-image': (product.shop_product_primary_variant?.shop_product_image?.image) ? 'url(' +  product.shop_product_primary_variant.shop_product_image.image_path + ')' : 'url(/assets/no-image.jpg)'}"
+  [routerLink]="'/'+product.shop_product_category?.url+'/'+product.url">
+  <div *ngIf="product.shop_product_primary_variant?.type.id"
+  [matTooltip]="(product?.shop_product_selected_variant?.type.id == 1) ? 'Veg' : ( (product?.shop_product_selected_variant?.type.id == 2) ? 'Non-Veg':'' )"
+   [ngClass]="{'veg': product.shop_product_primary_variant?.type.id == 1, 'nonveg': product.shop_product_primary_variant?.type.id == 2}"></div>
+    <!-- <img mat-card-image *ngIf="product.shop_product_primary_variant?.shop_product_image?.image" [src]="environment.siteAddress+'/assets/shop/'+environment.shopKey+'/products/'+ product.shop_product_primary_variant.shop_product_image.image" [alt]="product.shop_product_primary_variant.name"> -->
+  </div>
+  <mat-card-header>
+    <mat-card-title matRipple [matRippleCentered]="true" [routerLink]="'/'+product.shop_product_category?.url+'/'+product.url"> {{ product.name }}</mat-card-title>
+    <mat-card-subtitle>{{ product.shop_product_primary_variant?.name}} <span *ngIf="product.shop_product_variant.length > 1">
+      | {{ product.shop_product_variant.length }} Varients </span> </mat-card-subtitle>
+  </mat-card-header>
+  <!--<mat-card-content>
+    <p [innerHTML]="product.description"></p>
+  </mat-card-content>-->
+  <mat-card-actions>
+    <div class="price-grid">
+   <div>₹ {{ product.shop_product_primary_variant?.price}} </div> <div *ngIf="product.shop_product_primary_variant?.actual_price">₹ {{ product.shop_product_primary_variant?.actual_price}}</div>
+   <div></div>
+  </div>
+   <button matRipple [matRippleCentered]="true" class="addCart-btn"
+   [matTooltip]="(product.incart) ? product.name+' is already added' : 'Click here for add this item to cart'"
+   [ngClass]="{'active': product.incart}" (click)="addToCart(product)"><mat-icon aria-hidden="false" aria-label="Add Icon">add</mat-icon></button>
+  </mat-card-actions>
+</mat-card>

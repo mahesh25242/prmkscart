@@ -1,0 +1,74 @@
+<div class="header-inner"></div>
+<div class="container">
+<app-order-search [pageEvent]="pageEvent"></app-order-search>
+<ng-container *ngIf="(orders$ | async) as orders">
+  <div *ngIf="!orders.total">No data found</div>
+  <mat-card>
+  <table class="responsive-table highlight">
+    <thead>
+      <tr>
+        <th>
+          Order No.
+        </th>
+        <th>
+          Name
+        </th>
+        <th>
+          Total
+        </th>
+        <th>
+          Delivery
+        </th>
+        <th>
+          Delivery Date
+        </th>
+        <th>
+          Order Date
+        </th>
+        <th>
+          Status
+        </th>
+      </tr>
+    </thead>
+    <tbody>
+      <ng-container *ngIf="orders && orders.data && orders.data.length">
+        <tr *ngFor="let element of orders.data">
+          <td>
+            {{element.id}}
+          </td>
+          <td>
+            <a href="javascript:{}" (click)="viewOrder(element)"
+            matTooltip="Click here to view details about this order">{{element.shop_customer.name}}</a>
+          </td>
+          <td>
+            ₹ {{element.total}}
+          </td>
+          <td>
+            {{element.shop_delivery.name}}
+          </td>
+          <td>
+            {{ element.delivery_at | date: 'medium'}}
+          </td>
+          <td>
+            {{element.created_at | date:'medium'}}
+          </td>
+          <td>
+            {{element.status_text}}
+          </td>
+        </tr>
+      </ng-container>
+      <tr *ngIf="!orders || !orders.data || !orders.data.length">
+        <td colspan="7">
+          No order found
+        </td>
+      </tr>
+    </tbody>
+  </table>
+  <mat-paginator *ngIf="orders.total" [length]="orders.total"
+              [pageSize]="20"
+              [pageSizeOptions]="[20, 50, 70, 100]"
+              (page)="goto($event)">
+  </mat-paginator>
+</mat-card>
+</ng-container>
+</div>
