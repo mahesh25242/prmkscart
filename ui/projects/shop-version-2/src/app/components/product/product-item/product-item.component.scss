@@ -1,0 +1,26 @@
+.mat-card-headerimage {
+  overflow: hidden;
+  width:100%;
+  border-radius: 9px 9px 0 0;
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center;
+  cursor: pointer;
+  min-height: 130px;
+}
+strike{
+  color: #adacac;
+}
+.price{
+  font-weight: 700;
+  font-size: 16px;
+}
+mat-card-header{
+  margin-top: 7px;
+  mat-card-title{
+    font-size: 15px;
+    cursor: pointer;
+  }
+}
+
+

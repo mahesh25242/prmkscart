@@ -8,14 +8,10 @@ infiniteScroll
 infiniteScrollContainer=".my-sidenav-content" [fromRoot]="true"
 ></div>
 
-<div class="product-grid" >
 
-<ng-container *ngIf="(products$ | async) as products">
-
-  <div class="grid-col" *ngFor="let product of allProduct" >
+<mat-grid-list [cols]="breakpoint" rowHeight="300px" (window:resize)="onResize($event)" *ngIf="(products$ | async) as products">
+  <mat-grid-tile *ngFor="let product of allProduct">
     <app-product-item [shopProduct]="product"></app-product-item>
+  </mat-grid-tile>
+</mat-grid-list>
 
-  </div>
-  <div *ngIf="!allProduct.length">No item found</div>
-</ng-container>
-</div>
