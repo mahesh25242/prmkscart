@@ -1,4 +1,4 @@
-  <mat-sidenav-container [hasBackdrop]="true" fullscreen>
+  <mat-sidenav-container [hasBackdrop]="true" fullscreen class="shop-theme-light-yellow">
     <mat-sidenav #sidenav role="navigation" [mode]="'over'">
       <app-side-nav-list (sidenavClose)="sidenav.close()" *ngIf="!(isAdmin$ | async)"></app-side-nav-list>
       <app-admin-side-nav-list (sidenavClose)="sidenav.close()" *ngIf="(isAdmin$ | async)"></app-admin-side-nav-list>
