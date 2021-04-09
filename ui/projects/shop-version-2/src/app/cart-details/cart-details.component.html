@@ -129,24 +129,7 @@
     </div>
 
     </div>
-    <section class="address" *ngIf="selectedLocation?.id">
-      <button mat-icon-button color="primary" class="right-position" (click)="triggerOrderForm()">
-        <mat-icon>edit</mat-icon>
-      </button>
 
-      <h3 *ngIf="f.name.valid">{{f.name.value}}</h3>
-      <h4 *ngIf="f.phone.valid"> Ph: {{ f.phone.value }}
-        <mat-error *ngIf="f.phone.invalid">In valid phone number</mat-error>
-      </h4>
-      <p *ngIf="f.delivery_date.value">Delivery on: {{ f.delivery_date.value | date: 'dd/MM/yyyy'}}</p>
-      <p *ngIf="f.hour.value && f.minute.value && f.ampm.value">Time: {{f.hour.value}}.{{f.minute.value}} {{f.ampm.value}}</p>
-      <p *ngIf="selectedLocation.id">Location: {{selectedLocation.name}};</p>
-      <ng-container *ngIf="selectedLocation.need_cust_loc">
-        <p *ngIf="f.address.value">Address: {{f.address.value}}</p>
-        <p *ngIf="f.pin.value">Pin: {{f.pin.value}}</p>
-      </ng-container>
-      <p *ngIf="f.note.value">{{ f.note.value }}</p>
-    </section>
 
     <div mat-dialog-actions class="actionBtn" *ngIf="isShowButton()">
       <section class="example-section" [matTooltip]="(!terms) ? 'Please accept terms' : ''">

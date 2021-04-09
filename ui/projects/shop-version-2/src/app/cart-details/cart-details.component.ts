@@ -237,7 +237,7 @@ export class CartDetailsComponent implements OnInit, OnDestroy {
     }else{
       this.grandTotal = this.total;
     }
-    this.triggerOrderForm();
+
 
     if(this.breakPointSubScr) this.breakPointSubScr.unsubscribe();
 
@@ -302,18 +302,7 @@ export class CartDetailsComponent implements OnInit, OnDestroy {
     }
     return (this.f.name.valid && this.f.phone.valid);
   }
-  triggerOrderForm(){
-    let dialogRef = this.dialog.open(OrderFormComponent, {
-      data: {
-        customerFrm: this.customerFrm,
-        selectedLocation: this.selectedLocation,
-        mapUrl: this.mapUrl
-      },
-      // height: '400px',
-      // width: '600px',
-    });
 
-  }
 
   triggerTerms(){
     let dialogRef = this.dialog.open(OrderTermsComponent, {
@@ -321,6 +310,7 @@ export class CartDetailsComponent implements OnInit, OnDestroy {
       // width: '600px',
     });
   }
+
   get f(){ return this.customerFrm.controls; }
 
   editMessage(cart: Cart = null){
@@ -394,6 +384,22 @@ export class CartDetailsComponent implements OnInit, OnDestroy {
       is_delivery_date:[ false, []],
       selectedLocation: [null, []]
     });
+
+    this.f.selectedLocation.valueChanges.subscribe(res=>{
+      if(res?.min_amount && this.grandTotal < res?.min_amount){
+        this.f.selectedLocation.setErrors({
+          error: `${res.name} need atleast ₹ ${res?.min_amount} to delivery.`
+        });
+      }
+
+      if(res?.charge && this.f.selectedLocation.valid){
+        this.grandTotal = this.total + res?.charge;
+      }else{
+        this.grandTotal = this.total;
+      }
+
+    });
+
   }
 
   ngOnDestroy(){
