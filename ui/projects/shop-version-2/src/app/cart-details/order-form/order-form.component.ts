@@ -1,42 +1,36 @@
-import { Component, Inject, Input, OnInit } from '@angular/core';
-import { FormGroup, Validators } from '@angular/forms';
+import { Component, Input, OnChanges, OnInit } from '@angular/core';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { MatSlideToggleChange } from '@angular/material/slide-toggle';
 import { ShopDelivery } from 'src/app/lib/interfaces';
-import {MatDialogRef, MAT_DIALOG_DATA} from '@angular/material/dialog';
-import Notiflix from "notiflix";
-import { DateAdapter, MAT_DATE_FORMATS, MAT_DATE_LOCALE } from '@angular/material/core';
-import { MomentDateAdapter } from '@angular/material-moment-adapter';
-
-
-export const MY_FORMATS = {
-  parse: {
-    dateInput: 'LL',
-  },
-  display: {
-    dateInput: 'DD/MM/YYYY',
-    monthYearLabel: 'YYYY',
-    dateA11yLabel: 'LL',
-    monthYearA11yLabel: 'YYYY',
-  },
-};
 
 
 @Component({
   selector: 'app-order-form',
   templateUrl: './order-form.component.html',
-  styleUrls: ['./order-form.component.scss'],
-  providers: [
-    {provide: DateAdapter, useClass: MomentDateAdapter, deps: [MAT_DATE_LOCALE]},
-    {provide: MAT_DATE_FORMATS, useValue: MY_FORMATS},
-  ],
+  styleUrls: ['./order-form.component.scss']
 })
 export class OrderFormComponent implements OnInit {
-
+  @Input() customerFrm: FormGroup;
+  @Input() isHomeDelivery: boolean;
+  @Input() selectedLocation: ShopDelivery;
+  @Input() mapUrl: string;
   todayDate:Date = new Date();
+  isSlideChecked: boolean = false;
+  constructor(
+    private formBuilder: FormBuilder
+    ) { }
 
-  constructor(public dialogRef: MatDialogRef<OrderFormComponent>,
-    @Inject(MAT_DIALOG_DATA) public data: { customerFrm: FormGroup, selectedLocation: ShopDelivery, mapUrl: string}) { }
+  get f() {
+    return this.customerFrm.controls;
+  }
 
-  get f() { return this.data.customerFrm.controls; }
+  triggerPicker(picker: any){
+    if(this.f.is_delivery_date.value){
+      picker.open();
+    }else{
+      this.f.delivery_date.setValue(null);
+    }
+  }
   ngOnInit(): void {
 
   }
@@ -44,7 +38,7 @@ export class OrderFormComponent implements OnInit {
   chekValidation(){
     this.f.name.markAsTouched();
     this.f.phone.markAsTouched();
-    if(this.data.selectedLocation?.need_cust_loc){
+    if(this.isHomeDelivery){
       this.f.address.setValidators([Validators.required]);
       this.f.pin.setValidators([Validators.required]);
       this.f.address.markAsTouched();
@@ -55,19 +49,14 @@ export class OrderFormComponent implements OnInit {
       this.f.pin.updateValueAndValidity();
       this.f.address.updateValueAndValidity();
     }
-    if(this.f.hour.value){
-      if(!this.f.minute.value){
-        this.f.minute.setValue('00');
-      }
-      if(!this.f.delivery_date.value){
-        this.f.delivery_date.setValue(new Date());
-      }
-      let datetimeStart = `${this.f.delivery_date.value} ${this.f.hour.value}:${this.f.minute.value}:00 ${this.f.ampm.value}`;
-      console.log(datetimeStart);
+    if(this.f.is_delivery_date.value && !this.f.delivery_date.value){
+      this.f.delivery_date.setErrors({
+        required: true
+      });
+      this.f.delivery_date.markAsTouched();
     }
 
-    if(this.data.customerFrm.valid)
-      this.dialogRef.close();
+
     }
 
 

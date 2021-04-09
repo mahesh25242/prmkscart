@@ -1,4 +1,4 @@
-import { Component, EventEmitter, OnDestroy, OnInit, Output } from '@angular/core';
+import { ChangeDetectionStrategy, Component, EventEmitter, OnDestroy, OnInit, Output } from '@angular/core';
 import { empty, Observable,of,pipe, Subscription } from 'rxjs';
 import { mergeMap, tap, map } from 'rxjs/operators';
 import { Cart, Shop, ShopDelivery, ShopOrder } from 'src/app/lib/interfaces';
@@ -20,7 +20,8 @@ import { MessagingService } from '../lib/services';
 @Component({
   selector: 'app-cart-details',
   templateUrl: './cart-details.component.html',
-  styleUrls: ['./cart-details.component.scss']
+  styleUrls: ['./cart-details.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class CartDetailsComponent implements OnInit, OnDestroy {
   customerFrm: FormGroup;
@@ -30,8 +31,9 @@ export class CartDetailsComponent implements OnInit, OnDestroy {
   grandTotal:number = 0;
   todayDate:Date = new Date();
 
+  panelOpenState:boolean = false;
   environment = environment;
-
+  deliveries: any;
   shop$:Observable<Shop>;
   selectedLocation: ShopDelivery;
   mapUrl: string = '';
@@ -335,7 +337,17 @@ export class CartDetailsComponent implements OnInit, OnDestroy {
     });
 
     this.cartService.hideCartComponent$.next(true);
-    this.shop$ = this.shopService.aShop;
+    this.shop$ = this.shopService.aShop.pipe(tap(res=>{
+      if(res){
+        this.deliveries = res?.shop_delivery.reduce(function (r, a) {
+          let idx = (a.charge) ? 'paid': 'free';
+          r[idx] = r[idx] || [];
+          r[idx].push(a);
+          return r;
+        }, Object.create(null));
+      }
+
+    }));
     // .pipe(tap(res=>{
     //   this.changeLocation(first(res?.shop_delivery));
     // }));
@@ -379,6 +391,7 @@ export class CartDetailsComponent implements OnInit, OnDestroy {
       hour: [null, [Validators.min(1), Validators.max(12)]],
       minute: [null, [Validators.min(0), Validators.max(59)]],
       ampm: ['am', []],
+      is_delivery_date:[ false, []]
     });
   }
 

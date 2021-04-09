@@ -7,59 +7,124 @@
     <h1 mat-dialog-title>
       My Cart ( {{cart.length}} )
     </h1>
-    <div mat-dialog-content>
+    <div >
+
+      <mat-card>
+        <form [formGroup]="customerFrm">
+          <div class="selectDelevery" >
+            <h3>Delivered to: </h3>
+
+            <mat-tab-group mat-align-tabs="start" *ngIf="(shop$ | async) as shop" dynamicHeight>
+              <mat-tab label="Pickup From Shop">
+                <ng-template matTabContent>
+                  <mat-accordion>
+                    <mat-expansion-panel   *ngFor="let shop_delivery of deliveries.free"
+                    (opened)="shop_delivery.isOpened = true"
+                    (closed)="shop_delivery.isOpened = false">
+                      <mat-expansion-panel-header>
+                        <mat-panel-title>
+                          {{shop_delivery.name}}
+                        </mat-panel-title>
+                        <mat-panel-description>
+                          <span *ngIf="shop_delivery.charge" class="charge">
+                            Delivery Charge @ ₹ {{ shop_delivery.charge}}
+                          </span>
+                        </mat-panel-description>
+                      </mat-expansion-panel-header>
+                        <p [innerHTML]="shop_delivery.description"></p>
+
+                        <app-order-form [customerFrm]="customerFrm"
+                        [isHomeDelivery]="false" [mapUrl]="mapUrl"
+                        *ngIf="shop_delivery.isOpened"></app-order-form>
+                    </mat-expansion-panel>
+                  </mat-accordion>
+                </ng-template>
+              </mat-tab>
+              <mat-tab label="Home Delivery">
+                <ng-template matTabContent>
+
+                  <app-order-form [customerFrm]="customerFrm"
+                  [isHomeDelivery]="true" [mapUrl]="mapUrl"></app-order-form>
+
+                  <!-- <mat-accordion>
+                    <mat-expansion-panel
+                      *ngFor="let shop_delivery of deliveries.paid"
+                      (opened)="shop_delivery.isOpened = true"
+                      (closed)="shop_delivery.isOpened = false">
+                      <mat-expansion-panel-header>
+                        <mat-panel-title>
+                          {{shop_delivery.name}}
+                        </mat-panel-title>
+                        <mat-panel-description>
+                          <span *ngIf="shop_delivery.charge" class="charge">
+                            Delivery Charge @ ₹ {{ shop_delivery.charge}}
+                          </span>
+                        </mat-panel-description>
+                      </mat-expansion-panel-header>
+                        <p>Delivery Charge: ₹ {{ shop_delivery.charge}}</p>
+                        <p [innerHTML]="shop_delivery.description"></p>
+                        <app-order-form [customerFrm]="customerFrm"
+                        [selectedLocation]="shop_delivery" [mapUrl]="mapUrl"
+                         *ngIf="shop_delivery.isOpened"></app-order-form>
+                    </mat-expansion-panel>
+                  </mat-accordion> -->
+                </ng-template>
+              </mat-tab>
+            </mat-tab-group>
+
+          </div>
+        </form>
+
+      </mat-card>
 
       <mat-card *ngFor="let item of cart" class="grid-my-list" >
-        <div>
-          <div *ngIf="item.product?.shop_product_selected_variant?.type.id"
-          [matTooltip]="(item.product?.shop_product_selected_variant?.type.id == 1) ? 'Veg' : ( (item.product?.shop_product_selected_variant?.type.id == 2) ? 'Non-Veg':'' )"
-         [ngClass]="{'veg': item.product?.shop_product_selected_variant?.type.id == 1, 'nonveg': item.product?.shop_product_selected_variant?.type.id == 2}"></div>
-         <a href="javascript:{}"  [routerLink]="'/'+item.product.shop_product_category?.url+'/'+item.product.url">
-          <img [src]="(item.product?.shop_product_selected_variant?.shop_product_image?.image) ? item.product?.shop_product_selected_variant.shop_product_image.image_path: 'assets/no-image.jpg'">
-         </a>
-        </div>
+          <mat-grid-list [cols]="10" rowHeight="4:4">
+            <mat-grid-tile>
+              <div class="product-img" [ngStyle]="{'background-image': 'url(' + ((item.product?.shop_product_selected_variant?.shop_product_image?.image) ?  item.product.shop_product_selected_variant.shop_product_image.image_path : 'assets/no-image.jpg') + ')'}">
+                <div *ngIf="item.product?.shop_product_selected_variant?.type.id"
+                [matTooltip]="(item.product?.shop_product_selected_variant?.type.id == 1) ? 'Veg' : ( (item.product?.shop_product_selected_variant?.type.id == 2) ? 'Non-Veg':'' )"
+               [ngClass]="{'veg': item.product?.shop_product_selected_variant?.type.id == 1, 'nonveg': item.product?.shop_product_selected_variant?.type.id == 2}"></div>
+              </div>
+            </mat-grid-tile>
+            <mat-grid-tile  colspan="8">
+              <div class="middle">
+                <h4 class="cart-item-header pl-1">
+                  <a href="javascript:{}" [routerLink]="'/'+item.product.shop_product_category?.url+'/'+item.product.url"> {{item.product.name}}</a>
+                </h4>
+                <small class="block pl-1">{{ item.qty}} {{ (item.qty > 1) ? 'packets': 'packet' }} of {{item.product.shop_product_selected_variant.name}}</small>
+                <br/>
+                <b class="block pl-1">₹ {{item.price}}</b>
+                <div>
+                  <small class="block pl-1" *ngIf="item.message"> {{item.message}}</small>
+                </div>
+                <div>
+                  <button mat-icon-button color="primary" (click)="updateCart(item, '-')">
+                    <mat-icon>remove_circle_outline</mat-icon>
+                  </button>
+                  {{item.qty}}
+                  <button mat-icon-button color="primary" (click)="updateCart(item, '+')">
+                    <mat-icon>add_circle_outline</mat-icon>
+                  </button>
+                </div>
+              </div>
+            </mat-grid-tile>
+            <mat-grid-tile colspan="1">
+              <button mat-icon-button color="primary" (click)="editMessage(item)"
+              [matTooltip]="'Add a custom message for '+item.product.name">
+                <mat-icon>add_comment</mat-icon>
+              </button>
+            <!-- </ng-container> -->
+                <button mat-icon-button color="warn" (click)="deleteItem(item)"
+                [matTooltip]="'Remove ' +item.product.name+ ' from cart'">
+                  <mat-icon>delete</mat-icon>
+                </button>
+            </mat-grid-tile>
+          </mat-grid-list>
+
+
+
         <div >
-       <h4 class="cart-item-header pl-1" > {{item.product.name}}</h4>
-       <small class="block pl-1">{{ item.qty}} {{ (item.qty > 1) ? 'packets': 'packet' }} of {{item.product.shop_product_selected_variant.name}}</small>
-        <b class="block pl-1">₹ {{item.price}}</b>
 
-       <small class="block pl-1" *ngIf="item.message"> {{item.message}}</small>
-       <div class="d-none-lg">
-       <button mat-icon-button color="primary" (click)="updateCart(item, '-')">
-        <mat-icon>remove_circle_outline</mat-icon>
-      </button>
-      {{item.qty}}
-      <button mat-icon-button color="primary" (click)="updateCart(item, '+')">
-        <mat-icon>add_circle_outline</mat-icon>
-      </button>
-    </div>
-      </div>
-      <div class="d-none-md">
-        <button mat-icon-button color="primary"  (click)="updateCart(item, '-')"
-        [matTooltip]="'Decrease ' +item.product.name+ ' quantity'">
-          <mat-icon>remove_circle_outline</mat-icon>
-        </button>
-        {{item.qty}}
-        <button mat-icon-button color="primary" (click)="updateCart(item, '+')"
-        [matTooltip]="'Increase ' +item.product.name+ ' quantity'">
-          <mat-icon>add_circle_outline</mat-icon>
-        </button>
-      </div>
-
-<div>
-
-   <!-- <ng-container *ngIf="item.message"> -->
-    <div>
-      <button mat-icon-button color="primary" (click)="editMessage(item)"
-      [matTooltip]="'Add a custom message for '+item.product.name">
-        <mat-icon>add_comment</mat-icon>
-      </button>
-    <!-- </ng-container> -->
-        <button mat-icon-button color="warn" (click)="deleteItem(item)"
-        [matTooltip]="'Remove ' +item.product.name+ ' from cart'">
-          <mat-icon>delete</mat-icon>
-        </button>
-      </div>
       </div>
       </mat-card>
 <div class="order-total">
@@ -79,31 +144,7 @@
     </div>
 
     </div>
-      <div class="m-15">
-        <form [formGroup]="customerFrm">
-          <div class="selectDelevery" >
-         <h3>Please choose your delivery location from below.</h3>
-          </div>
-          <div class="tab-delivery-options">
-          <ng-container *ngIf="(shop$ | async) as shop">
-            <ng-container *ngFor="let shop_delivery of shop.shop_delivery">
-              <a matRipple href="javascript:{}"
-              class="animate__animated"
-              [matTooltip]="'Select '+shop_delivery.name+' as your delivery location' "
-               [ngClass]="{'active animate__headShake' : (selectedLocation?.id == shop_delivery.id)}"
-              (click)="changeLocation(shop_delivery)">
-                {{ shop_delivery.name }}
-                <span *ngIf="shop_delivery.charge">
-                  ( + ₹ {{ shop_delivery.charge}} )
-                </span>
-              </a>
-            </ng-container>
-          </ng-container>
-        </div>
 
-        </form>
-
-      </div>
     </div>
     <section class="address" *ngIf="selectedLocation?.id">
       <button mat-icon-button color="primary" class="right-position" (click)="triggerOrderForm()">

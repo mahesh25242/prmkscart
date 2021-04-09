@@ -1,8 +1,10 @@
 .grid-form {
-    display: grid;    
+    display: grid;
     grid-template-columns: 1fr 1fr 1fr;
     column-gap:30px;
-
+    .d-none{
+      display: none;
+    }
     input {
         margin-bottom: 0px;
     }
@@ -30,16 +32,16 @@ h4 {
 @media only screen and (max-width: 768px) {
     .mat-dialog-content {
         min-width: 95vw;
-       
+
     }
     .grid-form {
-        display: grid!important;    
+        display: grid!important;
         grid-template-columns: 1fr!important ;
        }
     }
     @media only screen and (min-width: 768px) {
         .mat-dialog-content {
-            min-width: 66vw;           
+            min-width: 66vw;
         }
 
     }

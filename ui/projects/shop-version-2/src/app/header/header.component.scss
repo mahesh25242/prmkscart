@@ -2,6 +2,11 @@
   flex: 1 1 auto;
 }
 
+mat-toolbar{
+  position: fixed;
+  z-index: 200;
+}
+
 a {
   text-decoration: none;
   color: white;
@@ -16,8 +21,3 @@ a:hover, a:active{
   }
   }
 
-@media(max-width: 959px){
-  mat-toolbar{
-      border-radius: 0px;
-  }
-}
