@@ -391,7 +391,8 @@ export class CartDetailsComponent implements OnInit, OnDestroy {
       hour: [null, [Validators.min(1), Validators.max(12)]],
       minute: [null, [Validators.min(0), Validators.max(59)]],
       ampm: ['am', []],
-      is_delivery_date:[ false, []]
+      is_delivery_date:[ false, []],
+      selectedLocation: [null, []]
     });
   }
 
