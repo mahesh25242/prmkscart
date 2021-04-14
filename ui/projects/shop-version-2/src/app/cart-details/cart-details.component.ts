@@ -296,12 +296,7 @@ export class CartDetailsComponent implements OnInit, OnDestroy {
 
   }
 
-  isShowButton(){
-    if(this.selectedLocation?.need_cust_loc){
-      return (this.f.name.valid && this.f.phone.valid && this.f.address.valid && this.f.pin.valid);
-    }
-    return (this.f.name.valid && this.f.phone.valid);
-  }
+
 
 
   triggerTerms(){

@@ -131,7 +131,7 @@
     </div>
 
 
-    <div mat-dialog-actions class="actionBtn" *ngIf="isShowButton()">
+    <div mat-dialog-actions class="actionBtn">
       <section class="example-section" [matTooltip]="(!terms) ? 'Please accept terms' : ''">
         <mat-checkbox [(ngModel)]="terms"></mat-checkbox>&nbsp;&nbsp;I agree to the <a href="javascript:{}" (click)="triggerTerms()">terms of service</a>
         <button class="whatsapp-btn" mat-raised-button color="primary"  type="submit" [disabled]="!terms" (click)="sendToShop()">

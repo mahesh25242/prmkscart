@@ -5,21 +5,13 @@
     <nav mat-tab-nav-bar [backgroundColor]="background">
       <a mat-tab-link *ngFor="let category of categories"
       [routerLink]="'/'+category.url+'/varities'"
-      routerLinkActive #rla="routerLinkActive"
-      [active]="rla.isActive">
+      [active]=" (selectedCategory$ | async)?.id == category.id">
       <mat-icon *ngIf="category.icon && category.is_maticon">{{category.icon}}</mat-icon>
       <img class="img-thumbnail" [src]="environment.siteAddress+'/assets/shop/'+environment.shopKey+'/category/'+category.icon" *ngIf="category.icon && !category.is_maticon"/>
       {{category.name}}
       </a>
     </nav>
     <ng-content></ng-content>
-    <!-- <a *ngFor="let category of categories" [ngClass]="{ 'active': (selectedCategory$ | async)?.id == category.id}" [routerLink]="'/'+category.url+'/varities'">
-      <mat-icon *ngIf="category.icon && category.is_maticon">{{category.icon}}</mat-icon>
-      <img class="img-thumbnail" [src]="environment.siteAddress+'/assets/shop/'+environment.shopKey+'/category/'+category.icon" *ngIf="category.icon && !category.is_maticon"/>
-      {{ category.name }}
-    </a> -->
-
-
   </ng-container>
 </ng-container>
 </div>
