@@ -6,6 +6,7 @@ import { ProductResolver } from './components/product/product-resolver';
 import { ProductComponent } from './components/product/product.component';
 import { ContactUsComponent } from './contact-us/contact-us.component';
 import { HomeComponent } from './home/home.component';
+import { LayoutComponent } from './layout/layout.component';
 import { OrderDeatilResolver } from './order-deatil/order-deatil-resolver';
 import { OrderDeatilComponent } from './order-deatil/order-deatil.component';
 import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
@@ -39,11 +40,11 @@ const routes: Routes = [
   },
   {
     path: '',
-    component: HomeComponent,
+    component: LayoutComponent,
     children:[
       {
         path: '',
-        component: ProductComponent,
+        component: HomeComponent,
         resolve:{
           product: ProductResolver
         }
@@ -54,7 +55,7 @@ const routes: Routes = [
       },
       {
         path: ':catUrl/varities',
-        component: ProductComponent,
+        component: HomeComponent,
         resolve:{
           product: ProductResolver
         }

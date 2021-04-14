@@ -23,6 +23,7 @@ export class CategoriesComponent implements OnInit {
     private route: ActivatedRoute,) { }
 
   ngOnInit(): void {
+
     this.hideTopCat$ = this.shopProductCategoryService.hideTopCat;
     this.selectedCategory$ = this.shopProductCategoryService.selectedCategory;
     this.categories$ = this.shopProductCategoryService.categories;

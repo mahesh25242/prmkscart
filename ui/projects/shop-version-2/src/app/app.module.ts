@@ -47,6 +47,8 @@ import { MessagingService } from './lib/services';
 import { OrderDeatilComponent } from './order-deatil/order-deatil.component';
 import { OrderDeatilResolver } from './order-deatil/order-deatil-resolver';
 import { ProductItemComponent } from './components/product/product-item/product-item.component';
+import { LayoutComponent } from './layout/layout.component';
+import { CarouselComponent } from './components/carousel/carousel.component';
 
 
 
@@ -81,7 +83,9 @@ export class MyHammerConfig extends HammerGestureConfig {
     OrderFormComponent,
     OrderTermsComponent,
     OrderDeatilComponent,
-    ProductItemComponent
+    ProductItemComponent,
+    LayoutComponent,
+    CarouselComponent
   ],
   imports: [
     BrowserModule,
