@@ -72,6 +72,10 @@ export class CartDetailsComponent implements OnInit, OnDestroy {
     //   el.scrollIntoView({behavior:"smooth"});
     //   return;
     // }
+
+    if(!this.f.delivery_date.value){
+      this.f.is_delivery_date.setValue(false);
+    }
     Notiflix.Loading.Arrows();
     this.sentToShop = this.cart$.pipe(mergeMap(cart=>{
       if(!cart) {
