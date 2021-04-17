@@ -2,6 +2,7 @@
 <div class="container">
 <ng-container *ngIf="(cart$ | async) as cart">
   <div *ngIf="!cart || !cart.length">Your cart is empty</div>
+  <form [formGroup]="customerFrm" #delivey (ngSubmit)="sendToShop(delivey)">
   <ng-container *ngIf="cart && cart.length">
 
     <h1 mat-dialog-title>
@@ -10,17 +11,21 @@
     <div >
 
       <mat-card>
-        <form [formGroup]="customerFrm">
+
           <div class="selectDelevery" >
             <h3>Delivered to: </h3>
 
-            <mat-tab-group mat-align-tabs="start" *ngIf="(shop$ | async) as shop" dynamicHeight>
+            <mat-tab-group mat-align-tabs="start" *ngIf="(shop$ | async) as shop" dynamicHeight >
               <mat-tab label="Pickup From Shop">
                 <ng-template matTabContent>
+                  <mat-error *ngIf="!customerFrm.controls.selectedLocation.value">
+                    Please choose a pick up location
+                  </mat-error>
                   <mat-accordion>
                     <mat-expansion-panel   *ngFor="let shop_delivery of deliveries.free"
+                    [expanded]="shop_delivery.isOpened"
                     (opened)="shop_delivery.isOpened = true"
-                    (closed)="shop_delivery.isOpened = false">
+                       (closed)="shop_delivery.isOpened = false">
                       <mat-expansion-panel-header>
                         <mat-panel-title>
                           {{shop_delivery.name}}
@@ -32,10 +37,10 @@
                         </mat-panel-description>
                       </mat-expansion-panel-header>
                         <p [innerHTML]="shop_delivery.description"></p>
-
-                        <app-order-form [customerFrm]="customerFrm"
-                        [isHomeDelivery]="false" [mapUrl]="mapUrl"
-                        *ngIf="shop_delivery.isOpened"></app-order-form>
+                        <app-order-form
+                        [shopDelivery]="shop_delivery" [mapUrl]="mapUrl"
+                        *ngIf="shop_delivery.isOpened"
+                        [formGroup]="customerFrm"></app-order-form>
                     </mat-expansion-panel>
                   </mat-accordion>
                 </ng-template>
@@ -43,20 +48,20 @@
               <mat-tab label="Home Delivery">
                 <ng-template matTabContent>
                   <ng-container *ngIf="f.selectedLocation.value">
-                    <p [innerHTML]="f.selectedLocation.value.description"></p>
-                    <p>Delivery Cost: {{ f.selectedLocation.value.charge }}</p>
+                    <p [innerHTML]="f.selectedLocation.value?.description"></p>
+                    <p>Delivery Cost: {{ f.selectedLocation.value?.charge }}</p>
                   </ng-container>
 
 
-                  <app-order-form [customerFrm]="customerFrm"
-                  [isHomeDelivery]="true" [mapUrl]="mapUrl"
-                  [deliveryloc]="deliveries.paid"></app-order-form>
+                  <app-order-form  [mapUrl]="mapUrl"
+                  [deliveryloc]="deliveries.paid"
+                  [formGroup]="customerFrm"></app-order-form>
                 </ng-template>
               </mat-tab>
             </mat-tab-group>
 
           </div>
-        </form>
+
 
       </mat-card>
 
@@ -133,8 +138,9 @@
 
     <div mat-dialog-actions class="actionBtn">
       <section class="example-section" [matTooltip]="(!terms) ? 'Please accept terms' : ''">
-        <mat-checkbox [(ngModel)]="terms"></mat-checkbox>&nbsp;&nbsp;I agree to the <a href="javascript:{}" (click)="triggerTerms()">terms of service</a>
-        <button class="whatsapp-btn" mat-raised-button color="primary"  type="submit" [disabled]="!terms" (click)="sendToShop()">
+        <mat-checkbox formControlName="terms"></mat-checkbox>&nbsp;&nbsp;I agree to the <a href="javascript:{}" (click)="triggerTerms()">terms of service</a>
+        <button class="whatsapp-btn" mat-raised-button color="primary"  type="submit"
+        [disabled]="!customerFrm.controls.terms.value">
           <!-- Generator: Adobe Illustrator 25.0.0, SVG Export Plug-In . SVG Version: 6.00 Build 0)  -->
           <svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
              viewBox="0 0 682 682" xml:space="preserve">
@@ -154,5 +160,6 @@
 
     </div>
   </ng-container>
+  </form>
 </ng-container>
 </div>

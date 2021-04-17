@@ -28,7 +28,7 @@ class ShopOrderController extends Controller
         }
 
 
-        if($need_cust_loc){
+        if($need_cust_loc || $need_cust_loc === null){
             $validationArr["address"] = ["required"];
             $validationArr["pin"] = ["required"];
         }

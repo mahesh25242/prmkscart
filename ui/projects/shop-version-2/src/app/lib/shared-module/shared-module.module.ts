@@ -12,6 +12,7 @@ import { DatePipe } from '@angular/common'
 import { ScrollTrackerDirective } from './scroll-tracker.directive';
 import { InfiniteScrollModule } from 'ngx-infinite-scroll';
 import { NgxMatDatetimePickerModule, NgxMatNativeDateModule, NgxMatTimepickerModule } from '@angular-material-components/datetime-picker';
+import { FocusInvalidInputDirective } from '../../components/focus-invalid-input.directive';
 
 
 import {MatIconModule} from '@angular/material/icon';
@@ -50,7 +51,8 @@ Notiflix.Block.Init({ svgColor:"#204486", });
 @NgModule({
   declarations: [
     SafeHtmlPipe,
-    ScrollTrackerDirective
+    ScrollTrackerDirective,
+    FocusInvalidInputDirective
   ],
   imports: [
     CommonModule,
@@ -97,6 +99,7 @@ Notiflix.Block.Init({ svgColor:"#204486", });
     NgSelectModule,
     // NgbModule,
     SafeHtmlPipe,
+    FocusInvalidInputDirective,
     FontAwesomeModule,
     FormsModule,
     ReactiveFormsModule,

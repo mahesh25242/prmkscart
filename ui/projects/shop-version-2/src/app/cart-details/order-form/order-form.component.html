@@ -1,15 +1,13 @@
 
 
 
-<div class="grid-form" [formGroup]="customerFrm">
+<div class="grid-form" [formGroup]="customerFrm" >
   <mat-form-field class="full-width-text" appearance="standard">
     <mat-label>Full Name</mat-label>
-    <input matInput formControlName="name" placeholder="Ex. John Doe" required maxlength="200">
-    <mat-error *ngIf="f.name.invalid">
+    <input matInput formControlName="name"
+    placeholder="Ex. John Doe" maxlength="200" id="fullName">
+    <mat-error *ngIf="f.name.errors && f.name.errors.error">
       {{f.name.errors.error}}
-    </mat-error>
-    <mat-error *ngIf="f.name.invalid && ((f.name.dirty || f.name.touched)) && f.name.errors.required">
-      Name is required.
     </mat-error>
   </mat-form-field>
 
@@ -23,7 +21,7 @@
 
   <mat-form-field class="full-width-text" appearance="standard">
     <mat-label>Phone</mat-label>
-    <input type="tel" matInput formControlName="phone" placeholder="Ex. 91546542465" required maxlength="200">
+    <input type="tel" matInput formControlName="phone" placeholder="Ex. 91546542465" maxlength="200">
     <mat-error *ngIf="f.phone.errors && f.phone.errors.error">
       {{f.phone.errors.error}}
     </mat-error>
@@ -36,7 +34,7 @@
   </mat-form-field>
 
 
-  <ng-container *ngIf="(isHomeDelivery)">
+  <ng-container *ngIf="(!shopDelivery)">
     <a *ngIf="mapUrl" [href]="mapUrl" target="_blank">Map</a>
     <mat-form-field class="full-width-text" appearance="standard">
       <mat-label>Address</mat-label>
@@ -94,7 +92,7 @@
     formControlName="is_delivery_date"
       name="Delivery Date" (change)="triggerPicker(picker)">
       {{
-        (f.delivery_date.value) ? 'Delivery Date & Time: '+(f.delivery_date.value |  date:'medium') : 'Do you want to pick delivery Date & Time?'
+        (f.delivery_date.value) ? 'This order will deleviered on '+(f.delivery_date.value |  date:'medium') : 'Do you want to pick delivery Date & Time?'
       }}
 
     </mat-slide-toggle>
@@ -114,6 +112,6 @@
   </mat-form-field>
 
 
-  <button (click)="chekValidation()" mat-flat-button color="primary" class="float-right">Save</button>
+  <!-- <button (click)="chekValidation()" mat-flat-button color="primary" class="float-right">Save</button> -->
 </div>
 

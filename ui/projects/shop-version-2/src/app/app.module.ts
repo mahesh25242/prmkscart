@@ -52,6 +52,7 @@ import { CarouselComponent } from './components/carousel/carousel.component';
 
 
 
+
 @Injectable()
 export class MyHammerConfig extends HammerGestureConfig {
   overrides = <any> {

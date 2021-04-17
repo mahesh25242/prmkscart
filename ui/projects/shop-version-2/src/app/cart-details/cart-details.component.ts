@@ -1,11 +1,11 @@
-import { ChangeDetectionStrategy, Component, EventEmitter, OnDestroy, OnInit, Output } from '@angular/core';
+import { ChangeDetectionStrategy, Component, EventEmitter, OnDestroy, OnInit, Output, ViewChild } from '@angular/core';
 import { empty, Observable,of,pipe, Subscription } from 'rxjs';
 import { mergeMap, tap, map } from 'rxjs/operators';
 import { Cart, Shop, ShopDelivery, ShopOrder } from 'src/app/lib/interfaces';
 import { CartService, GeneralService, ShopService } from 'src/app/lib/services';
 import { environment } from '../../environments/environment';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { first } from 'lodash'
+import { find, first } from 'lodash'
 import {MatSnackBar} from '@angular/material/snack-bar';
 import { BreakpointObserver, Breakpoints, BreakpointState } from '@angular/cdk/layout';
 import { Router } from '@angular/router';
@@ -16,6 +16,7 @@ import { DatePipe } from '@angular/common'
 import { OrderFormComponent } from './order-form/order-form.component';
 import { OrderTermsComponent } from './order-terms/order-terms.component';
 import { MessagingService } from '../lib/services';
+import { MatAccordion } from '@angular/material/expansion';
 
 @Component({
   selector: 'app-cart-details',
@@ -26,6 +27,7 @@ import { MessagingService } from '../lib/services';
 export class CartDetailsComponent implements OnInit, OnDestroy {
   customerFrm: FormGroup;
   @Output() public showDetails = new EventEmitter();
+  @ViewChild(MatAccordion) accordion: MatAccordion;
   cart$: Observable<Cart[]>;
   total:number = 0;
   grandTotal:number = 0;
@@ -38,7 +40,7 @@ export class CartDetailsComponent implements OnInit, OnDestroy {
   selectedLocation: ShopDelivery;
   mapUrl: string = '';
   loc : any =null;
-  terms:boolean = false;
+
   breakPointSubScr: Subscription;
 
   cartSubScr: Subscription;
@@ -63,12 +65,13 @@ export class CartDetailsComponent implements OnInit, OnDestroy {
     this.cartSubScr = this.cartService.updateCart(itm, action).subscribe();
   }
 
-  sendToShop(){
+  sendToShop(el: HTMLElement){
 
-    if(!this.selectedLocation?.id){
-      this.matSnackBar.open('Please choose a delivery location.', 'close');
-      return;
-    }
+    // if(!this.f.selectedLocation.value?.id){
+    //   //this.matSnackBar.open('Please choose a delivery location.', 'close');
+    //   el.scrollIntoView({behavior:"smooth"});
+    //   return;
+    // }
     Notiflix.Loading.Arrows();
     this.sentToShop = this.cart$.pipe(mergeMap(cart=>{
       if(!cart) {
@@ -83,16 +86,6 @@ export class CartDetailsComponent implements OnInit, OnDestroy {
         }
 
 
-        let deliveryDate = '';
-
-        if(this.f.delivery_date.value){
-          deliveryDate = this.datepipe.transform(this.f.delivery_date.value, 'yyyy-MM-dd');
-          let minute;
-          if(this.f.hour.value){
-            minute = (this.f.minute.value) ? ("0" + this.f.minute.value).slice(-2) : '00';
-          }
-          deliveryDate = `${deliveryDate} ${ (this.f.hour.value) ? `${("0" + this.f.hour.value).slice(-2) }:` :'' }${ (minute) ? `${minute}` : '' }${(this.f.hour.value) ? this.f.ampm.value : ''}`
-        }
 
         const postData = {
           cart: cart,
@@ -102,13 +95,10 @@ export class CartDetailsComponent implements OnInit, OnDestroy {
           phone: this.f.phone.value,
           address: this.f.address.value,
           pin: this.f.pin.value,
-          selectedLocation: this.selectedLocation,
+          selectedLocation: this.f.selectedLocation.value,
           grad_total: this.grandTotal,
           loc :this.loc,
-          delivery_date: deliveryDate,
-          hour: this.f.hour.value,
-          minute: this.f.minute.value,
-          ampm: this.f.ampm.value,
+          delivery_date: this.f.delivery_date.value,
           token: null
         }
 
@@ -195,19 +185,39 @@ export class CartDetailsComponent implements OnInit, OnDestroy {
       window.location.href = res.url;
       Notiflix.Loading.Remove();
     }, error=>{
+
       Notiflix.Loading.Remove();
+
       if(error.status == 422){
+
+        if(!this.f.selectedLocation.value?.need_cust_loc){
+          let selectedLocation = this.f.selectedLocation.value;
+          if(selectedLocation){
+            selectedLocation.isOpened = (selectedLocation.isOpened) ? selectedLocation.isOpened : true;
+          }
+          this.f.selectedLocation.setValue(selectedLocation);
+        }
+
+
         for(let result in this.customerFrm.controls){
           if(error.error.errors[result]){
-            this.customerFrm.controls[result].setErrors({ error: error.error.errors[result] });
-            this.customerFrm.controls[result].markAsDirty();
             this.customerFrm.controls[result].markAsTouched();
+            this.customerFrm.controls[result].setErrors({ error: error.error.errors[result] });
           }else{
             this.customerFrm.controls[result].setErrors(null);
 
           }
         }
+
+        if(this.customerFrm.invalid){
+          document.getElementById('fullName').focus();
+          el.scrollIntoView({behavior:"smooth"});
+
+
+        }
+
       }
+
     });
 
 
@@ -314,6 +324,7 @@ export class CartDetailsComponent implements OnInit, OnDestroy {
     });
   }
   ngOnInit(): void {
+
     this.generalService.bc$.next({
       siteName: environment.siteName,
       title: `My Cart`,
@@ -366,18 +377,16 @@ export class CartDetailsComponent implements OnInit, OnDestroy {
     }));
 
     this.customerFrm = this.formBuilder.group({
-      name: [null, [Validators.required]],
+      name: [null, []],
       note: [null, []],
       email: [null, []],
-      phone: [null, [Validators.required, Validators.pattern("[0-9 ]{10}")]],
+      phone: [null, []],
       address: [null, []],
       pin: [null, []],
       delivery_date: [null, []],
-      hour: [null, [Validators.min(1), Validators.max(12)]],
-      minute: [null, [Validators.min(0), Validators.max(59)]],
-      ampm: ['am', []],
       is_delivery_date:[ false, []],
-      selectedLocation: [null, []]
+      selectedLocation: [null, []],
+      terms: [null, []]
     });
 
     this.f.selectedLocation.valueChanges.subscribe(res=>{
