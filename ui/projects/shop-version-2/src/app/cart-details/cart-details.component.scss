@@ -31,6 +31,17 @@ mat-card{
   }
 }
 
+.whatsapp-btn {
+    border-radius: 50px;
+    padding: 5px 20px;
+    margin-left: 30px;
+}
+svg {
+    width:25px;
+    margin-right: 8px;
+
+}
+
 // .grid-my-list {
 //     display: grid;
 
@@ -122,17 +133,7 @@ mat-card{
 //     max-height: inherit;
 // }
 // .st0{fill-rule:evenodd;clip-rule:evenodd;fill:#FFFFFF;}
-// .whatsapp-btn {
-//     background-color: #00E777;
-//     border-radius: 50px;
-//     padding: 5px 20px;
-//     margin-left: 30px;
-// }
-// svg {
-//     width:25px;
-//     margin-right: 8px;
 
-// }
 // .actionBtn {
 //     margin-top: 30px;
 //     .example-section {margin-left: auto;}

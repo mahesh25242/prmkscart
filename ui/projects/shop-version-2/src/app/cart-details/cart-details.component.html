@@ -118,11 +118,11 @@
 <div class="order-total">
   <div>
     <small class="block"> Items:  <b>{{cart.length}}</b> </small>
-    <small class="block"> <ng-container *ngIf="selectedLocation && selectedLocation?.charge">
-        Delivery Cost: <b> ₹ {{ selectedLocation?.charge }}</b>
+    <small class="block"> <ng-container *ngIf="customerFrm.controls.selectedLocation.value && customerFrm.controls.selectedLocation.value?.charge">
+        Delivery Cost: <b> ₹ {{ customerFrm.controls.selectedLocation.value?.charge }}</b>
       </ng-container></small>
-      <small class="block mt-10" *ngIf="selectedLocation && selectedLocation?.id">
-        {{selectedLocation.description }}
+      <small class="block mt-10" *ngIf="customerFrm.controls.selectedLocation.value && customerFrm.controls.selectedLocation.value?.id">
+        {{customerFrm.controls.selectedLocation.value.description }}
       </small>
     </div>
     <div>
