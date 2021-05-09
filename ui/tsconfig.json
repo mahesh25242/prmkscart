@@ -14,12 +14,6 @@
       "path": "./tsconfig.spec.json"
     },
     {
-      "path": "./projects/shop-version-2/tsconfig.app.json"
-    },
-    {
-      "path": "./projects/shop-version-2/tsconfig.spec.json"
-    },
-    {
       "path": "./projects/Shop/tsconfig.app.json"
     },
     {
