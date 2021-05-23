@@ -335,7 +335,18 @@ export class CartDetailsComponent implements OnInit, OnDestroy {
     });
 
     this.cartService.hideCartComponent$.next(true);
-    this.shop$ = this.shopService.aShop;
+    this.shop$ = this.shopService.aShop.pipe(map(res=>{
+      const delivery = res?.shop_delivery;
+      if(delivery){
+        res.shop_delivery_filtered = delivery.reduce(function (r, a) {
+          let idx = (a.need_cust_loc) ? 'home': 'shops';
+          r[idx] = r[idx] || [];
+          r[idx].push(a);
+          return r;
+        }, Object.create(null))
+      }
+      return res;
+    }));
     // .pipe(tap(res=>{
     //   this.changeLocation(first(res?.shop_delivery));
     // }));

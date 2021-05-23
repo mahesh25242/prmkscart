@@ -1,12 +1,11 @@
 import { Component, OnInit } from '@angular/core';
-import { empty, Observable, of } from 'rxjs';
-import { map, mergeMap } from 'rxjs/operators';
+import { Observable } from 'rxjs';
 import { ShopProductCategory } from 'src/app/lib/interfaces';
 import { ShopProductCategoryService, ShopProductService } from 'src/app/lib/services';
 import { environment } from '../../../environments/environment';
 import * as _ from 'lodash';
 import { ActivatedRoute } from '@angular/router';
-import { animate, style, transition, trigger } from '@angular/animations';
+
 
 @Component({
   selector: 'app-categories',

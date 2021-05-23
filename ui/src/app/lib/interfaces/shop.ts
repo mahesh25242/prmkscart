@@ -39,5 +39,6 @@ export interface Shop {
   bg_color?: string,
   short_name?: string,
   logo?: string,
-  icons?: any
+  icons?: any,
+  shop_delivery_filtered? : { shops?: ShopDelivery[], home?: ShopDelivery[] }
 }

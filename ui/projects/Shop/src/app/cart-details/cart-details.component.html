@@ -21,7 +21,7 @@
         <div >
        <h4 class="cart-item-header pl-1" > {{item.product.name}}</h4>
        <small class="block pl-1">{{ item.qty}} {{ (item.qty > 1) ? 'packets': 'packet' }} of {{item.product.shop_product_selected_variant.name}}</small>
-        <b class="block pl-1">₹ {{item.price}}</b>
+        <b class="block pl-1">₹ {{item.product.shop_product_selected_variant.price}} X {{ item.qty}} = {{ item.price }}</b>
 
        <small class="block pl-1" *ngIf="item.message"> {{item.message}}</small>
        <div class="d-none-lg">
@@ -84,20 +84,39 @@
           <div class="selectDelevery" >
          <h3>Please choose your delivery location from below.</h3>
           </div>
+
           <div class="tab-delivery-options">
-          <ng-container *ngIf="(shop$ | async) as shop">
-            <ng-container *ngFor="let shop_delivery of shop.shop_delivery">
-              <a matRipple href="javascript:{}"
-              class="animate__animated"
-              [matTooltip]="'Select '+shop_delivery.name+' as your delivery location' "
-               [ngClass]="{'active animate__headShake' : (selectedLocation?.id == shop_delivery.id)}"
-              (click)="changeLocation(shop_delivery)">
-                {{ shop_delivery.name }}
-                <span *ngIf="shop_delivery.charge">
-                  ( + ₹ {{ shop_delivery.charge}} )
-                </span>
-              </a>
-            </ng-container>
+            <ng-container *ngIf="(shop$ | async) as shop">
+            <mat-tab-group mat-align-tabs="start">
+              <mat-tab label="Pick up from shop">
+                <ng-container *ngFor="let shop_delivery of shop?.shop_delivery_filtered.shops">
+                  <a matRipple href="javascript:{}"
+                    class="animate__animated"
+                    [matTooltip]="'Select '+shop_delivery.name+' as your delivery location' "
+                    [ngClass]="{'active animate__headShake' : (selectedLocation?.id == shop_delivery.id)}"
+                    (click)="changeLocation(shop_delivery)">
+                      {{ shop_delivery.name }}
+                      <span *ngIf="shop_delivery.charge">
+                        ( + ₹ {{ shop_delivery.charge}} )
+                      </span>
+                    </a>
+                </ng-container>
+              </mat-tab>
+              <mat-tab label="Home Delivery">
+                <ng-container *ngFor="let shop_delivery of shop?.shop_delivery_filtered.home">
+                  <a matRipple href="javascript:{}"
+                    class="animate__animated"
+                    [matTooltip]="'Select '+shop_delivery.name+' as your delivery location' "
+                    [ngClass]="{'active animate__headShake' : (selectedLocation?.id == shop_delivery.id)}"
+                    (click)="changeLocation(shop_delivery)">
+                      {{ shop_delivery.name }}
+                      <span *ngIf="shop_delivery.charge">
+                        ( + ₹ {{ shop_delivery.charge}} )
+                      </span>
+                    </a>
+                </ng-container>
+              </mat-tab>
+            </mat-tab-group>
           </ng-container>
         </div>
 
