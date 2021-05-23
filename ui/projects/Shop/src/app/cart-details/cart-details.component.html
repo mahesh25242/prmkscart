@@ -1,14 +1,13 @@
 <div class="header-inner"></div>
-<div class="container">
+<div class="container pb-m-5">
 <ng-container *ngIf="(cart$ | async) as cart">
   <div *ngIf="!cart || !cart.length">Your cart is empty</div>
   <ng-container *ngIf="cart && cart.length">
-
-    <h1 mat-dialog-title>
-      My Cart ( {{cart.length}} )
-    </h1>
     <div mat-dialog-content>
-
+<div class="cart-wrapp-mob">  
+  <h1 mat-dialog-title>
+    My Cart ( {{cart.length}} )
+  </h1>
       <mat-card *ngFor="let item of cart" class="grid-my-list" >
         <div>
           <div *ngIf="item.product?.shop_product_selected_variant?.type.id"
@@ -62,22 +61,6 @@
       </div>
       </div>
       </mat-card>
-<div class="order-total">
-  <div>
-    <small class="block"> Items:  <b>{{cart.length}}</b> </small>
-    <small class="block"> <ng-container *ngIf="selectedLocation && selectedLocation?.charge">
-        Delivery Cost: <b> ₹ {{ selectedLocation?.charge }}</b>
-      </ng-container></small>
-      <small class="block mt-10" *ngIf="selectedLocation && selectedLocation?.id">
-        {{selectedLocation.description }}
-      </small>
-    </div>
-    <div>
-      <small>Total</small>
-      <h1>₹  {{ grandTotal }}</h1>
-      <small>Inclusive of all taxes</small>
-    </div>
-
     </div>
       <div class="m-15">
         <form [formGroup]="customerFrm">
@@ -123,6 +106,24 @@
         </form>
 
       </div>
+
+      <div class="order-total m-15">
+        <div>
+          <small class="block"> Items:  <b>{{cart.length}}</b> </small>
+          <small class="block"> <ng-container *ngIf="selectedLocation && selectedLocation?.charge">
+              Delivery Cost: <b> ₹ {{ selectedLocation?.charge }}</b>
+            </ng-container></small>
+            <small class="block mt-10" *ngIf="selectedLocation && selectedLocation?.id">
+              {{selectedLocation.description }}
+            </small>
+          </div>
+          <div>
+            <small>Total</small>
+            <h1>₹  {{ grandTotal }}</h1>
+            <small>Inclusive of all taxes</small>
+          </div>
+      
+      </div>
     </div>
     <section class="address" *ngIf="selectedLocation?.id">
       <button mat-icon-button color="primary" class="right-position" (click)="triggerOrderForm()">
@@ -143,9 +144,11 @@
       <p *ngIf="f.note.value">{{ f.note.value }}</p>
     </section>
 
-    <div mat-dialog-actions class="actionBtn" *ngIf="isShowButton()">
+    <div mat-dialog-actions class="actionBtn footer-floatingbutton" *ngIf="isShowButton()">
       <section class="example-section" [matTooltip]="(!terms) ? 'Please accept terms' : ''">
+
         <mat-checkbox [(ngModel)]="terms"></mat-checkbox>&nbsp;&nbsp;I agree to the <a href="javascript:{}" (click)="triggerTerms()">terms of service</a>
+        
         <button class="whatsapp-btn" mat-raised-button color="primary"  type="submit" [disabled]="!terms" (click)="sendToShop()">
           <!-- Generator: Adobe Illustrator 25.0.0, SVG Export Plug-In . SVG Version: 6.00 Build 0)  -->
           <svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
@@ -161,6 +164,7 @@
             c15.2-2.3,46.8-19.2,53.4-37.6c6.6-18.5,6.6-34.3,4.6-37.6C500.7,410.1,495.4,408.1,487.5,404.1z"/>
           </svg>
            Send to Whatsapp </button>
+
       </section>
 
 

@@ -28,14 +28,12 @@ a:hover, a:active{
   top: 0;
   left: 0;
   width: 100%;
-  background:none;
+  background:rgb(0 0 0 / 28%);
   height: 56px;
   a{
     font-size: 14px;
   }
-  a.active{
-
-  }
+  
 }
 @media(max-width: 959px){
   mat-toolbar{

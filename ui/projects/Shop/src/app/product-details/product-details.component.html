@@ -11,7 +11,7 @@
   </div>
       <mat-form-field appearance="standard" *ngIf="(product.shop_product_variant.length > 1)">
         <mat-label>Choose Varient</mat-label>
-        <mat-select formControlName="shop_product_variant_id" required (selectionChange)="chooseVarient()">
+        <mat-select class="mt-3 font-25" formControlName="shop_product_variant_id" required (selectionChange)="chooseVarient()">
           <mat-option *ngFor="let shop_product_variant of product.shop_product_variant" [value]="shop_product_variant.id">
             {{shop_product_variant.name}} - ₹ {{shop_product_variant.price}}
           </mat-option>
@@ -22,7 +22,7 @@
       </mat-form-field>
 
 
-      <div class="relativePosition">
+      <div class="relativePosition d-none">
       <button type="button" mat-icon-button color="primary" (click)="updateCart('-')" [disabled]="qty<2"
       matTooltip="Decrease the quantity" class="animate__animated"
       [ngClass]="{'animate__flipInY' : qty<2 }">

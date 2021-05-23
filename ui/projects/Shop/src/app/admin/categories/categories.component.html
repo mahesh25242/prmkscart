@@ -2,7 +2,7 @@
 <div class="container">
 <h1>Categories</h1>
 
-<button mat-raised-button color="primary" class="mb-10" type="button" (click)="editCategory(null)"><mat-icon class="add-icon-position">add</mat-icon>Create Category</button>
+<button mat-raised-button color="primary" class="mb-10 mob-btn-lg-size" type="button" (click)="editCategory(null)"><mat-icon class="add-icon-position">add</mat-icon>Create Category</button>
 <ng-container *ngIf="(categories$ | async) as categories">
 <mat-card>
   <table class="responsive-table highlight">

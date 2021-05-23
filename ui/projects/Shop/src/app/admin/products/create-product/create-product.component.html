@@ -99,17 +99,14 @@
           <ng-container formArrayName="varients" >
           <div class="product-grid-admin" *ngFor="let stat of varients.controls; let i=index; let last = last" [formGroupName]="i">
             <div>
-              {{ i+ 1}}
-            </div>
-            <div>
-
-                <mat-radio-button  [checked]="stat.get('is_primary').value == 1"  [value]="1" (click)="setPrimary(stat)"  matTooltip="Set one as primary " radioGroup="is_primary">&nbsp;</mat-radio-button>
+              {{ i+ 1}} <span class="pl-2 pr-2 mob-show">Set as a Primary</span>
+              <mat-radio-button  [checked]="stat.get('is_primary').value == 1"  [value]="1" (click)="setPrimary(stat)"  matTooltip="Set one as primary " radioGroup="is_primary">&nbsp;</mat-radio-button>
 
               <mat-error *ngIf="stat.get('is_primary').errors && stat.get('is_primary').errors.error">
                 {{stat.get('is_primary').errors.error}}
               </mat-error>
-
             </div>
+            
             <div>
 
               <mat-form-field class="full-width-text" appearance="standard">
@@ -169,7 +166,7 @@
               <img *ngIf="stat.get('currImage').value" [src]="stat.get('currImage').value" [alt]="stat.get('currImage').value">
             </div>
             </div>
-            <div>
+            <div class="mt-m-3">
               <button (click)="fileInput.click()" type="button" mat-stroked-button color="primary">
                 <span>Choose Image</span>
                 <input #fileInput type="file" (change)="handleImageSelection(stat, $event.target.files)"
@@ -180,12 +177,15 @@
 
             </div>
             <div>
-              <button type="button" mat-icon-button  color="primary"
-              (click)="addVarient(stat)">
+              <button type="button" class="btn-hide-mob" mat-icon-button  color="primary" (click)="addVarient(stat)">
               <mat-icon>add_circle_outline</mat-icon>
               </button>
-              <button  *ngIf="varients.controls.length > 1" type="button" mat-icon-button  color="primary"
-              (click)="removeVarient(i)">
+              <button class="btn-show-mob mt-m-3" type="button" mat-raised-button  color="primary" (click)="addVarient(stat)">
+              <mat-icon>add_circle_outline</mat-icon>
+                Add new Varients
+              </button>
+
+              <button  *ngIf="varients.controls.length > 1" type="button" mat-icon-button  color="primary" (click)="removeVarient(i)">
               <mat-icon>delete_forever</mat-icon>
               </button>
             </div>
@@ -196,8 +196,8 @@
     </mat-card>
 
   <div mat-dialog-actions align="end">
-    <a routerLink="/admin/products/0" mat-raised-button  color="primary" >Cancel</a>
-    <button type="submit" mat-raised-button  color="primary">Save changes</button>
+    <a routerLink="/admin/products/0" mat-raised-button class="mr-3 mob-btn-lg-size"  color="primary" >Cancel</a>
+    <button type="submit" mat-raised-button  color="primary" class="mob-btn-lg-size">Save changes</button>
   </div>
 
   </form>

@@ -20,6 +20,7 @@ import { CreateCategoryComponent } from '../../categories/create-category/create
 })
 export class CreateProductComponent implements OnInit, OnDestroy {
   product: ShopProduct;
+  
   createProductFrm: FormGroup;
   statuses = [
     {

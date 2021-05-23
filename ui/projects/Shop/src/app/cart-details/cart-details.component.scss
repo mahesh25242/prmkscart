@@ -14,38 +14,29 @@
     }
     .pl-1 {padding-left: 10px;}
 }
+small {
+    margin-bottom: 8px;
+}
 .block {
     display: block;
 }
 .cart-item-header {
     color: #821807;
     font-weight: 500;
-    margin-bottom: 0px;
+    margin-bottom: 8px;
 }
 .m-15 {
     margin-top:15px;
 }
-.tab-delivery-options a {
-    background: #b1b1b1;
-    padding: 3px 8px;
-    margin-right: 8px;
-    color: #fff;
-    border-radius: 4px;
-    display: inline-block;
-    margin-bottom: 8px;
-    &.active {
-        background-color: #007BFF!important;
-    }
-}
 
-.order-total{
-    background: #00E777;
+
+.order-total{   
     padding: 15px;
     border-radius: 5px;
     display: grid;
     grid-template-columns: 1fr 111px;
     column-gap: 15px;
-    border:#00E777 1px solid;
+    border:1px solid #00E777 ; 
     .block {
         display: block;
     }
@@ -111,10 +102,59 @@ margin-top: 15px;
         top:10px;
     }
 }
-@media only screen and (max-width: 768px) {
+.p-5 {
+    padding:30px;
+}
+::ng-deep {
+    .mat-tab-body-content {
+        padding:30px 0px 10px;
+    }
+    .mat-tab-label-content {
+        text-transform: uppercase;
+    }
+    .mat-ink-bar {
+        height: 6px!important;
+    }
+    .mat-tab-label {
+        border: 1px solid #dadada;
+        margin-right: 4px;
+        padding:0 15px!important;
+    }
+}
 
+
+@media only screen and (max-width: 768px) {
+    .tab-delivery-options a {
+        background: #b1b1b1;
+        padding: 11px 16px;        
+        color: #fff;
+        border-radius: 4px;
+        display: block;
+        margin-bottom: 8px;
+        &.active {
+            background-color: #007BFF!important;
+        }
+    }
+    .cart-wrapp-mob {
+        background: #d5e1e8;
+        padding:15px;
+        border-radius:4px;
+    }
+    .footer-floatingbutton {
+        position: fixed;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        background:#e2e2e2;
+        padding: 20px 0;
+        display: flex;
+        margin-bottom: 0!important;
+    }
+.pb-m-5 {
+    padding-bottom:180px;
+}
     .selectDelevery {
-        background-color: #02615b;
+        background-color:#60b5d6;
         padding: 10px 11px;
         border-radius: 5px;
         color: #fff;
@@ -127,6 +167,8 @@ margin-top: 15px;
 
     .cdk-overlay-pane {
         min-width: 94vw!important;
+        width: 94vw!important;
+        max-width: 94vw!important;
     }
     .grid-form {
         display: grid;
@@ -148,19 +190,28 @@ margin-top: 15px;
     }
     .actionBtn {
 
-        .example-section {display: table;
-            margin: 0 auto;
-            max-width: 222px;
+        .example-section {
+            margin: 0 auto;            
             .whatsapp-btn {
-                margin-left: 10px;
-                margin-top:20px;
-                margin-bottom: 20px;
+                margin-left: 25px; 
             }
         }
 
     }
 }
 @media only screen and (min-width: 768px) {
+    .tab-delivery-options a {
+        background: #b1b1b1;
+        padding: 11px 16px;
+        margin-right: 8px;
+        color: #fff;
+        border-radius: 4px;
+        display: inline-block;
+        margin-bottom: 8px;
+        &.active {
+            background-color: #007BFF!important;
+        }
+    }
     .selectDelevery {
         background-color: #02615b;
         padding: 10px 11px;

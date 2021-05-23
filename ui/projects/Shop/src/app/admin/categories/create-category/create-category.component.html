@@ -63,7 +63,7 @@
 
 
 <div>
-      <button (click)="fileInput.click()" type="button" mat-stroked-button color="primary" *ngIf="!f.is_maticon.value">
+      <button (click)="fileInput.click()" type="button" class="mt-m-3 mob-btn-lg-size" mat-stroked-button color="primary" *ngIf="!f.is_maticon.value">
         <span>Choose Icon</span>
         <input #fileInput type="file" (change)="handleIconSelection($event.target.files)"
         style="display:none;"  accept="image/*" />
@@ -76,8 +76,8 @@
 
   </div>
   <div mat-dialog-actions align="end">
-    <button mat-stroked-button type="button" (click)="dialogRef.close()">Close</button>
-    <button mat-raised-button color="primary" type="submit">Save changes</button>
+    <button mat-stroked-button class="mob-btn-lg-size" type="button" (click)="dialogRef.close()">Close</button>
+    <button mat-raised-button class="mob-btn-lg-size" color="primary" type="submit">Save changes</button>
   </div>
 </form>
 

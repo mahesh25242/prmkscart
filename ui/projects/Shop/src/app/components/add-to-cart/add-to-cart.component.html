@@ -1,6 +1,6 @@
 <form class="vw-80" [formGroup]="addToCartFrm" (ngSubmit)="addToCart()">
-  <h1 mat-dialog-title>
-    Add To Cart</h1>
+  <h4 mat-dialog-title class="mb-2">
+    Add To Cart</h4>
     <h2>{{data.name}}</h2>
     <mat-card-subtitle>{{ data.shop_product_selected_variant?.name}}</mat-card-subtitle>
 
@@ -14,7 +14,7 @@
   </div>
     <mat-form-field appearance="standard" *ngIf="data.shop_product_variant.length > 1">
       <mat-label>Choose Varient</mat-label>
-      <mat-select formControlName="shop_product_variant_id" required (selectionChange)="chooseVarient()">
+      <mat-select class="font-20" formControlName="shop_product_variant_id" required (selectionChange)="chooseVarient()">
         <mat-option *ngFor="let shop_product_variant of data.shop_product_variant" [value]="shop_product_variant.id">
           {{shop_product_variant.name}} - ₹ {{ shop_product_variant.price }}
 
@@ -26,7 +26,7 @@
     </mat-form-field>
 
 
-<div class="relativePosition">
+<div class="relativePosition d-none">
     <button type="button" class="animate__animated" mat-icon-button color="primary" (click)="updateCart('-')" [disabled]="qty<2"
     matTooltip="Decrease the quantity" [ngClass]="{'animate__flipInY' : qty<2 }">
       <mat-icon>remove_circle_outline</mat-icon>
@@ -57,7 +57,7 @@
 
   </div>
   <div mat-dialog-actions>
-    <button mat-stroked-button type="button" (click)="dialogRef.close()">Close</button>
-    <button class="mat-primary_yellow" mat-raised-button color="primary" type="submit">Add</button>
+    <button mat-stroked-button type="button" (click)="dialogRef.close()" class="mob-btn-lg-size">Close</button>
+    <button class="mat-primary_yellow mob-btn-lg-size" mat-raised-button color="primary" type="submit">Add</button>
   </div>
 </form>

@@ -1,36 +1,10 @@
-.input-bordernone {
 
-input {
-    margin-bottom: 0px;
-}
 
-}
-
-.product-grid-admin-bs-1 {
-    display: grid;
-    grid-template-columns: 1fr 1fr 1fr 1fr ;
-    column-gap: 15px;
-    align-items: flex-end;
+::ng-deep{
     input {
         margin-bottom: 0px!important;
     }
 }
-
-.product-grid-admin {
-    display: grid;
-    grid-template-columns: 31px  27px 1fr 1fr 1fr 100px 100px 60px  133px 80px ;
-    column-gap: 15px;
-    align-items: center;
-    border: 1px solid #ececec;
-    margin-bottom: 10px;
-    padding: 0 15px;
-    border-radius: 5px;
-
-    input {
-        margin-bottom: 0px!important;
-    }
-}
-
 .image-wrap {
     height: 50px; width:50px;
     overflow: hidden;
@@ -60,7 +34,6 @@ input {
 
 }
 
-
 .container {
     width:100%;
     max-width: calc(100% - 83px);
@@ -70,10 +43,59 @@ input {
 }
 td, th {
     padding: 15px 15px;}
+.mr-3 {
+    margin-right: 15px;
+}
+.pr-2 {
+    padding-right: 15px;
+}
+.pl-2 {
+    padding-left: 15px;
+}
 @media only screen and (max-width: 768px) {
    
     .container {
         max-width: calc(100% - 15px);
     }
+    .btn-hide-mob {
+        display: none;
+    }
+    .mt-m-3 {
+        margin-top: 15px;
+    }
 
+}
+
+@media only screen and (min-width: 768px) {
+    .btn-show-mob {
+        display: none;
+    }
+   
+        .mob-show {
+            display: none;
+        }
+        .product-grid-admin-bs-1 {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr 1fr ;
+            column-gap: 15px;
+            align-items: flex-end;
+            input {
+                margin-bottom: 0px!important;
+            }
+        }
+        
+        .product-grid-admin {
+            display: grid;
+            grid-template-columns: 80px  1fr 1fr 1fr 100px 100px 60px  133px 80px ;
+            column-gap: 15px;
+            align-items: center;
+            border: 1px solid #ececec;
+            margin-bottom: 10px;
+            padding: 0 15px;
+            border-radius: 5px;
+        
+            input {
+                margin-bottom: 0px!important;
+            }
+        }
 }

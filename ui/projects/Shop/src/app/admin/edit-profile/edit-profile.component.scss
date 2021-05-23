@@ -1,7 +1,4 @@
-.container {
-    width:100%;
-    max-width: calc(100% - 83px);
-}
+
 .pr-15 {
     padding-right: 15px;
 }
@@ -33,6 +30,10 @@ input {
     }
 }
 @media only screen and (min-width: 768px) {
+    .container {
+        width:100%;
+        max-width: calc(100% - 83px);
+    }
 .col-item {
     grid-column: 1 / span 3;
   }
@@ -43,6 +44,13 @@ input {
   .align-self { align-self: center;}
 }
 @media only screen and (max-width: 768px) {
+    .container {
+        width:100%;
+        max-width:100%;
+    }
+    .mat-raised-button {
+        padding: 8px 56px;
+    }
     .grid-form-container {
         grid-template-columns:1fr;
         max-width:100%;
