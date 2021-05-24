@@ -59,7 +59,7 @@ class ShopProductController extends Controller
             'name' => ['required'],
             'status' => ['required'],
             'variants.*.name' => ['required', 'string'],
-            'variants.*.price' => ['required', 'integer'],
+            'variants.*.price' => ['required', 'numeric'],
         ];
 
 
