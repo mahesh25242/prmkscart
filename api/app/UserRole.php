@@ -25,7 +25,14 @@ class UserRole extends Model implements AuthenticatableContract, AuthorizableCon
         'shop_id', 'user_id', 'role_id', 'created_by', 'updated_by', 'deleted_by'
     ];
 
-
+    protected $casts = [
+        'shop_id' => 'integer',
+        'user_id' => 'integer',
+        'role_id' => 'integer',
+        'created_by' => 'integer',
+        'updated_by' => 'integer',
+        'deleted_by' => 'integer',
+    ];
 
 
 

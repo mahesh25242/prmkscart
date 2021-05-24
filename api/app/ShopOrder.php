@@ -26,6 +26,17 @@ class ShopOrder extends Model implements AuthenticatableContract, AuthorizableCo
          'delivery_at', 'web_push_token', 'sec_key'
     ];
 
+
+    protected $casts = [
+        'status' => 'boolean',
+        'shop_id' => 'integer',
+        'shop_customer_id' => 'integer',
+        'total' => 'double',
+        'delivery_chage' => 'double',
+        'shop_delivery_id' => 'integer'
+    ];
+
+
     public static function boot() {
         parent::boot();
 

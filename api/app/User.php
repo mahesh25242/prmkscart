@@ -29,6 +29,14 @@ class User extends Model implements AuthenticatableContract, AuthorizableContrac
         'fname', 'mname', 'lname','email',  'password', 'phone', 'avatar',
          'status', 'created_by', 'updated_by', 'deleted_by',
     ];
+
+    protected $casts = [
+        'status' => 'boolean',
+        'created_by' => 'integer',
+        'updated_by' => 'integer',
+        'deleted_by' => 'integer'
+    ];
+
     protected $appends = array('created_at_human');
     /**
      * The attributes excluded from the model's JSON form.

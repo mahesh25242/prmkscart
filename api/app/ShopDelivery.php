@@ -26,6 +26,14 @@ class ShopDelivery extends Model implements AuthenticatableContract, Authorizabl
          'map_url', 'address'
     ];
 
+    protected $casts = [
+        'shop_id' => 'integer',
+        'charge' => 'double',
+        'sortorder' => 'integer',
+        'need_cust_loc' => 'boolean',
+        'min_amount' => 'double',
+    ];
+
     public function shop()
     {
         return $this->belongsTo('App\Shop');

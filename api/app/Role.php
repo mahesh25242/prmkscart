@@ -24,6 +24,12 @@ class Role extends Model implements AuthenticatableContract, AuthorizableContrac
         'name', 'status', 'created_by', 'updated_by', 'deleted_by'
     ];
 
+    protected $casts = [
+        'status' => 'boolean',
+        'created_by' => 'integer',
+        'updated_by' => 'integer',
+        'deleted_by' => 'integer'
+    ];
 
 
     public function role()

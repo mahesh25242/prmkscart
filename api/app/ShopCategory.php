@@ -25,6 +25,14 @@ class ShopCategory extends Model implements AuthenticatableContract, Authorizabl
         'created_by', 'updated_by', 'deleted_by',
     ];
 
+    protected $casts = [
+        'status' => 'boolean',
+        'sortorder' => 'integer',
+        'created_by' => 'integer',
+        'updated_by' => 'integer',
+        'deleted_by' => 'integer'
+    ];
+
     protected $appends = array('status_text');
 
     public function getStatusTextAttribute()

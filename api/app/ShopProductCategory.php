@@ -25,6 +25,16 @@ class ShopProductCategory extends Model implements AuthenticatableContract, Auth
         'created_by', 'updated_by', 'deleted_by', 'is_maticon'
     ];
 
+    protected $casts = [
+        'status' => 'boolean',
+        'shop_id' => 'integer',
+        'sortorder' => 'integer',
+        'is_maticon' => 'boolean',
+        'created_by' => 'integer',
+        'updated_by' => 'integer',
+        'deleted_by' => 'integer'
+    ];
+
     protected $appends = array('status_text');
 
     public function getStatusTextAttribute()

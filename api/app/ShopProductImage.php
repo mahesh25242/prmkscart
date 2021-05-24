@@ -25,6 +25,15 @@ class ShopProductImage extends Model implements AuthenticatableContract, Authori
         'created_by', 'updated_by', 'deleted_by'
     ];
 
+    protected $casts = [
+        'shop_product_id' => 'integer',
+        'shop_product_variant_id' => 'integer',
+        'sortorder' => 'integer',
+        'created_by' => 'integer',
+        'updated_by' => 'integer',
+        'deleted_by' => 'integer'
+    ];
+
     protected $appends = array('image_path');
 
     public function getImagePathAttribute()

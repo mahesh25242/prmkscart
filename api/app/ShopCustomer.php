@@ -25,6 +25,11 @@ class ShopCustomer extends Model implements AuthenticatableContract, Authorizabl
          'status', 'web_push_token'
     ];
 
+    protected $casts = [
+        'status' => 'boolean',
+        'shop_id' => 'integer'
+    ];
+
     public function shop()
     {
         return $this->belongsTo('App\Shop');

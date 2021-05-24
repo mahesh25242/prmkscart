@@ -25,6 +25,18 @@ class ShopProductVariant extends Model implements AuthenticatableContract, Autho
         'status', 'is_primary', 'type', 'created_by', 'updated_by', 'deleted_by'
     ];
 
+    protected $casts = [
+        'status' => 'boolean',
+        'is_primary' => 'boolean',
+        'shop_product_id' => 'integer',
+        'actual_price' => 'double',
+        'price' => 'double',
+        'sortorder' => 'integer',
+        'created_by' => 'integer',
+        'updated_by' => 'integer',
+        'deleted_by' => 'integer'
+    ];
+
     public static function boot() {
         parent::boot();
 

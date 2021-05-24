@@ -25,6 +25,12 @@ class UserAddress extends Model implements AuthenticatableContract, Authorizable
         'created_by', 'updated_by', 'deleted_by'
     ];
 
+    protected $casts = [
+        'created_by' => 'integer',
+        'updated_by' => 'integer',
+        'deleted_by' => 'integer'
+    ];
+
 
 
     public function user()

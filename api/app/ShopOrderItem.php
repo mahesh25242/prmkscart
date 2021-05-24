@@ -25,6 +25,13 @@ class ShopOrderItem extends Model implements AuthenticatableContract, Authorizab
          'status', 'message'
     ];
 
+    protected $casts = [
+        'status' => 'boolean',
+        'shop_order_id' => 'integer',
+        'qty' => 'integer',
+        'price' => 'double'
+    ];
+
     public function shopOrder()
     {
         return $this->belongsTo('App\ShopOrder');
