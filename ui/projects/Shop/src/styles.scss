@@ -184,7 +184,8 @@ mat-card {
     }
     .mat-card-header .mat-card-title {
         margin-bottom: 12px;
-        font-size: 15px;
+        font-size:24px;
+        text-align: center;
         overflow: hidden;
         background-size: cover;
         background-position: center;
@@ -195,7 +196,8 @@ mat-card {
     .mat-card-subtitle {
         padding:0;
         margin: 0;
-        font-size: 12px;
+        font-size:16px;
+        text-align: center;
     }
     .addCart-btn {
         position: absolute;
@@ -232,7 +234,7 @@ mat-card {
     align-items: center;
     & > div:nth-child(1) {
         font-weight: bold;
-        font-size: 16px;
+        font-size:25px;
     }
     & > div:nth-child(2) {
         text-decoration:line-through;
@@ -245,10 +247,10 @@ mat-card {
 
         .mat-card-headerimage {
 
-            height: 160px;
+            height: 253px;
         }
         .mat-card {
-            min-height: 300px;
+            min-height: 359px;
         }
     }
 
@@ -274,6 +276,7 @@ mat-card {
     .mat-card-header .mat-card-title {
         margin-bottom: 12px;
         font-size: 15px;
+        text-align: center;
         overflow: hidden;
         background-size: cover;
         background-position: center;
@@ -284,7 +287,8 @@ mat-card {
     .mat-card-subtitle {
         padding:0;
         margin: 0;
-        font-size: 12px;
+        font-size: 17px;
+        text-align: center;
     }
     .addCart-btn {
         position: absolute;
@@ -321,7 +325,7 @@ mat-card {
     align-items: center;
     & > div:nth-child(1) {
         font-weight: bold;
-        font-size: 16px;
+        font-size: 19px;
     }
     & > div:nth-child(2) {
         text-decoration:line-through;
