@@ -138,11 +138,11 @@ export class CartDetailsComponent implements OnInit, OnDestroy {
               }
               txt += `%0a‎ ------------------------------------------- `;
               if(postData.name){
-                txt += `%0a‎ Name: ${encodeURIComponent(postData.name)}  `;
+                txt += `%0a‎ Name: *${encodeURIComponent(postData.name)}*  `;
               }
 
               if(postData.phone){
-                txt += `%0a‎ Ph: ${encodeURIComponent(postData.phone)}  `;
+                txt += `%0a‎ Ph: *${encodeURIComponent(postData.phone)}*  `;
               }
               txt += `%0a‎ ------------------------------------------- `;
               cart.map((itm, idx)=>{
