@@ -118,23 +118,14 @@ export class CartDetailsComponent implements OnInit, OnDestroy {
               Breakpoints.Handset,
               Breakpoints.Tablet
             ]).pipe(map(bp =>{
-              let txt = `%0a‎ Order from *${postData.name}*`;
+              let txt = '';//%0a‎ Order from *${postData.name}*
 
               txt += `%0a‎ Order: *${encodeURIComponent(`#${orderRes.id}`)}* ( ${cart.length} ${ (cart.length > 1) ? 'items' : 'item' } )`;
-              if(postData.phone){
-                txt += `%0a‎ Phone: ${encodeURIComponent(postData.phone)}  `;
+
+              if(postData?.selectedLocation?.name){
+                txt += `%0a‎ Delivery Point: ${encodeURIComponent(postData.selectedLocation.name)} `;
               }
-              cart.map((itm, idx)=>{
-                txt += `%0a‎ *${encodeURIComponent(itm.product.name)}* `;
-                if(itm.message){
-                  txt += `%0a‎ Message: ${encodeURIComponent(itm.message)} `;
-                }
-                txt += `%0a‎ Varient Name: ${encodeURIComponent(itm.product.shop_product_selected_variant.name)} `;
-                txt += `%0a‎ Quantity: ${encodeURIComponent(itm.qty)} `;
-                txt += `%0a‎ Price: ₹ *${encodeURIComponent(itm.price)}* `;
-                txt += `%0a‎ ============== `;
-              });
-              //txt += `%0a‎ ${ cart.length }  ${ (cart.length > 1) ? 'items' : 'item' } `;
+
 
               if(postData.delivery_date){
                 let deliveryDate = this.datepipe.transform(this.f.delivery_date.value, 'dd/MM/yyyy');
@@ -143,20 +134,40 @@ export class CartDetailsComponent implements OnInit, OnDestroy {
                   minute = (this.f.minute.value) ? ("0" + this.f.minute.value).slice(-2) : '00';
                 }
                 deliveryDate = `${deliveryDate} ${ (this.f.hour.value) ? `${("0" + this.f.hour.value).slice(-2) }:` :'' }${ (minute) ? `${minute}` : '' }${(this.f.hour.value) ? this.f.ampm.value : ''}`
-                txt += `%0a‎ Delivered On: ${encodeURIComponent(deliveryDate)}  `;
+                txt += `%0a‎ Delivery: ${encodeURIComponent(deliveryDate)}  `;
               }
+              txt += `%0a‎ ------------------------------------------- `;
+              if(postData.name){
+                txt += `%0a‎ Name: ${encodeURIComponent(postData.name)}  `;
+              }
+
+              if(postData.phone){
+                txt += `%0a‎ Ph: ${encodeURIComponent(postData.phone)}  `;
+              }
+              txt += `%0a‎ ------------------------------------------- `;
+              cart.map((itm, idx)=>{
+                txt += `%0a‎ *${encodeURIComponent(itm.product.name)}* `;
+                if(itm.message){
+                  txt += `%0a‎ Message: ${encodeURIComponent(itm.message)} `;
+                }
+                txt += `%0a‎ Variant Name: ${encodeURIComponent(itm.product.shop_product_selected_variant.name)} X ${encodeURIComponent(itm.qty)} `;
+                txt += `%0a‎ Price: ₹ *${encodeURIComponent(itm.price)}* `;
+                txt += `%0a‎ ------------------------------------------- `;
+              });
+              //txt += `%0a‎ ${ cart.length }  ${ (cart.length > 1) ? 'items' : 'item' } `;
+
+
 
               if(postData.note){
                 txt += `%0a‎ Order Note: ${encodeURIComponent(postData.note)}  `;
               }
 
-
-
-              txt += `%0a‎ Delivery Point: ${encodeURIComponent(postData.selectedLocation.name)} `;
               if(postData.selectedLocation.need_cust_loc){
                 txt += `%0a‎ Address: ${encodeURIComponent(postData.address)} `;
                 txt += `%0a‎ Pin: ${encodeURIComponent(postData.pin)} `;
               }
+              txt += `%0a‎ ------------------------------------------- `;
+
               if(postData.selectedLocation.charge){
                 txt += `%0a‎ Delivery Charge: ₹ ${encodeURIComponent(postData.selectedLocation.charge)} %0a `;
               }
@@ -169,8 +180,12 @@ export class CartDetailsComponent implements OnInit, OnDestroy {
                 txt += `%0a‎ Location: ${locUrl} %0a`;
 
               txt += `%0a‎ Grand Total: ₹ *${this.grandTotal}* %0a`;
-              txt += `%0a‎ ============== %0a`;
+              txt += `%0a‎ =========================== %0a`;
               txt += `%0a‎ *Order confirmation through reply/call* %0a`;
+
+              if(orderRes.sec_key){
+                txt += `%0a‎ Track Order: http://breadnbutter.co.in/order/${orderRes.sec_key} %0a `;
+              }
 
               let ret;
               if(bp.matches){

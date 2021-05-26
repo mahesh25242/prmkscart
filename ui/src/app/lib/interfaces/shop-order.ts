@@ -20,7 +20,8 @@ export interface ShopOrder {
   shop_order_item?: ShopOrderItem,
   shop_delivery?: ShopDelivery,
   delivery_at?: string,
-  status_text?: string
+  status_text?: string,
+  sec_key?: string
 }
 
 
