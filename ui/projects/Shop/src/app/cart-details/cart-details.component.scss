@@ -69,9 +69,7 @@ small {
     }
 
 }
-.mat-dialog-content {
-    max-height: inherit;
-}
+
 .st0{fill-rule:evenodd;clip-rule:evenodd;fill:#FFFFFF;}
 .whatsapp-btn {
     background-color: #00E777;
@@ -122,7 +120,9 @@ margin-top: 15px;
     }
 }
 
-
+.mat-dialog-content {
+    height: auto!important;
+}
 @media only screen and (max-width: 768px) {
     .tab-delivery-options a {
         background: #b1b1b1;

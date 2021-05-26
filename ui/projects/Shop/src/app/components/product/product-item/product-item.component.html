@@ -22,6 +22,6 @@
   </div>
    <button matRipple [matRippleCentered]="true" class="addCart-btn"
    [matTooltip]="(product.incart) ? product.name+' is already added' : 'Click here for add this item to cart'"
-   [ngClass]="{'active': product.incart}" (click)="addToCart(product)"><mat-icon aria-hidden="false" aria-label="Add Icon">add</mat-icon></button>
+   [ngClass]="{'active': product.incart}" (click)="addToCart(product)"><mat-icon>add_shopping_cart</mat-icon> <!--mat-icon aria-hidden="false" aria-label="Add Icon">add</mat-icon--></button>
   </mat-card-actions>
 </mat-card>

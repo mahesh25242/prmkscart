@@ -30,6 +30,7 @@ h4 {
 @media only screen and (max-width: 768px) {
     .mat-dialog-content {
         min-width: 95vw;
+        max-height: 60vh;
        
     }
     .grid-form {

@@ -1,10 +1,15 @@
 .extended-fab-button {
-    width: unset;
-    padding: 0 26px;
-    border-radius: 29px;
+    width: -webkit-max-content;
+    width: max-content;
+    padding: 7px 47px;
+    border-radius: 48px;
     position: fixed;
-    bottom: 14px;
-    right: 20px;  
+    bottom: 42px;
+    /* right: 35px; */
+    left: 50%;
+    margin-left: -29%;
+    height: 68px;
+
     span {
         padding: 0px;
     }
