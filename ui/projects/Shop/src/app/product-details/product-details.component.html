@@ -3,7 +3,7 @@
   <div class="visible-web">
     <form [formGroup]="addToCartFrm" (ngSubmit)="addToCart()">
     <div class="d-flex">
-      <div class="flex-1" >
+      <div class="flex-1 p-4" >
         <div class="product-image">
           <div *ngIf="product.shop_product_selected_variant?.type.id"
           [matTooltip]="(product?.shop_product_selected_variant?.type.id == 1) ? 'Veg' : ( (product?.shop_product_selected_variant?.type.id == 2) ? 'Non-Veg':'' )"
@@ -12,7 +12,7 @@
       </div>
 
       </div>
-      <div class="flex-1">
+      <div class="flex-1 p-4">
 
         <mat-form-field appearance="standard" *ngIf="(product.shop_product_variant.length > 1)">
           <mat-label>Choose Varient</mat-label>
@@ -26,7 +26,7 @@
           </mat-error>
         </mat-form-field>
         <ng-container *ngIf="product.shop_product_selected_variant?.price">
-          <div>
+          <div class="mt-3">
           <del *ngIf="product.shop_product_selected_variant?.actual_price">₹ {{ product.shop_product_selected_variant?.actual_price }}</del>
           <span class="weight-bold animate__animated animate__flipInX"> ₹ {{ product.shop_product_selected_variant?.price * qty }} </span>
           <!-- <span *ngIf="product.shop_product_selected_variant?.type.id">
@@ -36,7 +36,7 @@
           <p >{{ product.shop_product_selected_variant?.description }}</p>
         </ng-container>
         <p class="mt-5 clear-p" *ngIf="product.description">{{ product.description}}</p>
-        <button class="mat-primary_yellow" mat-raised-button color="primary" type="submit">Add</button>
+        <button class="mat-primary_yellow mt-3" mat-raised-button color="primary" type="submit">Add to Cart</button>
       </div>
     </div>
 </form>
@@ -85,10 +85,10 @@
           {{ product.shop_product_selected_variant?.type.name }}
         </span> -->
         </div>
-        <p >{{ product.shop_product_selected_variant?.description }}</p>
+        
       </ng-container>
 
-
+      <p >{{ product.shop_product_selected_variant?.description }}</p>
       <!-- <mat-form-field class="full-width-text" appearance="standard">
         <mat-label>Message</mat-label>
         <textarea matInput formControlName="message" placeholder="Ex. Happy Birth Day John Doe"></textarea>
@@ -96,7 +96,7 @@
           {{f.message.errors.error}}
         </mat-error>
       </mat-form-field> -->
-      <button class="mat-primary_yellow" mat-raised-button color="primary" type="submit">Add</button>
+      <button class="mat-primary_yellow m-w-100 mt-3" mat-raised-button color="primary" type="submit">Add to Cart</button>
 
 
       <p class="mt-5 clear-p" *ngIf="product.description">

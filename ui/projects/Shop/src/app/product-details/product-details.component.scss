@@ -1,13 +1,6 @@
 .mat-form-field {
     width: 100%;
 }
-.product-image {
-    text-align: center;
-
-    img {
-        max-width: 140px;
-    }
-}
 .relativePosition {
     position: relative;
     top: -12px;
@@ -44,17 +37,24 @@ h2 {
 .d-none {
     display: none;
 }
-
+.p-4 {
+    padding: 20px;
+}
 
 @media only screen and (max-width: 768px) {
+    .m-w-100 {
+        width: 100%;
+    }
     .visible-web {
         display: none;
     }
     .product-image {
         text-align: center;
+    background: #fff;
+    padding: 18px 30px;
     
         img {
-            max-width: 140px;
+            max-width:280px;
         }
     }
 
@@ -73,6 +73,10 @@ h2 {
 
     .product-image {
         text-align: center;
+        background: #fff;
+        border: 1px solid #eaeaea;
+        border-radius: 5px;
+        padding: 30px;
     
         img {
             max-width: 349px;

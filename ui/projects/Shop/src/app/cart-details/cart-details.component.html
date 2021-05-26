@@ -5,9 +5,9 @@
   <ng-container *ngIf="cart && cart.length">
     <div mat-dialog-content>
 <div class="cart-wrapp-mob">  
-  <h1 mat-dialog-title>
+  <h5 mat-dialog-title>
     My Cart ( {{cart.length}} )
-  </h1>
+  </h5>
       <mat-card *ngFor="let item of cart" class="grid-my-list" >
         <div>
           <div *ngIf="item.product?.shop_product_selected_variant?.type.id"

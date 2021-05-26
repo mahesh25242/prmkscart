@@ -10,7 +10,7 @@
   <mat-card-header>
     <mat-card-title matRipple [matRippleCentered]="true" [routerLink]="'/'+product.shop_product_category?.url+'/'+product.url"> {{ product.name }}</mat-card-title>
     <mat-card-subtitle>{{ product.shop_product_primary_variant?.name}} <span *ngIf="product.shop_product_variant.length > 1">
-      | {{ product.shop_product_variant.length }} Varients </span> </mat-card-subtitle>
+      | {{ product.shop_product_variant.length }} Variants </span> </mat-card-subtitle>
   </mat-card-header>
   <!--<mat-card-content>
     <p [innerHTML]="product.description"></p>
