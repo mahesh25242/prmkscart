@@ -22,21 +22,66 @@ a:hover, a:active{
     font-weight: 100;
   }
   }
-.mat-toolbar {
-  position: absolute;
-  z-index: 100;
-  top: 0;
-  left: 0;
-  width: 100%;
-  background:rgb(0 0 0 / 28%);
-  height: 56px;
-  a{
-    font-size: 14px;
-  }
-  
+
+.brand-logo {
+  background: url('../../assets/logo.png') no-repeat left center;
+  padding: 8px 0 8px 55px;
+  font-size: 22px !important;
+  background-size: 50px;
 }
 @media(max-width: 959px){
   mat-toolbar{
       border-radius: 0px;
   }
+}
+
+@media only screen and (max-width: 768px) {
+  .mat-toolbar {
+    position: fixed;
+    z-index: 100;
+    top: 0;
+    left: 0;
+    width: 100%;
+    background: rgb(90 43 2 / 70%);
+    height: 56px;
+    a{
+      font-size: 14px;
+    }
+    
+  }
+}
+
+@media only screen and (min-width: 768px) {
+  .mat-toolbar {
+    position: fixed;
+    z-index: 100;
+    top: 0;
+    left: 0;
+    width: 100%;
+    background: rgb(90 43 2 / 70%);
+    height: 74px;
+    a{
+      font-size: 14px;
+    }
+    
+  }
+  
+}
+::ng-deep {
+  @media only screen and (min-width: 768px) {
+   
+    .mat-toolbar-row, .mat-toolbar-single-row {
+      padding: 0 66px!important;
+    }
+
+  }
+
+  @media only screen and (max-width: 768px) {
+   
+    .mat-toolbar-row, .mat-toolbar-single-row {
+      padding: 0 25px!important;
+    }
+
+  }
+  
 }

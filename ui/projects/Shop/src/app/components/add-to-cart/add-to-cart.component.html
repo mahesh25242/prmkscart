@@ -13,7 +13,7 @@
     [src]="(data?.shop_product_selected_variant?.shop_product_image?.image) ?  data.shop_product_selected_variant.shop_product_image.image_path : 'assets/no-image.jpg'" [alt]="data.name+' '+data.shop_product_selected_variant?.name">
   </div>
     <mat-form-field appearance="standard" *ngIf="data.shop_product_variant.length > 1">
-      <mat-label>Choose Varient</mat-label>
+      <mat-label>Choose Variant</mat-label>
       <mat-select class="font-20" formControlName="shop_product_variant_id" required (selectionChange)="chooseVarient()">
         <mat-option *ngFor="let shop_product_variant of data.shop_product_variant" [value]="shop_product_variant.id">
           {{shop_product_variant.name}} - ₹ {{ shop_product_variant.price }}

@@ -21,6 +21,12 @@ overlayColor="#00000040"
 [hideOverlay]="false"
 ></mat-carousel-slide>
 </mat-carousel>
+<div class="serch-web">
+  <div class="container">
+  <app-search></app-search>
+</div>
+
+</div>
 <div class="container">
   <!-- <div class="swipe" (swipe)="onSwipe($event)">
     <h1>Swipe Gesture</h1>
@@ -28,7 +34,7 @@ overlayColor="#00000040"
     <h5 [innerHTML]="direction"></h5>
   </div> -->
 
-<app-search></app-search>
+<app-search class="search-mob"></app-search>
 <app-categories></app-categories>
 <router-outlet></router-outlet>
 

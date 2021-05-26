@@ -170,7 +170,7 @@ mat-card {
     
 .product-grid {
     display: grid;
-    grid-template-columns: 1fr 1fr 1fr;
+    grid-template-columns: 1fr 1fr 1fr 1fr;
     grid-column-gap:30px;
     grid-row-gap:30px;
     .mat-card-headerimage {
@@ -247,10 +247,10 @@ mat-card {
 
         .mat-card-headerimage {
 
-            height: 253px;
+            height: 236px;
         }
         .mat-card {
-            min-height: 359px;
+            min-height: 343px;
         }
     }
 
@@ -261,8 +261,7 @@ mat-card {
     
 .product-grid {
     display: grid;
-    grid-template-columns: 1fr 1fr 1fr 1fr;
-    grid-column-gap: 10px;
+    grid-column-gap:10px;
     grid-row-gap:10px;
     .mat-card-headerimage {
         overflow: hidden;

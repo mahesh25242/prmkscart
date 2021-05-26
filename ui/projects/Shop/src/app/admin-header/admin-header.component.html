@@ -7,11 +7,14 @@
     </div>
   </ng-container>
 
-  <a routerLink="/admin">{{title}}</a>
+  <a routerLink="/admin" class="admin-logo">{{title}}</a>
   <div class="flex-right" *ngIf="layOutXSmall.matches">
       <button mat-icon-button (click)="onToggleSidenav()">
           <mat-icon>menu</mat-icon>
       </button>
+  </div>
+  <div>
+    
   </div>
 
   <ng-container *ngIf="!layOutXSmall.matches">

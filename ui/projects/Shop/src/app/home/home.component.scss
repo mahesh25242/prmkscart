@@ -20,3 +20,14 @@ p {
     }
     
 }
+@media only screen and (max-width: 768px) {  
+    .serch-web { display: none;}
+}
+
+@media only screen and (min-width: 768px) {  
+    
+    .search-mob { display: none;}
+    .serch-web {
+        background:#460303;
+    }
+}
