@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { ShopProduct, ShopProductWithPagination } from 'src/app/lib/interfaces';
 import { GeneralService, ShopProductService } from 'src/app/lib/services';
@@ -6,7 +6,7 @@ import Notiflix from "notiflix";
 import { map, mergeMap } from 'rxjs/operators';
 import {MatDialog, MatDialogRef, MAT_DIALOG_DATA} from '@angular/material/dialog';
 import { environment } from '../../../../environments/environment';
-import { PageEvent } from '@angular/material/paginator';
+import { MatPaginator, PageEvent } from '@angular/material/paginator';
 import { Router } from '@angular/router';
 
 @Component({
@@ -15,6 +15,7 @@ import { Router } from '@angular/router';
   styleUrls: ['./list-products.component.scss']
 })
 export class ListProductsComponent implements OnInit {
+  @ViewChild(MatPaginator) paginator: MatPaginator;
   environment = environment;
   pageEvent: PageEvent;
   products$: Observable<ShopProductWithPagination>;
@@ -54,18 +55,27 @@ export class ListProductsComponent implements OnInit {
 
 
   deleteProduct(product: ShopProduct = null){
+
+
     Notiflix.Confirm.Show( 'delete?', `Do you want to delete ${product.name}`, 'Yes', 'No', ()=>{
       Notiflix.Loading.Arrows();
       this.shopProductService.deleteProduct(product).pipe(mergeMap(res=>{
-        return this.shopProductService.listproducts((this.pageEvent.pageIndex+1), {
-          pageSize: this.pageEvent.pageSize
-        }).pipe(map(()=>{
-          return res;
+        return this.shopProductService.listproducts((this.paginator.pageIndex+1), {
+          pageSize: this.paginator.pageSize
+        }).pipe(map((products)=>{
+          if(!products.data || !products.data.length){
+            let prevPage = this.paginator.pageIndex - 1;
+            prevPage = (prevPage < 0) ? 0 : prevPage;
+            this.router.navigate([`admin/products/${prevPage}`]);
+          }else{
+            return res
+          }
         }));
       })).subscribe(()=>{
         Notiflix.Loading.Remove();
         Notiflix.Notify.Success(`${product.name} Successfully deleted `);
-      }, ()=>{
+      }, (err)=>{
+        console.log(err)
         Notiflix.Loading.Remove();
         Notiflix.Notify.Failure(`unexpected error`);
       });
@@ -76,7 +86,7 @@ export class ListProductsComponent implements OnInit {
 
   goto(pageEvent: PageEvent){
     this.pageEvent = pageEvent;
-    this.router.navigate([`admin/products/${this.pageEvent.pageIndex}`]);
+    this.router.navigate([`admin/products/${this.paginator.pageIndex}`]);
 
     // Notiflix.Loading.Arrows();
     // this.pageEvent = pageEvent;

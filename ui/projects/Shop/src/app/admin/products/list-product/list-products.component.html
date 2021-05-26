@@ -69,8 +69,9 @@
   </table>
 
 
-  <mat-paginator *ngIf="products.total" [length]="products.total"
+  <mat-paginator #paginator *ngIf="products.total" [length]="products.total"
               [pageSize]="20"
+              [pageIndex]="(products.current_page - 1)"
               [pageSizeOptions]="[20, 50, 70, 100]"
               (page)="goto($event)">
   </mat-paginator>

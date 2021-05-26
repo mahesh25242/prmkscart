@@ -20,7 +20,7 @@ import { CreateCategoryComponent } from '../../categories/create-category/create
 })
 export class CreateProductComponent implements OnInit, OnDestroy {
   product: ShopProduct;
-  
+
   createProductFrm: FormGroup;
   statuses = [
     {
@@ -73,7 +73,7 @@ export class CreateProductComponent implements OnInit, OnDestroy {
 
     this.varients.controls.map((res: FormGroup, i) =>{
       formData.append(`variants[${i}][id]`, `${(res.controls.id.value) ? res.controls.id.value : 0}`);
-      formData.append(`variants[${i}][status]`, `${(res.controls.status.value) ? res.controls.status.value : ''}`);
+      formData.append(`variants[${i}][status]`, `${(res.controls.status.value) ? res.controls.status.value : 0}`);
       formData.append(`variants[${i}][name]`, `${(res.controls.name.value) ? res.controls.name.value : ''}`);
       formData.append(`variants[${i}][description]`, `${(res.controls.description.value) ? res.controls.description.value : ''}`);
       formData.append(`variants[${i}][is_primary]`, `${(res.controls.is_primary.value) ? 1 : 0}`);
@@ -90,7 +90,7 @@ export class CreateProductComponent implements OnInit, OnDestroy {
     formData.append('id', `${this.f.id.value}`);
     formData.append('name', this.f.name.value);
     formData.append('description', this.f.description.value);
-    formData.append('status', (this.f.status.value) ? this.f.status.value : '');
+    formData.append('status', (this.f.status.value) ? `1` : `0`);
     formData.append('sortorder', (this.f.sortorder.value) ? this.f.sortorder.value : 0);
     formData.append('shop_product_category_id', JSON.stringify(this.f.shop_product_category_id.value));
 
@@ -240,7 +240,7 @@ export class CreateProductComponent implements OnInit, OnDestroy {
         id: (this.product?.id) ? this.product?.id : 0,
         name: (this.product?.name) ? this.product?.name : '',
         description: (this.product?.description) ? this.product?.description : '',
-        status: (this.product?.status >= 0) ? this.product?.status : 1,
+        status: (this.product?.status) ? 1 : 0,
         sortorder: (this.product?.sortorder) ? this.product?.sortorder : 1,
         shop_product_category_id: (this.product?.shop_product_category?.id) ? this.product?.shop_product_category : null,
       });

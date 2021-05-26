@@ -80,9 +80,14 @@
           {{latest_order.status_text}}
         </td>
       </tr>
+      <tr *ngIf="!stat.latest_orders  || !stat.latest_orders.length">
+        <td colspan="7">
+          No order found
+        </td>
+      </tr>
     </tbody>
   </table>
-  
+
 </mat-card>
 <div class="flex-box mt-3">
   <a mat-flat-button color="primary" class="ml-auto" routerLink="/admin/orders">View All</a>
