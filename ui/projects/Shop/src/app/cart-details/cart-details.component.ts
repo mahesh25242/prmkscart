@@ -339,7 +339,8 @@ export class CartDetailsComponent implements OnInit, OnDestroy {
 
   editMessage(cart: Cart = null){
     let dialogRef = this.dialog.open(EditMessageComponent, {
-      data: cart
+      data: cart,
+      disableClose: true
     });
   }
   ngOnInit(): void {
