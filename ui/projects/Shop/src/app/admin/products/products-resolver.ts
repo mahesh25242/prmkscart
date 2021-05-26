@@ -12,10 +12,9 @@ export class ProductsResolver implements Resolve<any> {
 
   resolve(route: ActivatedRouteSnapshot): Observable<any> {
     const page = parseInt(route.params.page ,0);
+    console.log(route.params)
     return this.shopProductService.listproducts((page+1), {
-      pageSize : 20
-    }).pipe(tap(res=>{
-      console.log(res)
-    }));
+      pageSize : ((route.params?.pageSize) ? route.params?.pageSize : 20)
+    });
   }
 }

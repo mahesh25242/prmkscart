@@ -86,7 +86,7 @@ export class ListProductsComponent implements OnInit {
 
   goto(pageEvent: PageEvent){
     this.pageEvent = pageEvent;
-    this.router.navigate([`admin/products/${this.paginator.pageIndex}`]);
+    this.router.navigate([`admin/products/${this.paginator.pageIndex}`,  { pageSize: pageEvent.pageSize }]);
 
     // Notiflix.Loading.Arrows();
     // this.pageEvent = pageEvent;
