@@ -1,5 +1,48 @@
 <ng-container *ngIf="product">
 
+  <div class="visible-web">
+    <form [formGroup]="addToCartFrm" (ngSubmit)="addToCart()">
+    <div class="d-flex">
+      <div class="flex-1" >
+        <div class="product-image">
+          <div *ngIf="product.shop_product_selected_variant?.type.id"
+          [matTooltip]="(product?.shop_product_selected_variant?.type.id == 1) ? 'Veg' : ( (product?.shop_product_selected_variant?.type.id == 2) ? 'Non-Veg':'' )"
+          [ngClass]="{'veg': product.shop_product_selected_variant?.type.id == 1, 'nonveg': product.shop_product_selected_variant?.type.id == 2}"></div>
+          <img loading="lazy"  [src]="(product.shop_product_selected_variant?.shop_product_image?.image) ?  product.shop_product_selected_variant.shop_product_image.image_path : 'assets/no-image.jpg'" [alt]="product.name+' '+product.shop_product_selected_variant?.name">
+      </div>
+
+      </div>
+      <div class="flex-1">
+
+        <mat-form-field appearance="standard" *ngIf="(product.shop_product_variant.length > 1)">
+          <mat-label>Choose Varient</mat-label>
+          <mat-select class="mt-3 font-25" formControlName="shop_product_variant_id" required (selectionChange)="chooseVarient()">
+            <mat-option *ngFor="let shop_product_variant of product.shop_product_variant" [value]="shop_product_variant.id">
+              {{shop_product_variant.name}} - ₹ {{shop_product_variant.price}}
+            </mat-option>
+          </mat-select>
+          <mat-error *ngIf="f.shop_product_variant_id.errors && f.shop_product_variant_id.errors.error">
+            {{f.shop_product_variant_id.errors.error}}
+          </mat-error>
+        </mat-form-field>
+        <ng-container *ngIf="product.shop_product_selected_variant?.price">
+          <div>
+          <del *ngIf="product.shop_product_selected_variant?.actual_price">₹ {{ product.shop_product_selected_variant?.actual_price }}</del>
+          <span class="weight-bold animate__animated animate__flipInX"> ₹ {{ product.shop_product_selected_variant?.price * qty }} </span>
+          <!-- <span *ngIf="product.shop_product_selected_variant?.type.id">
+            {{ product.shop_product_selected_variant?.type.name }}
+          </span> -->
+          </div>
+          <p >{{ product.shop_product_selected_variant?.description }}</p>
+        </ng-container>
+        <p class="mt-5 clear-p" *ngIf="product.description">{{ product.description}}</p>
+        <button class="mat-primary_yellow" mat-raised-button color="primary" type="submit">Add</button>
+      </div>
+    </div>
+</form>
+  </div>
+
+<div class="visible-mob">
   <h2>{{ product.name}}</h2>
   <mat-card-subtitle>{{ product.shop_product_selected_variant?.name}}</mat-card-subtitle>
   <form [formGroup]="addToCartFrm" (ngSubmit)="addToCart()">
@@ -60,4 +103,5 @@
         {{ product.description}}
       </p>
     </form>
+  </div>
 </ng-container>
