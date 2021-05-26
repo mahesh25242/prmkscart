@@ -32,7 +32,7 @@
       <ng-container *ngIf="products && products.data.length">
         <tr *ngFor="let element of products.data; let i = index;">
           <td>
-            {{i + 1}}
+            {{products.from + i}}
           </td>
           <td>
             <span *ngIf="!element.shop_product_primary_variant?.shop_product_image?.image">--</span>
