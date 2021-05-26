@@ -322,6 +322,7 @@ export class CartDetailsComponent implements OnInit, OnDestroy {
         selectedLocation: this.selectedLocation,
         mapUrl: this.mapUrl
       },
+      disableClose: true
       // height: '400px',
       // width: '600px',
     });
