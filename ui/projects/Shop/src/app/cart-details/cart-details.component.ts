@@ -36,7 +36,7 @@ export class CartDetailsComponent implements OnInit, OnDestroy {
   selectedLocation: ShopDelivery;
   mapUrl: string = '';
   loc : any =null;
-  terms:boolean = false;
+  terms:boolean = true;
   breakPointSubScr: Subscription;
 
   cartSubScr: Subscription;
