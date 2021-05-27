@@ -15,6 +15,7 @@
    .extend-btn-cart  {
     display: grid;
     grid-template-columns: 1fr 1fr 1fr;
+    min-width: 212px;
     align-items: center;
     font-weight: 100; 
     text-transform: uppercase;

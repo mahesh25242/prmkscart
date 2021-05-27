@@ -1,0 +1,95 @@
+@media only screen and (max-width: 768px) { 
+    .inner-banner {
+        background-image: url(../../assets/banner.jpg);
+        min-height:149px;
+        background-size: cover;
+        background-position: center;
+    }
+    .d-flex-footer {
+        display: none;
+       
+    }
+    .banner-text {
+        text-align: left;
+        display: inline-block;
+        h1 {
+            text-transform: uppercase;
+            margin-bottom:0px;
+            color: #000;
+            font-size:2em;
+            font-weight: 900;
+        }
+        h4 {
+            font-weight: 600;
+            font-size:12px!important;
+            text-transform: uppercase;
+            margin-bottom:0px;
+
+        }
+    }
+    .banner-padding {
+        padding:69px 28px 22px 28px;
+    }
+    
+    .container.banner-padding {
+        background: none!important;
+    }
+    
+
+
+
+    
+}
+@media only screen and (min-width: 768px) { 
+    .banner-text {
+        text-align: left;
+        display: inline-block;
+        h1 {
+            text-transform: uppercase;
+    margin-bottom: 23px;
+    color: #000;
+    font-size: 4em;
+    font-weight: 900;
+        }
+        h4 {
+            font-weight: 600;
+            text-transform: uppercase;
+            margin-bottom:40px;
+
+        }
+    }
+    .banner-padding {
+        padding:126px 15px 12px 15px;
+    }
+    .inner-banner {
+        background-image: url(../../assets/banner.jpg);
+        min-height:185px;
+        background-size: cover;
+        background-position: center;
+    }
+    .font-30 {
+        font-size:30px!important;
+    }
+
+    .contactus-grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        column-gap: 30px;
+        margin: 30px 0;
+    }
+    .contactus-grid > div:first-child {border: 1px solid #ddd;}
+    .d-flex-footer {
+        display: flex;
+        padding-bottom: 20px;
+        margin-bottom: 30px;
+        border-bottom: 1px solid #ddd;
+    }
+    .d-flex-footer > div:first-child {
+width:55px;
+    }
+    .d-flex-footer > div:not(:first-child)
+    {
+        flex:1;
+        
+    }
+}

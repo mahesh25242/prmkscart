@@ -22,12 +22,58 @@ p {
 }
 @media only screen and (max-width: 768px) {  
     .serch-web { display: none;}
+    .banner-text {
+        text-align: left;
+        display: inline-block;
+        h1 {
+            text-transform: uppercase;
+            margin-bottom:0px;
+            color: #000;
+            font-size:2em;
+            font-weight: 900;
+        }
+        h4 {
+            font-weight: 600;
+            font-size:12px!important;
+            text-transform: uppercase;
+            margin-bottom:0px;
+
+        }
+    }
+    .banner-padding {
+        padding:99px 28px;
+    }
+    
+    .container.banner-padding {
+        background: none!important;
+    }
 }
 
 @media only screen and (min-width: 768px) {  
     
     .search-mob { display: none;}
     .serch-web {
-        background:#460303;
+        background:#e6dede;
+        margin-bottom: 30px;
+    }
+    .banner-text {
+        text-align: left;
+        display: inline-block;
+        h1 {
+            text-transform: uppercase;
+            margin-bottom:40px;
+            color: #000;
+            font-size: 6em;
+            font-weight: 900;
+        }
+        h4 {
+            font-weight: 600;
+            text-transform: uppercase;
+            margin-bottom:40px;
+
+        }
+    }
+    .banner-padding {
+        padding: 11% 0;
     }
 }
