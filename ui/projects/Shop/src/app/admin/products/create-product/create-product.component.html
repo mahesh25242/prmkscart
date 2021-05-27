@@ -33,8 +33,8 @@
 
       <mat-form-field class="full-width-text" appearance="standard">
         <mat-label>Description /  Ingredients</mat-label>
-        <textarea matInput formControlName="description" placeholder="Description /  Ingredients" maxlength="200"></textarea>
-        <mat-hint align="end" *ngIf="f.description?.value?.length">{{f.description?.value?.length}} / 200</mat-hint>
+        <textarea matInput formControlName="description" placeholder="Description /  Ingredients" maxlength="2000"></textarea>
+        <mat-hint align="end" *ngIf="f.description?.value?.length">{{f.description?.value?.length}} / 2000</mat-hint>
         <mat-error *ngIf="f.description.errors && f.description.errors.error">
           {{f.description.errors.error}}
         </mat-error>
@@ -106,7 +106,7 @@
                 {{stat.get('is_primary').errors.error}}
               </mat-error>
             </div>
-            
+
             <div>
 
               <mat-form-field class="full-width-text" appearance="standard">
@@ -123,8 +123,8 @@
 
               <mat-form-field class="full-width-text" appearance="standard">
                 <mat-label>Description</mat-label>
-                <textarea matInput formControlName="description" placeholder="Ex. descrtion about varient" maxlength="200"></textarea>
-                <mat-hint align="end" *ngIf="stat.get('description').value?.length">{{stat.get('description').value?.length}} / 200</mat-hint>
+                <textarea matInput formControlName="description" placeholder="Ex. descrtion about varient" maxlength="1000"></textarea>
+                <mat-hint align="end" *ngIf="stat.get('description').value?.length">{{stat.get('description').value?.length}} / 1000</mat-hint>
                 <mat-error *ngIf="stat.get('description').errors && stat.get('description').errors.error">
                   {{stat.get('description').errors.error}}
                 </mat-error>
@@ -182,7 +182,7 @@
               </button>
               <button class="btn-show-mob mt-m-3" type="button" mat-raised-button  color="primary" (click)="addVarient(stat)">
               <mat-icon>add_circle_outline</mat-icon>
-                Add new Variant 
+                Add new Variant
               </button>
 
               <button  *ngIf="varients.controls.length > 1" type="button" mat-icon-button  color="primary" (click)="removeVarient(i)">

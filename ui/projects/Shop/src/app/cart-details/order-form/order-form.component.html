@@ -5,7 +5,7 @@
   <mat-form-field class="full-width-text" appearance="standard">
     <mat-label>Full Name</mat-label>
     <input matInput formControlName="name" placeholder="Ex. John Doe" required maxlength="200">
-    <mat-error *ngIf="f.name.invalid">
+    <mat-error *ngIf="f.name.invalid" [tabindex]="++tabIndex">
       {{f.name.errors.error}}
     </mat-error>
     <mat-error *ngIf="f.name.invalid && ((f.name.dirty || f.name.touched)) && f.name.errors.required">
@@ -23,7 +23,8 @@
 
   <mat-form-field class="full-width-text" appearance="standard">
     <mat-label>Phone</mat-label>
-    <input type="tel" matInput formControlName="phone" placeholder="Ex. 91546542465" required maxlength="200">
+    <input type="tel" matInput formControlName="phone" placeholder="Ex. 91546542465"
+    required maxlength="200" [tabindex]="++tabIndex">
     <mat-error *ngIf="f.phone.errors && f.phone.errors.error">
       {{f.phone.errors.error}}
     </mat-error>
@@ -39,7 +40,8 @@
     <a *ngIf="data.mapUrl" [href]="data.mapUrl" target="_blank">Map</a>
     <mat-form-field class="full-width-text" appearance="standard">
       <mat-label>Address</mat-label>
-      <textarea matInput formControlName="address" placeholder="Ex. House Name/ Number" required maxlength="200"></textarea>
+      <textarea matInput formControlName="address" placeholder="Ex. House Name/ Number"
+       required maxlength="200" [tabindex]="++tabIndex"></textarea>
       <mat-error *ngIf="f.address.errors && f.address.errors.error">
         {{f.address.errors.error}}
       </mat-error>
@@ -50,7 +52,8 @@
 
     <mat-form-field class="full-width-text" appearance="standard">
       <mat-label>Pin Code</mat-label>
-      <input type="number" matInput formControlName="pin" placeholder="Ex. 658956" required maxlength="200">
+      <input type="number" matInput formControlName="pin" placeholder="Ex. 658956"
+      required maxlength="200" [tabindex]="++tabIndex">
       <mat-error *ngIf="f.pin.errors && f.pin.errors.error">
         {{f.pin.errors.error}}
       </mat-error>
@@ -63,7 +66,8 @@
 
   <mat-form-field appearance="standard">
     <mat-label>Delivery Date </mat-label>
-    <input [min]="todayDate" matInput [matDatepicker]="picker" formControlName="delivery_date" maxlength="150">
+    <input [min]="todayDate" matInput [matDatepicker]="picker"
+    formControlName="delivery_date" maxlength="150" [tabindex]="++tabIndex">
     <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
     <mat-datepicker #picker touchUi></mat-datepicker>
   </mat-form-field>
@@ -71,7 +75,8 @@
 
   <mat-form-field class="full-width-text" appearance="standard">
     <mat-label>Hours</mat-label>
-    <input type="number" matInput formControlName="hour" placeholder="Ex. 10" min="1" max="12">
+    <input type="number" matInput formControlName="hour" placeholder="Ex. 10" min="1" max="12"
+    [tabindex]="++tabIndex">
     <mat-error *ngIf="f.hour.errors && f.hour.errors.error" >
       {{f.hour.errors.error}}
     </mat-error>
@@ -79,20 +84,20 @@
 <div class="relative-position">
   <mat-form-field class="full-width-text" appearance="standard" >
     <mat-label>Minute</mat-label>
-    <input type="number" matInput formControlName="minute" placeholder="Ex. 15" min="0" max="59">
+    <input type="number" matInput formControlName="minute" placeholder="Ex. 15" min="0" max="59" [tabindex]="++tabIndex">
     <mat-error *ngIf="f.minute.errors && f.minute.errors.error" >
       {{f.minute.errors.error}}
     </mat-error>
   </mat-form-field>
 
-  <mat-button-toggle-group name="fontStyle" aria-label="Font Style" formControlName="ampm">
+  <mat-button-toggle-group name="fontStyle" aria-label="Font Style" formControlName="ampm" [tabindex]="++tabIndex">
     <mat-button-toggle value="am">AM</mat-button-toggle>
     <mat-button-toggle value="pm">PM</mat-button-toggle>
   </mat-button-toggle-group>
 </div>
   <mat-form-field class="full-width-text" appearance="standard">
     <mat-label>Order Note</mat-label>
-    <textarea matInput formControlName="note" placeholder="Any additional note" maxlength="200"></textarea>
+    <textarea matInput formControlName="note" placeholder="Any additional note" maxlength="200" [tabindex]="++tabIndex"></textarea>
     <mat-hint align="end" *ngIf="f.note?.value?.length">{{f.note?.value?.length}} / 200</mat-hint>
     <mat-error *ngIf="f.note.errors && f.note.errors.error">
       {{f.note.errors.error}}
@@ -104,5 +109,5 @@
 </mat-dialog-content>
 <mat-dialog-actions align="end">
 <button  (click)="dialogRef.close()" mat-stroked-button color="primary" class="mob-btn-lg-size">Cancel</button>
-<button (click)="chekValidation()" mat-flat-button color="primary" class="float-right mob-btn-lg-size">Save</button>
+<button (click)="chekValidation()" mat-flat-button color="primary" class="float-right mob-btn-lg-size" [tabindex]="++tabIndex">Save</button>
 </mat-dialog-actions>
