@@ -72,7 +72,7 @@ class ShopProduct extends Model implements AuthenticatableContract, Authorizable
 
     public function shopProductVariant()
     {
-        return $this->hasMany('App\ShopProductVariant');
+        return $this->hasMany('App\ShopProductVariant')->orderBy("sortorder", "ASC");
     }
 
     public function shopProductPrimaryVariant()
