@@ -48,11 +48,16 @@ export class ShopProductCategoryService {
   }
 
   showCategories(){
-    return this.http.get<ShopProductCategory[]>("/shop/product/showCategories").pipe(tap(res=>{
-      this.categories$.next(res);
-    }),
-    catchError(err=>{
-      return of(null);
-    }));
+    if(this.categories$.getValue()){
+      return this.categories;
+    }else{
+      return this.http.get<ShopProductCategory[]>("/shop/product/showCategories").pipe(tap(res=>{
+        this.categories$.next(res);
+      }),
+      catchError(err=>{
+        return of(null);
+      }));
+    }
+
   }
 }
