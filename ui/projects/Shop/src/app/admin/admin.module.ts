@@ -23,6 +23,7 @@ import { OrdersResolver } from './orders/orders-resolver';
 import { OrderDetailsComponent } from './orders/order-details/order-details.component';
 import { OrderSearchComponent } from './orders/order-search/order-search.component';
 import { SearchProductComponent } from './products/search-product/search-product.component';
+import { CreateProductResolver } from './products/create-product/create-product-resolver';
 
 @NgModule({
   declarations: [  AdminComponent, SignInComponent, HomeComponent, CategoriesComponent, ProductsComponent, ListProductsComponent, EditProfileComponent, CreateCategoryComponent, CreateProductComponent, ShopDeliveryComponent, CreateShopDeliveryComponent, ShopDetailsComponent, OrdersComponent, OrderDetailsComponent, OrderSearchComponent, SearchProductComponent],
@@ -35,7 +36,8 @@ import { SearchProductComponent } from './products/search-product/search-product
     CategoriesResolver,
     ProductsResolver,
     ShopDeliveryResolver,
-    OrdersResolver
+    OrdersResolver,
+    CreateProductResolver
   ]
 })
 export class AdminModule { }

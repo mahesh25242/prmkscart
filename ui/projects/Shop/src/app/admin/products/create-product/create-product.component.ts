@@ -200,6 +200,9 @@ export class CreateProductComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
 
+    this.product = this.route.snapshot.data["product"];
+
+
     this.createProductFrm= this.formBuilder.group({
       id: [0, []],
       name: [null, []],
@@ -214,20 +217,7 @@ export class CreateProductComponent implements OnInit, OnDestroy {
 
 
 
-    this.productSubScr = this.route.params.pipe(mergeMap(res=>{
-      const id = parseInt(res.id, 10);
-      if(id){
-        return this.shopProductService.products.pipe(map(products =>{
-          const product = find(products.data, (res) => res.id==id);
-          return product;
-        }));
-      }else{
-        return of(null);
-      }
-
-    })).subscribe(product=> {
-      this.product = product;
-    this.generalService.bc$.next({
+ this.generalService.bc$.next({
       siteName: environment.siteName,
       title: `${(this.product?.id) ? `Edit ${this.product.name}` : `Create new product`}`,
       url:'',
@@ -258,10 +248,6 @@ export class CreateProductComponent implements OnInit, OnDestroy {
         this.varients.controls = [];
         this.varients.push(this.formBuilder.group(this.varientFormBuild()));
       }
-    });
-
-
-
 
 
   }

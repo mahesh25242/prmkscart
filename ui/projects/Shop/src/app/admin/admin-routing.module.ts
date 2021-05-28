@@ -16,6 +16,7 @@ import { OrdersResolver } from './orders/orders-resolver';
 import { AdminComponent } from './admin.component';
 import { CreateProductComponent } from './products/create-product/create-product.component';
 import { ListProductsComponent } from './products/list-product/list-products.component';
+import { CreateProductResolver } from './products/create-product/create-product-resolver';
 
 
 
@@ -46,17 +47,20 @@ const routes: Routes = [
         path: 'products/:page',
         component: ProductsComponent,
         canActivate: [AdminAuthGuard],
-        resolve:{
-          products: ProductsResolver
-        },
         children:[
           {
             path: '',
             component: ListProductsComponent,
+            resolve:{
+              products: ProductsResolver
+            },
           },
           {
             path: 'add/:id',
             component: CreateProductComponent,
+            resolve:{
+              product: CreateProductResolver
+            }
           },
         ],
 

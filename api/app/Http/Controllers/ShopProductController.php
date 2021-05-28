@@ -311,9 +311,14 @@ class ShopProductController extends Controller
 
     public function showProductDetails(Request $request){
         $shpProduct =  \App\ShopProduct::with(["shopProductCategory", "shopProductPrimaryVariant.shopProductImage",
-        "shopProductVariant.shopProductImage"])->where("status", 1)
-        ->where('url', $request->input("url"))->get()->first();
-        return response($shpProduct);
+        "shopProductVariant.shopProductImage"])->where("status", 1);
+
+        if($request->input("id" ,null)){
+            $shpProduct = $shpProduct->where('id', $request->input("id"));
+        }else{
+            $shpProduct = $shpProduct->where('url', $request->input("url"));
+        }
+        return response($shpProduct->get()->first());
     }
 
 }
