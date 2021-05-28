@@ -28,7 +28,7 @@ class ShopOrder extends Model implements AuthenticatableContract, AuthorizableCo
 
 
     protected $casts = [
-        'status' => 'boolean',
+        'status' => 'integer',
         'shop_id' => 'integer',
         'shop_customer_id' => 'integer',
         'total' => 'double',
