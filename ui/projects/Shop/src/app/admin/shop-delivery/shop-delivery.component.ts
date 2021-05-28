@@ -32,7 +32,7 @@ export class ShopDeliveryComponent implements OnInit {
 
   deleteDeliveryLoc(delivery: ShopDelivery = null){
     Notiflix.Confirm.Show( 'delete?', `Do you want to delete ${delivery.name}`, 'Yes', 'No', ()=>{
-      Notiflix.Loading.Arrows();
+      Notiflix.Loading.Custom();
       this.shopService.deleteShopDelivery(delivery).pipe(mergeMap(res=>{
         return this.shopService.shopDeliveries().pipe(map(cats=>{
           return res;

@@ -55,7 +55,7 @@ export class OrderDetailsComponent implements OnInit, OnDestroy {
       break;
     }
     Notiflix.Confirm.Show( msg.t, msg.m, 'Yes', 'No', ()=>{
-      Notiflix.Loading.Arrows();
+      Notiflix.Loading.Custom();
       const postData = {
         status :this.status,
         id: this.data.id

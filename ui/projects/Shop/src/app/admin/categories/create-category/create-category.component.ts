@@ -43,7 +43,7 @@ export class CreateCategoryComponent implements OnInit, OnDestroy {
   get f() { return this.createCatFrm.controls}
 
   saveCategory(){
-    Notiflix.Loading.Arrows();
+    Notiflix.Loading.Custom();
 
 
 

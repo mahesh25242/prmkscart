@@ -21,7 +21,7 @@ export class SearchResultComponent implements OnInit {
   ngOnInit(): void {
 
     this.products$ = this.route.params.pipe(mergeMap(res=>{
-      Notiflix.Loading.Arrows();
+      Notiflix.Loading.Custom();
       const postData = {
         q: res?.q,
         pageSize : environment.productListPerPage

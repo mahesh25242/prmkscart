@@ -20,7 +20,7 @@ export class SearchProductComponent implements OnInit {
       pageSize : (this.pageEvent?.pageSize) ? this.pageEvent?.pageSize : 20,
       q: this.searchFrm.controls.q.value,
     }
-    Notiflix.Loading.Arrows();
+    Notiflix.Loading.Custom();
     this.shopProductService.listproducts(1, postData).subscribe(res=>{
       Notiflix.Loading.Remove();
     }, error=>{

@@ -67,7 +67,7 @@ export class CreateProductComponent implements OnInit, OnDestroy {
  }
 
   saveProduct(){
-    Notiflix.Loading.Arrows();
+    Notiflix.Loading.Custom();
 
     const formData = new FormData();
 

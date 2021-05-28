@@ -23,7 +23,7 @@ export class CreateShopDeliveryComponent implements OnInit, OnDestroy {
   get f(){ return this.createDeliveryFrm.controls;}
 
   saveDelivery(){
-    Notiflix.Loading.Arrows();
+    Notiflix.Loading.Custom();
     const postData = {
       id: this.f.id.value,
       name: this.f.name.value,

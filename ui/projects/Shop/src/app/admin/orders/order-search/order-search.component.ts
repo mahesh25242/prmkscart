@@ -34,7 +34,7 @@ export class OrderSearchComponent implements OnInit {
       start_date: startDate,
       end_date: endDate,
     }
-    Notiflix.Loading.Arrows();
+    Notiflix.Loading.Custom();
     this.cartService.getAllOrders(1, postData).subscribe(res=>{
       Notiflix.Loading.Remove();
     }, error=>{

@@ -33,7 +33,7 @@ export class OrdersComponent implements OnInit {
 
   goto(pageEvent: PageEvent){
     this.pageEvent = pageEvent;
-    Notiflix.Loading.Arrows();
+    Notiflix.Loading.Custom();
     const postData = {
       pageSize : this.pageEvent.pageSize
     }

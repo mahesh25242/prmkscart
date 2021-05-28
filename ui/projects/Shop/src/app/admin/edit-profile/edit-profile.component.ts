@@ -87,7 +87,7 @@ export class EditProfileComponent implements OnInit {
     });
   }
   updateProfile(){
-    Notiflix.Loading.Pulse(`${(this.f.fname.value) ? this.f.fname.value : ''} please wait`);
+    Notiflix.Loading.Custom(`${(this.f.fname.value) ? this.f.fname.value : ''} please wait`);
     const postData = {
       fname: this.f.fname.value,
       lname: this.f.lname.value,

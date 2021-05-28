@@ -32,7 +32,7 @@ export class ListProductsComponent implements OnInit {
 
   changeStatus(cat: ShopProduct = null){
     Notiflix.Confirm.Show( 'Change Status?', `Do you want to change ${cat.name} status?`, 'Yes', 'No', ()=>{
-      Notiflix.Loading.Arrows();
+      Notiflix.Loading.Custom();
       this.shopProductService.changeStatus(cat).pipe(mergeMap(res=>{
         const page = (this.pageEvent?.pageIndex) ? (this.pageEvent?.pageIndex + 1) : 1;
         return this.shopProductService.listproducts(page, {
@@ -55,10 +55,8 @@ export class ListProductsComponent implements OnInit {
 
 
   deleteProduct(product: ShopProduct = null){
-
-
     Notiflix.Confirm.Show( 'delete?', `Do you want to delete ${product.name}`, 'Yes', 'No', ()=>{
-      Notiflix.Loading.Arrows();
+      Notiflix.Loading.Custom();
       this.shopProductService.deleteProduct(product).pipe(mergeMap(res=>{
         return this.shopProductService.listproducts((this.paginator.pageIndex+1), {
           pageSize: this.paginator.pageSize

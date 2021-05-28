@@ -21,6 +21,8 @@ import { GeneralService, MessagingService } from './lib/services';
 })
 export class AppComponent implements OnInit, OnDestroy{
   title = '';
+
+
   showPushNoti: Subscription;
   receiveMessageSubScr: Subscription;
   isAdmin$: Observable<boolean>;
@@ -45,7 +47,9 @@ export class AppComponent implements OnInit, OnDestroy{
     this.router.events.subscribe((event: Event) => {
       switch (true) {
         case event instanceof NavigationStart: {
-          Notiflix.Loading.Pulse();
+          Notiflix.Loading.Custom();
+
+
           break;
         }
         case event instanceof NavigationEnd:

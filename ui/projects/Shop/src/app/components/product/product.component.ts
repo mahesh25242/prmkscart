@@ -42,7 +42,7 @@ export class ProductComponent implements OnInit, OnDestroy {
 
       if(this.isSearch && this.current_page){
 
-        Notiflix.Loading.Arrows();
+        Notiflix.Loading.Custom();
         ++this.current_page;
         if(this.productFetchUnsbscr) this.productFetchUnsbscr.unsubscribe();
         this.productFetchUnsbscr = this.route.params.pipe(mergeMap(res=>{

@@ -24,7 +24,7 @@ export class SignInComponent implements OnInit {
     private router: Router,
     private generalService: GeneralService ) { }
   signIn(){
-    Notiflix.Loading.Pulse(`please wait`);
+    Notiflix.Loading.Custom(`please wait`);
     this.invalidlogin = false;
 
     const postData = {

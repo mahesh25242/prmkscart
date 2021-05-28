@@ -67,7 +67,7 @@ export class CartDetailsComponent implements OnInit, OnDestroy {
       this.matSnackBar.open('Please choose a delivery location.', 'close');
       return;
     }
-    Notiflix.Loading.Arrows();
+    Notiflix.Loading.Custom();
     this.sentToShop = this.cart$.pipe(mergeMap(cart=>{
       if(!cart) {
         console.log("no cart exists")
