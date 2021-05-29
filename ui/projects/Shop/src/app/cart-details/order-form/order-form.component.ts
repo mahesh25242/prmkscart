@@ -55,15 +55,10 @@ export class OrderFormComponent implements OnInit {
       this.f.pin.updateValueAndValidity();
       this.f.address.updateValueAndValidity();
     }
-    if(this.f.hour.value){
-      if(!this.f.minute.value){
-        this.f.minute.setValue('00');
-      }
+    if(this.f.delivery_time.value){
       if(!this.f.delivery_date.value){
         this.f.delivery_date.setValue(new Date());
       }
-      let datetimeStart = `${this.f.delivery_date.value} ${this.f.hour.value}:${this.f.minute.value}:00 ${this.f.ampm.value}`;
-      console.log(datetimeStart);
     }
 
     if(this.data.customerFrm.valid)

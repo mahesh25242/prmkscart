@@ -73,27 +73,43 @@
   </mat-form-field>
 
 
-  <mat-form-field class="full-width-text" appearance="standard">
+  <!-- <mat-form-field class="full-width-text" appearance="standard">
     <mat-label>Hours</mat-label>
     <input type="number" matInput formControlName="hour" placeholder="Ex. 10" min="1" max="12"
     [tabindex]="++tabIndex">
     <mat-error *ngIf="f.hour.errors && f.hour.errors.error" >
       {{f.hour.errors.error}}
     </mat-error>
-  </mat-form-field>
+  </mat-form-field> -->
 <div class="relative-position">
+
+
+
   <mat-form-field class="full-width-text" appearance="standard" >
+    <mat-label>Time</mat-label>
+    <input matInput
+      formControlName="delivery_time"
+           name="selected_time_A"
+           [ngxMatTimepicker]="pickerA"
+           placeholder="4:00 PM"
+           readonly />
+</mat-form-field>
+<ngx-mat-timepicker #pickerA></ngx-mat-timepicker>
+
+
+
+  <!-- <mat-form-field class="full-width-text" appearance="standard" >
     <mat-label>Minute</mat-label>
     <input type="number" matInput formControlName="minute" placeholder="Ex. 15" min="0" max="59" [tabindex]="++tabIndex">
     <mat-error *ngIf="f.minute.errors && f.minute.errors.error" >
       {{f.minute.errors.error}}
     </mat-error>
-  </mat-form-field>
+  </mat-form-field> -->
 
-  <mat-button-toggle-group name="fontStyle" aria-label="Font Style" formControlName="ampm" [tabindex]="++tabIndex">
+  <!-- <mat-button-toggle-group name="fontStyle" aria-label="Font Style" formControlName="ampm" [tabindex]="++tabIndex">
     <mat-button-toggle value="am">AM</mat-button-toggle>
     <mat-button-toggle value="pm">PM</mat-button-toggle>
-  </mat-button-toggle-group>
+  </mat-button-toggle-group> -->
 </div>
   <mat-form-field class="full-width-text" appearance="standard">
     <mat-label>Order Note</mat-label>

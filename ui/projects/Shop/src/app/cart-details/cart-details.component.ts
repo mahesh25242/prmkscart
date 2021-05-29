@@ -1,5 +1,5 @@
 import { Component, EventEmitter, OnDestroy, OnInit, Output } from '@angular/core';
-import { empty, Observable,of,pipe, Subscription } from 'rxjs';
+import { empty, Observable,of,pipe, Subscription, throwError } from 'rxjs';
 import { mergeMap, tap, map } from 'rxjs/operators';
 import { Cart, Shop, ShopDelivery, ShopOrder } from 'src/app/lib/interfaces';
 import { CartService, GeneralService, ShopService } from 'src/app/lib/services';
@@ -85,12 +85,10 @@ export class CartDetailsComponent implements OnInit, OnDestroy {
 
         if(this.f.delivery_date.value){
           deliveryDate = this.datepipe.transform(this.f.delivery_date.value, 'yyyy-MM-dd');
-          let minute;
-          if(this.f.hour.value){
-            minute = (this.f.minute.value) ? ("0" + this.f.minute.value).slice(-2) : '00';
-          }
-          deliveryDate = `${deliveryDate} ${ (this.f.hour.value) ? `${("0" + this.f.hour.value).slice(-2) }:` :'' }${ (minute) ? `${minute}` : '' }${(this.f.hour.value) ? this.f.ampm.value : ''}`
+
+          deliveryDate = `${deliveryDate} ${this.f.delivery_time.value}`;
         }
+
 
         const postData = {
           cart: cart,
@@ -104,15 +102,15 @@ export class CartDetailsComponent implements OnInit, OnDestroy {
           grad_total: this.grandTotal,
           loc :this.loc,
           delivery_date: deliveryDate,
-          hour: this.f.hour.value,
-          minute: this.f.minute.value,
-          ampm: this.f.ampm.value,
+          delivery_time: this.f.delivery_time.value,
           token: null
         }
 
         return this.messagingService.getToken().pipe(mergeMap(tkn=>{
           postData.token = (tkn) ? tkn : '';
+
           return this.cartService.createOrder(postData).pipe(mergeMap((orderRes : ShopOrder)=>{
+
             if(!orderRes) return empty();
             return this.breakpointObserver.observe([
               Breakpoints.Handset,
@@ -129,11 +127,7 @@ export class CartDetailsComponent implements OnInit, OnDestroy {
 
               if(postData.delivery_date){
                 let deliveryDate = this.datepipe.transform(this.f.delivery_date.value, 'dd/MM/yyyy');
-                let minute;
-                if(this.f.hour.value){
-                  minute = (this.f.minute.value) ? ("0" + this.f.minute.value).slice(-2) : '00';
-                }
-                deliveryDate = `${deliveryDate} ${ (this.f.hour.value) ? `${("0" + this.f.hour.value).slice(-2) }:` :'' }${ (minute) ? `${minute}` : '' }${(this.f.hour.value) ? this.f.ampm.value : ''}`
+                deliveryDate = `${deliveryDate} ${ this.f.delivery_time.value }`
                 txt += `%0a‎ Delivery: ${encodeURIComponent(deliveryDate)}  `;
               }
               txt += `%0a‎ ------------------------------------------- `;
@@ -208,6 +202,7 @@ export class CartDetailsComponent implements OnInit, OnDestroy {
       window.location.href = res.url;
       Notiflix.Loading.Remove();
     }, error=>{
+      console.log(error)
       Notiflix.Loading.Remove();
       if(error.status == 422){
         for(let result in this.customerFrm.controls){
@@ -397,16 +392,17 @@ export class CartDetailsComponent implements OnInit, OnDestroy {
     }));
 
     this.customerFrm = this.formBuilder.group({
-      name: [null, [Validators.required]],
+      name: ['mahesh', [Validators.required]],
       note: [null, []],
       email: [null, []],
-      phone: [null, [Validators.required, Validators.pattern("[0-9 ]{10}")]],
+      phone: ['9995453566', [Validators.required, Validators.pattern("[0-9 ]{10}")]],
       address: [null, []],
       pin: [null, []],
       delivery_date: [null, []],
       hour: [null, [Validators.min(1), Validators.max(12)]],
       minute: [null, [Validators.min(0), Validators.max(59)]],
       ampm: ['am', []],
+      delivery_time: [ null, []]
     });
   }
 

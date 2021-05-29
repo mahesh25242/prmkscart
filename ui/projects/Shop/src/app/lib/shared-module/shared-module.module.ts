@@ -12,6 +12,8 @@ import { DatePipe } from '@angular/common'
 import { ScrollTrackerDirective } from './scroll-tracker.directive';
 import { InfiniteScrollModule } from 'ngx-infinite-scroll';
 
+import {NgxMatTimepickerModule} from 'ngx-mat-timepicker';
+
 
 import {MatIconModule} from '@angular/material/icon';
 import {MatButtonModule} from '@angular/material/button';
@@ -62,6 +64,7 @@ Notiflix.Block.Init({ svgColor:"#204486", });
     ReactiveFormsModule,
     NgxCaptchaModule,
     InfiniteScrollModule,
+    NgxMatTimepickerModule,
 
     MatIconModule,
     MatButtonModule,
@@ -99,6 +102,7 @@ Notiflix.Block.Init({ svgColor:"#204486", });
     ReactiveFormsModule,
     NgxCaptchaModule,
     InfiniteScrollModule,
+    NgxMatTimepickerModule,
 
     MatIconModule,
     MatButtonModule,
