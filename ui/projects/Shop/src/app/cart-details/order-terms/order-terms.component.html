@@ -1,2 +1,17 @@
-<p>order-terms works!</p>
-<button (click)="dialogRef.close()" mat-button>Close</button>
+<h4>Terms and Conditions</h4>
+<mat-dialog-content>
+<p>Please read the following Terms and Conditions carefully before using our service as these constitute a legally binding agreement between you and <b>{{environment.siteName}}</b> regarding your use of the site and the services provided by the company. Your access and/or use of our site/service shall mean you have read and understood the terms and conditions stated here and agree to comply with these. These terms apply to all visitors and users of our service. We reserve the right to add, delete or modify any part of the Terms and Conditions with or without prior notice. </p>
+<ol>
+    <li><b>Payment: </b>No payment can be made through the site. You need to contact the shop and settle payment directly. </li>
+    <li><b>Cancellation:</b> No order can be cancelled through the site. You need to contact the shop directly and request for cancellation.</li>
+    <li><b>Order timing:</b> You can place your order as per the working hours of the restaurant/bakery. For all orders made after 7 pm, delivery will be done in the morning hours of next day. Please check with the shop directly for delivery time. </li>
+<li><b>Images and content:</b> If you are a shop owner and wish to place your products in our site, please provide the content and images. </li>
+<li><b>Quality:</b> The site bears no responsibility of the quality of the food delivered. It shall be the sole responsibility of the restaurant/bakery delivering the food.</li>
+<li><b>Interactions between users:</b> You are solely responsible for your interaction with other users. We hope you understand that company does not screen its users and so you need to exercise caution and discretion while interacting with the shop owners or customers.</li>
+<li><b>Site contents:</b> The design and all materials on the site (except for shops’ contents and images) are protected by copyright, trademark and other applicable laws. Use/reproduction of any part of it is strictly prohibited. Company claims no ownership interest in any Third Party Content and disclaims any liability concerning those materials. We reserve the right to make changes to the website with/without prior notice. </li>
+</ol>
+<p>In case of any queries regarding the Terms and Conditions, contact us at +91 994 621 1178, +91 904 891 1178</p>
+</mat-dialog-content>
+<mat-dialog-actions align="end">
+<button (click)="dialogRef.close()" mat-flat-button color="primary" mat-button>I agree</button>
+</mat-dialog-actions>

@@ -1,5 +1,5 @@
 <div class="header-inner"></div>
-<div class="container pb-m-5">
+<div class="container">
 <ng-container *ngIf="(cart$ | async) as cart">
   <div *ngIf="!cart || !cart.length">Your cart is empty</div>
   <ng-container *ngIf="cart && cart.length">
@@ -19,9 +19,9 @@
         </div>
         <div >
        <h4 class="cart-item-header pl-1" > {{item.product.name}}</h4>
-       <small class="block pl-1">{{ item.qty}} {{ (item.qty > 1) ? 'packets': 'packet' }} of {{item.product.shop_product_selected_variant.name}}</small>
+       
         <b class="block pl-1">₹ {{item.product.shop_product_selected_variant.price}} X {{ item.qty}} = {{ item.price }}</b>
-
+        <small class="block pl-1">{{ item.qty}} {{ (item.qty > 1) ? 'packets': 'packet' }} of {{item.product.shop_product_selected_variant.name}}</small>
        <small class="block pl-1" *ngIf="item.message"> {{item.message}}</small>
        <div class="d-none-lg">
        <button mat-icon-button color="primary" (click)="updateCart(item, '-')">
@@ -45,18 +45,18 @@
         </button>
       </div>
 
-<div>
+<div class="comment-area">
 
    <!-- <ng-container *ngIf="item.message"> -->
-    <div>
+    <div >
       <button mat-icon-button color="primary" (click)="editMessage(item)"
       [matTooltip]="'Add a custom message for '+item.product.name">
-        <mat-icon>add_comment</mat-icon>
+     <span class="mob-comments">Add wishes note</span>  <mat-icon>add_comment</mat-icon>
       </button>
     <!-- </ng-container> -->
         <button mat-icon-button color="warn" (click)="deleteItem(item)"
         [matTooltip]="'Remove ' +item.product.name+ ' from cart'">
-          <mat-icon>delete</mat-icon>
+        <span class="mob-comments">Remove Item</span>  <mat-icon>delete</mat-icon>
         </button>
       </div>
       </div>
@@ -65,7 +65,7 @@
       <div class="m-15">
         <form [formGroup]="customerFrm">
           <div class="selectDelevery" >
-         <h3>Please choose your delivery location from below.</h3>
+         <h3>Select your delivery location.</h3>
           </div>
 
           <div class="tab-delivery-options">
@@ -78,24 +78,29 @@
                     [matTooltip]="'Select '+shop_delivery.name+' as your delivery location' "
                     [ngClass]="{'active animate__headShake' : (selectedLocation?.id == shop_delivery.id)}"
                     (click)="changeLocation(shop_delivery)">
+                    <div class="d-flex-btn">
                       {{ shop_delivery.name }}
                       <span *ngIf="shop_delivery.charge">
                         ( + ₹ {{ shop_delivery.charge}} )
                       </span>
+                      <mat-icon class="mr-auto">keyboard_arrow_right</mat-icon>
+                    </div>
                     </a>
                 </ng-container>
               </mat-tab>
               <mat-tab label="Home Delivery">
                 <ng-container *ngFor="let shop_delivery of shop?.shop_delivery_filtered.home">
+                  <b class="d-block"><mat-icon class="warning-ico">error</mat-icon>Additional <span class="btn-p-m-even" *ngIf="shop_delivery.charge">₹ {{ shop_delivery.charge}}</span>  for home delivery</b>
                   <a matRipple href="javascript:{}"
                     class="animate__animated"
                     [matTooltip]="'Select '+shop_delivery.name+' as your delivery location' "
                     [ngClass]="{'active animate__headShake' : (selectedLocation?.id == shop_delivery.id)}"
                     (click)="changeLocation(shop_delivery)">
-                      {{ shop_delivery.name }}
-                      <span *ngIf="shop_delivery.charge">
-                        ( + ₹ {{ shop_delivery.charge}} )
-                      </span>
+                    <div class="d-flex-btn">
+                      {{ shop_delivery.name }} 
+                      <!--span class="btn-pl-3" *ngIf="shop_delivery.charge">( + ₹ {{ shop_delivery.charge}} )</span-->
+                      <mat-icon class="mr-auto">keyboard_arrow_right</mat-icon>
+                    </div>
                     </a>
                 </ng-container>
               </mat-tab>
@@ -108,20 +113,35 @@
       </div>
 
       <div class="order-total m-15">
+        <table>
+          <tr>
+            <th>Detais</th>
+            <th width="130px" class="text-right">Total</th>
+          </tr>
+          <tr  *ngFor="let item of cart">
+            <td>
+              {{item.product.name}}  <small class="pl-3">{{item.product.shop_product_selected_variant.name}}</small>
+            </td>
+            <td class="text-right">
+              <b class="block pl-1">₹ {{item.product.shop_product_selected_variant.price}} X {{ item.qty}} = {{ item.price }}</b>
+            </td>
+          </tr>
+          <tr  *ngIf="selectedLocation && selectedLocation?.charge">
+            <td><b>Home delivery Cost:</b> </td>
+            <td class="text-right"><b> ₹ {{ selectedLocation?.charge }}</b></td>
+          </tr>
+          <tr>
+            <td><small class="block"> Total Items:  <b>{{cart.length}}</b> </small></td>
+            <td class="text-right"><h1>₹  {{ grandTotal }}</h1>
+              <small>Inc. of all taxes</small></td>
+          </tr>
+        </table>
         <div>
-          <small class="block"> Items:  <b>{{cart.length}}</b> </small>
-          <small class="block"> <ng-container *ngIf="selectedLocation && selectedLocation?.charge">
-              Delivery Cost: <b> ₹ {{ selectedLocation?.charge }}</b>
-            </ng-container></small>
             <small class="block mt-10" *ngIf="selectedLocation && selectedLocation?.id">
               {{selectedLocation.description }}
             </small>
           </div>
-          <div>
-            <small>Total</small>
-            <h1>₹  {{ grandTotal }}</h1>
-            <small>Inclusive of all taxes</small>
-          </div>
+          
       
       </div>
     </div>
@@ -163,7 +183,7 @@
             c-7.3,7.9-27.7,27.1-27.7,66s28.4,76.6,32.3,81.9c4,5.3,55.8,85.2,135.2,119.5c18.9,8.2,33.6,13,45.1,16.7c19,6,36.2,5.2,49.9,3.1
             c15.2-2.3,46.8-19.2,53.4-37.6c6.6-18.5,6.6-34.3,4.6-37.6C500.7,410.1,495.4,408.1,487.5,404.1z"/>
           </svg>
-           Send to Whatsapp </button>
+           BUY NOW </button>
 
       </section>
 

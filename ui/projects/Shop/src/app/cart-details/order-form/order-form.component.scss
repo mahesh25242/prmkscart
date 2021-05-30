@@ -27,6 +27,7 @@
 h4 {
     margin-bottom: 0px;
 }
+
 @media only screen and (max-width: 768px) {
     .mat-dialog-content {
         min-width: 95vw;
@@ -44,3 +45,6 @@ h4 {
         }
 
     }
+   .position-relative {
+       position: relative;
+   }

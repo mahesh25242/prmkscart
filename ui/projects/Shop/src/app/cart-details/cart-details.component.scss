@@ -29,13 +29,13 @@ small {
     margin-top:15px;
 }
 
-
+.text-right {
+    text-align: right;
+}
 .order-total{   
     padding: 15px;
     border-radius: 5px;
-    display: grid;
-    grid-template-columns: 1fr 149px;
-    column-gap: 15px;
+    
     border:1px solid #00E777 ; 
     .block {
         display: block;
@@ -69,12 +69,20 @@ small {
     }
 
 }
+.d-flex-btn {
+    display: flex;
+    align-items: center;
+    text-transform: uppercase;
+}
+.mr-auto {
+    margin-left: auto;
+}
 
 .st0{fill-rule:evenodd;clip-rule:evenodd;fill:#FFFFFF;}
 .whatsapp-btn {
     background-color: #00E777;
     border-radius: 50px;
-    padding: 5px 20px;
+    padding:10px 32px;
     margin-left: 30px;
 }
 svg {
@@ -100,8 +108,23 @@ margin-top: 15px;
         top:10px;
     }
 }
+.pl-3 {
+    padding-left: 5px;
+}
 .p-5 {
     padding:30px;
+}
+.btn-pl-3 {
+    padding-left: 15px;   
+   
+}
+.btn-p-m-even {
+    padding-left:5px;
+    padding-right:5px;
+    margin-bottom:10px;
+    display: inline-block;
+    color: rgb(16, 75, 236);
+    font-size:18px;
 }
 ::ng-deep {
     .mat-tab-body-content {
@@ -119,20 +142,53 @@ margin-top: 15px;
         padding:0 15px!important;
     }
 }
+.d-block {
+    display: block;
+}
 
 .mat-dialog-content {
     max-height:inherit!important;
 }
 @media only screen and (max-width: 768px) {
+    .mob-comments {
+        padding-right: 10px;
+    }
+    .comment-area {
+                grid-column: 1 / span 2;  
+                padding:0!important;  
+                margin-right: -10px;
+                margin-left:-10px;          
+        div {
+            display: flex;
+            column-gap:0px;
+           
+            .mat-icon-button {
+                width: auto!important;   
+                flex: 1; 
+                &:first-child {
+                    background-color: rgb(16, 75, 236);
+                    border-radius: 0px;
+                    border-bottom-left-radius:4px;
+                    color: #fff;
+                }  
+                &:last-child {
+                    background-color: #eceaea;
+                    border-radius: 0px;
+                    border-bottom-right-radius:4px;
+                }                 
+            }
+           
+        }
+    }
     .tab-delivery-options a {
-        background: #b1b1b1;
-        padding: 11px 16px;        
+        background: #007BFF;
+        padding: 11px 16px 11px 25px;        
         color: #fff;
-        border-radius: 4px;
+        border-radius:50px;
         display: block;
         margin-bottom: 8px;
         &.active {
-            background-color: #007BFF!important;
+            background-color: #6dca49!important;
         }
     }
     .cart-wrapp-mob {
@@ -149,19 +205,19 @@ margin-top: 15px;
         padding: 20px 0;
         display: flex;
         margin-bottom: 0!important;
+        z-index: 100;
     }
 .pb-m-5 {
     padding-bottom:180px;
 }
-    .selectDelevery {
-        background-color:#60b5d6;
-        padding: 10px 11px;
-        border-radius: 5px;
-        color: #fff;
+    .selectDelevery {       
+        border-radius: 5px;        
         margin-bottom: 15px;
-        text-align: center;
+         
         h3 {
             margin-bottom: 0px;
+            font-size: 18px;  
+            font-weight: 500;     
         }
     }
 
@@ -179,7 +235,7 @@ margin-top: 15px;
            padding: 0;
        }
        .grid-my-list {
-        grid-template-columns: 95px 1fr  41px;
+        grid-template-columns: 95px 1fr;
         align-items:flex-start;
     }
     .d-none-md {
@@ -200,6 +256,9 @@ margin-top: 15px;
     }
 }
 @media only screen and (min-width: 768px) {
+    .mob-comments {
+        display: none;
+    }
     .tab-delivery-options a {
         background: #b1b1b1;
         padding: 11px 16px;
@@ -266,3 +325,9 @@ margin-top: 15px;
     height: 8px;
     }
   }
+.warning-ico {
+    position: relative;
+    top: 7px;
+    margin-right: 5px;
+
+}

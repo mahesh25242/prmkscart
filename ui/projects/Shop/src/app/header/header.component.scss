@@ -49,6 +49,10 @@ a:hover, a:active{
     }
     
   }
+  
+  .mat-toolbar-row, .mat-toolbar-single-row {
+    padding: 0 25px!important;
+  }
 }
 
 @media only screen and (min-width: 768px) {
@@ -65,23 +69,8 @@ a:hover, a:active{
     }
     
   }
-  
-}
-::ng-deep {
-  @media only screen and (min-width: 768px) {
-   
-    .mat-toolbar-row, .mat-toolbar-single-row {
-      padding: 0 66px!important;
-    }
-
-  }
-
-  @media only screen and (max-width: 768px) {
-   
-    .mat-toolbar-row, .mat-toolbar-single-row {
-      padding: 0 25px!important;
-    }
-
+  .mat-toolbar-row, .mat-toolbar-single-row {
+    padding: 0 66px!important;
   }
   
 }
