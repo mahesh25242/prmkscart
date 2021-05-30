@@ -186,11 +186,15 @@ margin-top: 15px;
         color: #fff;
         border-radius:50px;
         display: block;
-        margin-bottom: 8px;
+        margin-bottom: 8px; 
+        .d-none {
+            display: none;
+        }       
         &.active {
             background-color: #6dca49!important;
         }
     }
+    
     .cart-wrapp-mob {
         background: #d5e1e8;
         padding:15px;
@@ -260,17 +264,22 @@ margin-top: 15px;
         display: none;
     }
     .tab-delivery-options a {
-        background: #b1b1b1;
-        padding: 11px 16px;
+        background: #007BFF;
+        padding: 11px 16px 11px 25px;
         margin-right: 8px;
         color: #fff;
-        border-radius: 4px;
+        border-radius:50px;
         display: inline-block;
+        width: 262px;
         margin-bottom: 8px;
+        .d-none {
+            display: none;
+        }     
         &.active {
-            background-color: #007BFF!important;
+            background-color:  #6dca49!important;
         }
     }
+   
     .selectDelevery {
         background-color:#60b5d6;
         padding: 10px 11px;

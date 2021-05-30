@@ -92,16 +92,18 @@
                 <ng-container *ngFor="let shop_delivery of shop?.shop_delivery_filtered.home">
                   <b class="d-block"><mat-icon class="warning-ico">error</mat-icon>Additional <span class="btn-p-m-even" *ngIf="shop_delivery.charge">₹ {{ shop_delivery.charge}}</span>  for home delivery</b>
                   <a matRipple href="javascript:{}"
-                    class="animate__animated"
+                    class="animate__animated primry-vsible"
                     [matTooltip]="'Select '+shop_delivery.name+' as your delivery location' "
                     [ngClass]="{'active animate__headShake' : (selectedLocation?.id == shop_delivery.id)}"
                     (click)="changeLocation(shop_delivery)">
                     <div class="d-flex-btn">
-                      {{ shop_delivery.name }} 
+                     <span class="d-none"> {{ shop_delivery.name }} </span>
+                      ADD YOUR DELIVERY ADDRESS
                       <!--span class="btn-pl-3" *ngIf="shop_delivery.charge">( + ₹ {{ shop_delivery.charge}} )</span-->
                       <mat-icon class="mr-auto">keyboard_arrow_right</mat-icon>
                     </div>
                     </a>
+                    <div style="display: none;" [ngClass]="{'active animate__headShake' : (selectedLocation?.id == shop_delivery.id)}" class="add-home-delivery-btn animate__animated"><div class="d-flex-btn">ADD YOUR DELIVERY ADDRESS <mat-icon class="mr-auto">keyboard_arrow_right</mat-icon></div></div>
                 </ng-container>
               </mat-tab>
             </mat-tab-group>
@@ -116,7 +118,7 @@
         <table>
           <tr>
             <th>Detais</th>
-            <th width="130px" class="text-right">Total</th>
+            <th width="150px" class="text-right">Total</th>
           </tr>
           <tr  *ngFor="let item of cart">
             <td>
