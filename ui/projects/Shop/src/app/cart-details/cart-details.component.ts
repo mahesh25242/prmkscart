@@ -392,10 +392,10 @@ export class CartDetailsComponent implements OnInit, OnDestroy {
     }));
 
     this.customerFrm = this.formBuilder.group({
-      name: ['mahesh', [Validators.required]],
+      name: [null, [Validators.required]],
       note: [null, []],
       email: [null, []],
-      phone: ['9995453566', [Validators.required, Validators.pattern("[0-9 ]{10}")]],
+      phone: [null, [Validators.required, Validators.pattern("[0-9 ]{10}")]],
       address: [null, []],
       pin: [null, []],
       delivery_date: [null, []],
