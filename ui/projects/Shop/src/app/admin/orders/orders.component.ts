@@ -28,8 +28,12 @@ export class OrdersComponent implements OnInit {
     private breakpointObserver: BreakpointObserver) { }
 
   viewOrder(shopOrder: ShopOrder = null){
+    const data = {
+      shopOrder: shopOrder,
+      pageEvent: this.pageEvent
+    }
     let dialogRef = this.dialog.open(OrderDetailsComponent, {
-      data: shopOrder
+      data: data
     });
 
 

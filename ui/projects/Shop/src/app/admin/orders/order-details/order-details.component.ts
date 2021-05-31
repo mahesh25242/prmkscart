@@ -19,7 +19,7 @@ export class OrderDetailsComponent implements OnInit, OnDestroy {
   status: number;
   whastAppUrl: string = null
   breakPointSubscr: Subscription;
-  constructor(@Inject(MAT_DIALOG_DATA) public data: ShopOrder,
+  constructor(@Inject(MAT_DIALOG_DATA) public data: any,
   public dialogRef: MatDialogRef<OrderDetailsComponent>,
   private cartService: CartService,
   private breakpointObserver: BreakpointObserver,) { }
@@ -58,10 +58,12 @@ export class OrderDetailsComponent implements OnInit, OnDestroy {
       Notiflix.Loading.Custom();
       const postData = {
         status :this.status,
-        id: this.data.id
+        id: this.data.shopOrder.id
       };
+      console.log(this.data)
       this.cartService.changeStatus(postData).pipe(mergeMap(res=>{
-        return this.cartService.getAllOrders();
+
+        return this.cartService.getAllOrders(this.data.pageEvent.pageIndex + 1);
       })).subscribe(res=>{
         Notiflix.Loading.Remove();
         Notiflix.Notify.Success(msg.s);
@@ -77,19 +79,19 @@ export class OrderDetailsComponent implements OnInit, OnDestroy {
 
   }
   ngOnInit(): void {
-    this.status = this.data.status;
+    this.status = this.data.shopOrder.status;
     this.breakpointObserver.observe([
       Breakpoints.XSmall,
       Breakpoints.Tablet
     ]).subscribe(res=>{
       if(res.matches){
-        this.whastAppUrl = `https://api.whatsapp.com/send?phone=${this.data.shop_customer.phone}`;
+        this.whastAppUrl = `https://api.whatsapp.com/send?phone=${this.data.shopOrder.shop_customer.phone}`;
       }else{
-        this.whastAppUrl = `https://web.whatsapp.com/send?phone=${this.data.shop_customer.phone}`;
+        this.whastAppUrl = `https://web.whatsapp.com/send?phone=${this.data.shopOrder.shop_customer.phone}`;
       }
     })
 
-    this.mapUrl = `${environment.gMapUrl}/maps?z=12&t=m&q=loc:${this.data?.loc?.lat}+${this.data?.loc?.lon}`;
+    this.mapUrl = `${environment.gMapUrl}/maps?z=12&t=m&q=loc:${this.data?.shopOrder?.loc?.lat}+${this.data?.loc?.lon}`;
   }
 
   ngOnDestroy(){
