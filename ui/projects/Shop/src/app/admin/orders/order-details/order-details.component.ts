@@ -60,7 +60,7 @@ export class OrderDetailsComponent implements OnInit, OnDestroy {
         status :this.status,
         id: this.data.shopOrder.id
       };
-      console.log(this.data)
+
       this.cartService.changeStatus(postData).pipe(mergeMap(res=>{
 
         return this.cartService.getAllOrders(this.data.pageEvent.pageIndex + 1);
