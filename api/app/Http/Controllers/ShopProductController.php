@@ -138,17 +138,19 @@ class ShopProductController extends Controller
                 if ($request->hasFile("variants.{$ind}.image")) {
                     $uniqid = Str::random(9);
                     $productImg = sprintf("%s.%s",time().$uniqid, $request->file("variants.{$ind}.image")->extension());
+
                     $destinationPath = "assets/shop/".$shopProduct->shop->shop_key.'/products';
                     $request->file("variants.{$ind}.image")->move($destinationPath, $productImg);
+
 
                     // $img = Image::make($destinationPath.'/'.$productImg)->encode('webp');
                     // $img->save($destinationPath.pathinfo($productImg, PATHINFO_FILENAME).'.webp');
 
                     // $productImg = pathinfo($productImg, PATHINFO_FILENAME).'.webp';
 
-                    if(Storage::disk('public')->exists(str_replace("assets/", "", $destinationPath)."/{$productImg}")){
-                        Storage::disk('public')->delete(str_replace("assets/", "", $destinationPath)."/{$productImg}");
-                    }
+                    // if(Storage::disk('public')->exists(str_replace("assets/", "", $destinationPath)."/{$productImg}")){
+                    //     Storage::disk('public')->delete(str_replace("assets/", "", $destinationPath)."/{$productImg}");
+                    // }
 
                     if(!Storage::disk('public')->exists("shop/index.html")){
                         Storage::disk('public')->put("shop/index.html", 'unauthorised access');
@@ -166,52 +168,52 @@ class ShopProductController extends Controller
                         Storage::disk('public')->put("shop/{$shopProduct->shop->shop_key}/products/index.html", 'unauthorised access');
                     }
 
-                    $img = Image::make($destinationPath.'/'.$productImg)->resize(350, null, function ($constraint) {
-                        $constraint->aspectRatio();
-                    });
+                    // $img = Image::make($destinationPath.'/'.$productImg)->resize(350, null, function ($constraint) {
+                    //     $constraint->aspectRatio();
+                    // });
 
 
-                    $img->text($shopProduct->shop->name, 20, 20, function($font) {
-                        $font->size(24);
-                        $font->color(array(255, 255, 255, 0.5));
+                    // $img->text($shopProduct->shop->name, 20, 20, function($font) {
+                    //     $font->size(24);
+                    //     $font->color(array(255, 255, 255, 0.5));
 
-                    });
-
-
-                    $img->save($destinationPath.'/'.$productImg, 60);
+                    // });
 
 
-
-                    if($shopProduct->shop->shop_url){
-                        try{
-                            $client = new \GuzzleHttp\Client(['headers' =>
-                            [
-                                'shopKey' => $shopProduct->shop->shop_key,
-                                'type' => 'product'
-                            ]
-                            ]);
-                            $res = $client->post("{$shopProduct->shop->shop_url}/copy-file.php", [
-                                "form_params" => [
-                                    "file"=>$productImg,
-                                    "action" => "copy"
-                                ]
-                            ]);
-                            $statusCode = $res->getStatusCode(); // 200
-                            if($statusCode == 200){
-                                $copyresponse = $res->getBody();
-                                $copyresponse = json_decode($copyresponse, true);
-                                if(isset($copyresponse["success"]) && $copyresponse["success"]){
-                                    Storage::disk('public')->delete("shop/{$shopProduct->shop->shop_key}/products/{$productImg}");
-                                }
-                            }
-
-                        }catch(Exception $e) {
-
-                        }
+                   // $img->save($destinationPath.'/'.$productImg, 60);
 
 
 
-                    }
+                    // if($shopProduct->shop->shop_url){
+                    //     try{
+                    //         $client = new \GuzzleHttp\Client(['headers' =>
+                    //         [
+                    //             'shopKey' => $shopProduct->shop->shop_key,
+                    //             'type' => 'product'
+                    //         ]
+                    //         ]);
+                    //         $res = $client->post("{$shopProduct->shop->shop_url}/copy-file.php", [
+                    //             "form_params" => [
+                    //                 "file"=>$productImg,
+                    //                 "action" => "copy"
+                    //             ]
+                    //         ]);
+                    //         $statusCode = $res->getStatusCode(); // 200
+                    //         if($statusCode == 200){
+                    //             $copyresponse = $res->getBody();
+                    //             $copyresponse = json_decode($copyresponse, true);
+                    //             if(isset($copyresponse["success"]) && $copyresponse["success"]){
+                    //                 Storage::disk('public')->delete("shop/{$shopProduct->shop->shop_key}/products/{$productImg}");
+                    //             }
+                    //         }
+
+                    //     }catch(Exception $e) {
+
+                    //     }
+
+
+
+                    // }
 
                 }
 
