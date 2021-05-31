@@ -8,7 +8,7 @@
     <!-- <img mat-card-image *ngIf="product.shop_product_primary_variant?.shop_product_image?.image" [src]="environment.siteAddress+'/assets/shop/'+environment.shopKey+'/products/'+ product.shop_product_primary_variant.shop_product_image.image" [alt]="product.shop_product_primary_variant.name"> -->
   </div>
   <mat-card-header>
-    <mat-card-title matRipple [matRippleCentered]="true" [routerLink]="'/'+product.shop_product_category?.url+'/'+product.url"> {{ product.name }}</mat-card-title>
+    <mat-card-title class="upper-case" matRipple [matRippleCentered]="true" [routerLink]="'/'+product.shop_product_category?.url+'/'+product.url"> {{ product.name }}</mat-card-title>
     <mat-card-subtitle>{{ product.shop_product_primary_variant?.name}} <span *ngIf="product.shop_product_variant.length > 1">
       | {{ product.shop_product_variant.length }} Variants </span> </mat-card-subtitle>
   </mat-card-header>
