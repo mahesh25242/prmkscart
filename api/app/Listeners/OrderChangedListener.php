@@ -46,7 +46,7 @@ class OrderChangedListener
             }
 
 
-            $notificationBuilder->setClickAction("shop/order/{$event->order->sec_key}");
+            $notificationBuilder->setClickAction("order/{$event->order->sec_key}");
             $notificationBuilder->setSound("default");
             $notificationBuilder->setBody("Your order #{$event->order->id} set as {$event->order->status_text}")
                                 ->setBadge('1');
