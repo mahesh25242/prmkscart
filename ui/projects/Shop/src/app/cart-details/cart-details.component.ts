@@ -198,7 +198,8 @@ export class CartDetailsComponent implements OnInit, OnDestroy {
       }));
 
     })).subscribe(res=>{
-      localStorage.removeItem(`${environment.shopKey}-cart`);
+      this.cartService.removeCart();
+
       window.location.href = res.url;
       Notiflix.Loading.Remove();
     }, error=>{
