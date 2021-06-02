@@ -3,7 +3,7 @@ import { Component, Inject, OnDestroy, OnInit } from '@angular/core';
 import {MatDialogRef, MAT_DIALOG_DATA} from '@angular/material/dialog';
 import Notiflix from "notiflix";
 import { Subscription } from 'rxjs';
-import { mergeMap } from 'rxjs/operators';
+import { map, mergeMap } from 'rxjs/operators';
 import { ShopOrder } from 'src/app/lib/interfaces';
 import { CartService } from 'src/app/lib/services';
 import { environment } from '../../../../environments/environment';
@@ -62,13 +62,14 @@ export class OrderDetailsComponent implements OnInit, OnDestroy {
       };
 
       this.cartService.changeStatus(postData).pipe(mergeMap(res=>{
-
-        return this.cartService.getAllOrders(this.data.pageEvent.pageIndex + 1);
+        const pageIndex = this.data.pageEvent?.pageIndex ?? 0;
+        return this.cartService.getAllOrders(pageIndex + 1).pipe(map(ordrs => res));
       })).subscribe(res=>{
         Notiflix.Loading.Remove();
-        Notiflix.Notify.Success(msg.s);
+        Notiflix.Notify.Success(res.message);
         this.dialogRef.close();
       }, error=>{
+        console.log(error)
         Notiflix.Loading.Remove();
         Notiflix.Notify.Failure(`Sorry unexpected error occur. please try again later `);
       });
