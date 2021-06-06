@@ -177,7 +177,7 @@ export class CartDetailsComponent implements OnInit, OnDestroy {
 
               txt += `%0a‎ Grand Total: ₹ *${this.grandTotal}* %0a`;
               txt += `%0a‎ =========================== %0a`;
-              txt += `%0a‎ *OPEN YOUR WHATSAPP & PLACE YOUR ORDER!* %0a`;
+              txt += `%0a‎ *PLEASE SEND YOUR ORDER TO WHATSAPP!* %0a`;
               txt += `%0a‎ *Order confirmation through reply/call* %0a`;
               
               let ret;

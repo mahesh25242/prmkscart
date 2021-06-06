@@ -45,7 +45,7 @@ export class SignInComponent implements OnInit {
         }))
       }));
     })).subscribe(()=>{
-      this.router.navigate(['/admin/home']);
+      this.router.navigate(['/admin/orders']);
       Notiflix.Loading.Remove();
     }, ()=>{
       Notiflix.Loading.Remove();

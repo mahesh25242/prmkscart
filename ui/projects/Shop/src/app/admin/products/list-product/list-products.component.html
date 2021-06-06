@@ -6,7 +6,8 @@
 <app-search-product  [pageEvent]="pageEvent"></app-search-product>
 <mat-card>
 <ng-container *ngIf="(products$ | async) as products">
-  <table class="responsive-table highlight">
+  <div class="responsive-table">
+  <table>
     <thead>
       <th class="w-60">
         No.
@@ -67,7 +68,7 @@
 
 
   </table>
-
+</div>
 
   <mat-paginator #paginator *ngIf="products.total" [length]="products.total"
               [pageSize]="20"

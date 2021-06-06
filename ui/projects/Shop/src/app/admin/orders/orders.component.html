@@ -4,11 +4,12 @@
 <ng-container *ngIf="(orders$ | async) as orders">
   <div *ngIf="!orders.total">No data found</div>
   <mat-card>
-  <table class="responsive-table highlight">
+    <div class="responsive-table">
+  <table class="order-mob-table">
     <thead>
       <tr>
         <th>
-          Order No.
+          Order #
         </th>
         <th>
           Name
@@ -70,6 +71,7 @@
       </tr>
     </tbody>
   </table>
+</div>
   <mat-paginator *ngIf="orders.total" [length]="orders.total"
               [pageSize]="20"
               [pageSizeOptions]="[20, 50, 70, 100]"

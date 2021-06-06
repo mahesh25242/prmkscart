@@ -38,6 +38,16 @@ td, th {
 }
 
 @media only screen and (max-width: 768px) {
+    .order-mob-table {
+        td, th {
+            white-space:nowrap;
+            padding: 9px 7px;
+        }
+       }
+       .responsive-table {
+        max-width: 100%;
+        overflow-x: auto;
+    }
    
     .container {
         max-width: calc(100% - 15px);
