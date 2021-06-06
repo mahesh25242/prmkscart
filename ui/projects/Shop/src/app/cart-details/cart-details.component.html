@@ -169,7 +169,8 @@
     <div mat-dialog-actions class="actionBtn footer-floatingbutton" *ngIf="isShowButton()">
       <section class="example-section" [matTooltip]="(!terms) ? 'Please accept terms' : ''">
 
-        <mat-checkbox [(ngModel)]="terms"></mat-checkbox>&nbsp;&nbsp;I agree the <a href="javascript:{}" (click)="triggerTerms()">Terms</a>
+        <mat-checkbox [(ngModel)]="terms"></mat-checkbox><a href="javascript:{}" class="ml-5" (click)="triggerTerms()">I AGREE </a>
+        <p class="pl-pr">Click and continue this order button and place your order to get the final summary and send it to us via WhatsApp for order.</p>
         
         <button class="whatsapp-btn" mat-raised-button color="primary"  type="submit" [disabled]="!terms" (click)="sendToShop()">
           <!-- Generator: Adobe Illustrator 25.0.0, SVG Export Plug-In . SVG Version: 6.00 Build 0)  -->
@@ -185,7 +186,7 @@
             c-7.3,7.9-27.7,27.1-27.7,66s28.4,76.6,32.3,81.9c4,5.3,55.8,85.2,135.2,119.5c18.9,8.2,33.6,13,45.1,16.7c19,6,36.2,5.2,49.9,3.1
             c15.2-2.3,46.8-19.2,53.4-37.6c6.6-18.5,6.6-34.3,4.6-37.6C500.7,410.1,495.4,408.1,487.5,404.1z"/>
           </svg>
-           BUY NOW </button>
+          ORDER ON WHATSAPP <mat-icon class="mr-auto">keyboard_arrow_right</mat-icon> </button>
 
       </section>
 

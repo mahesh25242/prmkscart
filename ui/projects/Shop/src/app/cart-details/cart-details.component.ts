@@ -117,7 +117,9 @@ export class CartDetailsComponent implements OnInit, OnDestroy {
               Breakpoints.Tablet
             ]).pipe(map(bp =>{
               let txt = '';//%0a‎ Order from *${postData.name}*
-
+              if(orderRes.sec_key){
+                txt += `%0a‎ Track Order: http://breadnbutter.co.in/order/${orderRes.sec_key} %0a `;
+              }
               txt += `%0a‎ Order: *${encodeURIComponent(`#${orderRes.id}`)}* ( ${cart.length} ${ (cart.length > 1) ? 'items' : 'item' } )`;
 
               if(postData?.selectedLocation?.name){
@@ -175,12 +177,9 @@ export class CartDetailsComponent implements OnInit, OnDestroy {
 
               txt += `%0a‎ Grand Total: ₹ *${this.grandTotal}* %0a`;
               txt += `%0a‎ =========================== %0a`;
+              txt += `%0a‎ *OPEN YOUR WHATSAPP & PLACE YOUR ORDER!* %0a`;
               txt += `%0a‎ *Order confirmation through reply/call* %0a`;
-
-              if(orderRes.sec_key){
-                txt += `%0a‎ Track Order: http://breadnbutter.co.in/order/${orderRes.sec_key} %0a `;
-              }
-
+              
               let ret;
               if(bp.matches){
                 ret = {
