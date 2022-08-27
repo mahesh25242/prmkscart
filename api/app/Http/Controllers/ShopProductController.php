@@ -46,8 +46,14 @@ class ShopProductController extends Controller
         if($request->input("q", null)){
             $q = $request->input("q", null);
             $products = $products->where("name", 'like', "%{$q}%");
-            $products = $products->orwhereHas("shopProductCategory", function($qry) use($q){
+             /*$products = $products->orwhereHas("shopProductCategory", function($qry) use($q){
                 $qry->where("name", 'like', "%{$q}%");
+            });*/
+            $products = $products->where(function($query)  use($q){
+
+                $query->where("shop_products.name", 'like', "%{$q}%")->orwhereHas("shopProductCategory", function($qry) use($q){
+                    $qry->where("name", 'like', "%{$q}%");
+                });
             });
         }
         return response($products->orderBy("sortorder", 'ASC')->paginate($perPage ));
