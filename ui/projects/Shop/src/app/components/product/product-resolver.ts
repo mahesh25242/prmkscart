@@ -14,8 +14,7 @@ export class ProductResolver implements Resolve<any> {
     private shopProductService: ShopProductService,
     private shopProductCategoryService: ShopProductCategoryService) { }
 
-  resolve(route: ActivatedRouteSnapshot): Observable<any> {
-
+  resolve(route: ActivatedRouteSnapshot): Observable<any> {      
     if(route.params?.catUrl){
       this.shopProductService.allProduct = [];
       return  this.shopProductCategoryService.showCategories().pipe(mergeMap(res=>{
@@ -23,7 +22,7 @@ export class ProductResolver implements Resolve<any> {
           cat_url: route.params?.catUrl,
           pageSize : environment.productListPerPage
         });
-      }))
+      }), take(1))
     }else{
       this.shopProductService.allProduct = [];
       return this.shopProductCategoryService.showCategories().pipe(mergeMap(res=>{
